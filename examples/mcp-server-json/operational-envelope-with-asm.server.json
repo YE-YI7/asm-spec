@@ -1,0 +1,112 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.asm.example/guarded-web-search",
+  "description": "MCP server example with ASM value metadata plus draft v0.4 operational constraints.",
+  "status": "active",
+  "repository": {
+    "url": "https://github.com/calebguo007/asm-spec",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.example.com/search"
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "asm": {
+        "asm_version": "0.3",
+        "service_id": "example/guarded-web-search@1.0",
+        "taxonomy": "tool.data.search",
+        "display_name": "Example Guarded Web Search MCP",
+        "provenance": {
+          "source_url": "https://mcp.example.com/.well-known/asm",
+          "retrieved_at": "2026-05-25T00:00:00Z",
+          "last_verified_at": "2026-05-25T00:00:00Z",
+          "verification_status": "self_reported",
+          "notes": "Demonstrates the draft v0.4 operational_constraints field as forward-compatible metadata inside an ASM v0.3 manifest."
+        },
+        "pricing": {
+          "billing_dimensions": [
+            {
+              "dimension": "query",
+              "unit": "per_1K",
+              "cost_per_unit": 2.5,
+              "currency": "USD"
+            }
+          ],
+          "free_tier": {
+            "dimension": "query",
+            "limit": 1000,
+            "period": "monthly"
+          }
+        },
+        "quality": {
+          "metrics": [
+            {
+              "name": "answer_relevance",
+              "score": 0.91,
+              "scale": "0-1",
+              "benchmark": "internal search relevance eval",
+              "self_reported": true
+            }
+          ]
+        },
+        "sla": {
+          "latency_p50": "650ms",
+          "latency_p99": "2s",
+          "uptime": 0.995,
+          "rate_limit": "60 req/min",
+          "regions": ["us-east-1", "eu-west-1"]
+        },
+        "payment": {
+          "methods": ["stripe"],
+          "auth_type": "oauth2",
+          "signup_url": "https://mcp.example.com/signup",
+          "receipt_endpoint": "https://mcp.example.com/.well-known/asm-receipts",
+          "receipt_envelope_version": "0.1",
+          "supports_delegated_receipts": false
+        },
+        "operational_constraints": {
+          "risk_class": "medium",
+          "side_effects": ["external_api_call", "network_access"],
+          "approval": {
+            "required": "conditional",
+            "conditions": [
+              "estimated_cost_usd > 1.00",
+              "query_targets_private_data == true"
+            ],
+            "human_readable": "Require approval for expensive searches or searches over private data."
+          },
+          "spend_caps": {
+            "per_call_usd": 1.0,
+            "per_day_usd": 25.0,
+            "currency": "USD"
+          },
+          "quotas": [
+            {
+              "dimension": "query",
+              "limit": 10000,
+              "period": "monthly",
+              "scope": "account"
+            }
+          ],
+          "rate_limits": [
+            {
+              "dimension": "query",
+              "limit": 60,
+              "period": "minute",
+              "scope": "account",
+              "burst": 10
+            }
+          ],
+          "receipt_required": true,
+          "policy_notes": "Publisher-declared operational envelope. Consumer policy remains authoritative."
+        }
+      },
+      "asm_url": "https://mcp.example.com/.well-known/asm"
+    }
+  }
+}

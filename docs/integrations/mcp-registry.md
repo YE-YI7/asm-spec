@@ -93,3 +93,24 @@ asm-mcp-validate examples/mcp-server-json/remote-with-asm.server.json --json
 - `examples/mcp-server-json/basic-with-asm.server.json`
 - `examples/mcp-server-json/remote-with-asm.server.json`
 - `examples/mcp-server-json/package-with-asm.server.json`
+- `examples/mcp-server-json/operational-envelope-with-asm.server.json`
+
+## Draft v0.4: pre-call operational envelope
+
+ASM v0.3 focuses on value metadata: pricing, quality, SLA, provenance,
+verification, payment, and receipts. Draft v0.4 adds an optional
+`operational_constraints` object for pre-call policy inputs: rate limits,
+quotas, spend caps, approval boundaries, risk class, side effects, and receipt
+requirements.
+
+This is still producer-provided metadata. ASM does not enforce local policy;
+clients and registries decide how to use it.
+
+Example:
+
+```bash
+asm-mcp-validate examples/mcp-server-json/operational-envelope-with-asm.server.json
+```
+
+RFC:
+[`docs/rfcs/operational-envelope-v0.4.md`](../rfcs/operational-envelope-v0.4.md)

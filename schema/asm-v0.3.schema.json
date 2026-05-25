@@ -450,6 +450,98 @@
         }
       }
     },
+    "operational_constraints": {
+      "type": "object",
+      "description": "Experimental pre-call operational envelope for client policy decisions: risk class, side effects, approval boundaries, spend caps, quotas, rate limits, and receipt expectations. Draft v0.4 field accepted in v0.3.x for producer-side adoption trials; clients enforce local policy.",
+      "properties": {
+        "risk_class": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "description": "Coarse operational risk level declared by the publisher or curator."
+        },
+        "side_effects": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Declared side effects such as read_only, external_api_call, persistent_state, financial_charge, sends_message, executes_code, or network_access."
+        },
+        "approval": {
+          "type": "object",
+          "description": "Pre-call approval envelope. ASM exposes policy inputs; clients decide whether and how to enforce them.",
+          "properties": {
+            "required": {
+              "type": "string",
+              "enum": ["never", "conditional", "always"],
+              "description": "Whether this service requires approval before invocation."
+            },
+            "conditions": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Human-readable or implementation-defined conditions that trigger approval."
+            },
+            "human_readable": {
+              "type": "string",
+              "description": "Plain-language explanation of approval policy."
+            }
+          },
+          "additionalProperties": false
+        },
+        "spend_caps": {
+          "type": "object",
+          "description": "Publisher-declared or recommended spend boundaries. Consumer policy remains authoritative.",
+          "properties": {
+            "per_call_usd": { "type": "number", "minimum": 0 },
+            "per_day_usd": { "type": "number", "minimum": 0 },
+            "per_month_usd": { "type": "number", "minimum": 0 },
+            "currency": {
+              "type": "string",
+              "default": "USD",
+              "description": "ISO 4217 currency code for the spend caps."
+            }
+          },
+          "additionalProperties": false
+        },
+        "quotas": {
+          "type": "array",
+          "description": "Provider quota envelope, usually daily or monthly.",
+          "items": {
+            "type": "object",
+            "required": ["dimension", "limit", "period"],
+            "properties": {
+              "dimension": { "type": "string" },
+              "limit": { "type": "number", "minimum": 0 },
+              "period": { "type": "string" },
+              "scope": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "rate_limits": {
+          "type": "array",
+          "description": "Provider request-rate envelope, usually per second, minute, or hour.",
+          "items": {
+            "type": "object",
+            "required": ["dimension", "limit", "period"],
+            "properties": {
+              "dimension": { "type": "string" },
+              "limit": { "type": "number", "minimum": 0 },
+              "period": { "type": "string" },
+              "scope": { "type": "string" },
+              "burst": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "receipt_required": {
+          "type": "boolean",
+          "description": "Whether clients should expect a post-call receipt before updating trust."
+        },
+        "policy_notes": {
+          "type": "string",
+          "description": "Caveats and local-policy interpretation notes."
+        }
+      },
+      "additionalProperties": false
+    },
     "extensions": {
       "type": "object",
       "description": "Category-specific non-standard fields, isolated by namespace. Core schema remains stable; all domain-specific data goes here.",

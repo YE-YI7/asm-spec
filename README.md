@@ -2,7 +2,7 @@
 
 **MCP tells agents what services can do. ASM tells agents what services are worth.**
 
-ASM is a lightweight settlement protocol for value-aware service selection. It gives agents structured metadata for pricing, quality, SLA, provenance, verification, and payment before they invoke or pay for a service.
+ASM is a lightweight settlement protocol for value-aware service selection. It gives agents structured metadata for pricing, quality, SLA, provenance, verification, payment, and pre-call operational constraints before they invoke or pay for a service.
 
 ```bash
 pip install -e .
@@ -25,6 +25,8 @@ python -m asm_cli score --source openrouter 'cheap LLM under $1 per 1M tokens un
 ```
 
 ASM is MCP-compatible today: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
+
+Current adoption wedge: producer-side ASM blocks. MCP registries have said value facets become compelling once publishers embed metadata. The next milestone is three to five external MCP servers exposing optional ASM under `_meta`, not another paper experiment.
 
 Latest paper signals:
 
@@ -65,6 +67,12 @@ Validate an MCP `server.json` with embedded ASM:
 
 ```bash
 asm-mcp-validate examples/mcp-server-json/remote-with-asm.server.json
+```
+
+Validate a draft v0.4 pre-call operational envelope:
+
+```bash
+asm-mcp-validate examples/mcp-server-json/operational-envelope-with-asm.server.json
 ```
 
 If the console script is not on `PATH`, use:
@@ -142,11 +150,17 @@ https://your-service.example/.well-known/asm
 
 Full guide: [`docs/integrations/mcp-registry.md`](docs/integrations/mcp-registry.md).
 
+Producer adoption guide: [`docs/adoption/producer-guide.md`](docs/adoption/producer-guide.md).
+
+Draft v0.4 operational envelope RFC:
+[`docs/rfcs/operational-envelope-v0.4.md`](docs/rfcs/operational-envelope-v0.4.md).
+
 Examples:
 
 - [`examples/mcp-server-json/basic-with-asm.server.json`](examples/mcp-server-json/basic-with-asm.server.json)
 - [`examples/mcp-server-json/remote-with-asm.server.json`](examples/mcp-server-json/remote-with-asm.server.json)
 - [`examples/mcp-server-json/package-with-asm.server.json`](examples/mcp-server-json/package-with-asm.server.json)
+- [`examples/mcp-server-json/operational-envelope-with-asm.server.json`](examples/mcp-server-json/operational-envelope-with-asm.server.json)
 
 ---
 
