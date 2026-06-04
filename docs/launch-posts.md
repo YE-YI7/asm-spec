@@ -1,31 +1,34 @@
 # ASM Launch Posts
 
-Use these posts to launch ASM as a practical CLI and MCP-compatible value
-metadata layer. The first launch should lead with the OpenRouter adapter, not
-with the paper.
+Use these posts to launch ASM as a practical OpenRouter value router first, and a protocol second.
+
+The first line should not be "I wrote a protocol." It should be "I built a CLI that picks AI models by cost, constraints, and metadata."
 
 ## Hacker News
 
 Title:
 
 ```text
-Show HN: ASM - rank AI services by price, latency, quality, and provenance
+Show HN: ASM - rank OpenRouter models by cost, constraints, and metadata
 ```
 
 Body:
 
 ```text
-I built Agent Service Manifest (ASM), a small open protocol and CLI for value-aware AI service selection.
+I built Agent Service Manifest (ASM), a small CLI/protocol experiment for choosing AI services from structured value metadata.
 
-The practical demo: ASM can rank live OpenRouter models from public metadata:
+The useful part today: ASM can rank live OpenRouter models without writing manifests first:
 
-    asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
+    asm openrouter 'cheap coding model under $0.50 per 1M tokens'
+    asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
 
-It turns provider/service metadata into comparable manifests: pricing, SLA/rate limits, quality metrics, provenance, verification, and payment/auth. The MCP integration path is intentionally lightweight: publish `.well-known/asm`, or embed ASM under MCP Registry `server.json` `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
+It turns provider metadata into comparable manifests: pricing, capabilities, provenance, verification status, and usage signals. It can also emit router snippets for LiteLLM, Vercel AI SDK, and LangChain.
 
-I am not claiming quality metrics are universally correct. The point is narrower: without structured value metadata, agent service selection is not reproducible.
+The protocol angle is MCP-compatible: publish `.well-known/asm`, or embed ASM under MCP Registry `server.json` `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
 
-Repo + demo GIF:
+Important caveat: OpenRouter usage rank is a revealed-preference signal, not benchmark quality. The point is narrower: service selection should be reproducible before the API call happens.
+
+Repo:
 https://github.com/calebguo007/asm-spec
 ```
 
@@ -34,41 +37,47 @@ https://github.com/calebguo007/asm-spec
 Title:
 
 ```text
-I built a CLI that ranks OpenRouter models by cost and constraints
+I built a CLI that picks OpenRouter models by cost and constraints
 ```
 
 Body:
 
 ```text
-I built ASM, a small CLI/protocol experiment for choosing AI services from structured metadata instead of reading pricing pages by hand.
+I built ASM, a small CLI/protocol experiment for choosing AI services from structured metadata instead of manually reading pricing pages.
 
-The part that may be useful today: it can rank OpenRouter models without writing manifests first:
+The practical demo is OpenRouter model selection:
 
-    asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
+    asm openrouter 'cheap coding model under $0.50 per 1M tokens'
+    asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
 
-It builds ephemeral manifests from OpenRouter's public model metadata, applies hard constraints, and ranks candidates. The repo also has an MCP-compatible metadata format for pricing, SLA/rate limits, quality metrics, provenance, verification, and payment/auth.
+It builds ephemeral manifests from OpenRouter's public model metadata, applies hard constraints, ranks candidates, and can emit LiteLLM / Vercel AI SDK / LangChain snippets.
 
-Important caveat: OpenRouter's public model endpoint does not expose per-model latency, so latency constraints are reported and ignored unless strict mode is enabled. Usage ranking is treated as a revealed-preference signal, not benchmark quality.
+Caveats:
+- OpenRouter's public model endpoint does not expose per-model latency or uptime.
+- The usage-ranking signal is not benchmark quality.
+- Free models dominate cost-first queries, so quality-sensitive use cases still need better benchmark metadata.
 
 Repo:
 https://github.com/calebguo007/asm-spec
 
-I would especially like feedback on what metadata fields are missing or wrong for real model/API selection.
+I would especially like feedback on what metadata is missing for real model/API routing.
 ```
 
 ## X / Twitter
 
 ```text
+I built ASM as a value router for AI services.
+
+Try it on OpenRouter:
+
+asm openrouter 'cheap coding model under $0.50 per 1M tokens'
+asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
+
+It ranks models by structured pricing/provenance/usage metadata and emits router config.
+
 MCP tells agents what services can do.
 ASM tells agents what services are worth.
 
-I added a live OpenRouter adapter:
-
-asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
-
-It ranks models from structured value metadata: price, constraints, provenance, and usage signals.
-
-Repo + GIF:
 https://github.com/calebguo007/asm-spec
 ```
 
@@ -82,13 +91,15 @@ The core idea:
 MCP tells agents what services can do.
 ASM tells agents what services are worth.
 
-The latest release adds a practical OpenRouter adapter:
+The latest version is more practical: ASM can now rank live OpenRouter models from public metadata:
 
-    asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
+    asm openrouter 'cheap coding model under $0.50 per 1M tokens'
 
-It builds ephemeral manifests from public model metadata and ranks candidates using declared cost and preference signals. ASM also defines an MCP-compatible path through `server.json` `_meta`, so registries and aggregators can index value metadata without requiring MCP core changes.
+It can also emit router snippets:
 
-The claim is deliberately bounded: ASM does not prove that any quality metric is universally correct. It makes value metadata computable, auditable, and reproducible.
+    asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
+
+The goal is not to claim that any one quality metric is universally correct. The goal is to make pre-call service selection computable and reproducible: cost, constraints, provenance, verification, and eventually trust receipts.
 
 Repo:
 https://github.com/calebguo007/asm-spec
@@ -99,31 +110,32 @@ https://github.com/calebguo007/asm-spec
 Title:
 
 ```text
-我做了一个 CLI：按价格/约束/元数据帮你选 OpenRouter 模型
+我做了一个 CLI：按价格、约束和元数据帮你选 OpenRouter 模型
 ```
 
 Body:
 
 ```text
-我最近在做 Agent Service Manifest (ASM)，一个给 AI service selection 用的协议和 CLI。
+我最近在做 Agent Service Manifest（ASM），一开始它更像一个协议：给 AI service selection 定义 pricing、SLA、quality、provenance、verification 这些字段。
 
-一句话：
+但我现在越来越确定，不能先让大家接受一个协议。要先让它变成一个有用工具。
 
-MCP 告诉 agent 一个服务能做什么。
-ASM 告诉 agent 一个服务值不值得调用。
+所以最新版本先接了 OpenRouter：
 
-现在最能直接试的是 OpenRouter adapter：
+    asm openrouter 'cheap coding model under $0.50 per 1M tokens'
 
-    asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
+它会从 OpenRouter 的公开 model metadata 生成临时 ASM manifest，然后按你的偏好和硬约束排序。也可以直接导出 router 配置：
 
-它会从 OpenRouter 公开 model metadata 构造临时 manifest，然后按硬约束和偏好排序。ASM 本身定义的字段包括 pricing、SLA/rate limit、quality metric、provenance、verification、payment/auth，也可以嵌到 MCP Registry `server.json` 的 `_meta` 里。
+    asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
 
-我不想把它包装成“模型质量被证明了”。更准确的说法是：如果没有结构化 value metadata，agent 选服务这件事不可复现；ASM 是把这一步变成可计算、可审计的尝试。
+现在支持 LiteLLM / Vercel AI SDK / LangChain 片段。
+
+我不想把它包装成“证明了哪个模型最好”。更准确的说法是：如果没有结构化 value metadata，agent 选服务这件事不可复现。ASM 是把这一步变成可计算、可审计的一次尝试。
 
 Repo:
 https://github.com/calebguo007/asm-spec
 
-想听听大家觉得真实选模型/API 时还缺哪些字段。
+想听听大家真实选模型/API 时还缺哪些字段。
 ```
 
 ## Posting Order
@@ -156,6 +168,4 @@ If Reddit or r/LocalLLaMA requires karma, points, or account age before posting:
 
 ## Accounts / Access
 
-Do not share passwords or long-lived tokens. If Codex posts for you, use an
-already logged-in browser session. GitHub repo edits can use the existing `gh`
-authorization.
+Do not share passwords or long-lived tokens. If Codex posts for you, use an already logged-in browser session. GitHub repo edits can use the existing `gh` authorization.

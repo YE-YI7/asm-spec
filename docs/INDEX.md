@@ -4,6 +4,7 @@
 
 | I want to... | Go to |
 |---|---|
+| Pick an OpenRouter model by cost, quality, and constraints | [`docs/openrouter-value-router.md`](openrouter-value-router.md) |
 | Add ASM to an MCP Registry `server.json` | [`docs/integrations/mcp-registry.md`](integrations/mcp-registry.md) |
 | Consume ASM from an aggregator | [`docs/integrations/aggregators.md`](integrations/aggregators.md) |
 | See paper result details | [`docs/paper-results.md`](paper-results.md) |

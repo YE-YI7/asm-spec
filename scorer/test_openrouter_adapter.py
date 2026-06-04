@@ -154,6 +154,77 @@ def test_cli_openrouter_source_with_cached_json(tmp_path: Path, capsys):
     assert "Selected:" in output
 
 
+def test_cli_openrouter_subcommand_with_cached_json(tmp_path: Path, capsys):
+    models_path = tmp_path / "models.json"
+    rankings_path = tmp_path / "rankings.json"
+    models_path.write_text(json.dumps(SAMPLE_MODELS), encoding="utf-8")
+    rankings_path.write_text(json.dumps(SAMPLE_RANKINGS), encoding="utf-8")
+
+    code = asm_main([
+        "openrouter",
+        "--openrouter-models-json",
+        str(models_path),
+        "--openrouter-rankings-json",
+        str(rankings_path),
+        "cheap coding model under $1 per 1M tokens",
+    ])
+    output = capsys.readouterr().out
+
+    assert code == 0
+    assert "OpenRouter ephemeral manifests" in output
+    assert "Model: cheap/free-model:free" in output
+    assert "Selected:" in output
+
+
+def test_cli_openrouter_json_format(tmp_path: Path, capsys):
+    models_path = tmp_path / "models.json"
+    rankings_path = tmp_path / "rankings.json"
+    models_path.write_text(json.dumps(SAMPLE_MODELS), encoding="utf-8")
+    rankings_path.write_text(json.dumps(SAMPLE_RANKINGS), encoding="utf-8")
+
+    code = asm_main([
+        "openrouter",
+        "--format",
+        "json",
+        "--openrouter-models-json",
+        str(models_path),
+        "--openrouter-rankings-json",
+        str(rankings_path),
+        "cheap coding model under $1 per 1M tokens",
+    ])
+    payload = json.loads(capsys.readouterr().out)
+
+    assert code == 0
+    assert payload["selected"]["model"] == "cheap/free-model:free"
+    assert payload["ranked"][0]["cost_per_1m_blended_tokens"] == 0
+    assert payload["source"]["n_manifests"] == 2
+
+
+def test_cli_openrouter_route_litellm_format(tmp_path: Path, capsys):
+    models_path = tmp_path / "models.json"
+    rankings_path = tmp_path / "rankings.json"
+    models_path.write_text(json.dumps(SAMPLE_MODELS), encoding="utf-8")
+    rankings_path.write_text(json.dumps(SAMPLE_RANKINGS), encoding="utf-8")
+
+    code = asm_main([
+        "openrouter",
+        "route",
+        "--format",
+        "litellm",
+        "--openrouter-models-json",
+        str(models_path),
+        "--openrouter-rankings-json",
+        str(rankings_path),
+        "cheap coding model under $1 per 1M tokens",
+    ])
+    output = capsys.readouterr().out
+
+    assert code == 0
+    assert "model_list:" in output
+    assert "model: openrouter/cheap/free-model:free" in output
+    assert "asm_score:" in output
+
+
 def test_topsis_handles_unknown_latency_without_nan():
     services = [
         ServiceVector("a", "A", "ai.llm.chat", 1.0, 0.5, float("inf"), 0.5),

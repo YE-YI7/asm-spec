@@ -2,14 +2,23 @@
 
 **MCP tells agents what services can do. ASM tells agents what services are worth.**
 
-ASM is a lightweight settlement protocol for value-aware service selection. It gives agents structured metadata for pricing, quality, SLA, provenance, verification, payment, and pre-call operational constraints before they invoke or pay for a service.
+ASM helps agents choose services before calling them. It ranks APIs by pricing, quality, SLA, provenance, verification, payment, and pre-call operational constraints.
+
+The fastest way to try it is as an OpenRouter value router:
 
 ```bash
 pip install -e .
+asm openrouter 'cheap coding model under $0.50 per 1M tokens'
+asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
+```
+
+This builds ephemeral ASM manifests from OpenRouter's public model metadata, ranks real model endpoints, and can emit router config snippets for tools you already use.
+
+```bash
 asm score "cheap reliable TTS under 1s"
 ```
 
-Rank live OpenRouter models without writing manifests first:
+Older equivalent form:
 
 ```bash
 asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
@@ -26,7 +35,7 @@ python -m asm_cli score --source openrouter 'cheap LLM under $1 per 1M tokens un
 
 ASM is MCP-compatible today: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
 
-Current adoption wedge: producer-side ASM blocks. MCP registries have said value facets become compelling once publishers embed metadata. The next milestone is three to five external MCP servers exposing optional ASM under `_meta`, not another paper experiment.
+Current adoption wedge: make ASM useful as an intermediate value layer first. OpenRouter model selection is the first live target; producer-side MCP blocks remain the compatibility path once publishers want their services to be ranked.
 
 Latest paper signals:
 
@@ -46,21 +55,44 @@ Long-form results: [`docs/paper-results.md`](docs/paper-results.md). Reproducibi
 git clone https://github.com/calebguo007/asm-spec.git
 cd asm-spec
 pip install -e .
-asm score "cheap reliable TTS under 1s"
+asm openrouter 'cheap coding model under $0.50 per 1M tokens'
 ```
 
 Example output shape:
 
 ```text
-Selected: OpenAI TTS
-Reason: OpenAI TTS scored 0.83 via TOPSIS...
+Selected: MoonshotAI: Kimi K2.6 (free)
+Model: moonshotai/kimi-k2.6:free
+Reason: MoonshotAI: Kimi K2.6 scored 1.000 via TOPSIS...
 
 Ranked services:
-1. OpenAI TTS (...)
-2. ElevenLabs TTS (...)
+1. MoonshotAI: Kimi K2.6 (free) (...)
+2. Tencent: Hy3 preview (...)
+3. StepFun: Step 3.5 Flash (...)
 
-Rejected by hard constraints:
-- Example Slow TTS: latency 1.40s > max 1.00s
+Rejected by hard constraints: none
+```
+
+Emit a LiteLLM router snippet:
+
+```bash
+asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
+```
+
+Other export formats:
+
+```bash
+asm openrouter --format json 'best value model for long-context summarization'
+asm openrouter route --format vercel-ai-sdk 'high quality reasoning model'
+asm openrouter route --format langchain 'cheap reliable chat model'
+```
+
+OpenRouter value-router notes: [`docs/openrouter-value-router.md`](docs/openrouter-value-router.md).
+
+Local manifest demo:
+
+```bash
+asm score "cheap reliable TTS under 1s"
 ```
 
 Validate an MCP `server.json` with embedded ASM:
@@ -84,7 +116,7 @@ python -m mcp_server_json_asm examples/mcp-server-json/remote-with-asm.server.js
 Try OpenRouter live model ranking:
 
 ```bash
-asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
+asm openrouter 'cheap LLM under $1 per 1M tokens under 1s'
 ```
 
 This builds ephemeral ASM manifests from OpenRouter's public `/api/v1/models`

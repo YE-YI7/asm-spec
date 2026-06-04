@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -187,6 +188,132 @@ def cmd_score(args: argparse.Namespace) -> int:
     return 0 if ranked else 2
 
 
+def cmd_openrouter(args: argparse.Namespace) -> int:
+    query_parts = list(args.query)
+    mode = "score"
+    if query_parts and query_parts[0] == "route":
+        mode = "route"
+        query_parts = query_parts[1:]
+    query = " ".join(query_parts).strip()
+    if not query:
+        print('OpenRouter query is required. Example: asm openrouter "cheap coding model under $0.50/1M tokens"')
+        return 1
+
+    manifests, source_metadata = load_openrouter_manifests(
+        models_json=args.openrouter_models_json,
+        rankings_json=args.openrouter_rankings_json,
+        timeout=args.openrouter_timeout,
+    )
+    preferences = infer_preferences(query)
+    constraints = infer_constraints(query, "ai.llm.chat")
+    latency_ignored = False
+    if constraints.max_latency_s is not None and not args.strict_latency:
+        constraints.max_latency_s = None
+        latency_ignored = True
+
+    services = [parse_manifest(m, io_ratio=preferences.io_ratio) for m in manifests]
+    selected = filter_services(services, constraints)
+    ranked = score_topsis(selected, preferences)
+
+    if args.format == "json":
+        print(json.dumps(
+            _openrouter_json_payload(query, ranked, services, constraints, preferences, source_metadata, latency_ignored, args.limit),
+            indent=2,
+        ))
+        return 0 if ranked else 2
+
+    output_format = "litellm" if mode == "route" and args.format == "text" else args.format
+    if mode == "route" or output_format != "text":
+        if not ranked:
+            print("No OpenRouter model satisfies the hard constraints.")
+            return 2
+        print(_format_route_config(output_format, ranked[: args.limit], query))
+        return 0
+
+    _print_selection(
+        query=query,
+        taxonomy="ai.llm.chat",
+        source_metadata=source_metadata,
+        preferences=preferences,
+        constraints=constraints,
+        ranked=ranked,
+        services=services,
+        limit=args.limit,
+        openrouter_latency_ignored=latency_ignored,
+    )
+    return 0 if ranked else 2
+
+
+def _print_selection(
+    *,
+    query: str,
+    taxonomy: str | None,
+    source_metadata: dict | None,
+    preferences: Preferences,
+    constraints: Constraints,
+    ranked: list,
+    services: list,
+    limit: int,
+    openrouter_latency_ignored: bool = False,
+) -> None:
+    print(f"Query: {query}")
+    print(f"Taxonomy: {taxonomy or 'any'}")
+    if source_metadata:
+        print(
+            "Source: OpenRouter ephemeral manifests "
+            f"({source_metadata['n_manifests']} scoreable / {source_metadata['n_models']} models, "
+            f"retrieved_at={source_metadata['retrieved_at']})"
+        )
+        if source_metadata.get("ranking_snapshot"):
+            print(f"Usage signal: cached OpenRouter ranking snapshot {source_metadata['ranking_snapshot']}")
+        print("Caveat: OpenRouter usage is a revealed-preference signal, not benchmark quality.")
+    if openrouter_latency_ignored:
+        print("Warning: OpenRouter /api/v1/models does not expose latency; ignored latency hard constraint.")
+    print(
+        "Preferences: "
+        f"cost={preferences.cost:.2f}, quality={preferences.quality:.2f}, "
+        f"speed={preferences.speed:.2f}, reliability={preferences.reliability:.2f}"
+    )
+    if constraints.max_latency_s is not None or constraints.min_uptime is not None or constraints.max_cost is not None:
+        parts = []
+        if constraints.max_latency_s is not None:
+            parts.append(f"latency <= {constraints.max_latency_s:.2f}s")
+        if constraints.min_uptime is not None:
+            parts.append(f"uptime >= {constraints.min_uptime:.3f}")
+        if constraints.max_cost is not None:
+            parts.append(f"representative cost <= {format_cost(constraints.max_cost, taxonomy)}")
+        print(f"Hard constraints: {', '.join(parts)}")
+
+    if not ranked:
+        print("\nNo service satisfies the hard constraints.")
+    else:
+        winner = ranked[0]
+        print(f"\nSelected: {winner.service.display_name}")
+        print(f"Model: {_openrouter_model_id(winner.service) or winner.service.service_id}")
+        print(f"Reason: {winner.reasoning}")
+        print("\nRanked services:")
+        for item in ranked[:limit]:
+            print(
+                f"{item.rank}. {item.service.display_name} "
+                f"(score={item.total_score:.4f}, cost={format_cost(item.service.cost_per_unit, item.service.taxonomy)}, "
+                f"quality={item.service.quality_score:.3f}, latency={format_latency(item.service.latency_seconds)}, "
+                f"uptime={item.service.uptime:.3f})"
+            )
+
+    rejected = []
+    for service in services:
+        reason = rejection_reason(service, constraints)
+        if reason:
+            rejected.append((service.display_name, reason))
+
+    if rejected:
+        print("\nRejected by hard constraints:")
+        for name, reason in rejected[:limit]:
+            print(f"- {name}: {reason}")
+    else:
+        print("\nRejected by hard constraints: none")
+
+
 def format_cost(cost_per_unit: float, taxonomy: str | None) -> str:
     if taxonomy and taxonomy.startswith("ai.llm"):
         return f"${cost_per_unit * 1_000_000:.4f}/1M blended tokens"
@@ -197,6 +324,123 @@ def format_latency(latency_seconds: float) -> str:
     if latency_seconds == float("inf"):
         return "unknown"
     return f"{latency_seconds:.2f}s"
+
+
+def _openrouter_model_id(service) -> str | None:
+    prefix = "openrouter/"
+    suffix = "@current"
+    service_id = service.service_id
+    if service_id.startswith(prefix) and service_id.endswith(suffix):
+        return service_id[len(prefix):-len(suffix)]
+    return None
+
+
+def _openrouter_json_payload(
+    query: str,
+    ranked: list,
+    services: list,
+    constraints: Constraints,
+    preferences: Preferences,
+    source_metadata: dict,
+    latency_ignored: bool,
+    limit: int,
+) -> dict:
+    rejected = []
+    for service in services:
+        reason = rejection_reason(service, constraints)
+        if reason:
+            rejected.append({"service": service.display_name, "model": _openrouter_model_id(service), "reason": reason})
+
+    return {
+        "query": query,
+        "source": source_metadata,
+        "caveat": "OpenRouter usage is a revealed-preference signal, not benchmark quality.",
+        "warnings": ["OpenRouter /api/v1/models does not expose latency; latency hard constraint ignored."] if latency_ignored else [],
+        "preferences": {
+            "cost": preferences.cost,
+            "quality": preferences.quality,
+            "speed": preferences.speed,
+            "reliability": preferences.reliability,
+            "io_ratio": preferences.io_ratio,
+        },
+        "selected": _scored_to_dict(ranked[0]) if ranked else None,
+        "ranked": [_scored_to_dict(item) for item in ranked[:limit]],
+        "rejected": rejected[:limit],
+    }
+
+
+def _scored_to_dict(item) -> dict:
+    return {
+        "rank": item.rank,
+        "model": _openrouter_model_id(item.service),
+        "service_id": item.service.service_id,
+        "display_name": item.service.display_name,
+        "score": item.total_score,
+        "cost_per_1m_blended_tokens": round(item.service.cost_per_unit * 1_000_000, 6),
+        "quality": item.service.quality_score,
+        "latency_seconds": None if item.service.latency_seconds == float("inf") else item.service.latency_seconds,
+        "uptime": item.service.uptime,
+        "reason": item.reasoning,
+    }
+
+
+def _format_route_config(fmt: str, ranked: list, query: str) -> str:
+    models = [(_openrouter_model_id(item.service) or item.service.service_id, item) for item in ranked]
+    if fmt == "litellm":
+        lines = [
+            "# Generated by ASM from OpenRouter value metadata.",
+            f"# Query: {query}",
+            "model_list:",
+        ]
+        for idx, (model_id, item) in enumerate(models, start=1):
+            alias = "asm-primary" if idx == 1 else f"asm-fallback-{idx - 1}"
+            lines.extend([
+                f"  - model_name: {alias}",
+                "    litellm_params:",
+                f"      model: openrouter/{model_id}",
+                f"    asm_score: {item.total_score:.4f}",
+            ])
+        lines.extend([
+            "router_settings:",
+            "  routing_strategy: usage-based-routing",
+        ])
+        if len(models) > 1:
+            lines.append("  fallbacks:")
+            lines.append("    - asm-primary:")
+            for idx in range(1, len(models)):
+                lines.append(f"        - asm-fallback-{idx}")
+        return "\n".join(lines)
+
+    if fmt == "vercel-ai-sdk":
+        primary = models[0][0]
+        fallbacks = [model_id for model_id, _ in models[1:]]
+        return "\n".join([
+            "// Generated by ASM from OpenRouter value metadata.",
+            f"// Query: {query}",
+            "import { openrouter } from '@openrouter/ai-sdk-provider';",
+            "",
+            f"export const model = openrouter('{primary}');",
+            f"export const fallbackModels = {json.dumps(fallbacks)}.map((id) => openrouter(id));",
+        ])
+
+    if fmt == "langchain":
+        primary = models[0][0]
+        fallbacks = [model_id for model_id, _ in models[1:]]
+        return "\n".join([
+            "# Generated by ASM from OpenRouter value metadata.",
+            f"# Query: {query}",
+            "import os",
+            "from langchain_openai import ChatOpenAI",
+            "",
+            "primary = ChatOpenAI(",
+            f"    model=\"{primary}\",",
+            "    base_url=\"https://openrouter.ai/api/v1\",",
+            "    api_key=os.environ[\"OPENROUTER_API_KEY\"],",
+            ")",
+            f"fallback_model_ids = {json.dumps(fallbacks)}",
+        ])
+
+    raise ValueError(f"Unsupported route format: {fmt}")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -216,10 +460,50 @@ def build_parser() -> argparse.ArgumentParser:
                        help="Do not ignore latency constraints for sources with unknown latency")
     score.add_argument("--limit", type=int, default=5, help="Maximum ranked/rejected rows to print")
     score.set_defaults(func=cmd_score)
+
+    openrouter = sub.add_parser("openrouter", help="Rank live OpenRouter models and optionally emit router configs")
+    openrouter.add_argument(
+        "query",
+        nargs="+",
+        help='Query, optionally prefixed with route. Example: asm openrouter "cheap coding model under $0.50/1M tokens"',
+    )
+    openrouter.add_argument("--format", choices=["text", "json", "litellm", "vercel-ai-sdk", "langchain"], default="text")
+    openrouter.add_argument("--openrouter-models-json", help="Use a cached OpenRouter /api/v1/models JSON file")
+    openrouter.add_argument("--openrouter-rankings-json", help="Use a cached OpenRouter rankings JSON file")
+    openrouter.add_argument("--openrouter-timeout", type=int, default=20, help="Timeout for OpenRouter models API fetch")
+    openrouter.add_argument("--strict-latency", action="store_true",
+                            help="Do not ignore latency constraints for sources with unknown latency")
+    openrouter.add_argument("--limit", type=int, default=5, help="Maximum ranked models or route entries to print")
+    openrouter.set_defaults(func=cmd_openrouter)
+    return parser
+
+
+def build_openrouter_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="asm openrouter", description="Rank live OpenRouter models")
+    parser.add_argument("--format", choices=["text", "json", "litellm", "vercel-ai-sdk", "langchain"], default="text")
+    parser.add_argument("--openrouter-models-json", help="Use a cached OpenRouter /api/v1/models JSON file")
+    parser.add_argument("--openrouter-rankings-json", help="Use a cached OpenRouter rankings JSON file")
+    parser.add_argument("--openrouter-timeout", type=int, default=20, help="Timeout for OpenRouter models API fetch")
+    parser.add_argument("--strict-latency", action="store_true",
+                        help="Do not ignore latency constraints for sources with unknown latency")
+    parser.add_argument("--limit", type=int, default=5, help="Maximum ranked models or route entries to print")
+    parser.add_argument(
+        "query",
+        nargs="*",
+        help='Query, optionally prefixed with route. Example: asm openrouter route --format litellm "cheap coding model"',
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
+    if argv is None:
+        argv = sys.argv[1:]
+    if argv and argv[0] == "openrouter":
+        parser = build_openrouter_parser()
+        args, query_parts = parser.parse_known_args(argv[1:])
+        args.query = args.query + query_parts
+        return cmd_openrouter(args)
+
     parser = build_parser()
     args = parser.parse_args(argv)
     return args.func(args)
