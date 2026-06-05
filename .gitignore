@@ -39,3 +39,20 @@ payments/benchmark-results/*.json
 !payments/benchmark-results/.gitkeep
 OUTREACH-PLAN.md
 LIVE-EVAL-PLAN.md
+
+# arXiv build: ignore vendored binaries + intermediates, keep .tex source
+tools/pandoc/
+tools/tectonic/
+arxiv/*.zip
+arxiv/*.log
+arxiv/*.preprocessed.md
+
+# Internal outreach drafts (Doubleword manifest, MCP discussion body, etc.)
+outreach/
+
+# Arena Elo: raw parquet + scratch dir (canonical snapshot lives in scorer/data/)
+data/lmarena/
+scorer/data/*.parquet
+# Build artifacts
+build/
+_wheelcheck/

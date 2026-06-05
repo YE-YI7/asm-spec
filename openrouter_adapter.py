@@ -9,6 +9,7 @@ requiring providers to publish manifests first.
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,20 @@ ROOT = Path(__file__).resolve().parent
 OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
 OPENROUTER_RANKINGS_URL = "https://openrouter.ai/rankings"
 DEFAULT_RANKINGS_JSON = ROOT / "experiments" / "results" / "external_validation" / "openrouter_rankings.json"
+
+# LMArena Elo (benchmark-backed quality signal). Snapshot built from
+# huggingface.co/datasets/lmarena-ai/leaderboard-dataset (text/latest).
+# Canonical location is inside the scorer package so it ships in the wheel;
+# ROOT/scorer resolves in both editable dev and installed layouts. The old
+# data/lmarena path is kept as a fallback.
+def _default_elo_snapshot() -> Path:
+    packaged = ROOT / "scorer" / "data" / "elo_snapshot.json"
+    return packaged if packaged.exists() else ROOT / "data" / "lmarena" / "elo_snapshot.json"
+
+
+ARENA_ELO_SNAPSHOT = _default_elo_snapshot()
+ARENA_ELO_ANCHOR_LOW = 1000.0
+ARENA_ELO_ANCHOR_HIGH = 1500.0
 
 
 def utc_now() -> str:
@@ -72,6 +87,8 @@ def openrouter_models_to_manifests(
     ranking_by_slug: dict[str, dict] | None = None,
     ranking_count: int = 0,
     ranking_generated_at: str | None = None,
+    elo_index: dict | None = None,
+    elo_meta: dict | None = None,
 ) -> list[dict]:
     """Convert OpenRouter model records into ephemeral ASM manifests."""
     ranking_by_slug = ranking_by_slug or {}
@@ -84,6 +101,8 @@ def openrouter_models_to_manifests(
             ranking_by_slug=ranking_by_slug,
             ranking_count=ranking_count,
             ranking_generated_at=ranking_generated_at,
+            elo_index=elo_index,
+            elo_meta=elo_meta,
         )
         if manifest is not None:
             manifests.append(manifest)
@@ -98,6 +117,8 @@ def openrouter_model_to_manifest(
     ranking_by_slug: dict[str, dict],
     ranking_count: int,
     ranking_generated_at: str | None,
+    elo_index: dict | None = None,
+    elo_meta: dict | None = None,
 ) -> dict | None:
     model_id = str(model.get("id") or "").strip()
     if not model_id:
@@ -126,7 +147,21 @@ def openrouter_model_to_manifest(
         })
 
     ranking = _find_ranking(model_id, ranking_by_slug)
-    quality_metric, leaderboard = _usage_quality(model_id, ranking, ranking_count, ranking_generated_at)
+    usage_metric, usage_board = _usage_quality(model_id, ranking, ranking_count, ranking_generated_at)
+    arena_metric, arena_board = _arena_quality(model_id, elo_index, elo_meta)
+    if arena_metric is not None:
+        # Benchmark-backed quality available -> primary axis.
+        quality_metrics = [arena_metric, usage_metric]
+        leaderboard = arena_board
+    elif elo_index:
+        # Elo mode active but this model has no benchmark match. Do NOT let the
+        # usage-popularity signal masquerade as quality on the same scale as Elo
+        # (mixing incomparable quality scales is a documented failure mode).
+        quality_metrics = [_unknown_quality(), usage_metric]
+        leaderboard = usage_board
+    else:
+        quality_metrics = [usage_metric]
+        leaderboard = usage_board
     architecture = model.get("architecture") or {}
     top_provider = model.get("top_provider") or {}
     context_length = model.get("context_length") or top_provider.get("context_length")
@@ -135,8 +170,11 @@ def openrouter_model_to_manifest(
         "Ephemeral manifest generated from OpenRouter model metadata.",
         "Pricing is OpenRouter-reported and may change.",
         "OpenRouter does not expose per-model latency or uptime in /api/v1/models.",
-        "Quality metric is a usage signal, not benchmark quality.",
     ]
+    if arena_metric is not None:
+        notes.append("Primary quality = LMArena overall Elo (benchmark-backed); usage signal kept as secondary.")
+    else:
+        notes.append("Quality metric is a usage signal, not benchmark quality.")
     if ranking_generated_at:
         notes.append(f"Usage ranking snapshot: {ranking_generated_at}.")
     else:
@@ -162,7 +200,7 @@ def openrouter_model_to_manifest(
             "estimated": False,
         },
         "quality": {
-            "metrics": [quality_metric],
+            "metrics": quality_metrics,
         },
         "provenance": {
             "source_url": models_source if models_source.startswith("http") else OPENROUTER_MODELS_URL,
@@ -185,10 +223,14 @@ def load_openrouter_manifests(
     *,
     models_json: str | Path | None = None,
     rankings_json: str | Path | None = None,
+    arena_elo: bool = True,
+    arena_category: str = "overall",
+    arena_snapshot_json: str | Path | None = None,
     timeout: int = 20,
 ) -> tuple[list[dict], dict]:
     models, source, retrieved_at = load_openrouter_models(models_json=models_json, timeout=timeout)
     rankings, ranking_count, ranking_generated_at = load_openrouter_rankings(rankings_json=rankings_json)
+    elo_index, elo_meta = load_arena_elo(arena_snapshot_json, arena_category) if arena_elo else ({}, {})
     manifests = openrouter_models_to_manifests(
         models,
         models_source=source,
@@ -196,6 +238,13 @@ def load_openrouter_manifests(
         ranking_by_slug=rankings,
         ranking_count=ranking_count,
         ranking_generated_at=ranking_generated_at,
+        elo_index=elo_index,
+        elo_meta=elo_meta,
+    )
+    elo_matched = sum(
+        1 for m in manifests
+        if (m.get("quality") or {}).get("metrics")
+        and m["quality"]["metrics"][0].get("name") == "lmarena_elo"
     )
     metadata = {
         "source": source,
@@ -204,8 +253,91 @@ def load_openrouter_manifests(
         "n_manifests": len(manifests),
         "ranking_snapshot": ranking_generated_at,
         "ranking_count": ranking_count,
+        "arena_elo_snapshot": elo_meta.get("publish_date"),
+        "arena_elo_matched": elo_matched,
     }
     return manifests, metadata
+
+
+def _normalize_model_key(name: str) -> str:
+    """Normalize an OpenRouter id or Arena model name to a comparable key."""
+    n = (name or "").lower().strip().lstrip("~")
+    if "/" in n:
+        n = n.split("/", 1)[1]            # drop provider prefix on OpenRouter ids
+    n = n.split(":", 1)[0]                 # drop :free / :nitro serving variants
+    n = re.sub(r"[ ._]+", "-", n)          # unify separators
+    n = re.sub(r"-+", "-", n).strip("-")
+    for suffix in ("-fast", "-turbo", "-nitro", "-high", "-low", "-online"):
+        if n.endswith(suffix):             # serving variants share the base model's Elo
+            n = n[: -len(suffix)]
+    return n
+
+
+def load_arena_elo(
+    snapshot_path: str | Path | None = None,
+    category: str = "overall",
+) -> tuple[dict[str, dict], dict]:
+    """Load the LMArena Elo snapshot, indexed by normalized model key."""
+    path = Path(snapshot_path) if snapshot_path else ARENA_ELO_SNAPSHOT
+    if not path.exists():
+        return {}, {}
+    snap = json.loads(path.read_text(encoding="utf-8"))
+    cat = (snap.get("categories") or {}).get(category) or {}
+    index: dict[str, dict] = {}
+    for row in cat.get("models", []):
+        index.setdefault(_normalize_model_key(row.get("model", "")), row)
+    meta = {
+        "category": category,
+        "source": snap.get("source"),
+        "retrieved_at": snap.get("retrieved_at"),
+        "publish_date": cat.get("leaderboard_publish_date"),
+        "elo_min": cat.get("elo_min"),
+        "elo_max": cat.get("elo_max"),
+    }
+    return index, meta
+
+
+def _arena_quality(
+    model_id: str,
+    elo_index: dict[str, dict] | None,
+    elo_meta: dict | None,
+) -> tuple[dict, dict] | tuple[None, None]:
+    """Return (quality_metric, leaderboard) from LMArena Elo, or (None, None)."""
+    if not elo_index:
+        return None, None
+    row = elo_index.get(_normalize_model_key(model_id))
+    if not row:
+        return None, None
+    elo = float(row.get("elo", 0.0))
+    score = max(0.0, min(1.0, (elo - ARENA_ELO_ANCHOR_LOW) / (ARENA_ELO_ANCHOR_HIGH - ARENA_ELO_ANCHOR_LOW)))
+    publish_date = (elo_meta or {}).get("publish_date")
+    metric = {
+        "name": "lmarena_elo",
+        "score": round(score, 4),
+        "scale": "0-1",
+        "benchmark": f"LMArena overall Elo {int(elo)} (snapshot {publish_date})",
+        "benchmark_url": "https://lmarena.ai/leaderboard",
+        "self_reported": False,
+    }
+    leaderboard = {
+        "name": f"LMArena overall ({publish_date})",
+        "rank": row.get("rank"),
+        "elo": elo,
+        "votes": row.get("votes"),
+        "url": "https://lmarena.ai/leaderboard",
+    }
+    return metric, leaderboard
+
+
+def _unknown_quality() -> dict:
+    """Neutral quality for models with no benchmark Elo (avoids mixing scales)."""
+    return {
+        "name": "quality_unknown",
+        "score": 0.5,
+        "scale": "0-1",
+        "benchmark": "No LMArena Elo match; quality scored neutral (not benchmark-backed).",
+        "self_reported": True,
+    }
 
 
 def _usage_quality(

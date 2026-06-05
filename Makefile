@@ -1,4 +1,4 @@
-.PHONY: test test-py test-ts validate-mcp-examples eval ablations selection-baselines preference-alignment llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce clean clean-cache help
+.PHONY: test test-py test-ts validate-mcp-examples eval ablations selection-baselines preference-alignment llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce refresh-elo clean clean-cache help
 
 LLM_PROVIDER ?= deepseek
 LLM_MODEL ?= deepseek-chat
@@ -23,6 +23,7 @@ help:
 	@echo "  make value-audit-full  Same audit on full MCPCorpus (~14K entries; first run downloads ~13MB)"
 	@echo "  make paper-tables  Generate paper tables from experiment results"
 	@echo "  make reproduce     Run every offline experiment in one command (Section 6 audit/eval/ablations/alignment + LLM dry-run)"
+	@echo "  make refresh-elo   Refresh the LMArena Elo snapshot (OpenRouter value router quality axis)"
 	@echo "  make clean         Remove cache artifacts"
 	@echo "  make clean-cache   Remove raw-doc cache (large)"
 	@echo ""
@@ -43,6 +44,9 @@ test-ts:
 
 validate-mcp-examples:
 	python mcp_server_json_asm.py examples/mcp-server-json/basic-with-asm.server.json
+
+refresh-elo:
+	python tools/refresh_arena_elo.py
 	python mcp_server_json_asm.py examples/mcp-server-json/remote-with-asm.server.json
 	python mcp_server_json_asm.py examples/mcp-server-json/package-with-asm.server.json
 

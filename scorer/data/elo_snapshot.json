@@ -1,0 +1,5027 @@
+{
+ "source": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/resolve/main/text/latest-00000-of-00001.parquet",
+ "retrieved_at": "2026-06-05T14:41:07Z",
+ "categories": {
+  "overall": {
+   "leaderboard_publish_date": "2026-05-27",
+   "elo_min": 833.6,
+   "elo_max": 1499.3,
+   "n": 360,
+   "models": [
+    {
+     "model": "claude-opus-4-6-thinking",
+     "org": "anthropic",
+     "elo": 1499.3,
+     "rank": 1,
+     "votes": 34186
+    },
+    {
+     "model": "claude-opus-4-6",
+     "org": "anthropic",
+     "elo": 1497.5,
+     "rank": 2,
+     "votes": 36512
+    },
+    {
+     "model": "claude-opus-4-7-thinking",
+     "org": "anthropic",
+     "elo": 1486.1,
+     "rank": 3,
+     "votes": 19973
+    },
+    {
+     "model": "gemini-3.5-flash",
+     "org": "google",
+     "elo": 1482.5,
+     "rank": 4,
+     "votes": 9045
+    },
+    {
+     "model": "gemini-3.1-pro-preview",
+     "org": "google",
+     "elo": 1481.4,
+     "rank": 5,
+     "votes": 43742
+    },
+    {
+     "model": "claude-opus-4-7",
+     "org": "anthropic",
+     "elo": 1480.8,
+     "rank": 6,
+     "votes": 20724
+    },
+    {
+     "model": "gemini-3-pro",
+     "org": "google",
+     "elo": 1479.6,
+     "rank": 7,
+     "votes": 41332
+    },
+    {
+     "model": "qwen3.7-max-preview",
+     "org": "alibaba",
+     "elo": 1474.6,
+     "rank": 8,
+     "votes": 3755
+    },
+    {
+     "model": "muse-spark",
+     "org": "meta",
+     "elo": 1474.1,
+     "rank": 9,
+     "votes": 12228
+    },
+    {
+     "model": "gpt-5.4-high",
+     "org": "openai",
+     "elo": 1472.3,
+     "rank": 10,
+     "votes": 28246
+    },
+    {
+     "model": "qwen3.5-max-preview",
+     "org": "alibaba",
+     "elo": 1470.8,
+     "rank": 11,
+     "votes": 20212
+    },
+    {
+     "model": "ernie-5.1",
+     "org": "baidu",
+     "elo": 1469.5,
+     "rank": 12,
+     "votes": 14675
+    },
+    {
+     "model": "glm-5.1",
+     "org": "zai",
+     "elo": 1469.3,
+     "rank": 13,
+     "votes": 13957
+    },
+    {
+     "model": "gpt-5.5-high",
+     "org": "openai",
+     "elo": 1468.8,
+     "rank": 14,
+     "votes": 16573
+    },
+    {
+     "model": "gemini-3-flash",
+     "org": "google",
+     "elo": 1466.1,
+     "rank": 15,
+     "votes": 30732
+    },
+    {
+     "model": "gpt-5.5",
+     "org": "openai",
+     "elo": 1463.9,
+     "rank": 16,
+     "votes": 16852
+    },
+    {
+     "model": "mimo-v2.5-pro",
+     "org": "xiaomi",
+     "elo": 1460.7,
+     "rank": 17,
+     "votes": 15722
+    },
+    {
+     "model": "gemini-2.5-pro",
+     "org": "google",
+     "elo": 1457.4,
+     "rank": 18,
+     "votes": 122636
+    },
+    {
+     "model": "gpt-5.4",
+     "org": "openai",
+     "elo": 1456.3,
+     "rank": 19,
+     "votes": 29672
+    },
+    {
+     "model": "kimi-k2.6",
+     "org": "moonshot",
+     "elo": 1456.1,
+     "rank": 20,
+     "votes": 15765
+    },
+    {
+     "model": "claude-sonnet-4-6",
+     "org": "anthropic",
+     "elo": 1454.4,
+     "rank": 21,
+     "votes": 27474
+    },
+    {
+     "model": "grok-4.20-beta-0309-reasoning",
+     "org": "xai",
+     "elo": 1453.8,
+     "rank": 22,
+     "votes": 29068
+    },
+    {
+     "model": "grok-4.20-multi-agent-beta-0309",
+     "org": "xai",
+     "elo": 1450.5,
+     "rank": 23,
+     "votes": 28630
+    },
+    {
+     "model": "claude-opus-4-5-20251101",
+     "org": "anthropic",
+     "elo": 1449.3,
+     "rank": 24,
+     "votes": 66107
+    },
+    {
+     "model": "dola-seed-2.0-pro",
+     "org": "bytedance",
+     "elo": 1449.2,
+     "rank": 25,
+     "votes": 37742
+    },
+    {
+     "model": "amazon-nova-experimental-chat-26-02-10",
+     "org": "amazon",
+     "elo": 1448.2,
+     "rank": 26,
+     "votes": 3418
+    },
+    {
+     "model": "deepseek-v4-pro-thinking",
+     "org": "deepseek",
+     "elo": 1446.4,
+     "rank": 27,
+     "votes": 15852
+    },
+    {
+     "model": "claude-opus-4-5-20251101-thinking-32k",
+     "org": "anthropic",
+     "elo": 1446.4,
+     "rank": 28,
+     "votes": 37130
+    },
+    {
+     "model": "gemini-3-flash (thinking-minimal)",
+     "org": "google",
+     "elo": 1446.2,
+     "rank": 29,
+     "votes": 52876
+    },
+    {
+     "model": "ernie-5.0-0110",
+     "org": "baidu",
+     "elo": 1446.1,
+     "rank": 30,
+     "votes": 34159
+    },
+    {
+     "model": "deepseek-v4-pro",
+     "org": "deepseek",
+     "elo": 1446.0,
+     "rank": 31,
+     "votes": 16920
+    },
+    {
+     "model": "grok-4.20-beta1",
+     "org": "xai",
+     "elo": 1445.7,
+     "rank": 32,
+     "votes": 24468
+    },
+    {
+     "model": "glm-5",
+     "org": "zai",
+     "elo": 1445.4,
+     "rank": 33,
+     "votes": 21930
+    },
+    {
+     "model": "kimi-k2.5-thinking",
+     "org": "moonshot",
+     "elo": 1444.8,
+     "rank": 34,
+     "votes": 36795
+    },
+    {
+     "model": "qwen3.6-max-preview",
+     "org": "alibaba",
+     "elo": 1444.4,
+     "rank": 35,
+     "votes": 4648
+    },
+    {
+     "model": "gemma-4-31b",
+     "org": "google",
+     "elo": 1442.4,
+     "rank": 36,
+     "votes": 5855
+    },
+    {
+     "model": "ernie-5.0-preview-1203",
+     "org": "baidu",
+     "elo": 1442.3,
+     "rank": 37,
+     "votes": 9752
+    },
+    {
+     "model": "gpt-5.1-high",
+     "org": "openai",
+     "elo": 1441.4,
+     "rank": 38,
+     "votes": 40856
+    },
+    {
+     "model": "qwen3.5-397b-a17b",
+     "org": "alibaba",
+     "elo": 1440.9,
+     "rank": 39,
+     "votes": 31970
+    },
+    {
+     "model": "glm-4.6",
+     "org": "zai",
+     "elo": 1440.5,
+     "rank": 40,
+     "votes": 35661
+    },
+    {
+     "model": "gpt-5.2-chat-latest-20260210",
+     "org": "openai",
+     "elo": 1439.2,
+     "rank": 41,
+     "votes": 32280
+    },
+    {
+     "model": "qwen3-max-preview",
+     "org": "alibaba",
+     "elo": 1438.9,
+     "rank": 42,
+     "votes": 27736
+    },
+    {
+     "model": "grok-4.1-thinking",
+     "org": "xai",
+     "elo": 1438.0,
+     "rank": 43,
+     "votes": 63569
+    },
+    {
+     "model": "qwen3.6-plus",
+     "org": "alibaba",
+     "elo": 1437.4,
+     "rank": 44,
+     "votes": 18202
+    },
+    {
+     "model": "claude-sonnet-4-5-20250929",
+     "org": "anthropic",
+     "elo": 1437.4,
+     "rank": 45,
+     "votes": 76121
+    },
+    {
+     "model": "grok-4.1",
+     "org": "xai",
+     "elo": 1437.1,
+     "rank": 46,
+     "votes": 65655
+    },
+    {
+     "model": "glm-4.7",
+     "org": "zai",
+     "elo": 1436.1,
+     "rank": 47,
+     "votes": 12133
+    },
+    {
+     "model": "mimo-v2-pro",
+     "org": "xiaomi",
+     "elo": 1435.4,
+     "rank": 48,
+     "votes": 22638
+    },
+    {
+     "model": "gemma-4-26b-a4b",
+     "org": "google",
+     "elo": 1434.7,
+     "rank": 49,
+     "votes": 5789
+    },
+    {
+     "model": "claude-sonnet-4-5-20250929-thinking-32k",
+     "org": "anthropic",
+     "elo": 1431.9,
+     "rank": 50,
+     "votes": 77813
+    },
+    {
+     "model": "ernie-5.0-preview-1022",
+     "org": "baidu",
+     "elo": 1430.1,
+     "rank": 51,
+     "votes": 4708
+    },
+    {
+     "model": "mistral-large-3",
+     "org": "mistral",
+     "elo": 1430.1,
+     "rank": 52,
+     "votes": 42553
+    },
+    {
+     "model": "glm-4.5",
+     "org": "zai",
+     "elo": 1428.9,
+     "rank": 53,
+     "votes": 24322
+    },
+    {
+     "model": "chatgpt-4o-latest-20250326",
+     "org": "openai",
+     "elo": 1428.8,
+     "rank": 54,
+     "votes": 82471
+    },
+    {
+     "model": "deepseek-v4-flash",
+     "org": "deepseek",
+     "elo": 1428.2,
+     "rank": 55,
+     "votes": 16725
+    },
+    {
+     "model": "deepseek-r1-0528",
+     "org": "deepseek",
+     "elo": 1428.0,
+     "rank": 56,
+     "votes": 18467
+    },
+    {
+     "model": "mimo-v2.5",
+     "org": "xiaomi",
+     "elo": 1426.8,
+     "rank": 57,
+     "votes": 15979
+    },
+    {
+     "model": "mistral-medium-2508",
+     "org": "mistral",
+     "elo": 1425.6,
+     "rank": 58,
+     "votes": 92031
+    },
+    {
+     "model": "longcat-flash-chat-2602-exp",
+     "org": "meituan",
+     "elo": 1425.4,
+     "rank": 59,
+     "votes": 23731
+    },
+    {
+     "model": "grok-3-preview-02-24",
+     "org": "xai",
+     "elo": 1424.7,
+     "rank": 60,
+     "votes": 32909
+    },
+    {
+     "model": "deepseek-v3.2-exp-thinking",
+     "org": "deepseek",
+     "elo": 1423.7,
+     "rank": 61,
+     "votes": 9064
+    },
+    {
+     "model": "deepseek-v3.2",
+     "org": "deepseek",
+     "elo": 1423.6,
+     "rank": 62,
+     "votes": 46204
+    },
+    {
+     "model": "deepseek-v3.2-exp",
+     "org": "deepseek",
+     "elo": 1422.9,
+     "rank": 63,
+     "votes": 11941
+    },
+    {
+     "model": "deepseek-v4-flash-thinking",
+     "org": "deepseek",
+     "elo": 1422.7,
+     "rank": 64,
+     "votes": 16545
+    },
+    {
+     "model": "gpt-5.1",
+     "org": "openai",
+     "elo": 1422.2,
+     "rank": 65,
+     "votes": 43501
+    },
+    {
+     "model": "longcat-flash-chat",
+     "org": "meituan",
+     "elo": 1421.8,
+     "rank": 66,
+     "votes": 11405
+    },
+    {
+     "model": "qwen3-vl-235b-a22b-instruct",
+     "org": "alibaba",
+     "elo": 1421.0,
+     "rank": 67,
+     "votes": 11515
+    },
+    {
+     "model": "kimi-k2.5-instant",
+     "org": "moonshot",
+     "elo": 1420.7,
+     "rank": 68,
+     "votes": 8197
+    },
+    {
+     "model": "gpt-5.5-instant",
+     "org": "openai",
+     "elo": 1420.5,
+     "rank": 69,
+     "votes": 24925
+    },
+    {
+     "model": "amazon-nova-experimental-chat-12-10",
+     "org": "amazon",
+     "elo": 1420.1,
+     "rank": 70,
+     "votes": 3681
+    },
+    {
+     "model": "deepseek-v3.1-terminus-thinking",
+     "org": "deepseek",
+     "elo": 1419.6,
+     "rank": 71,
+     "votes": 3468
+    },
+    {
+     "model": "deepseek-v3.1",
+     "org": "deepseek",
+     "elo": 1419.3,
+     "rank": 72,
+     "votes": 14969
+    },
+    {
+     "model": "deepseek-v3.2-thinking",
+     "org": "deepseek",
+     "elo": 1419.2,
+     "rank": 73,
+     "votes": 40111
+    },
+    {
+     "model": "qwen3-235b-a22b-instruct-2507",
+     "org": "alibaba",
+     "elo": 1419.1,
+     "rank": 74,
+     "votes": 95473
+    },
+    {
+     "model": "qwen3-next-80b-a3b-instruct",
+     "org": "alibaba",
+     "elo": 1418.8,
+     "rank": 75,
+     "votes": 22881
+    },
+    {
+     "model": "claude-opus-4-1-20250805-thinking-16k",
+     "org": "anthropic",
+     "elo": 1418.4,
+     "rank": 76,
+     "votes": 49833
+    },
+    {
+     "model": "deepseek-v3.1-terminus",
+     "org": "deepseek",
+     "elo": 1417.7,
+     "rank": 77,
+     "votes": 3705
+    },
+    {
+     "model": "qwen3.5-122b-a10b",
+     "org": "alibaba",
+     "elo": 1417.6,
+     "rank": 78,
+     "votes": 26670
+    },
+    {
+     "model": "gemini-2.5-flash",
+     "org": "google",
+     "elo": 1417.6,
+     "rank": 79,
+     "votes": 122458
+    },
+    {
+     "model": "claude-opus-4-1-20250805",
+     "org": "anthropic",
+     "elo": 1417.4,
+     "rank": 80,
+     "votes": 77373
+    },
+    {
+     "model": "gpt-4.5-preview-2025-02-27",
+     "org": "openai",
+     "elo": 1417.4,
+     "rank": 81,
+     "votes": 14547
+    },
+    {
+     "model": "gpt-5.2-high",
+     "org": "openai",
+     "elo": 1416.9,
+     "rank": 82,
+     "votes": 46111
+    },
+    {
+     "model": "deepseek-v3.1-thinking",
+     "org": "deepseek",
+     "elo": 1416.9,
+     "rank": 83,
+     "votes": 11746
+    },
+    {
+     "model": "gemini-3.1-flash-lite-preview",
+     "org": "google",
+     "elo": 1416.6,
+     "rank": 84,
+     "votes": 35135
+    },
+    {
+     "model": "amazon-nova-experimental-chat-11-10",
+     "org": "amazon",
+     "elo": 1416.5,
+     "rank": 85,
+     "votes": 25407
+    },
+    {
+     "model": "gpt-5.4-mini-high",
+     "org": "openai",
+     "elo": 1415.2,
+     "rank": 86,
+     "votes": 26397
+    },
+    {
+     "model": "kimi-k2-thinking-turbo",
+     "org": "moonshot",
+     "elo": 1414.2,
+     "rank": 87,
+     "votes": 60235
+    },
+    {
+     "model": "qwen3-235b-a22b-thinking-2507",
+     "org": "alibaba",
+     "elo": 1413.9,
+     "rank": 88,
+     "votes": 8993
+    },
+    {
+     "model": "qwen3-max-2025-09-23",
+     "org": "alibaba",
+     "elo": 1413.0,
+     "rank": 89,
+     "votes": 9158
+    },
+    {
+     "model": "mimo-v2-flash (non-thinking)",
+     "org": "xiaomi",
+     "elo": 1411.6,
+     "rank": 90,
+     "votes": 44619
+    },
+    {
+     "model": "gpt-5.2",
+     "org": "openai",
+     "elo": 1411.4,
+     "rank": 91,
+     "votes": 46492
+    },
+    {
+     "model": "grok-4-0709",
+     "org": "xai",
+     "elo": 1409.9,
+     "rank": 92,
+     "votes": 41413
+    },
+    {
+     "model": "o3-2025-04-16",
+     "org": "openai",
+     "elo": 1409.4,
+     "rank": 93,
+     "votes": 59775
+    },
+    {
+     "model": "grok-4-fast-chat",
+     "org": "xai",
+     "elo": 1409.2,
+     "rank": 94,
+     "votes": 6820
+    },
+    {
+     "model": "grok-4.3",
+     "org": "xai",
+     "elo": 1408.7,
+     "rank": 95,
+     "votes": 15773
+    },
+    {
+     "model": "grok-4-1-fast-reasoning",
+     "org": "xai",
+     "elo": 1408.4,
+     "rank": 96,
+     "votes": 54616
+    },
+    {
+     "model": "hunyuan-hy3-preview",
+     "org": "tencent",
+     "elo": 1408.1,
+     "rank": 97,
+     "votes": 5812
+    },
+    {
+     "model": "qwen3.5-27b",
+     "org": "alibaba",
+     "elo": 1408.0,
+     "rank": 98,
+     "votes": 25772
+    },
+    {
+     "model": "gemini-2.5-flash-preview-09-2025",
+     "org": "google",
+     "elo": 1407.0,
+     "rank": 99,
+     "votes": 32925
+    },
+    {
+     "model": "hunyuan-vision-1.5-thinking",
+     "org": "tencent",
+     "elo": 1406.1,
+     "rank": 100,
+     "votes": 2220
+    },
+    {
+     "model": "gpt-5-high",
+     "org": "openai",
+     "elo": 1405.3,
+     "rank": 101,
+     "votes": 31947
+    },
+    {
+     "model": "gpt-5-chat",
+     "org": "openai",
+     "elo": 1403.7,
+     "rank": 102,
+     "votes": 31595
+    },
+    {
+     "model": "step-3.5-flash",
+     "org": "stepfun",
+     "elo": 1403.0,
+     "rank": 103,
+     "votes": 34466
+    },
+    {
+     "model": "mimo-v2-omni",
+     "org": "xiaomi",
+     "elo": 1401.6,
+     "rank": 104,
+     "votes": 2968
+    },
+    {
+     "model": "qwen3-vl-235b-a22b-thinking",
+     "org": "alibaba",
+     "elo": 1401.0,
+     "rank": 105,
+     "votes": 7947
+    },
+    {
+     "model": "minimax-m2.7",
+     "org": "minimax",
+     "elo": 1400.1,
+     "rank": 106,
+     "votes": 23278
+    },
+    {
+     "model": "hunyuan-t1-20250711",
+     "org": "tencent",
+     "elo": 1399.7,
+     "rank": 107,
+     "votes": 4711
+    },
+    {
+     "model": "amazon-nova-experimental-chat-26-01-10",
+     "org": "amazon",
+     "elo": 1398.9,
+     "rank": 108,
+     "votes": 3414
+    },
+    {
+     "model": "grok-4-fast-reasoning",
+     "org": "xai",
+     "elo": 1397.5,
+     "rank": 109,
+     "votes": 18729
+    },
+    {
+     "model": "qwen3.5-flash",
+     "org": "alibaba",
+     "elo": 1397.2,
+     "rank": 110,
+     "votes": 29647
+    },
+    {
+     "model": "qwen3.5-35b-a3b",
+     "org": "alibaba",
+     "elo": 1396.3,
+     "rank": 111,
+     "votes": 27304
+    },
+    {
+     "model": "mimo-v2-flash (thinking)",
+     "org": "xiaomi",
+     "elo": 1395.3,
+     "rank": 112,
+     "votes": 10974
+    },
+    {
+     "model": "amazon-nova-experimental-chat-10-20",
+     "org": "amazon",
+     "elo": 1394.4,
+     "rank": 113,
+     "votes": 11474
+    },
+    {
+     "model": "qwen3-235b-a22b-no-thinking",
+     "org": "alibaba",
+     "elo": 1393.7,
+     "rank": 114,
+     "votes": 38226
+    },
+    {
+     "model": "claude-haiku-4-5-20251001",
+     "org": "anthropic",
+     "elo": 1391.3,
+     "rank": 115,
+     "votes": 78134
+    },
+    {
+     "model": "minimax-m2.1-preview",
+     "org": "minimax",
+     "elo": 1391.0,
+     "rank": 116,
+     "votes": 17138
+    },
+    {
+     "model": "gpt-5.3-chat-latest",
+     "org": "openai",
+     "elo": 1387.4,
+     "rank": 117,
+     "votes": 30882
+    },
+    {
+     "model": "qwen3-30b-a3b-instruct-2507",
+     "org": "alibaba",
+     "elo": 1383.8,
+     "rank": 118,
+     "votes": 23746
+    },
+    {
+     "model": "glm-4.5-air",
+     "org": "zai",
+     "elo": 1382.6,
+     "rank": 119,
+     "votes": 31095
+    },
+    {
+     "model": "gpt-4.1-2025-04-14",
+     "org": "openai",
+     "elo": 1381.9,
+     "rank": 120,
+     "votes": 50997
+    },
+    {
+     "model": "kimi-k2-0905-preview",
+     "org": "moonshot",
+     "elo": 1379.6,
+     "rank": 121,
+     "votes": 11795
+    },
+    {
+     "model": "gemini-2.5-flash-lite-preview-09-2025-no-thinking",
+     "org": "google",
+     "elo": 1378.9,
+     "rank": 122,
+     "votes": 47246
+    },
+    {
+     "model": "nvidia-nemotron-3-super-120b-a12b",
+     "org": "nvidia",
+     "elo": 1378.1,
+     "rank": 123,
+     "votes": 7458
+    },
+    {
+     "model": "hunyuan-turbos-20250416",
+     "org": "tencent",
+     "elo": 1375.8,
+     "rank": 124,
+     "votes": 10725
+    },
+    {
+     "model": "claude-opus-4-20250514-thinking-16k",
+     "org": "anthropic",
+     "elo": 1375.5,
+     "rank": 125,
+     "votes": 36900
+    },
+    {
+     "model": "deepseek-v3-0324",
+     "org": "deepseek",
+     "elo": 1374.8,
+     "rank": 126,
+     "votes": 45518
+    },
+    {
+     "model": "glm-4.6v",
+     "org": "zai",
+     "elo": 1374.8,
+     "rank": 127,
+     "votes": 2808
+    },
+    {
+     "model": "gpt-5-mini-high",
+     "org": "openai",
+     "elo": 1373.7,
+     "rank": 128,
+     "votes": 27039
+    },
+    {
+     "model": "gpt-5.4-nano-high",
+     "org": "openai",
+     "elo": 1373.6,
+     "rank": 129,
+     "votes": 25617
+    },
+    {
+     "model": "deepseek-r1",
+     "org": "deepseek",
+     "elo": 1372.7,
+     "rank": 130,
+     "votes": 18524
+    },
+    {
+     "model": "kimi-k2-0711-preview",
+     "org": "moonshot",
+     "elo": 1370.8,
+     "rank": 131,
+     "votes": 27643
+    },
+    {
+     "model": "mistral-medium-2505",
+     "org": "mistral",
+     "elo": 1369.3,
+     "rank": 132,
+     "votes": 33230
+    },
+    {
+     "model": "gemini-2.5-flash-lite-preview-06-17-thinking",
+     "org": "google",
+     "elo": 1368.5,
+     "rank": 133,
+     "votes": 32907
+    },
+    {
+     "model": "qwen3-next-80b-a3b-thinking",
+     "org": "alibaba",
+     "elo": 1367.7,
+     "rank": 134,
+     "votes": 13700
+    },
+    {
+     "model": "grok-3-mini-high",
+     "org": "xai",
+     "elo": 1366.7,
+     "rank": 135,
+     "votes": 16968
+    },
+    {
+     "model": "qwen2.5-max",
+     "org": "alibaba",
+     "elo": 1366.5,
+     "rank": 136,
+     "votes": 32623
+    },
+    {
+     "model": "o1-2024-12-17",
+     "org": "openai",
+     "elo": 1365.9,
+     "rank": 137,
+     "votes": 27807
+    },
+    {
+     "model": "qwen3-235b-a22b",
+     "org": "alibaba",
+     "elo": 1365.8,
+     "rank": 138,
+     "votes": 26268
+    },
+    {
+     "model": "gpt-oss-120b",
+     "org": "openai",
+     "elo": 1365.5,
+     "rank": 139,
+     "votes": 30639
+    },
+    {
+     "model": "claude-opus-4-20250514",
+     "org": "anthropic",
+     "elo": 1364.3,
+     "rank": 140,
+     "votes": 44223
+    },
+    {
+     "model": "amazon-nova-experimental-chat-10-09",
+     "org": "amazon",
+     "elo": 1364.2,
+     "rank": 141,
+     "votes": 2839
+    },
+    {
+     "model": "nova-2-lite",
+     "org": "amazon",
+     "elo": 1362.9,
+     "rank": 142,
+     "votes": 12246
+    },
+    {
+     "model": "ling-flash-2.0",
+     "org": "ant-group",
+     "elo": 1362.7,
+     "rank": 143,
+     "votes": 7010
+    },
+    {
+     "model": "grok-3-mini-beta",
+     "org": "xai",
+     "elo": 1362.6,
+     "rank": 144,
+     "votes": 22724
+    },
+    {
+     "model": "minimax-m2.5",
+     "org": "minimax",
+     "elo": 1359.9,
+     "rank": 145,
+     "votes": 36265
+    },
+    {
+     "model": "gemma-3-27b-it",
+     "org": "google",
+     "elo": 1358.2,
+     "rank": 146,
+     "votes": 47545
+    },
+    {
+     "model": "mercury-2",
+     "org": "inception-ai",
+     "elo": 1356.4,
+     "rank": 147,
+     "votes": 3123
+    },
+    {
+     "model": "qwen3-coder-480b-a35b-instruct",
+     "org": "alibaba",
+     "elo": 1356.3,
+     "rank": 148,
+     "votes": 25741
+    },
+    {
+     "model": "intellect-3",
+     "org": "",
+     "elo": 1356.1,
+     "rank": 149,
+     "votes": 5329
+    },
+    {
+     "model": "gemini-2.0-flash-001",
+     "org": "google",
+     "elo": 1354.0,
+     "rank": 150,
+     "votes": 43762
+    },
+    {
+     "model": "glm-4.7-flash",
+     "org": "zai",
+     "elo": 1353.4,
+     "rank": 151,
+     "votes": 11736
+    },
+    {
+     "model": "o1-preview",
+     "org": "openai",
+     "elo": 1352.9,
+     "rank": 152,
+     "votes": 31122
+    },
+    {
+     "model": "o4-mini-2025-04-16",
+     "org": "openai",
+     "elo": 1352.7,
+     "rank": 153,
+     "votes": 45452
+    },
+    {
+     "model": "step-3",
+     "org": "stepfun",
+     "elo": 1349.4,
+     "rank": 154,
+     "votes": 6545
+    },
+    {
+     "model": "nvidia-nemotron-3-nano-30b-a3b-bf16",
+     "org": "nvidia",
+     "elo": 1349.3,
+     "rank": 155,
+     "votes": 15513
+    },
+    {
+     "model": "claude-sonnet-4-20250514-thinking-32k",
+     "org": "anthropic",
+     "elo": 1348.4,
+     "rank": 156,
+     "votes": 35127
+    },
+    {
+     "model": "trinity-large-thinking",
+     "org": "",
+     "elo": 1345.4,
+     "rank": 157,
+     "votes": 23918
+    },
+    {
+     "model": "minimax-m1",
+     "org": "minimax",
+     "elo": 1342.3,
+     "rank": 158,
+     "votes": 35214
+    },
+    {
+     "model": "minimax-m2",
+     "org": "minimax",
+     "elo": 1342.2,
+     "rank": 159,
+     "votes": 6875
+    },
+    {
+     "model": "gpt-4.1-mini-2025-04-14",
+     "org": "openai",
+     "elo": 1340.5,
+     "rank": 160,
+     "votes": 39339
+    },
+    {
+     "model": "qwen3-32b",
+     "org": "alibaba",
+     "elo": 1340.1,
+     "rank": 161,
+     "votes": 3926
+    },
+    {
+     "model": "mistral-small-2506",
+     "org": "mistral",
+     "elo": 1339.1,
+     "rank": 162,
+     "votes": 17712
+    },
+    {
+     "model": "claude-sonnet-4-20250514",
+     "org": "anthropic",
+     "elo": 1337.8,
+     "rank": 163,
+     "votes": 40323
+    },
+    {
+     "model": "nvidia-llama-3.3-nemotron-super-49b-v1.5",
+     "org": "nvidia",
+     "elo": 1337.6,
+     "rank": 164,
+     "votes": 3345
+    },
+    {
+     "model": "trinity-large-preview",
+     "org": "",
+     "elo": 1337.2,
+     "rank": 165,
+     "votes": 28284
+    },
+    {
+     "model": "o3-mini-high",
+     "org": "openai",
+     "elo": 1336.6,
+     "rank": 166,
+     "votes": 18589
+    },
+    {
+     "model": "step-1o-turbo-202506",
+     "org": "stepfun",
+     "elo": 1335.0,
+     "rank": 167,
+     "votes": 9038
+    },
+    {
+     "model": "gemma-3-12b-it",
+     "org": "google",
+     "elo": 1334.2,
+     "rank": 168,
+     "votes": 3829
+    },
+    {
+     "model": "glm-4.5v",
+     "org": "zai",
+     "elo": 1333.6,
+     "rank": 169,
+     "votes": 4958
+    },
+    {
+     "model": "deepseek-v3",
+     "org": "deepseek",
+     "elo": 1332.6,
+     "rank": 170,
+     "votes": 21770
+    },
+    {
+     "model": "ring-flash-2.0",
+     "org": "ant-group",
+     "elo": 1331.8,
+     "rank": 171,
+     "votes": 7148
+    },
+    {
+     "model": "command-a-03-2025",
+     "org": "cohere",
+     "elo": 1331.3,
+     "rank": 172,
+     "votes": 56283
+    },
+    {
+     "model": "glm-4-plus-0111",
+     "org": "zai",
+     "elo": 1330.9,
+     "rank": 173,
+     "votes": 5760
+    },
+    {
+     "model": "gemini-2.0-flash-lite-preview-02-05",
+     "org": "google",
+     "elo": 1329.6,
+     "rank": 174,
+     "votes": 24955
+    },
+    {
+     "model": "qwq-32b",
+     "org": "alibaba",
+     "elo": 1329.2,
+     "rank": 175,
+     "votes": 25402
+    },
+    {
+     "model": "qwen-plus-0125",
+     "org": "alibaba",
+     "elo": 1326.5,
+     "rank": 176,
+     "votes": 5819
+    },
+    {
+     "model": "step-2-16k-exp-202412",
+     "org": "stepfun",
+     "elo": 1321.0,
+     "rank": 177,
+     "votes": 4833
+    },
+    {
+     "model": "gpt-5-nano-high",
+     "org": "openai",
+     "elo": 1320.0,
+     "rank": 178,
+     "votes": 8270
+    },
+    {
+     "model": "hunyuan-turbos-20250226",
+     "org": "tencent",
+     "elo": 1319.8,
+     "rank": 179,
+     "votes": 2220
+    },
+    {
+     "model": "llama-3.1-nemotron-ultra-253b-v1",
+     "org": "nvidia",
+     "elo": 1319.5,
+     "rank": 180,
+     "votes": 2549
+    },
+    {
+     "model": "gemini-1.5-pro-002",
+     "org": "google",
+     "elo": 1319.2,
+     "rank": 181,
+     "votes": 55606
+    },
+    {
+     "model": "o3-mini",
+     "org": "openai",
+     "elo": 1319.0,
+     "rank": 182,
+     "votes": 57344
+    },
+    {
+     "model": "o1-mini",
+     "org": "openai",
+     "elo": 1317.2,
+     "rank": 183,
+     "votes": 51981
+    },
+    {
+     "model": "qwen3-30b-a3b",
+     "org": "alibaba",
+     "elo": 1317.1,
+     "rank": 184,
+     "votes": 26495
+    },
+    {
+     "model": "claude-3-7-sonnet-20250219-thinking-32k",
+     "org": "anthropic",
+     "elo": 1314.5,
+     "rank": 185,
+     "votes": 38827
+    },
+    {
+     "model": "olmo-3.1-32b-instruct",
+     "org": "allenai",
+     "elo": 1311.9,
+     "rank": 186,
+     "votes": 12225
+    },
+    {
+     "model": "hunyuan-turbo-0110",
+     "org": "tencent",
+     "elo": 1311.5,
+     "rank": 187,
+     "votes": 2290
+    },
+    {
+     "model": "llama-3.3-nemotron-49b-super-v1",
+     "org": "nvidia",
+     "elo": 1308.4,
+     "rank": 188,
+     "votes": 2218
+    },
+    {
+     "model": "gemma-3n-e4b-it",
+     "org": "google",
+     "elo": 1306.2,
+     "rank": 189,
+     "votes": 22600
+    },
+    {
+     "model": "grok-2-2024-08-13",
+     "org": "xai",
+     "elo": 1304.7,
+     "rank": 190,
+     "votes": 63498
+    },
+    {
+     "model": "yi-lightning",
+     "org": "",
+     "elo": 1301.6,
+     "rank": 191,
+     "votes": 27332
+    },
+    {
+     "model": "gpt-4o-2024-05-13",
+     "org": "openai",
+     "elo": 1300.5,
+     "rank": 192,
+     "votes": 112881
+    },
+    {
+     "model": "claude-3-7-sonnet-20250219",
+     "org": "anthropic",
+     "elo": 1299.3,
+     "rank": 193,
+     "votes": 43194
+    },
+    {
+     "model": "qwen2.5-plus-1127",
+     "org": "alibaba",
+     "elo": 1299.2,
+     "rank": 194,
+     "votes": 10187
+    },
+    {
+     "model": "olmo-3-32b-think",
+     "org": "allenai",
+     "elo": 1298.5,
+     "rank": 195,
+     "votes": 5947
+    },
+    {
+     "model": "claude-3-5-sonnet-20241022",
+     "org": "anthropic",
+     "elo": 1297.7,
+     "rank": 196,
+     "votes": 88350
+    },
+    {
+     "model": "granite-4.1-8b",
+     "org": "ibm",
+     "elo": 1296.2,
+     "rank": 197,
+     "votes": 3614
+    },
+    {
+     "model": "molmo-2-8b",
+     "org": "allenai",
+     "elo": 1294.4,
+     "rank": 198,
+     "votes": 805
+    },
+    {
+     "model": "deepseek-v2.5-1210",
+     "org": "deepseek",
+     "elo": 1294.0,
+     "rank": 199,
+     "votes": 6795
+    },
+    {
+     "model": "athene-v2-chat",
+     "org": "",
+     "elo": 1291.5,
+     "rank": 200,
+     "votes": 24739
+    },
+    {
+     "model": "gemma-3-4b-it",
+     "org": "google",
+     "elo": 1290.8,
+     "rank": 201,
+     "votes": 4171
+    },
+    {
+     "model": "glm-4-plus",
+     "org": "zai",
+     "elo": 1289.7,
+     "rank": 202,
+     "votes": 26126
+    },
+    {
+     "model": "hunyuan-large-2025-02-10",
+     "org": "tencent",
+     "elo": 1288.0,
+     "rank": 203,
+     "votes": 3738
+    },
+    {
+     "model": "llama-4-maverick-17b-128e-instruct",
+     "org": "meta",
+     "elo": 1287.8,
+     "rank": 204,
+     "votes": 39987
+    },
+    {
+     "model": "gpt-oss-20b",
+     "org": "openai",
+     "elo": 1287.7,
+     "rank": 205,
+     "votes": 10633
+    },
+    {
+     "model": "gemini-1.5-flash-002",
+     "org": "google",
+     "elo": 1286.7,
+     "rank": 206,
+     "votes": 34902
+    },
+    {
+     "model": "gpt-4o-mini-2024-07-18",
+     "org": "openai",
+     "elo": 1286.5,
+     "rank": 207,
+     "votes": 68709
+    },
+    {
+     "model": "gpt-4.1-nano-2025-04-14",
+     "org": "openai",
+     "elo": 1284.8,
+     "rank": 208,
+     "votes": 6103
+    },
+    {
+     "model": "llama-3.1-405b-instruct-bf16",
+     "org": "meta",
+     "elo": 1283.7,
+     "rank": 209,
+     "votes": 41375
+    },
+    {
+     "model": "llama-3.1-nemotron-70b-instruct",
+     "org": "nvidia",
+     "elo": 1282.7,
+     "rank": 210,
+     "votes": 7140
+    },
+    {
+     "model": "gpt-4o-2024-08-06",
+     "org": "openai",
+     "elo": 1282.6,
+     "rank": 211,
+     "votes": 45499
+    },
+    {
+     "model": "qwen-max-0919",
+     "org": "alibaba",
+     "elo": 1282.0,
+     "rank": 212,
+     "votes": 16478
+    },
+    {
+     "model": "mercury",
+     "org": "inception-ai",
+     "elo": 1281.9,
+     "rank": 213,
+     "votes": 1957
+    },
+    {
+     "model": "llama-3.1-405b-instruct-fp8",
+     "org": "meta",
+     "elo": 1281.9,
+     "rank": 214,
+     "votes": 59656
+    },
+    {
+     "model": "claude-3-5-sonnet-20240620",
+     "org": "anthropic",
+     "elo": 1281.0,
+     "rank": 215,
+     "votes": 82419
+    },
+    {
+     "model": "llama-4-scout-17b-16e-instruct",
+     "org": "meta",
+     "elo": 1280.9,
+     "rank": 216,
+     "votes": 30299
+    },
+    {
+     "model": "grok-2-mini-2024-08-13",
+     "org": "xai",
+     "elo": 1280.8,
+     "rank": 217,
+     "votes": 52567
+    },
+    {
+     "model": "gemini-advanced-0514",
+     "org": "google",
+     "elo": 1278.6,
+     "rank": 218,
+     "votes": 50148
+    },
+    {
+     "model": "mistral-small-3.1-24b-instruct-2503",
+     "org": "mistral",
+     "elo": 1277.9,
+     "rank": 219,
+     "votes": 33220
+    },
+    {
+     "model": "llama-3.3-70b-instruct",
+     "org": "meta",
+     "elo": 1275.1,
+     "rank": 220,
+     "votes": 54745
+    },
+    {
+     "model": "hunyuan-standard-2025-02-10",
+     "org": "tencent",
+     "elo": 1274.0,
+     "rank": 221,
+     "votes": 3904
+    },
+    {
+     "model": "gemini-1.5-pro-001",
+     "org": "google",
+     "elo": 1273.6,
+     "rank": 222,
+     "votes": 79138
+    },
+    {
+     "model": "gpt-4-turbo-2024-04-09",
+     "org": "openai",
+     "elo": 1271.8,
+     "rank": 223,
+     "votes": 98114
+    },
+    {
+     "model": "deepseek-v2.5",
+     "org": "deepseek",
+     "elo": 1271.3,
+     "rank": 224,
+     "votes": 24572
+    },
+    {
+     "model": "olmo-3.1-32b-think",
+     "org": "allenai",
+     "elo": 1270.1,
+     "rank": 225,
+     "votes": 8505
+    },
+    {
+     "model": "qwen2.5-72b-instruct",
+     "org": "alibaba",
+     "elo": 1269.1,
+     "rank": 226,
+     "votes": 39406
+    },
+    {
+     "model": "mistral-large-2407",
+     "org": "mistral",
+     "elo": 1266.2,
+     "rank": 227,
+     "votes": 45459
+    },
+    {
+     "model": "mistral-large-2411",
+     "org": "mistral",
+     "elo": 1265.4,
+     "rank": 228,
+     "votes": 28073
+    },
+    {
+     "model": "athene-70b-0725",
+     "org": "",
+     "elo": 1265.2,
+     "rank": 229,
+     "votes": 19621
+    },
+    {
+     "model": "gpt-4-1106-preview",
+     "org": "openai",
+     "elo": 1263.5,
+     "rank": 230,
+     "votes": 100105
+    },
+    {
+     "model": "hunyuan-large-vision",
+     "org": "tencent",
+     "elo": 1263.3,
+     "rank": 231,
+     "votes": 5374
+    },
+    {
+     "model": "gpt-4-0125-preview",
+     "org": "openai",
+     "elo": 1262.3,
+     "rank": 232,
+     "votes": 93439
+    },
+    {
+     "model": "claude-3-opus-20240229",
+     "org": "anthropic",
+     "elo": 1262.1,
+     "rank": 233,
+     "votes": 194909
+    },
+    {
+     "model": "llama-3.1-70b-instruct",
+     "org": "meta",
+     "elo": 1261.0,
+     "rank": 234,
+     "votes": 55240
+    },
+    {
+     "model": "amazon-nova-pro-v1.0",
+     "org": "amazon",
+     "elo": 1258.7,
+     "rank": 235,
+     "votes": 24745
+    },
+    {
+     "model": "llama-3.1-tulu-3-70b",
+     "org": "allenai",
+     "elo": 1255.8,
+     "rank": 236,
+     "votes": 2846
+    },
+    {
+     "model": "claude-3-5-haiku-20241022",
+     "org": "anthropic",
+     "elo": 1255.4,
+     "rank": 237,
+     "votes": 69993
+    },
+    {
+     "model": "magistral-medium-2506",
+     "org": "mistral",
+     "elo": 1254.4,
+     "rank": 238,
+     "votes": 11641
+    },
+    {
+     "model": "reka-core-20240904",
+     "org": "",
+     "elo": 1248.5,
+     "rank": 239,
+     "votes": 7312
+    },
+    {
+     "model": "ibm-granite-h-small",
+     "org": "ibm",
+     "elo": 1241.6,
+     "rank": 240,
+     "votes": 5677
+    },
+    {
+     "model": "gemini-1.5-flash-001",
+     "org": "google",
+     "elo": 1239.4,
+     "rank": 241,
+     "votes": 62833
+    },
+    {
+     "model": "jamba-1.5-large",
+     "org": "",
+     "elo": 1237.1,
+     "rank": 242,
+     "votes": 8662
+    },
+    {
+     "model": "mistral-small-24b-instruct-2501",
+     "org": "mistral",
+     "elo": 1233.6,
+     "rank": 243,
+     "votes": 14681
+    },
+    {
+     "model": "gemma-2-27b-it",
+     "org": "google",
+     "elo": 1231.5,
+     "rank": 244,
+     "votes": 75754
+    },
+    {
+     "model": "qwen2.5-coder-32b-instruct",
+     "org": "alibaba",
+     "elo": 1230.1,
+     "rank": 245,
+     "votes": 5432
+    },
+    {
+     "model": "command-r-plus-08-2024",
+     "org": "cohere",
+     "elo": 1229.0,
+     "rank": 246,
+     "votes": 9866
+    },
+    {
+     "model": "amazon-nova-lite-v1.0",
+     "org": "amazon",
+     "elo": 1228.5,
+     "rank": 247,
+     "votes": 19372
+    },
+    {
+     "model": "llama-3.1-nemotron-51b-instruct",
+     "org": "nvidia",
+     "elo": 1228.1,
+     "rank": 248,
+     "votes": 3749
+    },
+    {
+     "model": "gemma-2-9b-it-simpo",
+     "org": "",
+     "elo": 1227.1,
+     "rank": 249,
+     "votes": 10072
+    },
+    {
+     "model": "glm-4-0520",
+     "org": "zai",
+     "elo": 1226.0,
+     "rank": 250,
+     "votes": 9788
+    },
+    {
+     "model": "gemini-1.5-flash-8b-001",
+     "org": "google",
+     "elo": 1225.9,
+     "rank": 251,
+     "votes": 35558
+    },
+    {
+     "model": "nemotron-4-340b-instruct",
+     "org": "nvidia",
+     "elo": 1224.9,
+     "rank": 252,
+     "votes": 19659
+    },
+    {
+     "model": "c4ai-aya-expanse-32b",
+     "org": "cohere",
+     "elo": 1224.1,
+     "rank": 253,
+     "votes": 27124
+    },
+    {
+     "model": "llama-3-70b-instruct",
+     "org": "meta",
+     "elo": 1220.9,
+     "rank": 254,
+     "votes": 156876
+    },
+    {
+     "model": "claude-3-sonnet-20240229",
+     "org": "anthropic",
+     "elo": 1218.1,
+     "rank": 255,
+     "votes": 109284
+    },
+    {
+     "model": "reka-flash-20240904",
+     "org": "",
+     "elo": 1218.0,
+     "rank": 256,
+     "votes": 7536
+    },
+    {
+     "model": "olmo-2-0325-32b-instruct",
+     "org": "allenai",
+     "elo": 1218.0,
+     "rank": 257,
+     "votes": 3334
+    },
+    {
+     "model": "phi-4",
+     "org": "microsoft",
+     "elo": 1216.7,
+     "rank": 258,
+     "votes": 24126
+    },
+    {
+     "model": "amazon-nova-micro-v1.0",
+     "org": "amazon",
+     "elo": 1208.5,
+     "rank": 259,
+     "votes": 19364
+    },
+    {
+     "model": "gemma-2-9b-it",
+     "org": "google",
+     "elo": 1207.5,
+     "rank": 260,
+     "votes": 54611
+    },
+    {
+     "model": "gpt-4-0314",
+     "org": "openai",
+     "elo": 1206.1,
+     "rank": 261,
+     "votes": 54173
+    },
+    {
+     "model": "command-r-plus",
+     "org": "cohere",
+     "elo": 1203.9,
+     "rank": 262,
+     "votes": 77554
+    },
+    {
+     "model": "qwen2-72b-instruct",
+     "org": "alibaba",
+     "elo": 1203.4,
+     "rank": 263,
+     "votes": 37325
+    },
+    {
+     "model": "hunyuan-standard-256k",
+     "org": "tencent",
+     "elo": 1202.0,
+     "rank": 264,
+     "votes": 2728
+    },
+    {
+     "model": "claude-3-haiku-20240307",
+     "org": "anthropic",
+     "elo": 1194.8,
+     "rank": 265,
+     "votes": 117701
+    },
+    {
+     "model": "llama-3.1-tulu-3-8b",
+     "org": "allenai",
+     "elo": 1193.4,
+     "rank": 266,
+     "votes": 2896
+    },
+    {
+     "model": "deepseek-coder-v2",
+     "org": "deepseek",
+     "elo": 1191.3,
+     "rank": 267,
+     "votes": 15147
+    },
+    {
+     "model": "ministral-8b-2410",
+     "org": "mistral",
+     "elo": 1191.0,
+     "rank": 268,
+     "votes": 4781
+    },
+    {
+     "model": "command-r-08-2024",
+     "org": "cohere",
+     "elo": 1187.4,
+     "rank": 269,
+     "votes": 10140
+    },
+    {
+     "model": "jamba-1.5-mini",
+     "org": "",
+     "elo": 1186.8,
+     "rank": 270,
+     "votes": 8858
+    },
+    {
+     "model": "llama-3.1-8b-instruct",
+     "org": "meta",
+     "elo": 1186.7,
+     "rank": 271,
+     "votes": 49605
+    },
+    {
+     "model": "gpt-4-0613",
+     "org": "openai",
+     "elo": 1186.1,
+     "rank": 272,
+     "votes": 88723
+    },
+    {
+     "model": "c4ai-aya-expanse-8b",
+     "org": "cohere",
+     "elo": 1185.2,
+     "rank": 273,
+     "votes": 9818
+    },
+    {
+     "model": "mistral-large-2402",
+     "org": "mistral",
+     "elo": 1176.6,
+     "rank": 274,
+     "votes": 62436
+    },
+    {
+     "model": "qwen1.5-110b-chat",
+     "org": "alibaba",
+     "elo": 1174.6,
+     "rank": 275,
+     "votes": 26195
+    },
+    {
+     "model": "yi-1.5-34b-chat",
+     "org": "",
+     "elo": 1173.0,
+     "rank": 276,
+     "votes": 24146
+    },
+    {
+     "model": "reka-flash-21b-20240226-online",
+     "org": "",
+     "elo": 1170.5,
+     "rank": 277,
+     "votes": 15450
+    },
+    {
+     "model": "qwen1.5-72b-chat",
+     "org": "alibaba",
+     "elo": 1166.2,
+     "rank": 278,
+     "votes": 39302
+    },
+    {
+     "model": "llama-3-8b-instruct",
+     "org": "meta",
+     "elo": 1165.7,
+     "rank": 279,
+     "votes": 104642
+    },
+    {
+     "model": "mistral-medium",
+     "org": "mistral",
+     "elo": 1165.2,
+     "rank": 280,
+     "votes": 34550
+    },
+    {
+     "model": "reka-flash-21b-20240226",
+     "org": "",
+     "elo": 1165.1,
+     "rank": 281,
+     "votes": 24806
+    },
+    {
+     "model": "command-r",
+     "org": "cohere",
+     "elo": 1163.2,
+     "rank": 282,
+     "votes": 54036
+    },
+    {
+     "model": "mixtral-8x22b-instruct-v0.1",
+     "org": "mistral",
+     "elo": 1162.1,
+     "rank": 283,
+     "votes": 51416
+    },
+    {
+     "model": "qwq-32b-preview",
+     "org": "alibaba",
+     "elo": 1161.9,
+     "rank": 284,
+     "votes": 3231
+    },
+    {
+     "model": "internlm2_5-20b-chat",
+     "org": "",
+     "elo": 1158.5,
+     "rank": 285,
+     "votes": 9901
+    },
+    {
+     "model": "gemma-2-2b-it",
+     "org": "google",
+     "elo": 1155.8,
+     "rank": 286,
+     "votes": 46616
+    },
+    {
+     "model": "granite-3.1-8b-instruct",
+     "org": "ibm",
+     "elo": 1149.6,
+     "rank": 287,
+     "votes": 3090
+    },
+    {
+     "model": "gemini-pro-dev-api",
+     "org": "google",
+     "elo": 1148.9,
+     "rank": 288,
+     "votes": 18354
+    },
+    {
+     "model": "zephyr-orpo-141b-A35b-v0.1",
+     "org": "",
+     "elo": 1143.8,
+     "rank": 289,
+     "votes": 4652
+    },
+    {
+     "model": "phi-3-medium-4k-instruct",
+     "org": "microsoft",
+     "elo": 1137.6,
+     "rank": 290,
+     "votes": 25055
+    },
+    {
+     "model": "qwen1.5-32b-chat",
+     "org": "alibaba",
+     "elo": 1137.3,
+     "rank": 291,
+     "votes": 21741
+    },
+    {
+     "model": "starling-lm-7b-beta",
+     "org": "",
+     "elo": 1132.1,
+     "rank": 292,
+     "votes": 16056
+    },
+    {
+     "model": "mixtral-8x7b-instruct-v0.1",
+     "org": "mistral",
+     "elo": 1131.6,
+     "rank": 293,
+     "votes": 73503
+    },
+    {
+     "model": "gemini-pro",
+     "org": "google",
+     "elo": 1130.6,
+     "rank": 294,
+     "votes": 6390
+    },
+    {
+     "model": "yi-34b-chat",
+     "org": "",
+     "elo": 1128.5,
+     "rank": 295,
+     "votes": 15483
+    },
+    {
+     "model": "qwen1.5-14b-chat",
+     "org": "alibaba",
+     "elo": 1127.8,
+     "rank": 296,
+     "votes": 17839
+    },
+    {
+     "model": "granite-3.1-2b-instruct",
+     "org": "ibm",
+     "elo": 1127.5,
+     "rank": 297,
+     "votes": 3188
+    },
+    {
+     "model": "gpt-3.5-turbo-0125",
+     "org": "openai",
+     "elo": 1125.0,
+     "rank": 298,
+     "votes": 66207
+    },
+    {
+     "model": "tulu-2-dpo-70b",
+     "org": "",
+     "elo": 1121.1,
+     "rank": 299,
+     "votes": 6535
+    },
+    {
+     "model": "wizardlm-70b",
+     "org": "microsoft",
+     "elo": 1119.6,
+     "rank": 300,
+     "votes": 8214
+    },
+    {
+     "model": "dbrx-instruct-preview",
+     "org": "",
+     "elo": 1118.9,
+     "rank": 301,
+     "votes": 32191
+    },
+    {
+     "model": "llama-2-70b-chat",
+     "org": "meta",
+     "elo": 1115.3,
+     "rank": 302,
+     "votes": 38492
+    },
+    {
+     "model": "nous-hermes-2-mixtral-8x7b-dpo",
+     "org": "",
+     "elo": 1112.1,
+     "rank": 303,
+     "votes": 3777
+    },
+    {
+     "model": "phi-3-small-8k-instruct",
+     "org": "microsoft",
+     "elo": 1109.9,
+     "rank": 304,
+     "votes": 17766
+    },
+    {
+     "model": "llama-3.2-3b-instruct",
+     "org": "meta",
+     "elo": 1109.6,
+     "rank": 305,
+     "votes": 7936
+    },
+    {
+     "model": "starling-lm-7b-alpha",
+     "org": "",
+     "elo": 1107.7,
+     "rank": 306,
+     "votes": 10224
+    },
+    {
+     "model": "openchat-3.5-0106",
+     "org": "",
+     "elo": 1106.7,
+     "rank": 307,
+     "votes": 12637
+    },
+    {
+     "model": "vicuna-33b",
+     "org": "",
+     "elo": 1105.3,
+     "rank": 308,
+     "votes": 22479
+    },
+    {
+     "model": "deepseek-llm-67b-chat",
+     "org": "deepseek",
+     "elo": 1105.1,
+     "rank": 309,
+     "votes": 4932
+    },
+    {
+     "model": "snowflake-arctic-instruct",
+     "org": "",
+     "elo": 1101.1,
+     "rank": 310,
+     "votes": 32832
+    },
+    {
+     "model": "llama2-70b-steerlm-chat",
+     "org": "nvidia",
+     "elo": 1098.2,
+     "rank": 311,
+     "votes": 3585
+    },
+    {
+     "model": "openchat-3.5",
+     "org": "",
+     "elo": 1097.1,
+     "rank": 312,
+     "votes": 7968
+    },
+    {
+     "model": "granite-3.0-8b-instruct",
+     "org": "ibm",
+     "elo": 1096.5,
+     "rank": 313,
+     "votes": 6638
+    },
+    {
+     "model": "gpt-3.5-turbo-1106",
+     "org": "openai",
+     "elo": 1094.2,
+     "rank": 314,
+     "votes": 16619
+    },
+    {
+     "model": "gemma-1.1-7b-it",
+     "org": "google",
+     "elo": 1094.1,
+     "rank": 315,
+     "votes": 23893
+    },
+    {
+     "model": "openhermes-2.5-mistral-7b",
+     "org": "",
+     "elo": 1092.6,
+     "rank": 316,
+     "votes": 5006
+    },
+    {
+     "model": "mistral-7b-instruct-v0.2",
+     "org": "mistral",
+     "elo": 1089.6,
+     "rank": 317,
+     "votes": 19402
+    },
+    {
+     "model": "llama-2-13b-chat",
+     "org": "meta",
+     "elo": 1084.5,
+     "rank": 318,
+     "votes": 19174
+    },
+    {
+     "model": "qwen1.5-7b-chat",
+     "org": "alibaba",
+     "elo": 1083.5,
+     "rank": 319,
+     "votes": 4737
+    },
+    {
+     "model": "solar-10.7b-instruct-v1.0",
+     "org": "",
+     "elo": 1083.2,
+     "rank": 320,
+     "votes": 4155
+    },
+    {
+     "model": "dolphin-2.2.1-mistral-7b",
+     "org": "",
+     "elo": 1081.0,
+     "rank": 321,
+     "votes": 1679
+    },
+    {
+     "model": "phi-3-mini-4k-instruct-june-2024",
+     "org": "microsoft",
+     "elo": 1080.0,
+     "rank": 322,
+     "votes": 12297
+    },
+    {
+     "model": "granite-3.0-2b-instruct",
+     "org": "ibm",
+     "elo": 1079.9,
+     "rank": 323,
+     "votes": 6837
+    },
+    {
+     "model": "wizardlm-13b",
+     "org": "microsoft",
+     "elo": 1076.6,
+     "rank": 324,
+     "votes": 7044
+    },
+    {
+     "model": "phi-3-mini-4k-instruct",
+     "org": "microsoft",
+     "elo": 1073.4,
+     "rank": 325,
+     "votes": 20118
+    },
+    {
+     "model": "zephyr-7b-beta",
+     "org": "",
+     "elo": 1069.5,
+     "rank": 326,
+     "votes": 11118
+    },
+    {
+     "model": "mpt-30b-chat",
+     "org": "",
+     "elo": 1068.7,
+     "rank": 327,
+     "votes": 2572
+    },
+    {
+     "model": "codellama-34b-instruct",
+     "org": "meta",
+     "elo": 1065.6,
+     "rank": 328,
+     "votes": 7366
+    },
+    {
+     "model": "zephyr-7b-alpha",
+     "org": "",
+     "elo": 1058.4,
+     "rank": 329,
+     "votes": 1785
+    },
+    {
+     "model": "vicuna-13b",
+     "org": "",
+     "elo": 1057.7,
+     "rank": 330,
+     "votes": 19367
+    },
+    {
+     "model": "codellama-70b-instruct",
+     "org": "meta",
+     "elo": 1057.3,
+     "rank": 331,
+     "votes": 1143
+    },
+    {
+     "model": "gemma-7b-it",
+     "org": "google",
+     "elo": 1056.2,
+     "rank": 332,
+     "votes": 8925
+    },
+    {
+     "model": "llama-3.2-1b-instruct",
+     "org": "meta",
+     "elo": 1054.7,
+     "rank": 333,
+     "votes": 8045
+    },
+    {
+     "model": "falcon-180b-chat",
+     "org": "",
+     "elo": 1054.4,
+     "rank": 334,
+     "votes": 1295
+    },
+    {
+     "model": "llama-2-7b-chat",
+     "org": "meta",
+     "elo": 1053.5,
+     "rank": 335,
+     "votes": 14148
+    },
+    {
+     "model": "guanaco-33b",
+     "org": "",
+     "elo": 1053.5,
+     "rank": 336,
+     "votes": 2921
+    },
+    {
+     "model": "qwen-14b-chat",
+     "org": "alibaba",
+     "elo": 1051.1,
+     "rank": 337,
+     "votes": 4964
+    },
+    {
+     "model": "phi-3-mini-128k-instruct",
+     "org": "microsoft",
+     "elo": 1050.5,
+     "rank": 338,
+     "votes": 20685
+    },
+    {
+     "model": "smollm2-1.7b-instruct",
+     "org": "",
+     "elo": 1042.1,
+     "rank": 339,
+     "votes": 2199
+    },
+    {
+     "model": "stripedhyena-nous-7b",
+     "org": "",
+     "elo": 1038.5,
+     "rank": 340,
+     "votes": 5182
+    },
+    {
+     "model": "olmo-7b-instruct",
+     "org": "allenai",
+     "elo": 1031.9,
+     "rank": 341,
+     "votes": 6328
+    },
+    {
+     "model": "vicuna-7b",
+     "org": "",
+     "elo": 1031.0,
+     "rank": 342,
+     "votes": 6923
+    },
+    {
+     "model": "palm-2",
+     "org": "google",
+     "elo": 1027.3,
+     "rank": 343,
+     "votes": 8554
+    },
+    {
+     "model": "mistral-7b-instruct",
+     "org": "mistral",
+     "elo": 1023.6,
+     "rank": 344,
+     "votes": 8977
+    },
+    {
+     "model": "gemma-1.1-2b-it",
+     "org": "google",
+     "elo": 1022.3,
+     "rank": 345,
+     "votes": 10854
+    },
+    {
+     "model": "gemma-2b-it",
+     "org": "google",
+     "elo": 1002.2,
+     "rank": 346,
+     "votes": 4780
+    },
+    {
+     "model": "qwen1.5-4b-chat",
+     "org": "alibaba",
+     "elo": 997.3,
+     "rank": 347,
+     "votes": 7597
+    },
+    {
+     "model": "koala-13b",
+     "org": "",
+     "elo": 989.7,
+     "rank": 348,
+     "votes": 6965
+    },
+    {
+     "model": "chatglm3-6b",
+     "org": "",
+     "elo": 972.1,
+     "rank": 349,
+     "votes": 4658
+    },
+    {
+     "model": "gpt4all-13b-snoozy",
+     "org": "",
+     "elo": 956.3,
+     "rank": 350,
+     "votes": 1743
+    },
+    {
+     "model": "mpt-7b-chat",
+     "org": "",
+     "elo": 955.3,
+     "rank": 351,
+     "votes": 3924
+    },
+    {
+     "model": "RWKV-4-Raven-14B",
+     "org": "",
+     "elo": 948.5,
+     "rank": 352,
+     "votes": 4845
+    },
+    {
+     "model": "chatglm2-6b",
+     "org": "",
+     "elo": 938.7,
+     "rank": 353,
+     "votes": 2658
+    },
+    {
+     "model": "alpaca-13b",
+     "org": "",
+     "elo": 932.9,
+     "rank": 354,
+     "votes": 5745
+    },
+    {
+     "model": "chatglm-6b",
+     "org": "",
+     "elo": 918.5,
+     "rank": 355,
+     "votes": 4914
+    },
+    {
+     "model": "oasst-pythia-12b",
+     "org": "",
+     "elo": 916.1,
+     "rank": 356,
+     "votes": 6310
+    },
+    {
+     "model": "fastchat-t5-3b",
+     "org": "",
+     "elo": 894.5,
+     "rank": 357,
+     "votes": 4203
+    },
+    {
+     "model": "stablelm-tuned-alpha-7b",
+     "org": "",
+     "elo": 866.6,
+     "rank": 358,
+     "votes": 3287
+    },
+    {
+     "model": "dolly-v2-12b",
+     "org": "",
+     "elo": 851.2,
+     "rank": 359,
+     "votes": 3412
+    },
+    {
+     "model": "llama-13b",
+     "org": "meta",
+     "elo": 833.6,
+     "rank": 360,
+     "votes": 2391
+    }
+   ]
+  },
+  "coding": {
+   "leaderboard_publish_date": "2026-05-27",
+   "elo_min": 683.4,
+   "elo_max": 1535.6,
+   "n": 355,
+   "models": [
+    {
+     "model": "claude-opus-4-6-thinking",
+     "org": "anthropic",
+     "elo": 1535.6,
+     "rank": 1,
+     "votes": 8335
+    },
+    {
+     "model": "claude-opus-4-6",
+     "org": "anthropic",
+     "elo": 1535.0,
+     "rank": 2,
+     "votes": 9596
+    },
+    {
+     "model": "claude-opus-4-7-thinking",
+     "org": "anthropic",
+     "elo": 1521.1,
+     "rank": 3,
+     "votes": 5578
+    },
+    {
+     "model": "claude-opus-4-7",
+     "org": "anthropic",
+     "elo": 1514.1,
+     "rank": 4,
+     "votes": 5903
+    },
+    {
+     "model": "claude-opus-4-5-20251101-thinking-32k",
+     "org": "anthropic",
+     "elo": 1502.6,
+     "rank": 5,
+     "votes": 7628
+    },
+    {
+     "model": "glm-5.1",
+     "org": "zai",
+     "elo": 1499.5,
+     "rank": 6,
+     "votes": 3756
+    },
+    {
+     "model": "mimo-v2.5-pro",
+     "org": "xiaomi",
+     "elo": 1499.3,
+     "rank": 7,
+     "votes": 4275
+    },
+    {
+     "model": "gpt-5.5-high",
+     "org": "openai",
+     "elo": 1498.1,
+     "rank": 8,
+     "votes": 4494
+    },
+    {
+     "model": "claude-sonnet-4-6",
+     "org": "anthropic",
+     "elo": 1497.9,
+     "rank": 9,
+     "votes": 7216
+    },
+    {
+     "model": "qwen3.7-max-preview",
+     "org": "alibaba",
+     "elo": 1497.8,
+     "rank": 10,
+     "votes": 1137
+    },
+    {
+     "model": "claude-opus-4-5-20251101",
+     "org": "anthropic",
+     "elo": 1497.4,
+     "rank": 11,
+     "votes": 15711
+    },
+    {
+     "model": "gpt-5.4-high",
+     "org": "openai",
+     "elo": 1496.2,
+     "rank": 12,
+     "votes": 7181
+    },
+    {
+     "model": "gemini-3.5-flash",
+     "org": "google",
+     "elo": 1491.2,
+     "rank": 13,
+     "votes": 2592
+    },
+    {
+     "model": "ernie-5.1",
+     "org": "baidu",
+     "elo": 1489.4,
+     "rank": 14,
+     "votes": 3943
+    },
+    {
+     "model": "claude-sonnet-4-5-20250929-thinking-32k",
+     "org": "anthropic",
+     "elo": 1488.3,
+     "rank": 15,
+     "votes": 17763
+    },
+    {
+     "model": "gemini-3.1-pro-preview",
+     "org": "google",
+     "elo": 1487.7,
+     "rank": 16,
+     "votes": 11296
+    },
+    {
+     "model": "qwen3.5-max-preview",
+     "org": "alibaba",
+     "elo": 1486.8,
+     "rank": 17,
+     "votes": 5491
+    },
+    {
+     "model": "claude-sonnet-4-5-20250929",
+     "org": "anthropic",
+     "elo": 1486.3,
+     "rank": 18,
+     "votes": 17609
+    },
+    {
+     "model": "kimi-k2.6",
+     "org": "moonshot",
+     "elo": 1485.4,
+     "rank": 19,
+     "votes": 4237
+    },
+    {
+     "model": "amazon-nova-experimental-chat-26-02-10",
+     "org": "amazon",
+     "elo": 1484.9,
+     "rank": 20,
+     "votes": 841
+    },
+    {
+     "model": "kimi-k2.5-instant",
+     "org": "moonshot",
+     "elo": 1484.6,
+     "rank": 21,
+     "votes": 1803
+    },
+    {
+     "model": "gemini-3-pro",
+     "org": "google",
+     "elo": 1482.7,
+     "rank": 22,
+     "votes": 8575
+    },
+    {
+     "model": "gpt-5.4",
+     "org": "openai",
+     "elo": 1481.3,
+     "rank": 23,
+     "votes": 7884
+    },
+    {
+     "model": "gpt-5.5",
+     "org": "openai",
+     "elo": 1481.2,
+     "rank": 24,
+     "votes": 4672
+    },
+    {
+     "model": "claude-opus-4-1-20250805-thinking-16k",
+     "org": "anthropic",
+     "elo": 1480.4,
+     "rank": 25,
+     "votes": 9848
+    },
+    {
+     "model": "muse-spark",
+     "org": "meta",
+     "elo": 1478.4,
+     "rank": 26,
+     "votes": 3260
+    },
+    {
+     "model": "mimo-v2-pro",
+     "org": "xiaomi",
+     "elo": 1476.6,
+     "rank": 27,
+     "votes": 6196
+    },
+    {
+     "model": "kimi-k2.5-thinking",
+     "org": "moonshot",
+     "elo": 1475.5,
+     "rank": 28,
+     "votes": 9469
+    },
+    {
+     "model": "longcat-flash-chat-2602-exp",
+     "org": "meituan",
+     "elo": 1473.6,
+     "rank": 29,
+     "votes": 6475
+    },
+    {
+     "model": "claude-opus-4-1-20250805",
+     "org": "anthropic",
+     "elo": 1472.9,
+     "rank": 30,
+     "votes": 15538
+    },
+    {
+     "model": "dola-seed-2.0-pro",
+     "org": "bytedance",
+     "elo": 1472.6,
+     "rank": 31,
+     "votes": 10045
+    },
+    {
+     "model": "mimo-v2.5",
+     "org": "xiaomi",
+     "elo": 1467.8,
+     "rank": 32,
+     "votes": 4584
+    },
+    {
+     "model": "longcat-flash-chat",
+     "org": "meituan",
+     "elo": 1467.6,
+     "rank": 33,
+     "votes": 2233
+    },
+    {
+     "model": "qwen3.5-397b-a17b",
+     "org": "alibaba",
+     "elo": 1466.9,
+     "rank": 34,
+     "votes": 8580
+    },
+    {
+     "model": "deepseek-v4-pro",
+     "org": "deepseek",
+     "elo": 1466.4,
+     "rank": 35,
+     "votes": 4940
+    },
+    {
+     "model": "qwen3.6-plus",
+     "org": "alibaba",
+     "elo": 1463.3,
+     "rank": 36,
+     "votes": 5403
+    },
+    {
+     "model": "qwen3.6-max-preview",
+     "org": "alibaba",
+     "elo": 1463.2,
+     "rank": 37,
+     "votes": 1327
+    },
+    {
+     "model": "gemini-3-flash",
+     "org": "google",
+     "elo": 1462.9,
+     "rank": 38,
+     "votes": 6383
+    },
+    {
+     "model": "grok-4.20-multi-agent-beta-0309",
+     "org": "xai",
+     "elo": 1460.7,
+     "rank": 39,
+     "votes": 7631
+    },
+    {
+     "model": "grok-4.20-beta-0309-reasoning",
+     "org": "xai",
+     "elo": 1459.3,
+     "rank": 40,
+     "votes": 7705
+    },
+    {
+     "model": "ernie-5.0-0110",
+     "org": "baidu",
+     "elo": 1457.3,
+     "rank": 41,
+     "votes": 8166
+    },
+    {
+     "model": "qwen3-max-preview",
+     "org": "alibaba",
+     "elo": 1457.2,
+     "rank": 42,
+     "votes": 5366
+    },
+    {
+     "model": "glm-5",
+     "org": "zai",
+     "elo": 1457.0,
+     "rank": 43,
+     "votes": 5384
+    },
+    {
+     "model": "deepseek-v4-pro-thinking",
+     "org": "deepseek",
+     "elo": 1456.5,
+     "rank": 44,
+     "votes": 4535
+    },
+    {
+     "model": "glm-4.7",
+     "org": "zai",
+     "elo": 1456.0,
+     "rank": 45,
+     "votes": 2411
+    },
+    {
+     "model": "gemma-4-31b",
+     "org": "google",
+     "elo": 1455.2,
+     "rank": 46,
+     "votes": 1355
+    },
+    {
+     "model": "kimi-k2-thinking-turbo",
+     "org": "moonshot",
+     "elo": 1453.8,
+     "rank": 47,
+     "votes": 14116
+    },
+    {
+     "model": "deepseek-v3.2-thinking",
+     "org": "deepseek",
+     "elo": 1452.1,
+     "rank": 48,
+     "votes": 8193
+    },
+    {
+     "model": "gpt-5.1-high",
+     "org": "openai",
+     "elo": 1451.8,
+     "rank": 49,
+     "votes": 8210
+    },
+    {
+     "model": "gemini-2.5-pro",
+     "org": "google",
+     "elo": 1451.8,
+     "rank": 50,
+     "votes": 25765
+    },
+    {
+     "model": "claude-haiku-4-5-20251001",
+     "org": "anthropic",
+     "elo": 1451.2,
+     "rank": 51,
+     "votes": 18302
+    },
+    {
+     "model": "deepseek-v4-flash",
+     "org": "deepseek",
+     "elo": 1450.0,
+     "rank": 52,
+     "votes": 4780
+    },
+    {
+     "model": "glm-4.6",
+     "org": "zai",
+     "elo": 1449.7,
+     "rank": 53,
+     "votes": 7481
+    },
+    {
+     "model": "gpt-5.2-chat-latest-20260210",
+     "org": "openai",
+     "elo": 1448.8,
+     "rank": 54,
+     "votes": 8304
+    },
+    {
+     "model": "minimax-m2.7",
+     "org": "minimax",
+     "elo": 1447.5,
+     "rank": 55,
+     "votes": 6572
+    },
+    {
+     "model": "deepseek-v3.2",
+     "org": "deepseek",
+     "elo": 1447.5,
+     "rank": 56,
+     "votes": 10179
+    },
+    {
+     "model": "grok-4.20-beta1",
+     "org": "xai",
+     "elo": 1446.3,
+     "rank": 57,
+     "votes": 6203
+    },
+    {
+     "model": "grok-4.1-thinking",
+     "org": "xai",
+     "elo": 1445.3,
+     "rank": 58,
+     "votes": 14270
+    },
+    {
+     "model": "amazon-nova-experimental-chat-26-01-10",
+     "org": "amazon",
+     "elo": 1445.0,
+     "rank": 59,
+     "votes": 736
+    },
+    {
+     "model": "qwen3-235b-a22b-instruct-2507",
+     "org": "alibaba",
+     "elo": 1444.5,
+     "rank": 60,
+     "votes": 20628
+    },
+    {
+     "model": "mistral-large-3",
+     "org": "mistral",
+     "elo": 1444.4,
+     "rank": 61,
+     "votes": 9554
+    },
+    {
+     "model": "gemma-4-26b-a4b",
+     "org": "google",
+     "elo": 1443.7,
+     "rank": 62,
+     "votes": 1365
+    },
+    {
+     "model": "gpt-5.2-high",
+     "org": "openai",
+     "elo": 1443.7,
+     "rank": 63,
+     "votes": 11036
+    },
+    {
+     "model": "grok-4.1",
+     "org": "xai",
+     "elo": 1442.8,
+     "rank": 64,
+     "votes": 14818
+    },
+    {
+     "model": "claude-opus-4-20250514-thinking-16k",
+     "org": "anthropic",
+     "elo": 1442.3,
+     "rank": 65,
+     "votes": 6674
+    },
+    {
+     "model": "mimo-v2-omni",
+     "org": "xiaomi",
+     "elo": 1441.2,
+     "rank": 66,
+     "votes": 848
+    },
+    {
+     "model": "qwen3-next-80b-a3b-instruct",
+     "org": "alibaba",
+     "elo": 1441.1,
+     "rank": 67,
+     "votes": 4794
+    },
+    {
+     "model": "gpt-5.4-mini-high",
+     "org": "openai",
+     "elo": 1440.9,
+     "rank": 68,
+     "votes": 6903
+    },
+    {
+     "model": "gemini-3-flash (thinking-minimal)",
+     "org": "google",
+     "elo": 1440.5,
+     "rank": 69,
+     "votes": 12797
+    },
+    {
+     "model": "mimo-v2-flash (non-thinking)",
+     "org": "xiaomi",
+     "elo": 1440.3,
+     "rank": 70,
+     "votes": 11214
+    },
+    {
+     "model": "qwen3-vl-235b-a22b-instruct",
+     "org": "alibaba",
+     "elo": 1440.3,
+     "rank": 71,
+     "votes": 2315
+    },
+    {
+     "model": "qwen3-max-2025-09-23",
+     "org": "alibaba",
+     "elo": 1439.6,
+     "rank": 72,
+     "votes": 2042
+    },
+    {
+     "model": "deepseek-v4-flash-thinking",
+     "org": "deepseek",
+     "elo": 1438.7,
+     "rank": 73,
+     "votes": 4709
+    },
+    {
+     "model": "deepseek-v3.2-exp-thinking",
+     "org": "deepseek",
+     "elo": 1438.2,
+     "rank": 74,
+     "votes": 1919
+    },
+    {
+     "model": "gpt-5.1",
+     "org": "openai",
+     "elo": 1436.2,
+     "rank": 75,
+     "votes": 9130
+    },
+    {
+     "model": "gpt-5.5-instant",
+     "org": "openai",
+     "elo": 1436.1,
+     "rank": 76,
+     "votes": 7212
+    },
+    {
+     "model": "mistral-medium-2508",
+     "org": "mistral",
+     "elo": 1435.0,
+     "rank": 77,
+     "votes": 20392
+    },
+    {
+     "model": "gpt-5-high",
+     "org": "openai",
+     "elo": 1434.8,
+     "rank": 78,
+     "votes": 6360
+    },
+    {
+     "model": "deepseek-v3.2-exp",
+     "org": "deepseek",
+     "elo": 1433.9,
+     "rank": 79,
+     "votes": 2501
+    },
+    {
+     "model": "step-3.5-flash",
+     "org": "stepfun",
+     "elo": 1433.5,
+     "rank": 80,
+     "votes": 8364
+    },
+    {
+     "model": "glm-4.5",
+     "org": "zai",
+     "elo": 1433.3,
+     "rank": 81,
+     "votes": 4772
+    },
+    {
+     "model": "grok-3-preview-02-24",
+     "org": "xai",
+     "elo": 1432.3,
+     "rank": 82,
+     "votes": 5400
+    },
+    {
+     "model": "gpt-5.2",
+     "org": "openai",
+     "elo": 1431.9,
+     "rank": 83,
+     "votes": 11360
+    },
+    {
+     "model": "amazon-nova-experimental-chat-11-10",
+     "org": "amazon",
+     "elo": 1431.8,
+     "rank": 84,
+     "votes": 5322
+    },
+    {
+     "model": "qwen3.5-122b-a10b",
+     "org": "alibaba",
+     "elo": 1431.8,
+     "rank": 85,
+     "votes": 7029
+    },
+    {
+     "model": "hunyuan-hy3-preview",
+     "org": "tencent",
+     "elo": 1430.7,
+     "rank": 86,
+     "votes": 1648
+    },
+    {
+     "model": "grok-4-fast-chat",
+     "org": "xai",
+     "elo": 1430.3,
+     "rank": 87,
+     "votes": 1249
+    },
+    {
+     "model": "deepseek-v3.1-terminus-thinking",
+     "org": "deepseek",
+     "elo": 1429.1,
+     "rank": 88,
+     "votes": 636
+    },
+    {
+     "model": "amazon-nova-experimental-chat-12-10",
+     "org": "amazon",
+     "elo": 1429.0,
+     "rank": 89,
+     "votes": 704
+    },
+    {
+     "model": "qwen3-vl-235b-a22b-thinking",
+     "org": "alibaba",
+     "elo": 1428.0,
+     "rank": 90,
+     "votes": 1625
+    },
+    {
+     "model": "deepseek-r1-0528",
+     "org": "deepseek",
+     "elo": 1427.1,
+     "rank": 91,
+     "votes": 2728
+    },
+    {
+     "model": "grok-4.3",
+     "org": "xai",
+     "elo": 1427.0,
+     "rank": 92,
+     "votes": 4422
+    },
+    {
+     "model": "ernie-5.0-preview-1203",
+     "org": "baidu",
+     "elo": 1425.9,
+     "rank": 93,
+     "votes": 1960
+    },
+    {
+     "model": "qwen3-235b-a22b-thinking-2507",
+     "org": "alibaba",
+     "elo": 1423.4,
+     "rank": 94,
+     "votes": 1611
+    },
+    {
+     "model": "gemini-2.5-flash",
+     "org": "google",
+     "elo": 1423.4,
+     "rank": 95,
+     "votes": 25169
+    },
+    {
+     "model": "qwen3.5-27b",
+     "org": "alibaba",
+     "elo": 1423.0,
+     "rank": 96,
+     "votes": 6863
+    },
+    {
+     "model": "minimax-m2.1-preview",
+     "org": "minimax",
+     "elo": 1422.7,
+     "rank": 97,
+     "votes": 3426
+    },
+    {
+     "model": "hunyuan-vision-1.5-thinking",
+     "org": "tencent",
+     "elo": 1420.6,
+     "rank": 98,
+     "votes": 437
+    },
+    {
+     "model": "deepseek-v3.1-thinking",
+     "org": "deepseek",
+     "elo": 1418.6,
+     "rank": 99,
+     "votes": 1904
+    },
+    {
+     "model": "grok-4-fast-reasoning",
+     "org": "xai",
+     "elo": 1418.6,
+     "rank": 100,
+     "votes": 3956
+    },
+    {
+     "model": "mimo-v2-flash (thinking)",
+     "org": "xiaomi",
+     "elo": 1417.8,
+     "rank": 101,
+     "votes": 2444
+    },
+    {
+     "model": "qwen3-30b-a3b-instruct-2507",
+     "org": "alibaba",
+     "elo": 1417.8,
+     "rank": 102,
+     "votes": 4660
+    },
+    {
+     "model": "chatgpt-4o-latest-20250326",
+     "org": "openai",
+     "elo": 1414.7,
+     "rank": 103,
+     "votes": 15865
+    },
+    {
+     "model": "deepseek-v3.1",
+     "org": "deepseek",
+     "elo": 1414.6,
+     "rank": 104,
+     "votes": 2624
+    },
+    {
+     "model": "ernie-5.0-preview-1022",
+     "org": "baidu",
+     "elo": 1413.3,
+     "rank": 105,
+     "votes": 916
+    },
+    {
+     "model": "claude-sonnet-4-20250514-thinking-32k",
+     "org": "anthropic",
+     "elo": 1413.2,
+     "rank": 106,
+     "votes": 6414
+    },
+    {
+     "model": "amazon-nova-experimental-chat-10-20",
+     "org": "amazon",
+     "elo": 1413.1,
+     "rank": 107,
+     "votes": 2293
+    },
+    {
+     "model": "qwen3-coder-480b-a35b-instruct",
+     "org": "alibaba",
+     "elo": 1412.5,
+     "rank": 108,
+     "votes": 4849
+    },
+    {
+     "model": "grok-4-1-fast-reasoning",
+     "org": "xai",
+     "elo": 1412.3,
+     "rank": 109,
+     "votes": 12670
+    },
+    {
+     "model": "qwen3.5-35b-a3b",
+     "org": "alibaba",
+     "elo": 1411.4,
+     "rank": 110,
+     "votes": 7198
+    },
+    {
+     "model": "grok-4-0709",
+     "org": "xai",
+     "elo": 1409.2,
+     "rank": 111,
+     "votes": 8155
+    },
+    {
+     "model": "qwen3.5-flash",
+     "org": "alibaba",
+     "elo": 1408.6,
+     "rank": 112,
+     "votes": 8187
+    },
+    {
+     "model": "o3-2025-04-16",
+     "org": "openai",
+     "elo": 1408.0,
+     "rank": 113,
+     "votes": 11756
+    },
+    {
+     "model": "gpt-5-mini-high",
+     "org": "openai",
+     "elo": 1407.2,
+     "rank": 114,
+     "votes": 5502
+    },
+    {
+     "model": "deepseek-v3.1-terminus",
+     "org": "deepseek",
+     "elo": 1406.6,
+     "rank": 115,
+     "votes": 778
+    },
+    {
+     "model": "gpt-5.3-chat-latest",
+     "org": "openai",
+     "elo": 1405.3,
+     "rank": 116,
+     "votes": 7910
+    },
+    {
+     "model": "nvidia-nemotron-3-super-120b-a12b",
+     "org": "nvidia",
+     "elo": 1404.3,
+     "rank": 117,
+     "votes": 1747
+    },
+    {
+     "model": "gpt-5.4-nano-high",
+     "org": "openai",
+     "elo": 1403.5,
+     "rank": 118,
+     "votes": 6894
+    },
+    {
+     "model": "gemini-2.5-flash-preview-09-2025",
+     "org": "google",
+     "elo": 1401.8,
+     "rank": 119,
+     "votes": 6846
+    },
+    {
+     "model": "claude-opus-4-20250514",
+     "org": "anthropic",
+     "elo": 1401.8,
+     "rank": 120,
+     "votes": 7903
+    },
+    {
+     "model": "gpt-5-chat",
+     "org": "openai",
+     "elo": 1400.5,
+     "rank": 121,
+     "votes": 5991
+    },
+    {
+     "model": "gemini-3.1-flash-lite-preview",
+     "org": "google",
+     "elo": 1400.2,
+     "rank": 122,
+     "votes": 9137
+    },
+    {
+     "model": "kimi-k2-0905-preview",
+     "org": "moonshot",
+     "elo": 1399.6,
+     "rank": 123,
+     "votes": 2243
+    },
+    {
+     "model": "qwen3-235b-a22b-no-thinking",
+     "org": "alibaba",
+     "elo": 1398.9,
+     "rank": 124,
+     "votes": 6975
+    },
+    {
+     "model": "gpt-4.5-preview-2025-02-27",
+     "org": "openai",
+     "elo": 1397.1,
+     "rank": 125,
+     "votes": 1939
+    },
+    {
+     "model": "glm-4.5-air",
+     "org": "zai",
+     "elo": 1396.5,
+     "rank": 126,
+     "votes": 6104
+    },
+    {
+     "model": "glm-4.6v",
+     "org": "zai",
+     "elo": 1393.8,
+     "rank": 127,
+     "votes": 536
+    },
+    {
+     "model": "mercury-2",
+     "org": "inception-ai",
+     "elo": 1391.9,
+     "rank": 128,
+     "votes": 768
+    },
+    {
+     "model": "qwen3-next-80b-a3b-thinking",
+     "org": "alibaba",
+     "elo": 1391.2,
+     "rank": 129,
+     "votes": 2677
+    },
+    {
+     "model": "ling-flash-2.0",
+     "org": "ant-group",
+     "elo": 1391.0,
+     "rank": 130,
+     "votes": 1528
+    },
+    {
+     "model": "gpt-4.1-2025-04-14",
+     "org": "openai",
+     "elo": 1390.4,
+     "rank": 131,
+     "votes": 9316
+    },
+    {
+     "model": "nova-2-lite",
+     "org": "amazon",
+     "elo": 1388.7,
+     "rank": 132,
+     "votes": 2519
+    },
+    {
+     "model": "hunyuan-t1-20250711",
+     "org": "tencent",
+     "elo": 1387.3,
+     "rank": 133,
+     "votes": 805
+    },
+    {
+     "model": "mistral-medium-2505",
+     "org": "mistral",
+     "elo": 1386.3,
+     "rank": 134,
+     "votes": 5900
+    },
+    {
+     "model": "qwen3-235b-a22b",
+     "org": "alibaba",
+     "elo": 1385.8,
+     "rank": 135,
+     "votes": 4339
+    },
+    {
+     "model": "glm-4.7-flash",
+     "org": "zai",
+     "elo": 1383.0,
+     "rank": 136,
+     "votes": 2687
+    },
+    {
+     "model": "gpt-oss-120b",
+     "org": "openai",
+     "elo": 1380.4,
+     "rank": 137,
+     "votes": 6494
+    },
+    {
+     "model": "claude-sonnet-4-20250514",
+     "org": "anthropic",
+     "elo": 1379.8,
+     "rank": 138,
+     "votes": 7396
+    },
+    {
+     "model": "minimax-m2.5",
+     "org": "minimax",
+     "elo": 1379.8,
+     "rank": 139,
+     "votes": 9266
+    },
+    {
+     "model": "nvidia-nemotron-3-nano-30b-a3b-bf16",
+     "org": "nvidia",
+     "elo": 1379.2,
+     "rank": 140,
+     "votes": 3277
+    },
+    {
+     "model": "o3-mini-high",
+     "org": "openai",
+     "elo": 1378.7,
+     "rank": 141,
+     "votes": 2596
+    },
+    {
+     "model": "kimi-k2-0711-preview",
+     "org": "moonshot",
+     "elo": 1377.8,
+     "rank": 142,
+     "votes": 5244
+    },
+    {
+     "model": "trinity-large-preview",
+     "org": "",
+     "elo": 1377.6,
+     "rank": 143,
+     "votes": 6942
+    },
+    {
+     "model": "grok-3-mini-high",
+     "org": "xai",
+     "elo": 1375.9,
+     "rank": 144,
+     "votes": 3296
+    },
+    {
+     "model": "minimax-m2",
+     "org": "minimax",
+     "elo": 1373.9,
+     "rank": 145,
+     "votes": 1547
+    },
+    {
+     "model": "gemini-2.5-flash-lite-preview-06-17-thinking",
+     "org": "google",
+     "elo": 1373.8,
+     "rank": 146,
+     "votes": 6001
+    },
+    {
+     "model": "deepseek-r1",
+     "org": "deepseek",
+     "elo": 1371.9,
+     "rank": 147,
+     "votes": 2317
+    },
+    {
+     "model": "gemini-2.5-flash-lite-preview-09-2025-no-thinking",
+     "org": "google",
+     "elo": 1371.4,
+     "rank": 148,
+     "votes": 9678
+    },
+    {
+     "model": "deepseek-v3-0324",
+     "org": "deepseek",
+     "elo": 1368.9,
+     "rank": 149,
+     "votes": 8372
+    },
+    {
+     "model": "o4-mini-2025-04-16",
+     "org": "openai",
+     "elo": 1368.8,
+     "rank": 150,
+     "votes": 8721
+    },
+    {
+     "model": "intellect-3",
+     "org": "",
+     "elo": 1368.0,
+     "rank": 151,
+     "votes": 973
+    },
+    {
+     "model": "gpt-4.1-mini-2025-04-14",
+     "org": "openai",
+     "elo": 1367.5,
+     "rank": 152,
+     "votes": 6918
+    },
+    {
+     "model": "o1-2024-12-17",
+     "org": "openai",
+     "elo": 1367.4,
+     "rank": 153,
+     "votes": 3973
+    },
+    {
+     "model": "o1-preview",
+     "org": "openai",
+     "elo": 1367.1,
+     "rank": 154,
+     "votes": 5123
+    },
+    {
+     "model": "amazon-nova-experimental-chat-10-09",
+     "org": "amazon",
+     "elo": 1366.2,
+     "rank": 155,
+     "votes": 552
+    },
+    {
+     "model": "grok-3-mini-beta",
+     "org": "xai",
+     "elo": 1366.1,
+     "rank": 156,
+     "votes": 4255
+    },
+    {
+     "model": "ring-flash-2.0",
+     "org": "ant-group",
+     "elo": 1365.8,
+     "rank": 157,
+     "votes": 1539
+    },
+    {
+     "model": "step-3",
+     "org": "stepfun",
+     "elo": 1365.4,
+     "rank": 158,
+     "votes": 1233
+    },
+    {
+     "model": "mistral-small-2506",
+     "org": "mistral",
+     "elo": 1363.1,
+     "rank": 159,
+     "votes": 3360
+    },
+    {
+     "model": "o1-mini",
+     "org": "openai",
+     "elo": 1362.8,
+     "rank": 160,
+     "votes": 8478
+    },
+    {
+     "model": "trinity-large-thinking",
+     "org": "",
+     "elo": 1362.7,
+     "rank": 161,
+     "votes": 6447
+    },
+    {
+     "model": "o3-mini",
+     "org": "openai",
+     "elo": 1362.1,
+     "rank": 162,
+     "votes": 9460
+    },
+    {
+     "model": "claude-3-7-sonnet-20250219-thinking-32k",
+     "org": "anthropic",
+     "elo": 1361.5,
+     "rank": 163,
+     "votes": 6191
+    },
+    {
+     "model": "hunyuan-turbos-20250416",
+     "org": "tencent",
+     "elo": 1361.4,
+     "rank": 164,
+     "votes": 1776
+    },
+    {
+     "model": "qwen2.5-max",
+     "org": "alibaba",
+     "elo": 1359.8,
+     "rank": 165,
+     "votes": 5101
+    },
+    {
+     "model": "minimax-m1",
+     "org": "minimax",
+     "elo": 1359.0,
+     "rank": 166,
+     "votes": 6489
+    },
+    {
+     "model": "qwen3-32b",
+     "org": "alibaba",
+     "elo": 1358.2,
+     "rank": 167,
+     "votes": 513
+    },
+    {
+     "model": "nvidia-llama-3.3-nemotron-super-49b-v1.5",
+     "org": "nvidia",
+     "elo": 1356.6,
+     "rank": 168,
+     "votes": 659
+    },
+    {
+     "model": "gemini-2.0-flash-001",
+     "org": "google",
+     "elo": 1351.7,
+     "rank": 169,
+     "votes": 6996
+    },
+    {
+     "model": "gpt-5-nano-high",
+     "org": "openai",
+     "elo": 1351.7,
+     "rank": 170,
+     "votes": 1684
+    },
+    {
+     "model": "glm-4.5v",
+     "org": "zai",
+     "elo": 1349.6,
+     "rank": 171,
+     "votes": 991
+    },
+    {
+     "model": "olmo-3.1-32b-instruct",
+     "org": "allenai",
+     "elo": 1348.8,
+     "rank": 172,
+     "votes": 2513
+    },
+    {
+     "model": "hunyuan-turbos-20250226",
+     "org": "tencent",
+     "elo": 1343.1,
+     "rank": 173,
+     "votes": 275
+    },
+    {
+     "model": "claude-3-5-sonnet-20241022",
+     "org": "anthropic",
+     "elo": 1342.9,
+     "rank": 174,
+     "votes": 14964
+    },
+    {
+     "model": "step-1o-turbo-202506",
+     "org": "stepfun",
+     "elo": 1340.3,
+     "rank": 175,
+     "votes": 1504
+    },
+    {
+     "model": "claude-3-7-sonnet-20250219",
+     "org": "anthropic",
+     "elo": 1338.9,
+     "rank": 176,
+     "votes": 7146
+    },
+    {
+     "model": "qwen3-30b-a3b",
+     "org": "alibaba",
+     "elo": 1337.9,
+     "rank": 177,
+     "votes": 4531
+    },
+    {
+     "model": "qwq-32b",
+     "org": "alibaba",
+     "elo": 1334.5,
+     "rank": 178,
+     "votes": 4046
+    },
+    {
+     "model": "command-a-03-2025",
+     "org": "cohere",
+     "elo": 1331.1,
+     "rank": 179,
+     "votes": 10219
+    },
+    {
+     "model": "qwen-plus-0125",
+     "org": "alibaba",
+     "elo": 1328.5,
+     "rank": 180,
+     "votes": 893
+    },
+    {
+     "model": "mercury",
+     "org": "inception-ai",
+     "elo": 1326.0,
+     "rank": 181,
+     "votes": 394
+    },
+    {
+     "model": "deepseek-v3",
+     "org": "deepseek",
+     "elo": 1325.5,
+     "rank": 182,
+     "votes": 3280
+    },
+    {
+     "model": "gemma-3-27b-it",
+     "org": "google",
+     "elo": 1322.5,
+     "rank": 183,
+     "votes": 8077
+    },
+    {
+     "model": "gemini-2.0-flash-lite-preview-02-05",
+     "org": "google",
+     "elo": 1322.5,
+     "rank": 184,
+     "votes": 3474
+    },
+    {
+     "model": "olmo-3-32b-think",
+     "org": "allenai",
+     "elo": 1320.7,
+     "rank": 185,
+     "votes": 1055
+    },
+    {
+     "model": "hunyuan-turbo-0110",
+     "org": "tencent",
+     "elo": 1319.8,
+     "rank": 186,
+     "votes": 299
+    },
+    {
+     "model": "magistral-medium-2506",
+     "org": "mistral",
+     "elo": 1319.6,
+     "rank": 187,
+     "votes": 2250
+    },
+    {
+     "model": "step-2-16k-exp-202412",
+     "org": "stepfun",
+     "elo": 1316.7,
+     "rank": 188,
+     "votes": 737
+    },
+    {
+     "model": "qwen2.5-plus-1127",
+     "org": "alibaba",
+     "elo": 1314.8,
+     "rank": 189,
+     "votes": 1553
+    },
+    {
+     "model": "granite-4.1-8b",
+     "org": "ibm",
+     "elo": 1314.3,
+     "rank": 190,
+     "votes": 944
+    },
+    {
+     "model": "yi-lightning",
+     "org": "",
+     "elo": 1312.9,
+     "rank": 191,
+     "votes": 4316
+    },
+    {
+     "model": "athene-v2-chat",
+     "org": "",
+     "elo": 1312.7,
+     "rank": 192,
+     "votes": 4019
+    },
+    {
+     "model": "llama-3.1-nemotron-ultra-253b-v1",
+     "org": "nvidia",
+     "elo": 1312.4,
+     "rank": 193,
+     "votes": 367
+    },
+    {
+     "model": "mistral-small-3.1-24b-instruct-2503",
+     "org": "mistral",
+     "elo": 1310.1,
+     "rank": 194,
+     "votes": 6136
+    },
+    {
+     "model": "deepseek-v2.5-1210",
+     "org": "deepseek",
+     "elo": 1309.9,
+     "rank": 195,
+     "votes": 1079
+    },
+    {
+     "model": "gpt-oss-20b",
+     "org": "openai",
+     "elo": 1308.7,
+     "rank": 196,
+     "votes": 2167
+    },
+    {
+     "model": "hunyuan-large-2025-02-10",
+     "org": "tencent",
+     "elo": 1307.2,
+     "rank": 197,
+     "votes": 519
+    },
+    {
+     "model": "claude-3-5-sonnet-20240620",
+     "org": "anthropic",
+     "elo": 1307.0,
+     "rank": 198,
+     "votes": 13607
+    },
+    {
+     "model": "hunyuan-large-vision",
+     "org": "tencent",
+     "elo": 1306.5,
+     "rank": 199,
+     "votes": 964
+    },
+    {
+     "model": "gpt-4.1-nano-2025-04-14",
+     "org": "openai",
+     "elo": 1306.3,
+     "rank": 200,
+     "votes": 807
+    },
+    {
+     "model": "llama-4-maverick-17b-128e-instruct",
+     "org": "meta",
+     "elo": 1303.1,
+     "rank": 201,
+     "votes": 6997
+    },
+    {
+     "model": "deepseek-v2.5",
+     "org": "deepseek",
+     "elo": 1301.8,
+     "rank": 202,
+     "votes": 4252
+    },
+    {
+     "model": "gpt-4o-2024-05-13",
+     "org": "openai",
+     "elo": 1297.7,
+     "rank": 203,
+     "votes": 19526
+    },
+    {
+     "model": "llama-3.3-nemotron-49b-super-v1",
+     "org": "nvidia",
+     "elo": 1296.1,
+     "rank": 204,
+     "votes": 286
+    },
+    {
+     "model": "gemini-1.5-pro-002",
+     "org": "google",
+     "elo": 1294.8,
+     "rank": 205,
+     "votes": 9175
+    },
+    {
+     "model": "qwen2.5-72b-instruct",
+     "org": "alibaba",
+     "elo": 1293.0,
+     "rank": 206,
+     "votes": 6688
+    },
+    {
+     "model": "llama-3.1-405b-instruct-bf16",
+     "org": "meta",
+     "elo": 1291.8,
+     "rank": 207,
+     "votes": 6249
+    },
+    {
+     "model": "glm-4-plus",
+     "org": "zai",
+     "elo": 1291.0,
+     "rank": 208,
+     "votes": 4449
+    },
+    {
+     "model": "gpt-4o-mini-2024-07-18",
+     "org": "openai",
+     "elo": 1290.2,
+     "rank": 209,
+     "votes": 10927
+    },
+    {
+     "model": "qwen-max-0919",
+     "org": "alibaba",
+     "elo": 1288.6,
+     "rank": 210,
+     "votes": 2756
+    },
+    {
+     "model": "olmo-3.1-32b-think",
+     "org": "allenai",
+     "elo": 1288.1,
+     "rank": 211,
+     "votes": 1569
+    },
+    {
+     "model": "grok-2-2024-08-13",
+     "org": "xai",
+     "elo": 1288.0,
+     "rank": 212,
+     "votes": 10368
+    },
+    {
+     "model": "glm-4-plus-0111",
+     "org": "zai",
+     "elo": 1287.1,
+     "rank": 213,
+     "votes": 894
+    },
+    {
+     "model": "claude-3-5-haiku-20241022",
+     "org": "anthropic",
+     "elo": 1286.8,
+     "rank": 214,
+     "votes": 11248
+    },
+    {
+     "model": "llama-4-scout-17b-16e-instruct",
+     "org": "meta",
+     "elo": 1286.4,
+     "rank": 215,
+     "votes": 5255
+    },
+    {
+     "model": "llama-3.1-405b-instruct-fp8",
+     "org": "meta",
+     "elo": 1284.0,
+     "rank": 216,
+     "votes": 9714
+    },
+    {
+     "model": "gpt-4o-2024-08-06",
+     "org": "openai",
+     "elo": 1284.0,
+     "rank": 217,
+     "votes": 7318
+    },
+    {
+     "model": "gemma-3-12b-it",
+     "org": "google",
+     "elo": 1281.7,
+     "rank": 218,
+     "votes": 543
+    },
+    {
+     "model": "mistral-large-2407",
+     "org": "mistral",
+     "elo": 1277.1,
+     "rank": 219,
+     "votes": 7589
+    },
+    {
+     "model": "qwen2.5-coder-32b-instruct",
+     "org": "alibaba",
+     "elo": 1276.1,
+     "rank": 220,
+     "votes": 873
+    },
+    {
+     "model": "mistral-large-2411",
+     "org": "mistral",
+     "elo": 1276.0,
+     "rank": 221,
+     "votes": 4212
+    },
+    {
+     "model": "llama-3.1-nemotron-70b-instruct",
+     "org": "nvidia",
+     "elo": 1272.3,
+     "rank": 222,
+     "votes": 1312
+    },
+    {
+     "model": "amazon-nova-pro-v1.0",
+     "org": "amazon",
+     "elo": 1270.4,
+     "rank": 223,
+     "votes": 3853
+    },
+    {
+     "model": "hunyuan-standard-2025-02-10",
+     "org": "tencent",
+     "elo": 1270.2,
+     "rank": 224,
+     "votes": 549
+    },
+    {
+     "model": "gemma-3n-e4b-it",
+     "org": "google",
+     "elo": 1269.7,
+     "rank": 225,
+     "votes": 3530
+    },
+    {
+     "model": "grok-2-mini-2024-08-13",
+     "org": "xai",
+     "elo": 1269.1,
+     "rank": 226,
+     "votes": 8652
+    },
+    {
+     "model": "llama-3.3-70b-instruct",
+     "org": "meta",
+     "elo": 1268.9,
+     "rank": 227,
+     "votes": 8748
+    },
+    {
+     "model": "gpt-4-turbo-2024-04-09",
+     "org": "openai",
+     "elo": 1268.9,
+     "rank": 228,
+     "votes": 17104
+    },
+    {
+     "model": "athene-70b-0725",
+     "org": "",
+     "elo": 1267.5,
+     "rank": 229,
+     "votes": 3122
+    },
+    {
+     "model": "gemini-1.5-pro-001",
+     "org": "google",
+     "elo": 1266.8,
+     "rank": 230,
+     "votes": 12747
+    },
+    {
+     "model": "claude-3-opus-20240229",
+     "org": "anthropic",
+     "elo": 1264.7,
+     "rank": 231,
+     "votes": 33748
+    },
+    {
+     "model": "gemini-1.5-flash-002",
+     "org": "google",
+     "elo": 1262.0,
+     "rank": 232,
+     "votes": 5892
+    },
+    {
+     "model": "llama-3.1-70b-instruct",
+     "org": "meta",
+     "elo": 1260.2,
+     "rank": 233,
+     "votes": 9389
+    },
+    {
+     "model": "gemini-advanced-0514",
+     "org": "google",
+     "elo": 1255.3,
+     "rank": 234,
+     "votes": 8138
+    },
+    {
+     "model": "gpt-4-1106-preview",
+     "org": "openai",
+     "elo": 1254.5,
+     "rank": 235,
+     "votes": 15605
+    },
+    {
+     "model": "deepseek-coder-v2",
+     "org": "deepseek",
+     "elo": 1251.5,
+     "rank": 236,
+     "votes": 2671
+    },
+    {
+     "model": "gpt-4-0125-preview",
+     "org": "openai",
+     "elo": 1249.7,
+     "rank": 237,
+     "votes": 15289
+    },
+    {
+     "model": "ibm-granite-h-small",
+     "org": "ibm",
+     "elo": 1249.5,
+     "rank": 238,
+     "votes": 1264
+    },
+    {
+     "model": "mistral-small-24b-instruct-2501",
+     "org": "mistral",
+     "elo": 1246.2,
+     "rank": 239,
+     "votes": 2083
+    },
+    {
+     "model": "amazon-nova-lite-v1.0",
+     "org": "amazon",
+     "elo": 1239.3,
+     "rank": 240,
+     "votes": 3060
+    },
+    {
+     "model": "gemini-1.5-flash-001",
+     "org": "google",
+     "elo": 1236.2,
+     "rank": 241,
+     "votes": 10680
+    },
+    {
+     "model": "llama-3.1-tulu-3-70b",
+     "org": "allenai",
+     "elo": 1235.9,
+     "rank": 242,
+     "votes": 450
+    },
+    {
+     "model": "phi-4",
+     "org": "microsoft",
+     "elo": 1231.8,
+     "rank": 243,
+     "votes": 3305
+    },
+    {
+     "model": "hunyuan-standard-256k",
+     "org": "tencent",
+     "elo": 1231.2,
+     "rank": 244,
+     "votes": 497
+    },
+    {
+     "model": "gemma-3-4b-it",
+     "org": "google",
+     "elo": 1230.8,
+     "rank": 245,
+     "votes": 605
+    },
+    {
+     "model": "reka-core-20240904",
+     "org": "",
+     "elo": 1230.5,
+     "rank": 246,
+     "votes": 1216
+    },
+    {
+     "model": "glm-4-0520",
+     "org": "zai",
+     "elo": 1228.1,
+     "rank": 247,
+     "votes": 1718
+    },
+    {
+     "model": "jamba-1.5-large",
+     "org": "",
+     "elo": 1228.0,
+     "rank": 248,
+     "votes": 1440
+    },
+    {
+     "model": "llama-3.1-nemotron-51b-instruct",
+     "org": "nvidia",
+     "elo": 1223.4,
+     "rank": 249,
+     "votes": 665
+    },
+    {
+     "model": "claude-3-sonnet-20240229",
+     "org": "anthropic",
+     "elo": 1223.2,
+     "rank": 250,
+     "votes": 18888
+    },
+    {
+     "model": "amazon-nova-micro-v1.0",
+     "org": "amazon",
+     "elo": 1218.2,
+     "rank": 251,
+     "votes": 2981
+    },
+    {
+     "model": "gemini-1.5-flash-8b-001",
+     "org": "google",
+     "elo": 1218.1,
+     "rank": 252,
+     "votes": 6069
+    },
+    {
+     "model": "gemma-2-27b-it",
+     "org": "google",
+     "elo": 1211.4,
+     "rank": 253,
+     "votes": 12088
+    },
+    {
+     "model": "olmo-2-0325-32b-instruct",
+     "org": "allenai",
+     "elo": 1210.6,
+     "rank": 254,
+     "votes": 427
+    },
+    {
+     "model": "nemotron-4-340b-instruct",
+     "org": "nvidia",
+     "elo": 1209.8,
+     "rank": 255,
+     "votes": 3254
+    },
+    {
+     "model": "gpt-4-0314",
+     "org": "openai",
+     "elo": 1209.2,
+     "rank": 256,
+     "votes": 8306
+    },
+    {
+     "model": "llama-3-70b-instruct",
+     "org": "meta",
+     "elo": 1206.6,
+     "rank": 257,
+     "votes": 28126
+    },
+    {
+     "model": "ministral-8b-2410",
+     "org": "mistral",
+     "elo": 1202.4,
+     "rank": 258,
+     "votes": 838
+    },
+    {
+     "model": "claude-3-haiku-20240307",
+     "org": "anthropic",
+     "elo": 1199.5,
+     "rank": 259,
+     "votes": 20898
+    },
+    {
+     "model": "c4ai-aya-expanse-32b",
+     "org": "cohere",
+     "elo": 1197.1,
+     "rank": 260,
+     "votes": 4685
+    },
+    {
+     "model": "qwen2-72b-instruct",
+     "org": "alibaba",
+     "elo": 1196.3,
+     "rank": 261,
+     "votes": 6249
+    },
+    {
+     "model": "llama-3.1-8b-instruct",
+     "org": "meta",
+     "elo": 1195.3,
+     "rank": 262,
+     "votes": 8582
+    },
+    {
+     "model": "gemma-2-9b-it-simpo",
+     "org": "",
+     "elo": 1191.4,
+     "rank": 263,
+     "votes": 1471
+    },
+    {
+     "model": "reka-flash-20240904",
+     "org": "",
+     "elo": 1190.5,
+     "rank": 264,
+     "votes": 1207
+    },
+    {
+     "model": "gpt-4-0613",
+     "org": "openai",
+     "elo": 1187.9,
+     "rank": 265,
+     "votes": 13719
+    },
+    {
+     "model": "command-r-plus-08-2024",
+     "org": "cohere",
+     "elo": 1187.6,
+     "rank": 266,
+     "votes": 1675
+    },
+    {
+     "model": "granite-3.1-8b-instruct",
+     "org": "ibm",
+     "elo": 1186.9,
+     "rank": 267,
+     "votes": 478
+    },
+    {
+     "model": "qwen1.5-110b-chat",
+     "org": "alibaba",
+     "elo": 1184.4,
+     "rank": 268,
+     "votes": 4763
+    },
+    {
+     "model": "llama-3.1-tulu-3-8b",
+     "org": "allenai",
+     "elo": 1183.9,
+     "rank": 269,
+     "votes": 476
+    },
+    {
+     "model": "mistral-large-2402",
+     "org": "mistral",
+     "elo": 1183.5,
+     "rank": 270,
+     "votes": 10418
+    },
+    {
+     "model": "jamba-1.5-mini",
+     "org": "",
+     "elo": 1178.8,
+     "rank": 271,
+     "votes": 1352
+    },
+    {
+     "model": "gemma-2-9b-it",
+     "org": "google",
+     "elo": 1174.0,
+     "rank": 272,
+     "votes": 8921
+    },
+    {
+     "model": "command-r-plus",
+     "org": "cohere",
+     "elo": 1172.3,
+     "rank": 273,
+     "votes": 13937
+    },
+    {
+     "model": "command-r-08-2024",
+     "org": "cohere",
+     "elo": 1169.9,
+     "rank": 274,
+     "votes": 1783
+    },
+    {
+     "model": "yi-1.5-34b-chat",
+     "org": "",
+     "elo": 1169.8,
+     "rank": 275,
+     "votes": 3841
+    },
+    {
+     "model": "mixtral-8x22b-instruct-v0.1",
+     "org": "mistral",
+     "elo": 1166.1,
+     "rank": 276,
+     "votes": 8780
+    },
+    {
+     "model": "qwen1.5-72b-chat",
+     "org": "alibaba",
+     "elo": 1165.9,
+     "rank": 277,
+     "votes": 6370
+    },
+    {
+     "model": "reka-flash-21b-20240226-online",
+     "org": "",
+     "elo": 1165.0,
+     "rank": 278,
+     "votes": 2879
+    },
+    {
+     "model": "mistral-medium",
+     "org": "mistral",
+     "elo": 1162.6,
+     "rank": 279,
+     "votes": 5149
+    },
+    {
+     "model": "c4ai-aya-expanse-8b",
+     "org": "cohere",
+     "elo": 1161.0,
+     "rank": 280,
+     "votes": 1567
+    },
+    {
+     "model": "internlm2_5-20b-chat",
+     "org": "",
+     "elo": 1159.5,
+     "rank": 281,
+     "votes": 1684
+    },
+    {
+     "model": "qwq-32b-preview",
+     "org": "alibaba",
+     "elo": 1155.7,
+     "rank": 282,
+     "votes": 566
+    },
+    {
+     "model": "qwen1.5-32b-chat",
+     "org": "alibaba",
+     "elo": 1155.2,
+     "rank": 283,
+     "votes": 3930
+    },
+    {
+     "model": "reka-flash-21b-20240226",
+     "org": "",
+     "elo": 1154.2,
+     "rank": 284,
+     "votes": 4748
+    },
+    {
+     "model": "llama-3-8b-instruct",
+     "org": "meta",
+     "elo": 1152.1,
+     "rank": 285,
+     "votes": 18374
+    },
+    {
+     "model": "granite-3.1-2b-instruct",
+     "org": "ibm",
+     "elo": 1149.8,
+     "rank": 286,
+     "votes": 508
+    },
+    {
+     "model": "starling-lm-7b-beta",
+     "org": "",
+     "elo": 1143.2,
+     "rank": 287,
+     "votes": 2948
+    },
+    {
+     "model": "qwen1.5-14b-chat",
+     "org": "alibaba",
+     "elo": 1138.3,
+     "rank": 288,
+     "votes": 3208
+    },
+    {
+     "model": "gpt-3.5-turbo-0125",
+     "org": "openai",
+     "elo": 1136.9,
+     "rank": 289,
+     "votes": 11130
+    },
+    {
+     "model": "dbrx-instruct-preview",
+     "org": "",
+     "elo": 1132.3,
+     "rank": 290,
+     "votes": 5502
+    },
+    {
+     "model": "phi-3-medium-4k-instruct",
+     "org": "microsoft",
+     "elo": 1130.6,
+     "rank": 291,
+     "votes": 3973
+    },
+    {
+     "model": "zephyr-orpo-141b-A35b-v0.1",
+     "org": "",
+     "elo": 1129.7,
+     "rank": 292,
+     "votes": 831
+    },
+    {
+     "model": "command-r",
+     "org": "cohere",
+     "elo": 1128.2,
+     "rank": 293,
+     "votes": 9645
+    },
+    {
+     "model": "mixtral-8x7b-instruct-v0.1",
+     "org": "mistral",
+     "elo": 1126.9,
+     "rank": 294,
+     "votes": 11784
+    },
+    {
+     "model": "tulu-2-dpo-70b",
+     "org": "",
+     "elo": 1116.7,
+     "rank": 295,
+     "votes": 805
+    },
+    {
+     "model": "gpt-3.5-turbo-1106",
+     "org": "openai",
+     "elo": 1116.3,
+     "rank": 296,
+     "votes": 2121
+    },
+    {
+     "model": "openchat-3.5-0106",
+     "org": "",
+     "elo": 1113.4,
+     "rank": 297,
+     "votes": 2005
+    },
+    {
+     "model": "granite-3.0-8b-instruct",
+     "org": "ibm",
+     "elo": 1113.0,
+     "rank": 298,
+     "votes": 1108
+    },
+    {
+     "model": "gemma-2-2b-it",
+     "org": "google",
+     "elo": 1112.8,
+     "rank": 299,
+     "votes": 7298
+    },
+    {
+     "model": "yi-34b-chat",
+     "org": "",
+     "elo": 1112.3,
+     "rank": 300,
+     "votes": 2345
+    },
+    {
+     "model": "gemini-pro",
+     "org": "google",
+     "elo": 1108.4,
+     "rank": 301,
+     "votes": 678
+    },
+    {
+     "model": "qwen1.5-7b-chat",
+     "org": "alibaba",
+     "elo": 1107.8,
+     "rank": 302,
+     "votes": 772
+    },
+    {
+     "model": "gemini-pro-dev-api",
+     "org": "google",
+     "elo": 1104.5,
+     "rank": 303,
+     "votes": 2681
+    },
+    {
+     "model": "phi-3-small-8k-instruct",
+     "org": "microsoft",
+     "elo": 1101.9,
+     "rank": 304,
+     "votes": 3219
+    },
+    {
+     "model": "llama-3.2-3b-instruct",
+     "org": "meta",
+     "elo": 1098.2,
+     "rank": 305,
+     "votes": 1351
+    },
+    {
+     "model": "starling-lm-7b-alpha",
+     "org": "",
+     "elo": 1098.0,
+     "rank": 306,
+     "votes": 1397
+    },
+    {
+     "model": "deepseek-llm-67b-chat",
+     "org": "deepseek",
+     "elo": 1096.1,
+     "rank": 307,
+     "votes": 649
+    },
+    {
+     "model": "phi-3-mini-4k-instruct-june-2024",
+     "org": "microsoft",
+     "elo": 1093.6,
+     "rank": 308,
+     "votes": 1841
+    },
+    {
+     "model": "phi-3-mini-4k-instruct",
+     "org": "microsoft",
+     "elo": 1093.1,
+     "rank": 309,
+     "votes": 3449
+    },
+    {
+     "model": "granite-3.0-2b-instruct",
+     "org": "ibm",
+     "elo": 1090.9,
+     "rank": 310,
+     "votes": 1134
+    },
+    {
+     "model": "snowflake-arctic-instruct",
+     "org": "",
+     "elo": 1089.9,
+     "rank": 311,
+     "votes": 5734
+    },
+    {
+     "model": "gemma-1.1-7b-it",
+     "org": "google",
+     "elo": 1084.3,
+     "rank": 312,
+     "votes": 4332
+    },
+    {
+     "model": "mistral-7b-instruct-v0.2",
+     "org": "mistral",
+     "elo": 1082.2,
+     "rank": 313,
+     "votes": 3114
+    },
+    {
+     "model": "wizardlm-70b",
+     "org": "microsoft",
+     "elo": 1081.7,
+     "rank": 314,
+     "votes": 988
+    },
+    {
+     "model": "nous-hermes-2-mixtral-8x7b-dpo",
+     "org": "",
+     "elo": 1080.2,
+     "rank": 315,
+     "votes": 575
+    },
+    {
+     "model": "llama-2-70b-chat",
+     "org": "meta",
+     "elo": 1079.3,
+     "rank": 316,
+     "votes": 5717
+    },
+    {
+     "model": "vicuna-33b",
+     "org": "",
+     "elo": 1078.8,
+     "rank": 317,
+     "votes": 2866
+    },
+    {
+     "model": "openchat-3.5",
+     "org": "",
+     "elo": 1074.7,
+     "rank": 318,
+     "votes": 971
+    },
+    {
+     "model": "qwen-14b-chat",
+     "org": "alibaba",
+     "elo": 1072.0,
+     "rank": 319,
+     "votes": 599
+    },
+    {
+     "model": "llama-3.2-1b-instruct",
+     "org": "meta",
+     "elo": 1071.0,
+     "rank": 320,
+     "votes": 1346
+    },
+    {
+     "model": "solar-10.7b-instruct-v1.0",
+     "org": "",
+     "elo": 1067.3,
+     "rank": 321,
+     "votes": 482
+    },
+    {
+     "model": "openhermes-2.5-mistral-7b",
+     "org": "",
+     "elo": 1064.9,
+     "rank": 322,
+     "votes": 589
+    },
+    {
+     "model": "llama-2-13b-chat",
+     "org": "meta",
+     "elo": 1062.8,
+     "rank": 323,
+     "votes": 2626
+    },
+    {
+     "model": "zephyr-7b-alpha",
+     "org": "",
+     "elo": 1053.3,
+     "rank": 324,
+     "votes": 201
+    },
+    {
+     "model": "gemma-7b-it",
+     "org": "google",
+     "elo": 1048.6,
+     "rank": 325,
+     "votes": 1381
+    },
+    {
+     "model": "smollm2-1.7b-instruct",
+     "org": "",
+     "elo": 1048.4,
+     "rank": 326,
+     "votes": 352
+    },
+    {
+     "model": "codellama-34b-instruct",
+     "org": "meta",
+     "elo": 1046.3,
+     "rank": 327,
+     "votes": 853
+    },
+    {
+     "model": "zephyr-7b-beta",
+     "org": "",
+     "elo": 1045.1,
+     "rank": 328,
+     "votes": 1250
+    },
+    {
+     "model": "vicuna-13b",
+     "org": "",
+     "elo": 1041.2,
+     "rank": 329,
+     "votes": 2389
+    },
+    {
+     "model": "phi-3-mini-128k-instruct",
+     "org": "microsoft",
+     "elo": 1040.0,
+     "rank": 330,
+     "votes": 3886
+    },
+    {
+     "model": "mpt-30b-chat",
+     "org": "",
+     "elo": 1039.8,
+     "rank": 331,
+     "votes": 258
+    },
+    {
+     "model": "wizardlm-13b",
+     "org": "microsoft",
+     "elo": 1035.4,
+     "rank": 332,
+     "votes": 735
+    },
+    {
+     "model": "gemma-1.1-2b-it",
+     "org": "google",
+     "elo": 1034.7,
+     "rank": 333,
+     "votes": 1963
+    },
+    {
+     "model": "llama2-70b-steerlm-chat",
+     "org": "nvidia",
+     "elo": 1025.3,
+     "rank": 334,
+     "votes": 467
+    },
+    {
+     "model": "mistral-7b-instruct",
+     "org": "mistral",
+     "elo": 1018.9,
+     "rank": 335,
+     "votes": 1032
+    },
+    {
+     "model": "olmo-7b-instruct",
+     "org": "allenai",
+     "elo": 1016.2,
+     "rank": 336,
+     "votes": 772
+    },
+    {
+     "model": "vicuna-7b",
+     "org": "",
+     "elo": 1010.5,
+     "rank": 337,
+     "votes": 726
+    },
+    {
+     "model": "gemma-2b-it",
+     "org": "google",
+     "elo": 1010.1,
+     "rank": 338,
+     "votes": 742
+    },
+    {
+     "model": "llama-2-7b-chat",
+     "org": "meta",
+     "elo": 1002.4,
+     "rank": 339,
+     "votes": 1956
+    },
+    {
+     "model": "stripedhyena-nous-7b",
+     "org": "",
+     "elo": 1001.6,
+     "rank": 340,
+     "votes": 704
+    },
+    {
+     "model": "qwen1.5-4b-chat",
+     "org": "alibaba",
+     "elo": 999.3,
+     "rank": 341,
+     "votes": 1283
+    },
+    {
+     "model": "guanaco-33b",
+     "org": "",
+     "elo": 996.0,
+     "rank": 342,
+     "votes": 263
+    },
+    {
+     "model": "palm-2",
+     "org": "google",
+     "elo": 995.0,
+     "rank": 343,
+     "votes": 917
+    },
+    {
+     "model": "chatglm3-6b",
+     "org": "",
+     "elo": 964.7,
+     "rank": 344,
+     "votes": 535
+    },
+    {
+     "model": "koala-13b",
+     "org": "",
+     "elo": 945.4,
+     "rank": 345,
+     "votes": 747
+    },
+    {
+     "model": "RWKV-4-Raven-14B",
+     "org": "",
+     "elo": 928.4,
+     "rank": 346,
+     "votes": 505
+    },
+    {
+     "model": "chatglm-6b",
+     "org": "",
+     "elo": 919.9,
+     "rank": 347,
+     "votes": 551
+    },
+    {
+     "model": "mpt-7b-chat",
+     "org": "",
+     "elo": 913.6,
+     "rank": 348,
+     "votes": 397
+    },
+    {
+     "model": "chatglm2-6b",
+     "org": "",
+     "elo": 902.4,
+     "rank": 349,
+     "votes": 293
+    },
+    {
+     "model": "oasst-pythia-12b",
+     "org": "",
+     "elo": 900.8,
+     "rank": 350,
+     "votes": 714
+    },
+    {
+     "model": "stablelm-tuned-alpha-7b",
+     "org": "",
+     "elo": 886.5,
+     "rank": 351,
+     "votes": 363
+    },
+    {
+     "model": "alpaca-13b",
+     "org": "",
+     "elo": 799.3,
+     "rank": 352,
+     "votes": 626
+    },
+    {
+     "model": "dolly-v2-12b",
+     "org": "",
+     "elo": 776.8,
+     "rank": 353,
+     "votes": 396
+    },
+    {
+     "model": "fastchat-t5-3b",
+     "org": "",
+     "elo": 764.4,
+     "rank": 354,
+     "votes": 428
+    },
+    {
+     "model": "llama-13b",
+     "org": "meta",
+     "elo": 683.4,
+     "rank": 355,
+     "votes": 304
+    }
+   ]
+  }
+ }
+}

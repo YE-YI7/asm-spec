@@ -4,7 +4,14 @@
 
 ASM helps agents choose services before calling them. It ranks APIs by pricing, quality, SLA, provenance, verification, payment, and pre-call operational constraints.
 
-The fastest way to try it is as an OpenRouter value router:
+The fastest way to try it — no clone, no install (needs [uv](https://docs.astral.sh/uv/)):
+
+```bash
+uvx --from git+https://github.com/calebguo007/asm-spec.git \
+  asm openrouter 'best value coding model under $3 per 1M tokens'
+```
+
+Or from a local checkout:
 
 ```bash
 pip install -e .
@@ -12,7 +19,7 @@ asm openrouter 'cheap coding model under $0.50 per 1M tokens'
 asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
 ```
 
-This builds ephemeral ASM manifests from OpenRouter's public model metadata, ranks real model endpoints, and can emit router config snippets for tools you already use.
+It builds ephemeral ASM manifests from OpenRouter's public model metadata, scores them on **price vs. quality (LMArena Elo)**, and emits a router config for tools you already use (LiteLLM, Vercel AI SDK, LangChain). Coding queries are scored on the LMArena coding leaderboard; models with no Elo match are flagged, not faked.
 
 ```bash
 asm score "cheap reliable TTS under 1s"

@@ -94,6 +94,40 @@ def rejection_reason(service, constraints: Constraints) -> str | None:
     return None
 
 
+_QUALITY_TAGS = {
+    "lmarena_elo": "Elo",
+    "quality_unknown": "no-bench",
+    "openrouter_usage_signal": "usage",
+}
+
+
+def _quality_source_map(manifests: list[dict]) -> dict:
+    out = {}
+    for m in manifests:
+        mets = (m.get("quality") or {}).get("metrics") or []
+        name = mets[0].get("name") if mets else None
+        out[m.get("service_id")] = _QUALITY_TAGS.get(name, "")
+    return out
+
+
+def _format_ranked_row(item, q_source: dict, hide_sla: bool) -> str:
+    tag = q_source.get(getattr(item.service, "service_id", None), "")
+    qtag = f" {tag}" if tag else ""
+    row = (
+        f"{item.rank}. {item.service.display_name} "
+        f"(score={item.total_score:.4f}, "
+        f"cost={format_cost(item.service.cost_per_unit, item.service.taxonomy)}, "
+        f"quality={item.service.quality_score:.3f}{qtag}"
+    )
+    if not hide_sla:
+        row += f", latency={format_latency(item.service.latency_seconds)}, uptime={item.service.uptime:.3f}"
+    return row + ")"
+
+
+def _arena_category_for(query: str) -> str:
+    return "coding" if re.search(r"\bcod(?:e|ing)\b|program", query.lower()) else "overall"
+
+
 def cmd_score(args: argparse.Namespace) -> int:
     source_metadata = None
     openrouter_latency_ignored = False
@@ -101,6 +135,7 @@ def cmd_score(args: argparse.Namespace) -> int:
         manifests, source_metadata = load_openrouter_manifests(
             models_json=args.openrouter_models_json,
             rankings_json=args.openrouter_rankings_json,
+            arena_category=_arena_category_for(args.query),
             timeout=args.openrouter_timeout,
         )
         taxonomy = args.taxonomy or "ai.llm.chat"
@@ -137,9 +172,15 @@ def cmd_score(args: argparse.Namespace) -> int:
             f"({source_metadata['n_manifests']} scoreable / {source_metadata['n_models']} models, "
             f"retrieved_at={source_metadata['retrieved_at']})"
         )
+        if source_metadata.get("arena_elo_snapshot"):
+            print(
+                f"Quality: LMArena Elo (snapshot {source_metadata['arena_elo_snapshot']}), "
+                f"benchmark-backed for {source_metadata.get('arena_elo_matched', 0)}/{source_metadata['n_manifests']} models; "
+                "the rest scored neutral (quality unknown)."
+            )
         if source_metadata.get("ranking_snapshot"):
-            print(f"Usage signal: cached OpenRouter ranking snapshot {source_metadata['ranking_snapshot']}")
-        print("Caveat: OpenRouter usage is a revealed-preference signal, not benchmark quality.")
+            print(f"Usage signal (secondary): cached OpenRouter ranking snapshot {source_metadata['ranking_snapshot']}")
+        print("Caveat: Elo is human-preference quality; OpenRouter usage is a revealed-preference signal, not quality.")
     if openrouter_latency_ignored:
         print("Warning: OpenRouter /api/v1/models does not expose latency; ignored latency hard constraint.")
     print(
@@ -164,13 +205,12 @@ def cmd_score(args: argparse.Namespace) -> int:
         print(f"\nSelected: {winner.service.display_name}")
         print(f"Reason: {winner.reasoning}")
         print("\nRanked services:")
+        q_source = _quality_source_map(candidate_manifests)
+        hide_sla = args.source == "openrouter"
         for item in ranked[: args.limit]:
-            print(
-                f"{item.rank}. {item.service.display_name} "
-                f"(score={item.total_score:.4f}, cost={format_cost(item.service.cost_per_unit, item.service.taxonomy)}, "
-                f"quality={item.service.quality_score:.3f}, latency={format_latency(item.service.latency_seconds)}, "
-                f"uptime={item.service.uptime:.3f})"
-            )
+            print(_format_ranked_row(item, q_source, hide_sla))
+        if args.source == "openrouter":
+            print(f'\nTip: turn this into a router config -> asm openrouter route --format litellm "{args.query}"')
 
     rejected = []
     for service in services:
@@ -202,6 +242,7 @@ def cmd_openrouter(args: argparse.Namespace) -> int:
     manifests, source_metadata = load_openrouter_manifests(
         models_json=args.openrouter_models_json,
         rankings_json=args.openrouter_rankings_json,
+        arena_category=_arena_category_for(query),
         timeout=args.openrouter_timeout,
     )
     preferences = infer_preferences(query)
@@ -240,6 +281,7 @@ def cmd_openrouter(args: argparse.Namespace) -> int:
         services=services,
         limit=args.limit,
         openrouter_latency_ignored=latency_ignored,
+        quality_tags=_quality_source_map(manifests),
     )
     return 0 if ranked else 2
 
@@ -255,6 +297,7 @@ def _print_selection(
     services: list,
     limit: int,
     openrouter_latency_ignored: bool = False,
+    quality_tags: dict | None = None,
 ) -> None:
     print(f"Query: {query}")
     print(f"Taxonomy: {taxonomy or 'any'}")
@@ -264,9 +307,15 @@ def _print_selection(
             f"({source_metadata['n_manifests']} scoreable / {source_metadata['n_models']} models, "
             f"retrieved_at={source_metadata['retrieved_at']})"
         )
+        if source_metadata.get("arena_elo_snapshot"):
+            print(
+                f"Quality: LMArena Elo (snapshot {source_metadata['arena_elo_snapshot']}), "
+                f"benchmark-backed for {source_metadata.get('arena_elo_matched', 0)}/{source_metadata['n_manifests']} models; "
+                "the rest scored neutral (quality unknown)."
+            )
         if source_metadata.get("ranking_snapshot"):
-            print(f"Usage signal: cached OpenRouter ranking snapshot {source_metadata['ranking_snapshot']}")
-        print("Caveat: OpenRouter usage is a revealed-preference signal, not benchmark quality.")
+            print(f"Usage signal (secondary): cached OpenRouter ranking snapshot {source_metadata['ranking_snapshot']}")
+        print("Caveat: Elo is human-preference quality; OpenRouter usage is a revealed-preference signal, not quality.")
     if openrouter_latency_ignored:
         print("Warning: OpenRouter /api/v1/models does not expose latency; ignored latency hard constraint.")
     print(
@@ -292,13 +341,10 @@ def _print_selection(
         print(f"Model: {_openrouter_model_id(winner.service) or winner.service.service_id}")
         print(f"Reason: {winner.reasoning}")
         print("\nRanked services:")
+        q_source = quality_tags or {}
         for item in ranked[:limit]:
-            print(
-                f"{item.rank}. {item.service.display_name} "
-                f"(score={item.total_score:.4f}, cost={format_cost(item.service.cost_per_unit, item.service.taxonomy)}, "
-                f"quality={item.service.quality_score:.3f}, latency={format_latency(item.service.latency_seconds)}, "
-                f"uptime={item.service.uptime:.3f})"
-            )
+            print(_format_ranked_row(item, q_source, hide_sla=True))
+        print(f'\nTip: turn this into a router config -> asm openrouter route --format litellm "{query}"')
 
     rejected = []
     for service in services:
