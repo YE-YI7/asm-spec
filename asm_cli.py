@@ -131,6 +131,7 @@ def _arena_category_for(query: str) -> str:
 def cmd_score(args: argparse.Namespace) -> int:
     source_metadata = None
     openrouter_latency_ignored = False
+    openrouter_uptime_ignored = False
     if args.source == "openrouter":
         manifests, source_metadata = load_openrouter_manifests(
             models_json=args.openrouter_models_json,
@@ -150,6 +151,9 @@ def cmd_score(args: argparse.Namespace) -> int:
     if args.source == "openrouter" and constraints.max_latency_s is not None and not args.strict_latency:
         constraints.max_latency_s = None
         openrouter_latency_ignored = True
+    if args.source == "openrouter" and constraints.min_uptime is not None:
+        constraints.min_uptime = None
+        openrouter_uptime_ignored = True
 
     candidate_manifests = [
         m for m in manifests
@@ -183,6 +187,8 @@ def cmd_score(args: argparse.Namespace) -> int:
         print("Caveat: Elo is human-preference quality; OpenRouter usage is a revealed-preference signal, not quality.")
     if openrouter_latency_ignored:
         print("Warning: OpenRouter /api/v1/models does not expose latency; ignored latency hard constraint.")
+    if openrouter_uptime_ignored:
+        print("Warning: OpenRouter /api/v1/models does not expose uptime; ignored uptime hard constraint.")
     print(
         "Preferences: "
         f"cost={preferences.cost:.2f}, quality={preferences.quality:.2f}, "
@@ -248,9 +254,13 @@ def cmd_openrouter(args: argparse.Namespace) -> int:
     preferences = infer_preferences(query)
     constraints = infer_constraints(query, "ai.llm.chat")
     latency_ignored = False
+    uptime_ignored = False
     if constraints.max_latency_s is not None and not args.strict_latency:
         constraints.max_latency_s = None
         latency_ignored = True
+    if constraints.min_uptime is not None:
+        constraints.min_uptime = None
+        uptime_ignored = True
 
     services = [parse_manifest(m, io_ratio=preferences.io_ratio) for m in manifests]
     selected = filter_services(services, constraints)
@@ -281,6 +291,7 @@ def cmd_openrouter(args: argparse.Namespace) -> int:
         services=services,
         limit=args.limit,
         openrouter_latency_ignored=latency_ignored,
+        openrouter_uptime_ignored=uptime_ignored,
         quality_tags=_quality_source_map(manifests),
     )
     return 0 if ranked else 2
@@ -297,6 +308,7 @@ def _print_selection(
     services: list,
     limit: int,
     openrouter_latency_ignored: bool = False,
+    openrouter_uptime_ignored: bool = False,
     quality_tags: dict | None = None,
 ) -> None:
     print(f"Query: {query}")
@@ -318,6 +330,8 @@ def _print_selection(
         print("Caveat: Elo is human-preference quality; OpenRouter usage is a revealed-preference signal, not quality.")
     if openrouter_latency_ignored:
         print("Warning: OpenRouter /api/v1/models does not expose latency; ignored latency hard constraint.")
+    if openrouter_uptime_ignored:
+        print("Warning: OpenRouter /api/v1/models does not expose uptime; ignored uptime hard constraint.")
     print(
         "Preferences: "
         f"cost={preferences.cost:.2f}, quality={preferences.quality:.2f}, "
