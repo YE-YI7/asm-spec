@@ -1,0 +1,68 @@
+{
+  "asm_version": "0.3",
+  "service_id": "culturedcode/things-3@current",
+  "taxonomy": "tool.productivity.task_management",
+  "display_name": "Things 3",
+  "capabilities": {
+    "description": "Award-winning Apple-only task manager; no cloud API, local automation only.",
+    "functions": [
+      "tasks",
+      "projects",
+      "areas",
+      "reminders",
+      "recurring_tasks",
+      "today_view",
+      "this_evening"
+    ]
+  },
+  "invocation": {
+    "interface": "applescript",
+    "reach": "local_device",
+    "agent_operable": true,
+    "auth_to_invoke": "device_local",
+    "automation_paths": [
+      "applescript",
+      "url_scheme",
+      "shortcuts"
+    ],
+    "platforms": [
+      "macos",
+      "ios"
+    ],
+    "docs_url": "https://culturedcode.com/things/support/articles/2803573/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "license",
+        "unit": "per_1",
+        "cost_per_unit": 49.99,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "one_time_purchase"
+    ],
+    "auth_type": "none",
+    "signup_url": "https://culturedcode.com/things/"
+  },
+  "usage_terms": {
+    "automation_allowed": "conditional",
+    "notes": "No public cloud API. Driveable only by an agent running on the user's own Apple device via AppleScript / URL scheme / Shortcuts."
+  },
+  "provenance": {
+    "source_url": "https://culturedcode.com/things/support/articles/2967034/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: one-time $49.99 (macOS), local-only invocation, Apple platforms. Governance lightly sourced; training stance unknown."
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "unknown",
+    "lock_in_notes": "Apple-only; data in Things Cloud. No public cloud export API; export via app only."
+  }
+}

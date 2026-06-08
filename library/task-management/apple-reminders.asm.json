@@ -1,0 +1,69 @@
+{
+  "asm_version": "0.3",
+  "service_id": "apple/reminders@current",
+  "taxonomy": "tool.productivity.task_management",
+  "display_name": "Apple Reminders",
+  "capabilities": {
+    "description": "Free Apple-ecosystem reminders app; automatable on-device via Shortcuts / Siri / EventKit.",
+    "functions": [
+      "reminders",
+      "lists",
+      "due_dates",
+      "location_reminders",
+      "recurring_tasks",
+      "siri_capture"
+    ]
+  },
+  "invocation": {
+    "interface": "shortcuts",
+    "reach": "local_device",
+    "agent_operable": true,
+    "auth_to_invoke": "device_local",
+    "automation_paths": [
+      "shortcuts",
+      "siri",
+      "eventkit"
+    ],
+    "platforms": [
+      "macos",
+      "ios"
+    ],
+    "docs_url": "https://support.apple.com/guide/shortcuts/welcome/ios"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "user",
+        "unit": "per_1",
+        "cost_per_unit": 0,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier"
+    ],
+    "auth_type": "none"
+  },
+  "usage_terms": {
+    "automation_allowed": "conditional",
+    "notes": "No developer cloud API. On-device automation only via Shortcuts/Siri/EventKit; requires an agent resident on the user's Apple device."
+  },
+  "provenance": {
+    "source_url": "https://support.apple.com/guide/shortcuts/welcome/ios",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: free, Apple-only, local-only invocation. System app (no store rating). Training stance not specifically documented -> unknown."
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "unknown",
+    "residency": [
+      "us"
+    ],
+    "lock_in_notes": "Apple ecosystem; data in iCloud. Apple's general posture is on-device privacy, but no Reminders-specific training statement was verified."
+  }
+}

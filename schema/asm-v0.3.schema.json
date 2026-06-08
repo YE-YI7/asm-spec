@@ -97,6 +97,11 @@
           "type": "string",
           "description": "Human-readable description of what the service does"
         },
+        "functions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Concrete capabilities the tool offers, for task-fit matching (e.g. reminders, recurring_tasks, calendar_view, pomodoro_timer, natural_language_capture, sub_tasks). Beyond modalities; this is what the tool can actually DO."
+        },
         "input_modalities": {
           "type": "array",
           "items": {
@@ -538,6 +543,101 @@
         "policy_notes": {
           "type": "string",
           "description": "Caveats and local-policy interpretation notes."
+        }
+      },
+      "additionalProperties": false
+    },
+    "invocation": {
+      "type": "object",
+      "description": "How (and whether) an autonomous agent can actually drive this tool — the primary eligibility gate for agent tool selection. Distinct from payment/auth: this answers 'can the agent operate it at all, and from where', not 'who pays'.",
+      "properties": {
+        "interface": {
+          "type": "string",
+          "description": "Primary machine interface. Recommended values: rest_api, graph_api, graphql, grpc, mcp, sdk, cli, url_scheme, applescript, shortcuts, webhook, gui, none."
+        },
+        "reach": {
+          "type": "string",
+          "enum": ["cloud", "local_device", "hybrid"],
+          "description": "cloud = a remote/headless agent can call it from anywhere; local_device = only an agent running on the user's own machine/OS can drive it (e.g. AppleScript or Shortcuts); hybrid = both."
+        },
+        "agent_operable": {
+          "type": "boolean",
+          "description": "Whether an autonomous agent can drive the tool end-to-end without a human in the loop, in the appropriate reach environment."
+        },
+        "auth_to_invoke": {
+          "type": "string",
+          "description": "Credential needed to invoke. Recommended values: none, api_token, oauth, account_login, device_local, byo_key."
+        },
+        "automation_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "For non-cloud or GUI tools, concrete automation hooks an agent could use, e.g. applescript, shortcuts, url_scheme, computer_use."
+        },
+        "platforms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "OS/ecosystem where the tool runs or is operable. Recommended values: web, macos, ios, windows, android, linux, any."
+        },
+        "docs_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Developer or automation documentation URL."
+        }
+      },
+      "additionalProperties": false
+    },
+    "usage_terms": {
+      "type": "object",
+      "description": "Whether and how an agent is permitted to use the service, independent of whether it is technically reachable. A tool may expose an API yet forbid automated use, or be GUI-only yet explicitly bless scripting.",
+      "properties": {
+        "automation_allowed": {
+          "type": "string",
+          "enum": ["yes", "conditional", "no", "unknown"],
+          "description": "Whether the Terms of Service permit automated / agent-driven use."
+        },
+        "tos_url": { "type": "string", "format": "uri" },
+        "license": {
+          "type": "string",
+          "description": "License or usage tier governing programmatic use."
+        },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "data_governance": {
+      "type": "object",
+      "description": "What happens to data the agent puts into or pulls from the service: ownership, portability, training use, retention, residency. The consequences-of-use class an agent must weigh on a human's behalf.",
+      "properties": {
+        "data_owner": {
+          "type": "string",
+          "enum": ["user", "provider", "shared", "unknown"],
+          "description": "Who owns data created or submitted through the service."
+        },
+        "exportable": {
+          "type": "boolean",
+          "description": "Whether the user can export / take their data out."
+        },
+        "export_formats": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "trains_on_user_data": {
+          "type": "string",
+          "enum": ["yes", "opt_out", "no", "unknown"],
+          "description": "Whether the provider uses user data to train its models."
+        },
+        "retention": {
+          "type": "string",
+          "description": "Data retention / deletion policy, human-readable."
+        },
+        "residency": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Data residency regions, e.g. us, eu."
+        },
+        "lock_in_notes": {
+          "type": "string",
+          "description": "Switching cost, proprietary-format, or portability caveats."
         }
       },
       "additionalProperties": false

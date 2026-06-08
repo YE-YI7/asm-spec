@@ -1,0 +1,72 @@
+{
+  "asm_version": "0.3",
+  "service_id": "microsoft/to-do@current",
+  "taxonomy": "tool.productivity.task_management",
+  "display_name": "Microsoft To Do",
+  "capabilities": {
+    "description": "Free cross-platform task manager, deep Microsoft 365 / Outlook integration.",
+    "functions": [
+      "tasks",
+      "lists",
+      "due_dates",
+      "reminders",
+      "recurring_tasks",
+      "my_day",
+      "steps",
+      "m365_integration"
+    ]
+  },
+  "invocation": {
+    "interface": "graph_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "oauth",
+    "platforms": [
+      "web",
+      "macos",
+      "ios",
+      "windows",
+      "android"
+    ],
+    "docs_url": "https://learn.microsoft.com/en-us/graph/api/resources/todo-overview"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "user",
+        "unit": "per_1",
+        "cost_per_unit": 0,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier"
+    ],
+    "auth_type": "account",
+    "signup_url": "https://to-do.office.com"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Microsoft Graph API (delegated + application permissions)",
+    "tos_url": "https://www.microsoft.com/servicesagreement"
+  },
+  "provenance": {
+    "source_url": "https://learn.microsoft.com/en-us/graph/api/resources/todo-overview",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: free, invocation (Graph API), platforms, no-AI-training on M365 data. App-store rating not separately verified."
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "residency": [
+      "us",
+      "eu"
+    ],
+    "lock_in_notes": "Microsoft states M365 subscription data is not used to train its AI models; data within the Microsoft Graph."
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "asm_version": "0.3",
+  "service_id": "todoist/todoist@current",
+  "taxonomy": "tool.productivity.task_management",
+  "display_name": "Todoist",
+  "capabilities": {
+    "description": "Cross-platform task manager with natural-language capture, recurring tasks, filters.",
+    "functions": [
+      "tasks",
+      "recurring_tasks",
+      "reminders",
+      "sub_tasks",
+      "labels",
+      "filters",
+      "natural_language_capture",
+      "calendar_view",
+      "collaboration"
+    ]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "oauth",
+    "platforms": [
+      "web",
+      "macos",
+      "ios",
+      "windows",
+      "android",
+      "linux"
+    ],
+    "docs_url": "https://developer.todoist.com/api/v1/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "user",
+        "unit": "per_month",
+        "cost_per_unit": 5,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier",
+      "subscription"
+    ],
+    "auth_type": "account",
+    "signup_url": "https://todoist.com"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Public developer REST API (free tier rate-limited)",
+    "tos_url": "https://todoist.com/terms"
+  },
+  "provenance": {
+    "source_url": "https://developer.todoist.com/api/v1/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: pricing, invocation, platforms, automation, app-store quality, and no-AI-training (Doist security/privacy docs)."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "app_store_rating_ios",
+        "score": 4.8,
+        "scale": "0-5",
+        "benchmark": "Apple App Store user rating",
+        "self_reported": false,
+        "benchmark_url": "https://apps.apple.com/app/id572688855"
+      },
+      {
+        "name": "play_store_rating",
+        "score": 4.6,
+        "scale": "0-5",
+        "benchmark": "Google Play user rating",
+        "self_reported": false
+      }
+    ]
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "retention": "GDPR-compliant; user retains all rights to their data",
+    "lock_in_notes": "Provider owns code/DB infrastructure; user data is exportable and user-owned."
+  }
+}
