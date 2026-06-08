@@ -1,0 +1,63 @@
+{
+  "asm_version": "0.3",
+  "service_id": "figma/figma@current",
+  "taxonomy": "tool.creative.design",
+  "display_name": "Figma",
+  "capabilities": {
+    "description": "Collaborative interface/vector design; cloud, scriptable via REST + plugin APIs.",
+    "functions": [
+      "vector_design",
+      "ui_design",
+      "components",
+      "collaboration",
+      "dev_mode",
+      "export"
+    ]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "oauth",
+    "platforms": [
+      "web",
+      "macos",
+      "windows"
+    ],
+    "docs_url": "https://developers.figma.com/docs/rest-api/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "seat",
+        "unit": "per_month",
+        "cost_per_unit": 15,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier",
+      "subscription"
+    ],
+    "auth_type": "account",
+    "signup_url": "https://figma.com"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Public REST API + plugin API"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "unknown"
+  },
+  "provenance": {
+    "source_url": "https://developers.figma.com/docs/rest-api/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: REST+plugin API, free Starter + paid ~$15/seat. Governance training-stance not verified this pass -> unknown, not assumed."
+  }
+}

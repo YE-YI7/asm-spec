@@ -16,7 +16,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ENTRIES = [json.loads(Path(p).read_text(encoding="utf-8"))
-           for p in glob.glob(str(HERE / "task-management" / "*.asm.json"))]
+           for p in glob.glob(str(HERE / "**" / "*.asm.json"), recursive=True)]
 
 
 def monthly_cost(m):
@@ -31,9 +31,10 @@ def monthly_cost(m):
     return 0.0 if free else base
 
 
-def select(task, *, agent_reach, user_platform, required_functions):
+def select(task, *, agent_reach, user_platform, required_functions, taxonomy=None):
     kept, rejected = [], []
-    for m in ENTRIES:
+    pool = [m for m in ENTRIES if taxonomy is None or m.get("taxonomy") == taxonomy]
+    for m in pool:
         inv = m.get("invocation", {})
         name = m["display_name"]
         # gate 1: invocable by THIS agent
@@ -75,10 +76,18 @@ def show(title, task, **ctx):
 if __name__ == "__main__":
     show("Cloud agent, Windows user: store study plan + daily reminders",
          "make a study plan and remind me daily",
+         taxonomy="tool.productivity.task_management",
          agent_reach="cloud", user_platform="windows",
          required_functions=["reminders", "recurring_tasks"])
 
     show("Same, but user also wants a built-in pomodoro timer",
          "study plan + daily reminders + pomodoro",
+         taxonomy="tool.productivity.task_management",
          agent_reach="cloud", user_platform="windows",
          required_functions=["reminders", "recurring_tasks", "pomodoro_timer"])
+
+    show("Cloud agent, Windows user: edit an image / make a poster",
+         "edit this image and lay out a poster",
+         taxonomy="tool.creative.design",
+         agent_reach="cloud", user_platform="windows",
+         required_functions=["photo_editing"])

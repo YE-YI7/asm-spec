@@ -1,0 +1,63 @@
+{
+  "asm_version": "0.3",
+  "service_id": "canva/canva@current",
+  "taxonomy": "tool.creative.design",
+  "display_name": "Canva",
+  "capabilities": {
+    "description": "Template-first graphic design; cloud, scriptable via the Connect API.",
+    "functions": [
+      "templates",
+      "graphic_design",
+      "presentations",
+      "brand_kit",
+      "ai_design",
+      "export"
+    ]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "oauth",
+    "platforms": [
+      "web",
+      "ios",
+      "android"
+    ],
+    "docs_url": "https://www.canva.dev/docs/connect/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "seat",
+        "unit": "per_month",
+        "cost_per_unit": 15,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier",
+      "subscription"
+    ],
+    "auth_type": "account",
+    "signup_url": "https://canva.com"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Canva Connect API"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "unknown"
+  },
+  "provenance": {
+    "source_url": "https://www.canva.dev/docs/connect/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: Connect API, free Starter + paid ~$15/mo. Governance training-stance not verified this pass -> unknown, not assumed."
+  }
+}

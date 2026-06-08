@@ -1,0 +1,64 @@
+{
+  "asm_version": "0.3",
+  "service_id": "serif/affinity-designer@current",
+  "taxonomy": "tool.creative.design",
+  "display_name": "Affinity Designer",
+  "capabilities": {
+    "description": "One-time-purchase pro design suite; NO scripting/automation API — GUI only.",
+    "functions": [
+      "vector_design",
+      "photo_editing",
+      "publishing",
+      "export"
+    ]
+  },
+  "invocation": {
+    "interface": "gui",
+    "reach": "local_device",
+    "agent_operable": false,
+    "auth_to_invoke": "device_local",
+    "automation_paths": [
+      "computer_use"
+    ],
+    "platforms": [
+      "macos",
+      "windows",
+      "ios"
+    ],
+    "docs_url": "https://affinity.serif.com/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "license",
+        "unit": "per_1",
+        "cost_per_unit": 69.99,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "one_time_purchase"
+    ],
+    "auth_type": "none",
+    "signup_url": "https://affinity.serif.com/"
+  },
+  "usage_terms": {
+    "automation_allowed": "no",
+    "notes": "No public scripting or automation API; only fragile pixel-level GUI control."
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "lock_in_notes": "Local desktop app, files local; one-time purchase, no subscription."
+  },
+  "provenance": {
+    "source_url": "https://affinity.serif.com/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: one-time ~$69.99/app (suite ~$164), NO automation API -> agent_operable=False (only computer-use clicking)."
+  }
+}

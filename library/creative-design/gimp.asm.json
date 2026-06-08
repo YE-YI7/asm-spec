@@ -1,0 +1,65 @@
+{
+  "asm_version": "0.3",
+  "service_id": "gimp/gimp@current",
+  "taxonomy": "tool.creative.design",
+  "display_name": "GIMP",
+  "capabilities": {
+    "description": "Free open-source raster editor; local automation via Script-Fu / Python-Fu.",
+    "functions": [
+      "photo_editing",
+      "layers",
+      "scripting",
+      "batch_processing",
+      "export"
+    ]
+  },
+  "invocation": {
+    "interface": "cli",
+    "reach": "local_device",
+    "agent_operable": true,
+    "auth_to_invoke": "none",
+    "automation_paths": [
+      "script-fu",
+      "python-fu"
+    ],
+    "platforms": [
+      "macos",
+      "windows",
+      "linux"
+    ],
+    "docs_url": "https://www.gimp.org/docs/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "license",
+        "unit": "per_1",
+        "cost_per_unit": 0,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "free_tier"
+    ],
+    "auth_type": "none"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "GPL (open source)"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "lock_in_notes": "Local desktop, open-source (GPL); no cloud — data never leaves the machine."
+  },
+  "provenance": {
+    "source_url": "https://www.gimp.org/docs/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: free/GPL, local Script-Fu/Python-Fu automation; data fully local (reach=local_device)."
+  }
+}

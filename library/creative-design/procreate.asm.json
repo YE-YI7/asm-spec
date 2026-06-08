@@ -1,0 +1,64 @@
+{
+  "asm_version": "0.3",
+  "service_id": "procreate/procreate@current",
+  "taxonomy": "tool.creative.design",
+  "display_name": "Procreate",
+  "capabilities": {
+    "description": "iPad illustration app; one-time purchase, NO automation/scripting API — pure GUI.",
+    "functions": [
+      "illustration",
+      "painting",
+      "brushes",
+      "layers",
+      "animation",
+      "export"
+    ]
+  },
+  "invocation": {
+    "interface": "gui",
+    "reach": "local_device",
+    "agent_operable": false,
+    "auth_to_invoke": "device_local",
+    "automation_paths": [
+      "computer_use"
+    ],
+    "platforms": [
+      "ios"
+    ],
+    "docs_url": "https://procreate.com/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "license",
+        "unit": "per_1",
+        "cost_per_unit": 12.99,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "one_time_purchase"
+    ],
+    "auth_type": "none",
+    "signup_url": "https://procreate.com/"
+  },
+  "usage_terms": {
+    "automation_allowed": "no",
+    "notes": "iPad-only GUI app; no automation/scripting interface at all."
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "lock_in_notes": "On-device iPad app; artwork stays local. One-time purchase."
+  },
+  "provenance": {
+    "source_url": "https://procreate.com/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: one-time $12.99, iPad GUI only, no automation API -> agent_operable=False."
+  }
+}
