@@ -1,0 +1,65 @@
+{
+  "asm_version": "0.3",
+  "service_id": "usemotion/motion@current",
+  "taxonomy": "tool.productivity.task_management",
+  "display_name": "Motion (usemotion.com)",
+  "capabilities": {
+    "description": "AI calendar/scheduler that auto-plans tasks and meetings; paid, no free tier.",
+    "functions": [
+      "tasks",
+      "projects",
+      "ai_scheduling",
+      "auto_prioritization",
+      "calendar",
+      "recurring_tasks"
+    ]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "api_token",
+    "platforms": [
+      "web",
+      "macos",
+      "windows",
+      "ios",
+      "android"
+    ],
+    "docs_url": "https://docs.usemotion.com/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "user",
+        "unit": "per_month",
+        "cost_per_unit": 19,
+        "currency": "USD"
+      }
+    ]
+  },
+  "payment": {
+    "methods": [
+      "subscription"
+    ],
+    "auth_type": "account",
+    "signup_url": "https://usemotion.com"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Public REST API via X-API-Key header"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "trains_on_user_data": "no",
+    "lock_in_notes": "Motion and its LLM providers (incl. OpenAI) do not train on user inputs/outputs. SOC 2 Type II."
+  },
+  "provenance": {
+    "source_url": "https://docs.usemotion.com/",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Verified 2026-06: REST API (X-API-Key), $34/mo or $19/mo annual, NO free tier (7-day trial), no-AI-training + SOC 2 (usemotion.com/security). Distinct from themotionapp.com (a golf app)."
+  }
+}
