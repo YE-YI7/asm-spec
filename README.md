@@ -2,47 +2,46 @@
 
 **MCP tells agents what services can do. ASM tells agents what services are worth.**
 
-ASM helps agents choose services before calling them. It ranks APIs by pricing, quality, SLA, provenance, verification, payment, and pre-call operational constraints.
+ASM is the value-metadata layer for **agent tool selection**. When an agent carries out a task for a human, it faces many candidate tools — GUI apps, CLIs, and APIs; free and paid; cloud and local-only. ASM gives it the structured metadata to quickly pick one it *can actually drive*, is *allowed* to use, and that *fits the task* — then rank the survivors on cost, quality, latency, and data terms.
 
-The fastest way to try it — no clone, no install (needs [uv](https://docs.astral.sh/uv/)):
+It is **not** a model picker. The tools are real products — task managers, design apps, data tools, schedulers — anything an agent might invoke on a user's behalf.
+
+## Try it: pick a tool for a task
+
+```bash
+git clone https://github.com/calebguo007/asm-spec.git && cd asm-spec
+python library/select_demo.py
+```
+
+For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it picks free, scriptable **Photopea** over paid Photoshop — and filters **Affinity Designer**, which exposes no automation API at all.
+
+The library it selects over is in [`library/`](library/) — 16 real tools across task-management and creative-design today, each carrying:
+
+- **invocation** — can an agent drive it, and from where (cloud API / local script / GUI-only)
+- **pricing**, **quality**, **sla**, **payment**
+- **usage_terms** — whether automated use is even permitted
+- **data_governance** — ownership, export, whether it trains on your data
+
+Entries are schema-validated and source-linked; unverified dimensions are marked, not faked.
+
+## The gap ASM fills
+
+The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + payment together in machine-actionable form. ASM is that missing value/selection layer — and it rides on top of the connection layers, not against them.
+
+ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
+
+## One slice: ranking AI services (OpenRouter)
+
+The same engine works for the AI-service taxonomy. No clone, no install (needs [uv](https://docs.astral.sh/uv/)):
 
 ```bash
 uvx --from git+https://github.com/calebguo007/asm-spec.git \
   asm openrouter 'best value coding model under $3 per 1M tokens'
 ```
 
-Or from a local checkout:
-
-```bash
-pip install -e .
-asm openrouter 'cheap coding model under $0.50 per 1M tokens'
-asm openrouter route --format litellm 'cheap coding model under $0.50 per 1M tokens'
-```
-
-It builds ephemeral ASM manifests from OpenRouter's public model metadata, scores them on **price vs. quality (LMArena Elo)**, and emits a router config for tools you already use (LiteLLM, Vercel AI SDK, LangChain). Coding queries are scored on the LMArena coding leaderboard; models with no Elo match are flagged, not faked.
-
-```bash
-asm score "cheap reliable TTS under 1s"
-```
-
-Older equivalent form:
-
-```bash
-asm score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
-```
+It builds ephemeral ASM manifests from OpenRouter's live model metadata, scores them on price vs. quality (LMArena Elo), and can emit a router config (LiteLLM / Vercel AI SDK / LangChain). Model routing is the easiest slice to demo — one taxonomy among many, not the point.
 
 ![ASM OpenRouter CLI demo](docs/assets/asm-openrouter-demo.gif)
-
-If your Python script directory is not on `PATH`, use:
-
-```bash
-python -m asm_cli score "cheap reliable TTS under 1s"
-python -m asm_cli score --source openrouter 'cheap LLM under $1 per 1M tokens under 1s'
-```
-
-ASM is MCP-compatible today: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
-
-Current adoption wedge: make ASM useful as an intermediate value layer first. OpenRouter model selection is the first live target; producer-side MCP blocks remain the compatibility path once publishers want their services to be ranked.
 
 Latest paper signals:
 
@@ -263,6 +262,7 @@ Schema: [`schema/asm-v0.3.schema.json`](schema/asm-v0.3.schema.json).
 
 ```text
 schema/                         ASM JSON Schema
+library/                        Tool-value library (agent tool selection) + select_demo.py
 manifests/                      75 source-linked manifests
 scorer/                         Python TOPSIS scorer and tests
 registry/                       MCP registry server exposing ASM tools
