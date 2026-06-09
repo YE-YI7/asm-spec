@@ -15,7 +15,7 @@ python library/select_demo.py
 
 For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it picks free, scriptable **Photopea** over paid Photoshop — and filters **Affinity Designer**, which exposes no automation API at all.
 
-The library it selects over is in [`library/`](library/) — 16 real tools across task-management and creative-design today, each carrying:
+The library it selects over is in [`library/`](library/) — 26 real tools across task management, creative design, research, communication, developer tools, and booking/travel today, each carrying:
 
 - **invocation** — can an agent drive it, and from where (cloud API / local script / GUI-only)
 - **pricing**, **quality**, **sla**, **payment**
@@ -23,6 +23,12 @@ The library it selects over is in [`library/`](library/) — 16 real tools acros
 - **data_governance** — ownership, export, whether it trains on your data
 
 Entries are schema-validated and source-linked; unverified dimensions are marked, not faked.
+
+June 2026 coverage update: the tool-selection library now includes 26 source-linked tools across task management, creative design, research, communication, developer tools, and booking/travel. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights.
+
+Productization/distribution plan: [`docs/productization-distribution.md`](docs/productization-distribution.md).
+
+Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs/library-coverage-report.md).
 
 ## The gap ASM fills
 

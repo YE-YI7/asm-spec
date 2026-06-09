@@ -1,4 +1,4 @@
-"""Schema validation: every manifest under manifests/ must validate against
+"""Schema validation: every manifest under manifests/ and library/ must validate against
 schema/asm-v0.3.schema.json. This test catches the class of regression where
 new manifests use enum values not in the schema (e.g. an invalid
 verification_status string).
@@ -23,6 +23,7 @@ except ImportError:  # pragma: no cover
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA_PATH = ROOT / "schema" / "asm-v0.3.schema.json"
 MANIFESTS_DIR = ROOT / "manifests"
+LIBRARY_DIR = ROOT / "library"
 
 
 @pytest.fixture(scope="module")
@@ -33,7 +34,7 @@ def schema():
 
 
 def manifest_paths():
-    return sorted(MANIFESTS_DIR.glob("*.asm.json"))
+    return sorted(MANIFESTS_DIR.glob("*.asm.json")) + sorted(LIBRARY_DIR.rglob("*.asm.json"))
 
 
 def test_at_least_one_manifest():

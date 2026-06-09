@@ -1,0 +1,81 @@
+{
+  "asm_version": "0.3",
+  "service_id": "github/rest-api@current",
+  "taxonomy": "tool.development.repository",
+  "display_name": "GitHub REST API",
+  "capabilities": {
+    "description": "Repository, issue, pull request, workflow, and release automation through GitHub's REST API.",
+    "functions": ["repo_read", "issue_create", "pull_request_create", "release_create", "workflow_dispatch", "code_search"],
+    "input_modalities": ["text", "structured_data"],
+    "output_modalities": ["structured_data", "text"]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "oauth",
+    "platforms": ["any"],
+    "docs_url": "https://docs.github.com/en/rest"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      { "dimension": "api_call", "unit": "per_1", "cost_per_unit": 0, "currency": "USD" }
+    ],
+    "free_tier": "REST API access subject to rate limits; paid GitHub plans/features separate.",
+    "estimated": false
+  },
+  "payment": {
+    "methods": ["free_tier", "subscription"],
+    "auth_type": "oauth2",
+    "signup_url": "https://github.com/pricing"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "GitHub API terms and acceptable use policies apply.",
+    "tos_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "export_formats": ["git", "json"],
+    "trains_on_user_data": "unknown",
+    "retention": "Repository/account retention follows GitHub account and organization settings.",
+    "lock_in_notes": "Git data is portable; issues, PR metadata, Actions history, and permissions are GitHub-specific."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "developer_workflow_api_fit",
+        "score": 1,
+        "scale": "0-1",
+        "benchmark": "Official REST API covers repositories, issues, pull requests, releases, and workflows",
+        "benchmark_url": "https://docs.github.com/en/rest",
+        "self_reported": true
+      }
+    ]
+  },
+  "sla": {
+    "rate_limit": "60 requests/hour unauthenticated; 5,000 requests/hour authenticated user; higher limits for some GitHub Apps/Enterprise contexts.",
+    "regions": ["global"]
+  },
+  "operational_constraints": {
+    "risk_class": "high",
+    "side_effects": ["external_api_call", "network_access", "persistent_state", "executes_code"],
+    "approval": {
+      "required": "conditional",
+      "conditions": ["create pull request", "push commit", "dispatch workflow", "publish release", "change repository settings"],
+      "human_readable": "Read-only repo inspection is low risk; code changes, workflow execution, and release publication need approval."
+    },
+    "rate_limits": [
+      { "dimension": "request", "limit": 5000, "period": "hour", "scope": "authenticated_user" }
+    ],
+    "receipt_required": true
+  },
+  "provenance": {
+    "source_url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "manual_verified",
+    "notes": "Verified REST API scope and primary rate limits from official GitHub docs."
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "asm_version": "0.3",
+  "service_id": "linear/graphql-api@current",
+  "taxonomy": "tool.development.issue_tracking",
+  "display_name": "Linear GraphQL API",
+  "capabilities": {
+    "description": "Issue, project, team, cycle, and workflow automation through Linear's GraphQL API.",
+    "functions": ["issue_read", "issue_create", "issue_update", "project_read", "cycle_read", "webhooks"],
+    "input_modalities": ["text", "structured_data"],
+    "output_modalities": ["structured_data", "text"]
+  },
+  "invocation": {
+    "interface": "graphql",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "api_token",
+    "platforms": ["any"],
+    "docs_url": "https://linear.app/developers/graphql"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      { "dimension": "api_call", "unit": "per_1", "cost_per_unit": 0, "currency": "USD" }
+    ],
+    "free_tier": "API use included with Linear account/workspace plan.",
+    "estimated": false
+  },
+  "payment": {
+    "methods": ["free_tier", "subscription"],
+    "auth_type": "api_key",
+    "signup_url": "https://linear.app/pricing"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Public GraphQL API; avoid polling and use webhooks for updates.",
+    "tos_url": "https://linear.app/terms"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "export_formats": ["json", "csv"],
+    "trains_on_user_data": "unknown",
+    "retention": "Workspace retention/export follows Linear account controls.",
+    "lock_in_notes": "Issues/projects are exportable but workflow/cycle semantics are Linear-specific."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "issue_tracking_api_fit",
+        "score": 1,
+        "scale": "0-1",
+        "benchmark": "Official GraphQL API supports issue/project workflows and webhooks",
+        "benchmark_url": "https://linear.app/developers/graphql",
+        "self_reported": true
+      }
+    ]
+  },
+  "sla": {
+    "rate_limit": "API key: 2,500 requests/hour and 3,000,000 complexity points/hour; OAuth app: 5,000 requests/hour; single query max complexity 10,000 points.",
+    "regions": ["global"]
+  },
+  "operational_constraints": {
+    "risk_class": "medium",
+    "side_effects": ["external_api_call", "network_access", "persistent_state"],
+    "approval": {
+      "required": "conditional",
+      "conditions": ["create or update issues visible to a team", "change project/cycle status", "bulk edit more than 10 issues"],
+      "human_readable": "Issue reads are low risk; visible writes and bulk edits should require approval."
+    },
+    "rate_limits": [
+      { "dimension": "request", "limit": 2500, "period": "hour", "scope": "api_key_user" },
+      { "dimension": "complexity_point", "limit": 3000000, "period": "hour", "scope": "api_key_user" }
+    ],
+    "receipt_required": false
+  },
+  "provenance": {
+    "source_url": "https://linear.app/developers/rate-limiting",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "manual_verified",
+    "notes": "Verified request and complexity rate limits from official Linear developer docs."
+  }
+}

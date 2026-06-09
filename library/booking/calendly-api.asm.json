@@ -1,0 +1,78 @@
+{
+  "asm_version": "0.3",
+  "service_id": "calendly/api@current",
+  "taxonomy": "tool.booking.scheduling",
+  "display_name": "Calendly API",
+  "capabilities": {
+    "description": "Scheduling API for reading event types, availability, scheduled events, invitees, and webhooks.",
+    "functions": ["availability_lookup", "booking_link", "scheduled_event_read", "webhooks", "meeting_limits"],
+    "input_modalities": ["text", "structured_data"],
+    "output_modalities": ["structured_data", "text"]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "api_token",
+    "platforms": ["any"],
+    "docs_url": "https://developer.calendly.com/"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      { "dimension": "api_call", "unit": "per_1", "cost_per_unit": 0, "currency": "USD" }
+    ],
+    "free_tier": "API available to all users on all plans; plan limits/features vary.",
+    "estimated": false
+  },
+  "payment": {
+    "methods": ["free_tier", "subscription"],
+    "auth_type": "api_key",
+    "signup_url": "https://calendly.com/pricing"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "Public API with PAT authentication.",
+    "tos_url": "https://calendly.com/legal/terms-and-conditions"
+  },
+  "data_governance": {
+    "data_owner": "user",
+    "exportable": true,
+    "export_formats": ["json", "csv"],
+    "trains_on_user_data": "unknown",
+    "retention": "Event/invitee retention follows Calendly account policy.",
+    "lock_in_notes": "Scheduling links and event-type configuration are Calendly-specific."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "scheduling_api_fit",
+        "score": 1,
+        "scale": "0-1",
+        "benchmark": "Official API connects software systems with Calendly scheduling platform",
+        "benchmark_url": "https://calendly.com/help/calendly-api-overview",
+        "self_reported": true
+      }
+    ]
+  },
+  "sla": {
+    "rate_limit": "Official API has rate limits; exact limits are documented in developer portal and may vary.",
+    "regions": ["global"]
+  },
+  "operational_constraints": {
+    "risk_class": "medium",
+    "side_effects": ["external_api_call", "network_access", "persistent_state"],
+    "approval": {
+      "required": "conditional",
+      "conditions": ["schedule meeting on user's calendar", "change event type availability", "cancel scheduled event"],
+      "human_readable": "Availability lookup is low risk; booking/canceling user-visible meetings should require approval."
+    },
+    "receipt_required": false
+  },
+  "provenance": {
+    "source_url": "https://calendly.com/help/calendly-api-overview",
+    "retrieved_at": "2026-06-08T00:00:00Z",
+    "last_verified_at": "2026-06-08T00:00:00Z",
+    "verification_status": "manual_verified",
+    "notes": "Verified API availability across plans from Calendly Help; detailed rate-limit page is in developer portal."
+  }
+}
