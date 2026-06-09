@@ -40,12 +40,10 @@ payments/benchmark-results/*.json
 OUTREACH-PLAN.md
 LIVE-EVAL-PLAN.md
 
-# arXiv build: ignore vendored binaries + intermediates, keep .tex source
+# arXiv build: LaTeX build of the paper — kept out of the public spec repo
 tools/pandoc/
 tools/tectonic/
-arxiv/*.zip
-arxiv/*.log
-arxiv/*.preprocessed.md
+arxiv/
 
 # Internal outreach drafts (Doubleword manifest, MCP discussion body, etc.)
 outreach/

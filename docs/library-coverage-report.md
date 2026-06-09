@@ -1,6 +1,6 @@
 # Tool Library Coverage Report
 
-Snapshot: 2026-06-08.
+Snapshot: 2026-06-09.
 
 ## Summary
 
@@ -35,7 +35,7 @@ The library deliberately marks unverified fields instead of filling them with in
 |---|---:|---|
 | `invocation` | 0 / 26 | Strongest coverage. Every entry says how an agent can or cannot operate the tool. |
 | `usage_terms` | 0 / 26 | Every entry has a terms/automation stance. |
-| `data_governance` | 12 / 26 | Main next cleanup target: training-use and retention claims are often hard to verify. |
+| `data_governance` | 9 / 26 | Training-use verified this pass for Figma & Canva (opt-out) and Photoshop (no), on top of the task/research/comms/dev/booking sets. Remaining `unknown`s are per-entry where official terms make no clear statement (e.g. Google Tasks, Photopea). |
 | `operational_constraints` | 16 / 26 | New booking/communication/dev/research entries carry it; older task/design entries still need it. |
 | `quality` | 14 / 26 | Needs a consistent non-self-fulfilling metric per domain. |
 | `sla` | 16 / 26 | Older task/design entries rarely publish API-like SLA; mark as unavailable or source a support/status proxy. |
@@ -43,7 +43,7 @@ The library deliberately marks unverified fields instead of filling them with in
 ## Next Cleanup Batch
 
 1. Add `operational_constraints` to all 16 pre-existing task/design entries.
-2. Replace `data_governance.trains_on_user_data=unknown` where official privacy/product terms make a clear statement.
+2. Replace `data_governance.trains_on_user_data=unknown` where official privacy/product terms make a clear statement. (Done 2026-06-09: Figma, Canva, Photoshop.)
 3. Normalize quality metrics:
    - task/design: public app-store rating or documented automation/API coverage
    - research: citation/source portability and corpus coverage

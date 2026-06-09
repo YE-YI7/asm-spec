@@ -51,13 +51,14 @@
   "data_governance": {
     "data_owner": "user",
     "exportable": true,
-    "trains_on_user_data": "unknown"
+    "trains_on_user_data": "opt_out",
+    "lock_in_notes": "Free/Pro: AI training on by default, opt-out available. Teams/Business/Enterprise/Education: content is NEVER used for training and cannot be opted in."
   },
   "provenance": {
     "source_url": "https://www.canva.dev/docs/connect/",
     "retrieved_at": "2026-06-08T00:00:00Z",
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
-    "notes": "Verified 2026-06: Connect API, free Starter + paid ~$15/mo. Governance training-stance not verified this pass -> unknown, not assumed."
+    "notes": "Verified 2026-06: Connect API, free Starter + paid ~$15/mo; AI-training opt-out for Free/Pro, never for Enterprise tiers (Canva AI Product Terms)."
   }
 }
