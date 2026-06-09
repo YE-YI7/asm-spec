@@ -26,6 +26,7 @@ def select_tool(
     user_platform: str = "any",
     required_functions: list[str] | None = None,
     require_approval_for: list[str] | None = None,
+    require_agent_completable_setup: bool = False,
 ) -> dict:
     """Pick the best tool from the ASM library for a task.
 
@@ -41,6 +42,8 @@ def select_tool(
         user_platform: e.g. windows, macos, ios, android, web, any.
         required_functions: capability names the tool must have (e.g. ["flight_search"]).
         require_approval_for: side-effects that should force approval (e.g. ["financial_charge","sends_message"]).
+        require_agent_completable_setup: if true, drop tools that need a human-in-the-loop
+            step (paid signup, OAuth consent, manual approval) the agent cannot complete unattended.
     """
     return select(
         task,
@@ -49,6 +52,7 @@ def select_tool(
         user_platform=user_platform,
         required_functions=required_functions or [],
         require_approval_for=require_approval_for or [],
+        require_agent_completable_setup=require_agent_completable_setup,
     )
 
 

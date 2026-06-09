@@ -29,6 +29,10 @@ def show(title, task, **ctx):
                   f"risk={pol['risk_class']},",
                   f"approval={pol['approval_policy']},",
                   f"side_effects={pol['side_effects']}")
+        inv = top.get("invocation") or {}
+        if inv.get("agent_completable_setup") is not None:
+            print(f"  setup: agent_completable={inv.get('agent_completable_setup')},",
+                  f"requires={inv.get('setup_requires', [])}")
         for m in kept[1:]:
             print(f"   alt:  {m['display_name']} (${monthly_cost(m):.2f}/mo)")
     else:
@@ -80,3 +84,10 @@ if __name__ == "__main__":
          taxonomy="tool.booking.travel",
          agent_reach="cloud", user_platform="windows",
          required_functions=["flight_search", "flight_order_create"])
+
+    show("Autonomous agent (no human available for setup): pull real-estate data",
+         "get property and market data for an address",
+         taxonomy="tool.data.real_estate",
+         agent_reach="cloud", user_platform="windows",
+         required_functions=["real_estate_data"],
+         require_agent_completable_setup=True)

@@ -48,14 +48,17 @@ def monthly_cost(m: dict) -> float:
     return 0.0 if free else base
 
 
-def eligibility(m: dict, agent_reach: str, user_platform: str,
-                required_functions) -> str | None:
+def eligibility(m: dict, agent_reach: str, user_platform: str, required_functions,
+                require_agent_completable_setup: bool = False) -> str | None:
     """Return None if the tool is eligible, else a human-readable rejection reason."""
     inv = m.get("invocation", {})
     if not inv.get("agent_operable"):
         return "not agent-operable"
     if inv.get("reach") == "local_device" and agent_reach != "local_device":
         return f"reach=local_device but agent is {agent_reach} (can't drive remotely)"
+    if require_agent_completable_setup and inv.get("agent_completable_setup") is False:
+        req = ", ".join(inv.get("setup_requires") or []) or "human-in-the-loop"
+        return f"setup not agent-completable (requires {req})"
     if (m.get("usage_terms") or {}).get("automation_allowed") == "no":
         return "ToS forbids automated use"
     plats = inv.get("platforms", [])
@@ -83,13 +86,15 @@ def policy_of(m: dict, require_approval_for=()) -> dict:
 
 
 def rank(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
-         user_platform: str = "any", required_functions=(), library=None):
+         user_platform: str = "any", required_functions=(),
+         require_agent_completable_setup: bool = False, library=None):
     """Return (kept_manifests_sorted, rejected[{service, service_id, reason}])."""
     entries = library if library is not None else load_library()
     pool = [m for m in entries if taxonomy is None or m.get("taxonomy") == taxonomy]
     kept, rejected = [], []
     for m in pool:
-        why = eligibility(m, agent_reach, user_platform, list(required_functions))
+        why = eligibility(m, agent_reach, user_platform, list(required_functions),
+                          require_agent_completable_setup=require_agent_completable_setup)
         if why:
             rejected.append({"service": m.get("display_name"),
                              "service_id": m.get("service_id"), "reason": why})
@@ -102,11 +107,14 @@ def rank(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
 
 def select(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
            user_platform: str = "any", required_functions=(),
-           require_approval_for=(), library=None) -> dict:
+           require_approval_for=(), require_agent_completable_setup: bool = False,
+           library=None) -> dict:
     """Structured selection decision (used by the CLI, MCP server, hosted API)."""
     kept, rejected = rank(task, taxonomy=taxonomy, agent_reach=agent_reach,
                           user_platform=user_platform,
-                          required_functions=required_functions, library=library)
+                          required_functions=required_functions,
+                          require_agent_completable_setup=require_agent_completable_setup,
+                          library=library)
     out = {
         "task": task, "taxonomy": taxonomy,
         "selected": None, "reason": "no eligible tool",
@@ -116,12 +124,15 @@ def select(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud"
     if kept:
         top = kept[0]
         pol = policy_of(top, require_approval_for)
+        inv = top.get("invocation") or {}
         out["selected"] = {
             "service_id": top.get("service_id"),
             "display_name": top.get("display_name"),
             "monthly_cost_usd": round(monthly_cost(top), 2),
-            "interface": (top.get("invocation") or {}).get("interface"),
-            "reach": (top.get("invocation") or {}).get("reach"),
+            "interface": inv.get("interface"),
+            "reach": inv.get("reach"),
+            "agent_completable_setup": inv.get("agent_completable_setup"),
+            "setup_requires": inv.get("setup_requires", []),
         }
         out["risk_class"] = pol["risk_class"]
         out["approval_required"] = pol["approval_required"]

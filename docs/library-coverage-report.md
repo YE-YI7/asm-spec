@@ -4,7 +4,7 @@ Snapshot: 2026-06-09.
 
 ## Summary
 
-The product-facing ASM library now has 26 source-linked tool manifests across 11 taxonomies:
+The product-facing ASM library now has 30 source-linked tool manifests across 12 taxonomies:
 
 | Taxonomy | Count |
 |---|---:|
@@ -19,6 +19,7 @@ The product-facing ASM library now has 26 source-linked tool manifests across 11
 | `tool.research.web` | 1 |
 | `tool.research.academic` | 1 |
 | `tool.research.reference_manager` | 1 |
+| `tool.data.real_estate` | 4 |
 
 This is no longer only a task-manager/design demo. The added domains test the parts of ASM that matter for agents:
 
@@ -26,6 +27,7 @@ This is no longer only a task-manager/design demo. The added domains test the pa
 - communication: message-sending approval boundaries
 - developer tools: code/workflow mutation
 - booking/travel: financial charge, PII, and irreversible booking risk
+- real-estate data: the invocability *setup* axis — keyless vs free-signup vs paid vs OAuth/MLS-approval, via the new `invocation.agent_completable_setup` field (added from a production gateway operator's feedback)
 
 ## Known Gaps
 

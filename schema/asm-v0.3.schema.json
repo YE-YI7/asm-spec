@@ -568,6 +568,15 @@
           "type": "string",
           "description": "Credential needed to invoke. Recommended values: none, api_token, oauth, account_login, device_local, byo_key."
         },
+        "agent_completable_setup": {
+          "type": "boolean",
+          "description": "Whether an agent can get from zero to a working call with NO human-in-the-loop step. False if the tool requires a signup, payment, OAuth consent, or manual approval the agent cannot complete unattended — even if it technically accepts credentials once a human has set it up. Distinguishes 'immediately usable' from 'usable only after human onboarding'."
+        },
+        "setup_requires": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Human-in-the-loop onboarding steps required before an agent can invoke. Recommended values: free_api_key_signup, paid_signup, oauth_consent, manual_approval, licensing_agreement, account_creation, api_key_request. Empty or absent means immediately usable with no human step."
+        },
         "automation_paths": {
           "type": "array",
           "items": { "type": "string" },
