@@ -36,6 +36,18 @@ The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Comp
 
 ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
 
+## Use it from an agent (MCP server)
+
+ASM ships an MCP server so any MCP client (Claude Desktop, Cursor, an agent host) can call the selector as a tool — no schema adoption required:
+
+```bash
+git clone https://github.com/calebguo007/asm-spec && cd asm-spec
+pip install mcp
+python asm_selector_mcp.py        # stdio MCP server
+```
+
+It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `python /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The same selector is importable directly: `from library_select import select`.
+
 ## One slice: ranking AI services (OpenRouter)
 
 The same engine works for the AI-service taxonomy. No clone, no install (needs [uv](https://docs.astral.sh/uv/)):
