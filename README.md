@@ -59,6 +59,14 @@ asm select "find and book a refundable flight" --taxonomy tool.booking.travel \
 python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
 ```
 
+LangChain / LangGraph builders get the same selector as a drop-in tool (`pip install langchain-core`):
+
+```python
+import sys; sys.path += ["asm-spec", "asm-spec/integrations/langchain"]
+from asm_tools import ASMToolSelectorTool
+agent_tools = [ASMToolSelectorTool()]   # name: asm_tool_selector
+```
+
 A public instance runs at **https://asm-spec.onrender.com** (free tier — first request after idle may take ~50s to wake):
 
 ```bash
