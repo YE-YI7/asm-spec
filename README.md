@@ -59,6 +59,17 @@ asm select "find and book a refundable flight" --taxonomy tool.booking.travel \
 python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
 ```
 
+A public instance runs at **https://asm-spec.onrender.com** (free tier — first request after idle may take ~50s to wake):
+
+```bash
+curl -X POST https://asm-spec.onrender.com/select -H "Content-Type: application/json" \
+  -d '{"task":"find and book a refundable flight","taxonomy":"tool.booking.travel",
+       "required_functions":["flight_search","flight_order_create"],
+       "require_approval_for":["financial_charge"]}'
+# -> {"selected": {"display_name": "Amadeus Self-Service APIs", ...},
+#     "risk_class": "critical", "approval_required": true, ...}
+```
+
 ## One slice: ranking AI services (OpenRouter)
 
 The same engine works for the AI-service taxonomy. No clone, no install (needs [uv](https://docs.astral.sh/uv/)):
