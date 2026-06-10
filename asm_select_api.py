@@ -102,8 +102,10 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    host = os.environ.get("ASM_API_HOST", "127.0.0.1")
-    port = int(os.environ.get("ASM_API_PORT", "8787"))
+    # PaaS hosts (Render/Railway/Heroku) inject PORT and need 0.0.0.0 binding.
+    paas_port = os.environ.get("PORT")
+    host = os.environ.get("ASM_API_HOST", "0.0.0.0" if paas_port else "127.0.0.1")
+    port = int(os.environ.get("ASM_API_PORT", paas_port or "8787"))
     httpd = ThreadingHTTPServer((host, port), Handler)
     print(f"asm-select-api serving {len(_LIBRARY)} tools on http://{host}:{port}")
     httpd.serve_forever()
