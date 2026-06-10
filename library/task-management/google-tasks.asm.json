@@ -52,12 +52,15 @@
     "retrieved_at": "2026-06-08T00:00:00Z",
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
-    "notes": "Verified 2026-06: free, invocation (Tasks API), Gmail/Calendar integration. Data-training stance for Tasks NOT clearly documented -> unknown, not assumed."
+    "notes": "Verified 2026-06: free, invocation (Tasks API), Gmail/Calendar integration. Data-training stance for Tasks NOT clearly documented -> unknown, not assumed. SLA verified 2026-06: Google Tasks is an explicitly covered service under the Google Workspace 99.9% SLA (paid Workspace tiers)."
   },
   "data_governance": {
     "data_owner": "user",
     "exportable": true,
     "trains_on_user_data": "unknown",
     "lock_in_notes": "Google does not specifically state whether Tasks data is used for AI training; consumer smart-features are opt-out. Treat as unverified."
+  },
+  "sla": {
+    "uptime": 0.999
   }
 }

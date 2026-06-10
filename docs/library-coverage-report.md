@@ -39,8 +39,8 @@ The library deliberately marks unverified fields instead of filling them with in
 | `usage_terms` | 0 / 26 | Every entry has a terms/automation stance. |
 | `data_governance` | 9 / 26 | Training-use verified this pass for Figma & Canva (opt-out) and Photoshop (no), on top of the task/research/comms/dev/booking sets. Remaining `unknown`s are per-entry where official terms make no clear statement (e.g. Google Tasks, Photopea). |
 | `operational_constraints` | 16 / 26 | New booking/communication/dev/research entries carry it; older task/design entries still need it. |
-| `quality` | 14 / 26 | Needs a consistent non-self-fulfilling metric per domain. |
-| `sla` | 16 / 26 | Older task/design entries rarely publish API-like SLA; mark as unavailable or source a support/status proxy. |
+| `quality` | 18 / 30 | Needs a consistent non-self-fulfilling metric per domain. Next cleanup target. |
+| `sla` | 19 / 30 | Published SLAs verified 2026-06-09 where they exist: Slack 99.99% (paid Business+/Enterprise), GitHub 99.9% (Enterprise Cloud), Gmail + Google Tasks 99.9% (Google Workspace covered services; paid tiers) — tier scoping recorded per entry. Most consumer tools publish no SLA; absence is recorded, not invented. |
 
 ## Next Cleanup Batch
 

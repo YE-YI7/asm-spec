@@ -48,6 +48,17 @@ python asm_selector_mcp.py        # stdio MCP server
 
 It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `python /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The same selector is importable directly: `from library_select import select`.
 
+The same engine is also available as:
+
+```bash
+# CLI (human or scripted)
+asm select "find and book a refundable flight" --taxonomy tool.booking.travel \
+  --requires flight_search,flight_order_create --json
+
+# Hosted HTTP API (stdlib-only; deploy anywhere that runs Python)
+python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
+```
+
 ## One slice: ranking AI services (OpenRouter)
 
 The same engine works for the AI-service taxonomy. No clone, no install (needs [uv](https://docs.astral.sh/uv/)):

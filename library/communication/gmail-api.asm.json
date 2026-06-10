@@ -5,27 +5,51 @@
   "display_name": "Gmail API",
   "capabilities": {
     "description": "Google Workspace Gmail API for reading, drafting, labeling, and sending email on behalf of a user.",
-    "functions": ["email_read", "email_draft", "email_send", "labels", "thread_search", "attachments"],
-    "input_modalities": ["text", "file"],
-    "output_modalities": ["text", "structured_data", "file"]
+    "functions": [
+      "email_read",
+      "email_draft",
+      "email_send",
+      "labels",
+      "thread_search",
+      "attachments"
+    ],
+    "input_modalities": [
+      "text",
+      "file"
+    ],
+    "output_modalities": [
+      "text",
+      "structured_data",
+      "file"
+    ]
   },
   "invocation": {
     "interface": "rest_api",
     "reach": "cloud",
     "agent_operable": true,
     "auth_to_invoke": "oauth",
-    "platforms": ["any"],
+    "platforms": [
+      "any"
+    ],
     "docs_url": "https://developers.google.com/workspace/gmail/api"
   },
   "pricing": {
     "billing_dimensions": [
-      { "dimension": "quota_unit", "unit": "per_1", "cost_per_unit": 0, "currency": "USD" }
+      {
+        "dimension": "quota_unit",
+        "unit": "per_1",
+        "cost_per_unit": 0,
+        "currency": "USD"
+      }
     ],
     "free_tier": "Included subject to Google API quota and Gmail sending limits.",
     "estimated": false
   },
   "payment": {
-    "methods": ["free_tier", "subscription"],
+    "methods": [
+      "free_tier",
+      "subscription"
+    ],
     "auth_type": "oauth2",
     "signup_url": "https://workspace.google.com/"
   },
@@ -38,10 +62,15 @@
   "data_governance": {
     "data_owner": "user",
     "exportable": true,
-    "export_formats": ["mbox", "json"],
+    "export_formats": [
+      "mbox",
+      "json"
+    ],
     "trains_on_user_data": "no",
     "retention": "User mailbox retention follows Google account/workspace policy.",
-    "residency": ["global"],
+    "residency": [
+      "global"
+    ],
     "lock_in_notes": "Email is portable via IMAP/Takeout, but labels and thread state are Gmail-specific."
   },
   "quality": {
@@ -58,18 +87,37 @@
   },
   "sla": {
     "rate_limit": "1,200,000 quota units per minute per project; method costs vary, drafts.send costs 100 units.",
-    "regions": ["global"]
+    "regions": [
+      "global"
+    ],
+    "uptime": 0.999
   },
   "operational_constraints": {
     "risk_class": "high",
-    "side_effects": ["external_api_call", "network_access", "sends_message", "persistent_state"],
+    "side_effects": [
+      "external_api_call",
+      "network_access",
+      "sends_message",
+      "persistent_state"
+    ],
     "approval": {
       "required": "conditional",
-      "conditions": ["send email", "add external recipients", "send more than 10 messages", "attach files", "delete or archive messages"],
+      "conditions": [
+        "send email",
+        "add external recipients",
+        "send more than 10 messages",
+        "attach files",
+        "delete or archive messages"
+      ],
       "human_readable": "Agents may draft freely under policy; sending or destructive mailbox actions should require approval."
     },
     "rate_limits": [
-      { "dimension": "quota_unit", "limit": 1200000, "period": "minute", "scope": "project" }
+      {
+        "dimension": "quota_unit",
+        "limit": 1200000,
+        "period": "minute",
+        "scope": "project"
+      }
     ],
     "receipt_required": true,
     "policy_notes": "Email send is a user-visible external action and should be treated differently from mailbox search."
@@ -79,6 +127,6 @@
     "retrieved_at": "2026-06-08T00:00:00Z",
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "manual_verified",
-    "notes": "Verified quota-unit limit and method-unit examples from official Gmail API quota docs."
+    "notes": "Verified quota-unit limit and method-unit examples from official Gmail API quota docs. SLA verified 2026-06: Google Workspace SLA 99.9% monthly uptime; Gmail is a covered service (paid Workspace tiers)."
   }
 }

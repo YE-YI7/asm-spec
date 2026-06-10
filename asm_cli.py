@@ -503,9 +503,62 @@ def _format_route_config(fmt: str, ranked: list, query: str) -> str:
     raise ValueError(f"Unsupported route format: {fmt}")
 
 
+def cmd_select(args: argparse.Namespace) -> int:
+    """Tool selection over the library/ manifests (the agent-tool-selection wedge)."""
+    from library_select import select  # stdlib-only; lazy to keep CLI startup lean
+
+    result = select(
+        args.task,
+        taxonomy=args.taxonomy,
+        agent_reach=args.reach,
+        user_platform=args.platform,
+        required_functions=[f for f in (args.requires or "").split(",") if f],
+        require_approval_for=[s for s in (args.approval_for or "").split(",") if s],
+        require_agent_completable_setup=args.agent_setup_only,
+    )
+    if args.json:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 0 if result["selected"] else 2
+
+    sel = result["selected"]
+    if not sel:
+        print("No eligible tool.")
+        for r in result["rejected"][: args.limit]:
+            print(f"  - {r['service']}: {r['reason']}")
+        return 2
+    print(f"Selected: {sel['display_name']} ({sel['service_id']})")
+    print(f"  cost=${sel['monthly_cost_usd']}/mo, interface={sel['interface']}, reach={sel['reach']}")
+    if sel.get("agent_completable_setup") is not None:
+        print(f"  setup: agent_completable={sel['agent_completable_setup']}, requires={sel.get('setup_requires', [])}")
+    print(f"  risk={result['risk_class']}, approval_required={result['approval_required']}, side_effects={result['side_effects']}")
+    print(f"  reason: {result['reason']}")
+    for alt in result["alternatives"][: args.limit]:
+        print(f"  alt: {alt['display_name']} (${alt['monthly_cost_usd']}/mo)")
+    if result["rejected"]:
+        print("  filtered out:")
+        for r in result["rejected"][: args.limit]:
+            print(f"   - {r['service']}: {r['reason']}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="asm", description="Agent Service Manifest CLI")
     sub = parser.add_subparsers(dest="command", required=True)
+
+    sel = sub.add_parser("select", help="Pick a TOOL from the ASM library for an agent task")
+    sel.add_argument("task", help='Example: "find and book a refundable flight"')
+    sel.add_argument("--taxonomy", help="Scope candidates, e.g. tool.booking.travel")
+    sel.add_argument("--reach", default="cloud", choices=["cloud", "local_device"],
+                     help="Where the agent runs (default: cloud)")
+    sel.add_argument("--platform", default="any", help="User platform: windows, macos, ios, android, web, any")
+    sel.add_argument("--requires", help="Comma-separated required functions, e.g. flight_search,flight_order_create")
+    sel.add_argument("--approval-for", dest="approval_for",
+                     help="Comma-separated side-effects that force approval, e.g. financial_charge,sends_message")
+    sel.add_argument("--agent-setup-only", action="store_true",
+                     help="Drop tools needing human-in-the-loop setup (paid signup, OAuth consent, approval)")
+    sel.add_argument("--json", action="store_true", help="Emit the structured decision as JSON")
+    sel.add_argument("--limit", type=int, default=5, help="Maximum alternatives/rejections to print")
+    sel.set_defaults(func=cmd_select)
 
     score = sub.add_parser("score", help="Rank services for a natural-language service request")
     score.add_argument("query", help='Example: "cheap reliable TTS under 1s"')

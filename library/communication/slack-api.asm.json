@@ -5,27 +5,50 @@
   "display_name": "Slack Web API",
   "capabilities": {
     "description": "Slack API for channel/message workflows, workspace automation, and app-driven collaboration.",
-    "functions": ["chat_read", "chat_send", "channel_list", "user_lookup", "webhooks", "events"],
-    "input_modalities": ["text", "structured_data"],
-    "output_modalities": ["text", "structured_data"]
+    "functions": [
+      "chat_read",
+      "chat_send",
+      "channel_list",
+      "user_lookup",
+      "webhooks",
+      "events"
+    ],
+    "input_modalities": [
+      "text",
+      "structured_data"
+    ],
+    "output_modalities": [
+      "text",
+      "structured_data"
+    ]
   },
   "invocation": {
     "interface": "rest_api",
     "reach": "cloud",
     "agent_operable": true,
     "auth_to_invoke": "oauth",
-    "platforms": ["any"],
+    "platforms": [
+      "any"
+    ],
     "docs_url": "https://api.slack.com/web"
   },
   "pricing": {
     "billing_dimensions": [
-      { "dimension": "api_call", "unit": "per_1", "cost_per_unit": 0, "currency": "USD" }
+      {
+        "dimension": "api_call",
+        "unit": "per_1",
+        "cost_per_unit": 0,
+        "currency": "USD"
+      }
     ],
     "free_tier": "API access included with Slack workspace/app usage; paid workspace features separate.",
     "estimated": false
   },
   "payment": {
-    "methods": ["free_tier", "subscription"],
+    "methods": [
+      "free_tier",
+      "subscription"
+    ],
     "auth_type": "oauth2",
     "signup_url": "https://slack.com"
   },
@@ -38,7 +61,9 @@
   "data_governance": {
     "data_owner": "shared",
     "exportable": true,
-    "export_formats": ["json"],
+    "export_formats": [
+      "json"
+    ],
     "trains_on_user_data": "unknown",
     "retention": "Workspace retention/export policy controls message availability.",
     "lock_in_notes": "Threads, reactions, and channel permissions are Slack-specific."
@@ -57,18 +82,36 @@
   },
   "sla": {
     "rate_limit": "Per-method, per-app, per-workspace tiers; posting messages generally no more than 1 message per second per channel.",
-    "regions": ["global"]
+    "regions": [
+      "global"
+    ],
+    "uptime": 0.9999
   },
   "operational_constraints": {
     "risk_class": "high",
-    "side_effects": ["external_api_call", "network_access", "sends_message", "persistent_state"],
+    "side_effects": [
+      "external_api_call",
+      "network_access",
+      "sends_message",
+      "persistent_state"
+    ],
     "approval": {
       "required": "conditional",
-      "conditions": ["post message to a channel", "DM a user", "invite users", "delete or modify messages"],
+      "conditions": [
+        "post message to a channel",
+        "DM a user",
+        "invite users",
+        "delete or modify messages"
+      ],
       "human_readable": "Workspace-visible messages and destructive actions should require approval."
     },
     "rate_limits": [
-      { "dimension": "message", "limit": 1, "period": "second", "scope": "channel" }
+      {
+        "dimension": "message",
+        "limit": 1,
+        "period": "second",
+        "scope": "channel"
+      }
     ],
     "receipt_required": true
   },
@@ -77,6 +120,6 @@
     "retrieved_at": "2026-06-08T00:00:00Z",
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "manual_verified",
-    "notes": "Verified rate-limit tier model and message-posting guidance from official Slack API docs."
+    "notes": "Verified rate-limit tier model and message-posting guidance from official Slack API docs. SLA verified 2026-06: 99.99% uptime guarantee applies to paid Business+/Enterprise Grid plans (not the free tier); 100x credit policy."
   }
 }
