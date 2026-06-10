@@ -49,7 +49,9 @@ Optional pointer:
 _meta.io.modelcontextprotocol.registry/publisher-provided.asm_url
 ```
 
-Use `asm_url` when the full manifest is too large for a registry metadata field or when the publisher wants a canonical `.well-known/asm` endpoint.
+**Inline vs link — pick by mutability.** Inline `asm` blocks are for *static* facts (taxonomy, invocation shape, payment model). For *mutable* value data — pricing, SLA, quality scores — `asm_url` pointing at a canonical `.well-known/asm` is the recommended shape: freshness then has a single source the publisher re-stamps once, instead of N embedded copies that drift out of sync. This matters most for multi-server hosts: a gateway serving hundreds of cards can cheaply refresh one catalog timestamp, but cannot re-stamp every embedded rider block on each refresh without it diverging from runtime. (Guidance from a production 810-pack gateway operator — modelcontextprotocol/experimental-ext-server-card#27.)
+
+`asm_url` is also the right choice when the full manifest is too large for a registry metadata field.
 
 ## Field mapping
 
@@ -65,6 +67,7 @@ Use `asm_url` when the full manifest is too large for a registry metadata field 
 
 - `asm` SHOULD be a valid ASM v0.3 manifest object.
 - `asm_url` MAY point to the same manifest at `.well-known/asm`.
+- Mutable value data (pricing, SLA, quality) SHOULD live behind `asm_url`; inline `asm` SHOULD be limited to static descriptors. Consumers SHOULD prefer the linked manifest when both are present and they disagree.
 - Aggregators SHOULD treat missing ASM as a warning, not as an invalid MCP server.
 - Aggregators SHOULD validate `asm` against `schema/asm-v0.3.schema.json`.
 - Selectors SHOULD compare quality scores only within matching `quality.metrics[].name` / `benchmark` semantics.

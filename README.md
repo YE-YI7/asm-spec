@@ -34,7 +34,7 @@ Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs
 
 The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + payment together in machine-actionable form. ASM is that missing value/selection layer — and it rides on top of the connection layers, not against them.
 
-ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`.
+ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`. Convention: inline blocks carry *static* facts; *mutable* value data (pricing/SLA/quality) should live behind `asm_url` so freshness has a single re-stampable source — guidance hardened by a production multi-server host (see [`docs/integrations/mcp-registry.md`](docs/integrations/mcp-registry.md)).
 
 ## Use it from an agent (MCP server)
 
