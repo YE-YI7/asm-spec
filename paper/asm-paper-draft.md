@@ -1,24 +1,24 @@
-# Agent Service Manifest: A Settlement Protocol for Value-Aware Service Selection in Agent Economies
+# Agent Service Manifest: A Settlement Protocol for Value-Aware Tool Selection in Agent Economies
 
-> **Draft — Complete (Sections 1-8), Revision 2**
+> **Draft — Complete (Sections 1-8), Revision 3 (tool-selection reframing)**
 > Authors: Yi Guo
-> Date: April 2026
+> Date: June 2026
 
 ---
 
 ## Abstract
 
-Autonomous agents increasingly choose among competing AI services before they execute or pay. Existing protocols cover capability discovery (MCP), inter-agent communication (A2A), and payment execution (AP2), but a settlement layer is missing: agents can see what tools do, yet cannot compute what services are worth. We present **Agent Service Manifest (ASM)**, a lightweight settlement protocol: a JSON Schema giving agents standardised value descriptors across pricing, quality, SLA, provenance, verification, and payment. Two audits ground the gap: 0/50 MCP-related GitHub repositories and 0/14,519 entries across five MCP registries and directories (including the full MCPCorpus dataset) expose all four core value classes simultaneously. We stress-test ASM across offline selection, LLM selection, live execution, and external preference signals using **75 manifests across 47 taxonomies** and a two-stage selection engine (constraint filter + TOPSIS). On 200 synthetic tasks ASM improves preference-weighted utility by **23.1%** over random and cuts cost **59.2%** vs. most-expensive ($p < 10^{-6}$, < 5 ms scoring overhead); on 20 natural-language user requests, ASM is zero-regret on 100% vs. 75% for the strongest single-axis policy. Across three frontier LLMs (DeepSeek-V4-flash, Qwen3-Max, Kimi K2.5), swapping raw HTML for ASM manifests raises top-1 selection accuracy from **63.9-72.2% to 100.0%** with non-overlapping 95% CIs. A live-execution follow-up over 30 real tasks routed through five Chinese-LLM endpoints shows ASM-TOPSIS matching the strongest deterministic baseline on judge-rated quality at the same realised cost, but only after enforcing a same-benchmark candidate-set constraint, providing direct in-the-wild evidence of the protocol's quality-normalisation limitation. ASM's contribution is the surface change: brittle HTML parsing becomes deterministic numerical comparison, and its honest caveat is that the protocol inherits the data quality of the manifests it is fed. Beyond author-curated experiments, the protocol has shipped its **first external reference integration** (Akkhar-Code by Akkhar-Labs) via an open RFC-to-PR-to-merge process, with the contributor's `supersedes` correction convention and `public_key_fingerprint` signature pinning landing in the receipt envelope spec — first evidence that the protocol attracts and integrates third-party producers, not only author-curated manifests.
+Autonomous agents increasingly act on a human's behalf, and to do so they must choose among heterogeneous tools: GUI applications, CLIs, and APIs; free and paid; cloud-hosted and local-only. Existing protocols cover capability discovery (MCP), inter-agent communication (A2A), and payment execution (AP2), but the selection layer is missing twice over: an agent can see what a tool does, yet can compute neither *whether it can use it* — invocability from its runtime, permitted automation, unattended setup — nor *what it is worth* — price, quality, reliability, data terms. We present **Agent Service Manifest (ASM)**, a lightweight settlement protocol: a JSON Schema giving agents standardised eligibility and value descriptors across invocation, usage terms, data governance, pricing, quality, SLA, provenance, verification, and payment. Selection proceeds as eligibility gating followed by preference-weighted multi-criteria ranking (constraint filter + TOPSIS). Two audits ground the gap: 0/50 MCP-related GitHub repositories and 0/14,519 entries across five MCP registries and directories (including the full MCPCorpus dataset) expose all four core value classes simultaneously. We validate the **value layer in depth** on the AI-service slice — **75 manifests across 47 taxonomies**; on 200 synthetic tasks ASM improves preference-weighted utility by **23.1%** over random and cuts cost **59.2%** vs. most-expensive ($p < 10^{-6}$, < 5 ms scoring overhead); across three frontier LLMs (DeepSeek-V4-flash, Qwen3-Max, Kimi K2.5), swapping raw HTML for ASM manifests raises top-1 selection accuracy from **63.9-72.2% to 100.0%** with non-overlapping 95% CIs; a live-execution follow-up over 30 real tasks exposes the protocol's quality-normalisation limitation in the wild. We then validate the **eligibility layer in breadth** with a curated tool-value library of **30 real products across 7 task domains** (task management, design, research, communication, developer tools, booking, real-estate data), where the selected tool changes correctly with the agent's runtime, the task's capability requirements, and operational risk — a flight-booking task returns `risk=critical, approval required` before any call is made. The strongest external evidence is a **production co-design loop**: after a first reference integration (Akkhar-Code receipts, shipped via an open RFC-to-PR-to-merge process), the operator of an 810-pack MCP gateway ran the selector, identified the missing signal — distinguishing tools an agent can use immediately from tools whose onboarding requires a human — and that signal shipped the same day as first-class schema fields (`agent_completable_setup`, `setup_requires`), followed by an inline-vs-link mutability convention drawn from the same operator's feedback. ASM rides MCP Server Cards as a `_meta` "rider" extension alongside two independent riders (payment, project context), and ships five distribution surfaces, including a live hosted selector. ASM's honest caveat is unchanged: the protocol inherits the data quality of the manifests it is fed; library coverage is curated, and gaps are documented rather than fabricated.
 
 ---
 
 ## 1. Introduction
 
-The AI service economy is undergoing a fundamental transformation. As autonomous agents become the primary consumers of AI services — invoking language models, generating images, synthesizing speech, and orchestrating compute resources on behalf of human users — the scale and frequency of service selection decisions has grown by orders of magnitude. A single complex agent workflow may require selecting among dozens of candidate services across multiple categories, each with distinct pricing structures, quality profiles, and operational characteristics.
+The agent economy is undergoing a fundamental transformation. When a user asks an agent to "make me a study plan and remind me daily," the agent must select and *operate* real products to deliver: a task manager to hold the plan, a reminder mechanism to fire daily, perhaps a pomodoro timer. The candidates are radically heterogeneous — some expose clean cloud APIs, some are drivable only by on-device automation, some are GUI-only and cannot be driven at all; some are free, some need a paid subscription or a user-supplied API key; some permit automated use and some forbid it in their terms. The same structure repeats across everything agents are asked to do — booking travel, sending team updates, editing images, opening pull requests, pulling property data — and a single workflow may require such selection decisions across multiple categories, each with distinct invocation surfaces, pricing structures, quality profiles, and operational risk. AI services (language models, image generation, speech synthesis) are one slice of this space, and the slice where structured value data is deepest; but the selection problem an agent actually faces is the general one: *which tool, of the ones I can use and am allowed to use, best fits this task at what cost and risk?*
 
 This transformation has been supported by significant advances in agent infrastructure protocols. The **Model Context Protocol** (MCP) [1], introduced by Anthropic and now supported by major platforms including OpenAI and Google, provides a standardized mechanism for agents to discover and invoke external tools. Google's **Agent-to-Agent Protocol** (A2A) [2] enables structured communication between agents, while the **Agent Payment Protocol** (AP2) [3] defines secure transaction execution for agent-initiated purchases. Together, these protocols address the fundamental questions of *what tools can do*, *how agents communicate*, and *how to pay safely*.
 
-However, a critical gap remains: **no existing protocol tells an agent what a service is worth**.
+However, a critical gap remains — and it is double. **No existing protocol tells an agent whether it can use a tool, and no existing protocol tells it what the tool is worth.** The first half is the eligibility question: can this agent, from its runtime (a headless cloud process vs. an agent resident on the user's device), drive this tool at all? Is automated use permitted by the terms of service? Can the agent get from zero to a working call without a human completing a signup, a payment, or an OAuth consent? The second half is the value question: among the eligible candidates, which is worth selecting on price, quality, reliability, and data terms? Connection-layer protocols and integration platforms (MCP and Server Cards, Zapier's 8,000+ connectors, Composio's 850+) answer *how to connect*; none answers *which of several to pick*.
 
 When an agent faces three subtitle generation APIs priced at $0.10/minute, $0.03/minute, and free (with a 5-minute queue), it possesses no structured data to make an informed choice. The pricing information exists only in human-readable HTML pages with inconsistent formats. Quality data is scattered across blog posts, social media discussions, and vendor marketing materials. SLA parameters — latency percentiles, uptime guarantees, rate limits — are buried in documentation that varies wildly in structure and completeness. The result is that **agent intelligence drops to zero at the service selection step**: regardless of how capable the underlying model is, it cannot optimize over information it cannot parse.
 
@@ -32,15 +32,17 @@ To test whether this gap exists in current practice rather than only in theory, 
 
 In this paper, we present **Agent Service Manifest (ASM)**, an open settlement protocol designed to fill this gap. ASM provides:
 
-1. **A standardized value descriptor** — a JSON Schema specification covering pricing (open billing dimensions with tiered and conditional pricing), quality (third-party benchmark references with trust transparency), SLA (latency, throughput, uptime, rate limits), provenance, and payment methods (pre-wired for AP2 interop).
+1. **A standardized eligibility + value descriptor** — a JSON Schema specification covering, on the eligibility side, invocation (interface, cloud/local reach, agent operability, and whether setup is completable without a human — `agent_completable_setup` / `setup_requires`), usage terms (whether automated use is permitted at all), and data governance (ownership, export, training-use, retention); and, on the value side, pricing (open billing dimensions with tiered and conditional pricing), quality (third-party benchmark references with trust transparency), SLA (latency, throughput, uptime, rate limits), operational constraints (risk class, side effects, approval boundaries), provenance, and payment methods (pre-wired for AP2 interop).
 
 2. **A hierarchical taxonomy** — a 47-category classification system (e.g., `ai.llm.chat`, `ai.vision.image_generation`, `infra.compute.gpu`, `tool.devops.monitoring`, `tool.productivity.calendar`) that enables agents to search, filter, and match services across categories using prefix queries.
 
-3. **A two-stage selection engine** — combining hard constraint filtering with TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) multi-criteria ranking, producing preference-aware recommendations with full explainability.
+3. **A gated selection engine** — eligibility gates (agent-operability, reach, terms, platform, capability fit, setup completability) applied before hard constraint filtering and TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) multi-criteria ranking, producing preference-aware recommendations that carry the selected tool's risk class and approval requirement, with full explainability including per-candidate rejection reasons.
 
-4. **An MCP-compatible integration path** — ASM can be deployed as an independent `.well-known/asm` endpoint (Phase 1), embedded today in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm` (Phase 2), or proposed as a native registry/specification field through a SEP (Phase 3), ensuring zero breaking changes at each stage.
+4. **An MCP-compatible integration path** — ASM can be deployed as an independent `.well-known/asm` endpoint (Phase 1), embedded today in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm` (Phase 2), or carried as a `_meta` "rider" extension on MCP Server Cards alongside independent riders for payment and project context (Phase 3, in progress on the Extensions track), ensuring zero breaking changes at each stage. A mutability convention governs the embed: inline blocks carry static facts; mutable value data (pricing, SLA, quality) lives behind `asm_url` so freshness has a single re-stampable source.
 
-We stress-test ASM with **75 real-world service manifests spanning 47 taxonomies**, all carrying explicit provenance metadata, and with two ecosystem audits (n=50 GitHub repositories and n=14,519 registry / directory entries) showing that structured value metadata is absent in current practice. A 200-task A/B evaluation, a 7-baseline regret analysis, a 20-request natural-language preference-alignment suite, a three-LLM ranking experiment, a live-execution follow-up, and external Arena/OpenRouter stress tests converge on the same finding: when value metadata is structured and semantically comparable, selection becomes deterministic and cross-LLM-stable; when it is not, even frontier LLMs leave 28-36 percentage points of top-1 accuracy on the table or propagate bad benchmark assumptions. Our framing throughout this paper is therefore not "ASM is faster or cheaper than X"; it is **"without structured value metadata, agent service selection is not reproducible - and ASM is a runnable, reproducible, integrable layer that fixes this".**
+5. **A curated tool-value library and selector** — 30 real products across 7 task domains, each entry source-linked and schema-validated, with unverified dimensions documented rather than fabricated; distributed through five surfaces (importable module, CLI, MCP server, hosted HTTP API, LangChain tool) so agent builders can consume selection decisions without adopting the schema.
+
+We validate ASM at two depths. **In depth**, on the AI-service slice: **75 real-world service manifests spanning 47 taxonomies**, all carrying explicit provenance metadata, with two ecosystem audits (n=50 GitHub repositories and n=14,519 registry / directory entries) showing that structured value metadata is absent in current practice. A 200-task A/B evaluation, a 7-baseline regret analysis, a 20-request natural-language preference-alignment suite, a three-LLM ranking experiment, a live-execution follow-up, and external Arena/OpenRouter stress tests converge on the same finding: when value metadata is structured and semantically comparable, selection becomes deterministic and cross-LLM-stable; when it is not, even frontier LLMs leave 28-36 percentage points of top-1 accuracy on the table or propagate bad benchmark assumptions. **In breadth**, on the general tool-selection problem: a curated library of 30 real products across 7 task domains, where eligibility gates (cloud vs. local-only reach, GUI-only tools, aggregator-only access, human-in-the-loop setup) change the selected tool correctly as the agent's runtime and the task's requirements change, and where high-stakes domains surface `risk_class` and approval requirements before any call is made (§6.5d). The eligibility layer's key field was named by a production gateway operator running the selector against an 810-pack catalog, and shipped the same day (§6.5e). Our framing throughout this paper is therefore not "ASM is faster or cheaper than X"; it is **"without structured eligibility and value metadata, agent tool selection is not reproducible - and ASM is a runnable, reproducible, integrable layer that fixes this".**
 
 The remainder of this paper is organized as follows. Section 2 formalizes the service selection problem. Section 3 surveys related work. Section 4 presents the ASM protocol design. Section 5 describes the reference implementation. Section 6 evaluates ASM across multiple scenarios. Section 7 discusses limitations, trust mechanisms, and future directions. Section 8 concludes.
 
@@ -50,11 +52,19 @@ The remainder of this paper is organized as follows. Section 2 formalizes the se
 
 ### 2.1 Setting
 
-We consider a setting where an autonomous agent $\mathcal{A}$ receives a task $T$ from a user $U$ and must select one or more services from a candidate set $\mathcal{S} = \{s_1, s_2, \ldots, s_n\}$ to fulfill the task. Each service $s_i$ is characterized by a multi-dimensional value vector:
+We consider a setting where an autonomous agent $\mathcal{A}$, running in an execution environment $E$ (cloud-hosted or resident on the user's device, on a given platform, holding a given set of credentials), receives a task $T$ from a user $U$ and must select one or more tools from a candidate set $\mathcal{S} = \{s_1, s_2, \ldots, s_n\}$ to fulfill the task. Each tool $s_i$ is characterized by an eligibility descriptor and a value vector:
 
-$$\mathbf{v}_i = (c_i, q_i, l_i, r_i, \mathbf{e}_i)$$
+$$\mathbf{g}_i = (\text{op}_i, \text{reach}_i, \text{terms}_i, \text{plat}_i, \text{setup}_i, F_i) \qquad \mathbf{v}_i = (c_i, q_i, l_i, r_i, \mathbf{e}_i)$$
 
-where:
+where the eligibility descriptor declares:
+- $\text{op}_i \in \{0,1\}$ — whether an autonomous agent can drive the tool at all (a GUI-only application is $\text{op}_i = 0$)
+- $\text{reach}_i \in \{\text{cloud}, \text{local\_device}, \text{hybrid}\}$ — where an agent must run to drive it
+- $\text{terms}_i$ — whether automated use is permitted by the provider's terms
+- $\text{plat}_i$ — supported platforms
+- $\text{setup}_i \in \{0,1\}$ — whether an agent can get from zero to a working call with no human-in-the-loop step (paid signup, OAuth consent, manual approval)
+- $F_i$ — the set of concrete capabilities the tool offers
+
+and the value vector declares:
 - $c_i \in \mathbb{R}_{\geq 0}$ is the cost (normalized to a per-unit basis)
 - $q_i \in [0, 1]$ is the quality score (normalized from heterogeneous benchmarks)
 - $l_i \in \mathbb{R}_{> 0}$ is the latency (p50, in seconds)
@@ -75,11 +85,17 @@ Services violating any constraint are eliminated from the candidate set.
 
 ### 2.3 Selection Problem
 
-The agent's objective is to find the service $s^*$ that maximizes a preference-weighted multi-criteria score over the feasible set:
+Selection is a two-phase decision. First, **eligibility gating** eliminates tools the agent cannot or may not use, regardless of how attractive their value vectors are:
+
+$$\mathcal{S}_{\text{elig}} = \{s_i \in \mathcal{S} \mid G(\mathbf{g}_i, E, T) = 1\}$$
+
+where $G$ requires $\text{op}_i = 1$, $\text{reach}_i$ compatible with the agent's environment $E$, automated use permitted by $\text{terms}_i$, platform compatibility, the task's required capabilities $F_T \subseteq F_i$, and — when the agent operates unattended — $\text{setup}_i = 1$. The gate order matters: these are lexicographic vetoes, not weighted criteria; no price discount compensates for a tool the agent cannot drive.
+
+Second, the agent finds the tool $s^*$ that maximizes a preference-weighted multi-criteria score over the feasible set:
 
 $$s^* = \arg\max_{s_i \in \mathcal{S}_{\text{feas}}} \; f(\mathbf{v}_i, \mathbf{w})$$
 
-where $\mathcal{S}_{\text{feas}} = \{s_i \in \mathcal{S} \mid s_i \text{ satisfies } \mathcal{C}\}$ is the set of services passing all hard constraints, and $f$ is a scoring function that maps value vectors and preference weights to a scalar ranking score.
+where $\mathcal{S}_{\text{feas}} = \{s_i \in \mathcal{S}_{\text{elig}} \mid s_i \text{ satisfies } \mathcal{C}\}$ is the set of eligible tools passing all hard constraints, and $f$ is a scoring function that maps value vectors and preference weights to a scalar ranking score. The decision additionally carries the selected tool's operational policy (risk class, side effects, approval requirement) so the caller can gate execution.
 
 ### 2.4 Key Challenges
 
@@ -94,6 +110,8 @@ This formulation reveals several challenges that motivate ASM:
 **C4: Trust asymmetry.** Service providers have economic incentives to overstate quality and understate latency. Without a verification mechanism, agents cannot distinguish self-reported claims from independently verified measurements.
 
 **C5: Preference diversity.** The optimal service depends entirely on who is asking. A user prioritizing cost will choose differently from one prioritizing quality, even when facing the identical candidate set. This rules out any "one size fits all" ranking and necessitates a parameterized scoring function.
+
+**C6: Invocability heterogeneity.** Real tools differ not only in value but in whether an agent can use them at all, and the differences are messier than an API/CLI/GUI ladder. A tool may expose a clean cloud API (Todoist), be drivable only by on-device automation (Things 3 via AppleScript — unreachable for a cloud agent), be reachable only through an aggregator (Any.do via Zapier), or be GUI-only with no automation surface (Affinity Designer, Procreate). Orthogonally, a tool may *technically* accept credentials yet still be unusable unattended because onboarding requires a human: a paid signup (ATTOM), an OAuth consent, or a licensing approval (MLS-class data via the RESO Web API). These properties are hard vetoes, not scoring penalties — which is why ASM models them as a first-class eligibility descriptor rather than folding them into the value vector.
 
 ### 2.5 Relationship to LLM Routing
 
@@ -192,12 +210,19 @@ This means the simplest valid ASM manifest is just 3 lines of JSON — a deliber
 
 | Module | Purpose | Key Fields |
 |--------|---------|------------|
+| `invocation` | Eligibility: can an agent drive it, from where | `interface`, `reach` (cloud / local_device / hybrid), `agent_operable`, `auth_to_invoke`, `agent_completable_setup`, `setup_requires[]`, `automation_paths[]`, `platforms[]` |
+| `usage_terms` | Eligibility: is automated use permitted | `automation_allowed` (yes / conditional / no / unknown), `tos_url`, `license` |
+| `data_governance` | Consequences of use | `data_owner`, `exportable`, `trains_on_user_data` (yes / opt_out / no / unknown), `retention`, `residency[]`, `lock_in_notes` |
+| `capabilities` | Task fit | `functions[]` (concrete capabilities for requirement matching), modalities, limits |
+| `operational_constraints` | Pre-call policy envelope | `risk_class`, `side_effects[]`, `approval` (never / conditional / always), `spend_caps`, `quotas`, `rate_limits` |
 | `pricing` | Cost structure | open `billing_dimensions[]`, `tiers`, `conditions`, `batch_discount`, `free_tier` |
 | `quality` | Performance metrics | `metrics[]` (name, score, scale, benchmark, `self_reported`), `leaderboard_rank` |
 | `sla` | Reliability guarantees | `latency_p50`, `latency_p99`, `throughput`, `uptime`, `rate_limit`, `regions` |
 | `payment` | Payment methods | `methods[]`, `auth_type`, `ap2_endpoint` |
 | `provenance` | Source traceability | `source_url`, `retrieved_at`, `last_verified_at`, `verification_status`, `notes` |
 | `extensions` | Category-specific | Namespaced fields (e.g., `llm.supports_vision`, `image_gen.max_resolution`) |
+
+The first three modules form the **eligibility descriptor** ($\mathbf{g}_i$ in §2.1) and were added when the protocol's scope generalised from AI services to arbitrary tools; all are optional and backward compatible (every pre-existing manifest continues to validate). Two design points deserve note. First, `agent_completable_setup` and `setup_requires` encode the distinction between a tool that is *immediately usable* and one that *technically accepts credentials* but still needs a human to complete a paid signup, an OAuth consent, or a manual approval — a signal named by a production gateway operator after running the selector (§6.5e), and added the same day. Second, `usage_terms` is deliberately independent of `invocation`: a tool may expose a clean API yet forbid automated use, or be GUI-only yet explicitly bless scripting; technical reachability and permission are different gates.
 
 **v0.3 additions** (for Signed Receipts integration):
 
@@ -396,7 +421,7 @@ The `asm:` namespace is registered for receipt type fields, enabling full tracea
 
 ## 5. Reference Implementation
 
-We provide a complete reference implementation consisting of three components: a Python scoring engine (§5.1), a TypeScript MCP server (§5.2), and demonstration scripts (§5.3). All components are open-source under the MIT license.
+We provide a complete reference implementation consisting of four components: a Python scoring engine (§5.1), a TypeScript MCP server (§5.2), demonstration scripts (§5.3), and the tool selector with its five distribution surfaces (§5.4). All components are open-source under the MIT license; the full suite passes 133 tests, including schema validation of every manifest and library entry.
 
 ### 5.1 Scoring Engine
 
@@ -481,11 +506,27 @@ Each scenario demonstrates that the same candidate set produces different optima
 4. Trust-adjusted re-ranking showing how dishonest services are penalized
 5. ASM v0.3 manifest with receipt fields
 
+### 5.4 Tool Selector and Distribution Surfaces
+
+The tool selector (`library_select.py`, pure standard library) implements the gated selection of §2.3 over the library manifests: eligibility gates (agent-operability, reach vs. agent environment, terms, platform, required capabilities, optional `agent_completable_setup`), then cost-first ranking among survivors, returning a structured decision that includes the selected tool's `risk_class`, `approval_required`, `side_effects`, and per-candidate rejection reasons.
+
+One engine is exposed through five surfaces, so agent builders consume selection decisions without adopting the schema:
+
+| Surface | Entry point | Consumer |
+|---------|-------------|----------|
+| Importable module | `from library_select import select` | Python agents |
+| CLI | `asm select "task" --taxonomy ... --json` | Scripts, humans |
+| MCP server | `asm_selector_mcp.py` — `select_tool`, `list_library_tools`, `get_tool_manifest` | Claude Desktop, Cursor, MCP hosts |
+| Hosted HTTP API | `POST /select` (stdlib-only; live public instance) | Any language, zero install |
+| LangChain tool | `ASMToolSelectorTool` (langchain-core `BaseTool`) | LangChain / LangGraph agents |
+
+The MCP and LangChain surfaces return the operational policy inline, so a host can gate a `risk=critical` action (e.g., a flight booking that commits funds and transmits passenger PII) on human approval before invocation — connecting the §4 policy envelope to the place where agents actually act.
+
 ---
 
 ## 6. Evaluation
 
-We evaluate ASM along twelve dimensions: evidence of the missing value layer in current MCP repositories (Section 6.0), registry-level value-metadata coverage (Section 6.0a), coverage of real-world pricing heterogeneity (Section 6.1), scoring behavior across preference profiles (Section 6.2), trust delta effectiveness (Section 6.3), component ablations (Section 6.3a), protocol overhead (Section 6.4), a controlled A/B comparison against baseline selection policies (Section 6.5), live-API execution (Section 6.5b), selection regret and preference alignment (Sections 6.6-6.6a), LLM-as-selector behavior (Section 6.7), and external preference correlation (Section 6.8).
+We evaluate ASM along fourteen dimensions, organised as depth-then-breadth. The **depth track** validates the value layer on the AI-service slice, where structured data is richest: evidence of the missing value layer in current MCP repositories (Section 6.0), registry-level value-metadata coverage (Section 6.0a), coverage of real-world pricing heterogeneity (Section 6.1), scoring behavior across preference profiles (Section 6.2), trust delta effectiveness (Section 6.3), component ablations (Section 6.3a), protocol overhead (Section 6.4), a controlled A/B comparison against baseline selection policies (Section 6.5), live-API execution (Section 6.5b), selection regret and preference alignment (Sections 6.6-6.6a), LLM-as-selector behavior (Section 6.7), and external preference correlation (Section 6.8). The **breadth track** validates the eligibility layer on the general tool-selection problem: a curated multi-domain tool-value library with gated selection (Section 6.5d), and a production co-design loop with a multi-server gateway operator (Section 6.5e). External-producer evidence threads both tracks (Section 6.5c).
 
 ### 6.0 Evidence of the Missing Value Layer in Current MCP Repositories
 
@@ -742,6 +783,35 @@ In the same-benchmark run all six selectors are within ~0.5 judge points (9.21�
 - Schema diff PR: `github.com/calebguo007/asm-spec/pull/8` (merged at commit 99a9773)
 - Cost-delta primitive + tests: `scorer/scorer.py::cost_delta_from_receipt`, `scorer/test_scorer.py::test_cost_delta_*`
 
+### 6.5d Breadth: the Tool-Value Library and Gated Multi-Domain Selection
+
+The experiments above operate on the AI-service slice, where pricing and quality data are densest. The protocol's actual scope — an agent selecting among heterogeneous tools to execute a human's task — requires showing that the eligibility descriptor (§2.1, §4.1) does real filtering work outside that slice. We curated a **tool-value library of 30 real products across 7 task domains**: task management (9 — Todoist, TickTick, Microsoft To Do, Google Tasks, Things 3, Apple Reminders, Notion, Motion, Any.do), creative/design (7 — Figma, Canva, Photoshop, GIMP, Photopea, Affinity Designer, Procreate), research (3), communication (2 — Gmail, Slack), developer tools (2 — GitHub, Linear), booking (3 — Calendly, Duffel, Amadeus), and real-estate data (4 — Census, HUD, ATTOM, RESO).
+
+**Curation discipline.** Every entry is source-linked: pricing from provider pages, invocability from developer documentation, governance from privacy policies and AI-product terms, quality from public ratings (App Store / G2 / Trustpilot) with `benchmark_url` and `self_reported: false`. Dimensions we could not source are recorded as `unknown` or omitted, and a public coverage report enumerates the gaps (at this snapshot: quality sourced for 22/30, published SLA exists for 11/30, training-use stance verifiable for 19/30). The library deliberately contains *negative* invocability examples: two GUI-only tools no agent can drive (Affinity Designer, Procreate), one tool reachable only through an aggregator (Any.do via Zapier), and two drivable only on the user's own device (Things 3, Apple Reminders).
+
+**Gated selection changes the answer for the right reasons.** Representative scenarios from the selector demo (all reproducible via `library/select_demo.py`):
+
+- *"Store a study plan + daily reminders"* (cloud agent, Windows user): the selector drops Things 3 and Apple Reminders (`reach=local_device` — a cloud agent cannot drive them), drops Any.do (not agent-operable directly), drops Google Tasks (missing required functions), and picks Todoist at $0/mo. Adding a pomodoro requirement flips the pick to TickTick — the only survivor with the capability.
+- *"Edit an image / lay out a poster"* (cloud agent): picks free, scriptable Photopea over Photoshop at $22.99/mo; Affinity Designer is filtered as not agent-operable.
+- *"Find and book a refundable flight"*: picks Amadeus, and the decision carries `risk_class=critical, approval=always`, with declared side effects `financial_charge`, `passenger_pii`, `booking_commitment` — the policy envelope an agent host needs to demand human approval before committing funds.
+- *"Pull property data"* with `require_agent_completable_setup=true` (an unattended agent): picks the US Census Data API (keyless, immediately usable) and rejects HUD (`account_creation, api_key_request`), ATTOM (`paid_signup`), and RESO/MLS (`mls_membership_approval, licensing_agreement, oauth_consent`) — each with an explicit, machine-readable rejection reason.
+
+**What this validates.** The eligibility gates are not decorative: in every scenario at least one value-attractive candidate is vetoed for a reason no price discount can compensate (cannot drive it, may not automate it, cannot finish setup unattended). Selection outcomes change correctly with the agent's runtime and the task's requirements, and high-stakes selections surface approval requirements before execution. **What this does not validate**: the library is author-curated (n=30) and selection quality is judged by construction (the gates fire on documented facts), not by user studies; scaling curation beyond single-author throughput is an open problem discussed in §7.1.
+
+### 6.5e A Production Co-Design Loop: the Invocability-Setup Signal
+
+§6.5c reported the first external producer integration. This section reports a stronger form of external evidence: a **production operator using the selector and changing the protocol**.
+
+The operator runs an open MCP gateway serving **810 server packs on one origin** [17] — a multi-server host whose daily operating problem is exactly the selection question ("which of these 810 do I pick"). After the gateway shipped MCP Server Cards in production, the operator ran the library selector and reported, unprompted, that the invocability rejections (the Zapier-only and local-device cases above) were "exactly the gate we're missing." Asked which single signal would most improve their routing — their stack used embedding retrieval over ~10 candidates plus an LLM chooser, with no cost, latency, or invocability modeling — they answered: **invocability, specifically distinguishing tools that are immediately usable from tools that technically accept credentials but still require a paid signup, OAuth flow, or other human-in-the-loop setup an agent cannot complete.**
+
+That distinction did not exist in the schema. It shipped the same day as two first-class fields — `invocation.agent_completable_setup` (boolean) and `invocation.setup_requires` (enumerated human-in-the-loop steps) — and a four-source real-estate library slice the operator suggested as the stress test, spanning the full setup spectrum: keyless (Census), free-signup (HUD), paid-signup (ATTOM), and licensing-plus-OAuth (RESO/MLS). The selector gained a corresponding gate (`require_agent_completable_setup`), exposed across all five distribution surfaces.
+
+A second protocol change followed from the same operator's scale experience: serving hundreds of cards, a host can cheaply re-stamp one catalog's freshness timestamp but cannot re-stamp hundreds of embedded metadata blocks on every refresh without drifting from runtime. This became ASM's **inline-vs-link mutability convention**: inline `_meta` blocks carry static facts; mutable value data (pricing, SLA, quality) lives behind `asm_url` at a canonical `.well-known/asm`, so freshness has a single re-stampable source, and consumers prefer the linked manifest when the two disagree.
+
+**Ecosystem context.** This loop ran inside MCP's extension surface rather than beside it: ASM rides Server Cards as a reverse-DNS `_meta` "rider" extension, a pattern the same operator independently grouped with two other live riders (payment, project context) as the expected adoption surface for adjacent concerns [18]. The three rider authors have since aligned on shared mechanism rules (namespaced key, self-describing value, runtime consistency, declared freshness) while keeping payloads distinct.
+
+**What this validates — and does not.** It validates that the protocol's feedback loop works under production pressure: a non-author operator ran the artifact, named a missing primitive from operating experience, and the primitive landed as schema the same day — the eligibility analogue of §6.5c's receipt-envelope loop, from an operator with a 810-pack catalog rather than a pre-launch product. It does not validate adoption: at this writing the gateway has not published ASM metadata for its packs, the rider documentation issue remains open, and n = 1 operator's routing priorities may not generalise. We report a co-design loop, not a deployment.
+
 ### 6.6 Selection Regret Against Stronger Heuristic Baselines
 
 The previous experiment demonstrates gains over random and premium-price heuristics, but those are weak baselines. We therefore add a regret evaluation against five stronger policies: cheapest-first, fastest-first, highest-quality-first, weighted-average scoring, and most-expensive-first. For each task, regret is defined as:
@@ -924,6 +994,10 @@ A second, independent external signal is OpenRouter's per-model 7-day token-volu
 
 **Evaluation with simulated tasks.** The §6.5 A/B experiment selects over real, source-linked manifest data, but the tasks themselves are synthesized rather than drawn from a deployed agent's request stream, and scoring uses the manifests' declared values rather than measured runtime values. Live-API replication — where each policy's selection is *executed* and the realized cost, latency, and quality are fed back through Signed Receipts — is the natural next step, and the most direct way to convert §6.5's selection-utility advantage into realized outcome evidence.
 
+**Library curation scale.** The tool-value library (§6.5d) is author-curated at n = 30. Single-author curation does not scale to the long tail of tools agents encounter, and the quality axis for non-AI tools currently leans on public store/review ratings — a popularity-adjacent signal with known biases, used because it is verifiable, not because it is ideal. The intended path mirrors the manifests' own: curated entries bootstrap the selector's usefulness; producers then publish first-party ASM (the §6.5e operator's catalog being the natural first candidate) because appearing in selectors becomes valuable. Until that flywheel turns, library coverage and its `unknown` markers are published in a coverage report rather than smoothed over.
+
+**Eligibility facts can drift.** `agent_completable_setup`, terms-of-service permissions, and platform support change at provider discretion, and unlike pricing they rarely carry machine-readable change feeds. The `updated_at`/`ttl` freshness mechanism and the inline-vs-link convention (§6.5e) mitigate staleness for consumers, but verifying eligibility claims ultimately needs the same receipt-style feedback loop the value axes have.
+
 ### 7.2 Trust Mechanisms in Context
 
 ASM's trust model is complementary to existing approaches:
@@ -950,6 +1024,10 @@ This positions ASM not as a marketplace itself, but as the data layer that enabl
 
 **Second external reference integration.** §6.5c reports n = 1: one third-party producer (Akkhar-Code by Akkhar-Labs) implementing the v0.1 receipt envelope. The natural next step is a second integration from a different category (e.g. a TTS or image-generation service emitting receipts under `ai.audio.tts` / `ai.vision.image_generation`) to stress-test the `supersedes` correction semantics, retry-advisory parameters, and `delegates_to` chain under different operational pressure than an agentic IDE.
 
+**Producer-published eligibility metadata.** §6.5d's library is consumer-side curation. The natural next step is the §6.5e operator's catalog publishing first-party ASM blocks (static eligibility inline, mutable value behind `asm_url` per the mutability convention), which would convert the co-design loop into the first production deployment and let the selector rank a live 810-pack catalog instead of a curated 30-tool library.
+
+**Rider-pattern standardisation.** The shared mechanism rules co-drafted with the faf and mcp-pay authors (namespaced `_meta` key, self-describing value, runtime consistency, declared freshness) are a candidate for the Server Card wire-format documentation on MCP's Extensions track; if adopted, adjacent concerns gain a documented home and the core card stays thin.
+
 **Real-time pricing.** Extending ASM with WebSocket-based pricing feeds for services with volatile costs (e.g., GPU spot pricing, auction-based models).
 
 **Federated registries.** A discovery protocol allowing agents to query multiple ASM registries and merge results, similar to DNS federation.
@@ -964,15 +1042,15 @@ This positions ASM not as a marketplace itself, but as the data layer that enabl
 
 ## 8. Conclusion
 
-We have presented Agent Service Manifest (ASM), an open protocol for the missing value layer in the agent infrastructure stack. The central claim is empirical and deliberately bounded: across two independent ecosystem audits (n=50 GitHub repositories and n=14,519 registry/directory entries), zero entries expose all four core economic value classes (pricing, SLA, quality, payment) in machine-actionable form; across three independent frontier LLMs reading the same provider HTML, top-1 selection accuracy on a 36-task ranking suite is 63.9-72.2%, while the same LLMs given structured ASM manifests reach 100%. **Structured value metadata makes agent service selection reproducible.**
+We have presented Agent Service Manifest (ASM), an open protocol for the missing selection layer in the agent infrastructure stack — the layer that answers, for an agent executing a human's task over heterogeneous tools, both *which of these can I use* and *which is worth using*. The central claims are empirical and deliberately bounded. On the value side: across two independent ecosystem audits (n=50 GitHub repositories and n=14,519 registry/directory entries), zero entries expose all four core economic value classes (pricing, SLA, quality, payment) in machine-actionable form; across three independent frontier LLMs reading the same provider HTML, top-1 selection accuracy on a 36-task ranking suite is 63.9-72.2%, while the same LLMs given structured ASM manifests reach 100%. On the eligibility side: across a 30-tool, 7-domain library of real products, hard gates that no value score can compensate (GUI-only tools, local-only reach, aggregator-only access, human-in-the-loop setup) change the selected tool correctly as the agent's runtime and task change — and the key gate was named by a production gateway operator, not the authors. **Structured eligibility and value metadata make agent tool selection reproducible.**
 
-ASM provides a minimal schema, a provenance-aware manifest format, a trust model that connects declarations to signed receipts, and a two-stage settlement engine that combines hard constraints with preference-weighted TOPSIS ranking. The reference implementation includes a Python scorer, a dual-protocol registry, MCP Registry `server.json` examples, two audit scripts, six evaluation harnesses (A/B, regret, preference alignment, LLM-as-selector, live execution, external preference correlation), 75 real-world manifests across 47 taxonomies, a Docker-based reproducibility image, and a one-command `make reproduce` target that re-derives every offline number in this paper.
+ASM provides a minimal schema with first-class eligibility descriptors (invocation, usage terms, data governance) beside the value modules, a provenance-aware manifest format, a trust model that connects declarations to signed receipts, and a gated settlement engine that applies eligibility vetoes before hard constraints and preference-weighted TOPSIS ranking. The reference implementation includes a Python scorer, a dual-protocol registry, MCP Registry `server.json` examples, two audit scripts, six evaluation harnesses (A/B, regret, preference alignment, LLM-as-selector, live execution, external preference correlation), 75 real-world AI-service manifests across 47 taxonomies, a 30-tool / 7-domain tool-value library with a public coverage report, a selector shipped through five surfaces (importable module, CLI, MCP server, live hosted API, LangChain tool), a Docker-based reproducibility image, and a one-command `make reproduce` target that re-derives every offline number in this paper; the suite passes 133 tests.
 
 ASM does not prove that any provider's quality metric is inherently correct, nor that heterogeneous benchmarks can be safely collapsed into a universal scalar. The live-execution and external-signal stress tests show the opposite: registry-time semantic validation is necessary. The remaining work is therefore adoption and semantic hardening: MCP registries and aggregators should ingest ASM under `_meta`, enforce metric provenance and benchmark compatibility, and move trust mechanisms from self-reported provenance toward third-party verification and receipt-backed updates.
 
-Through an open RFC-to-PR-to-merge process, the protocol shipped its **first external reference integration** (Akkhar-Code by Akkhar-Labs, taxonomy `tool.code.orchestration`) against the v0.3.2 schema. The contributor authored the `supersedes` correction convention and `public_key_fingerprint` signature pinning that now appear in the receipt envelope spec; the full process — integration brief, four open questions, schema diff PR, per-field acceptance review, merge — is preserved at `github.com/calebguo007/asm-spec/issues/7` and PR #8. This is the first evidence that ASM attracts external producers through public protocol governance rather than author-curated demonstration.
+External parties have now shaped the protocol twice, through two different loops. Through an open RFC-to-PR-to-merge process, the protocol shipped its **first external reference integration** (Akkhar-Code by Akkhar-Labs, taxonomy `tool.code.orchestration`) against the v0.3.2 schema; the contributor authored the `supersedes` correction convention and `public_key_fingerprint` signature pinning that now appear in the receipt envelope spec (issue #7, PR #8). Through a **production co-design loop**, the operator of an 810-pack MCP gateway ran the selector, named the missing invocability-setup signal, and that signal shipped the same day as the `agent_completable_setup` / `setup_requires` schema fields, followed by the inline-vs-link mutability convention drawn from the same operator's scale experience (§6.5e). ASM now rides MCP Server Cards as one of three independent `_meta` rider extensions, with shared mechanism rules co-drafted among the rider authors. This is evidence that ASM evolves through public protocol governance and production feedback rather than author-curated demonstration.
 
-If agents are to become economic actors, service selection cannot remain an unstructured browsing task. ASM makes settlement a computable, reproducible step in the agent stack.
+If agents are to become economic actors, tool selection cannot remain an unstructured browsing task — nor a blind one that ignores whether the agent can drive, is permitted to drive, or can even finish onboarding the tool it is about to pick. ASM makes settlement a computable, reproducible step in the agent stack.
 
 The protocol, reference implementation, all 75 service manifests, audit data, evaluation harnesses, and the artifact-evaluation Docker image are available at: <https://github.com/calebguo007/asm-spec>. Reproduction instructions are in `ARTIFACT.md`.
 
@@ -1006,8 +1084,12 @@ The protocol, reference implementation, all 75 service manifests, audit data, ev
 
 [13] C.L. Hwang and K. Yoon. Multiple Attribute Decision Making: Methods and Applications. Springer, 1981.
 
-[14] LMSYS Chatbot Arena (LM Arena). 2024–2025 leaderboard snapshots (`elo_results_*.pkl`). https://huggingface.co/spaces/lmarena-ai/chatbot-arena-leaderboard
+[14] LMSYS Chatbot Arena (LM Arena). 2024–2025 leaderboard snapshots (`elo_results_*.pkl`), superseded by the current dataset at https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset ; https://huggingface.co/spaces/lmarena-ai/chatbot-arena-leaderboard
 
 [15] OpenRouter Model Rankings, 7-day token volume per model variant. https://openrouter.ai/rankings
 
 [16] Akkhar-Labs. Akkhar-Code × ASM integration brief, 2026-05-16 (Rahat Hasan, Akkhar-Labs Architecture). First external reference integration of the ASM v0.3.2 receipt envelope; preserved with attribution at `docs/integrations/akkhar-code-receipt-spec.md`. Tracking issue: github.com/calebguo007/asm-spec/issues/7 ; merged at PR #8 / commit 99a9773 ; tagged at v0.3.2.
+
+[17] Pipeworx. Open MCP gateway: 810 server packs on one origin with per-pack Server Cards and `.well-known/mcp/catalog.json` discovery. Production feedback documented in the SEP-2127 discussion (modelcontextprotocol/modelcontextprotocol PR #2127) and email correspondence, 2026-06. https://gateway.pipeworx.io
+
+[18] MCP Server Cards (SEP-2127) and the `_meta` rider extension surface. Extensions-track incubation at github.com/modelcontextprotocol/experimental-ext-server-card ; rider-pattern documentation issue #27 (mechanism rules co-drafted by the ASM, faf, and mcp-pay authors), 2026-06.
