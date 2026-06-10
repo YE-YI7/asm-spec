@@ -61,5 +61,17 @@
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
     "notes": "Verified 2026-06: free/GPL, local Script-Fu/Python-Fu automation; data fully local (reach=local_device)."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "g2_rating",
+        "score": 4.3,
+        "scale": "0-5",
+        "benchmark": "G2 verified-review rating (2026-06)",
+        "benchmark_url": "https://www.g2.com/products/gimp/reviews",
+        "self_reported": false
+      }
+    ]
   }
 }

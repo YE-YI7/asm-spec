@@ -63,5 +63,17 @@
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
     "notes": "Verified 2026-06: local scripting (UXP/ExtendScript) + cloud API; ~$22.99/mo, no free tier; Firefly trained on licensed content, not customer content (Adobe)."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "g2_rating",
+        "score": 4.6,
+        "scale": "0-5",
+        "benchmark": "G2 verified-review rating (~13K reviews, 2026-06)",
+        "benchmark_url": "https://www.g2.com/products/adobe-photoshop/reviews",
+        "self_reported": false
+      }
+    ]
   }
 }

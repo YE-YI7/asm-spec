@@ -68,5 +68,17 @@
       "eu"
     ],
     "lock_in_notes": "Microsoft states M365 subscription data is not used to train its AI models; data within the Microsoft Graph."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "g2_rating",
+        "score": 4.4,
+        "scale": "0-5",
+        "benchmark": "G2 verified-review rating (90 reviews, 2026-06)",
+        "benchmark_url": "https://www.g2.com/products/microsoft-to-do/reviews",
+        "self_reported": false
+      }
+    ]
   }
 }

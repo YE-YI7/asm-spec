@@ -66,5 +66,17 @@
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
     "notes": "Verified 2026-06: free REST API, Plus $10 / Business $18, no-AI-training (Notion AI security docs), SOC 2. App-store rating not separately verified."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "g2_rating",
+        "score": 4.6,
+        "scale": "0-5",
+        "benchmark": "G2 verified-review rating (2026-06)",
+        "benchmark_url": "https://www.g2.com/products/notion/reviews",
+        "self_reported": false
+      }
+    ]
   }
 }

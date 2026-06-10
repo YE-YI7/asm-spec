@@ -60,5 +60,17 @@
     "last_verified_at": "2026-06-08T00:00:00Z",
     "verification_status": "self_reported",
     "notes": "Verified 2026-06: one-time $12.99, iPad GUI only, no automation API -> agent_operable=False."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "app_store_rating_ios",
+        "score": 4.4,
+        "scale": "0-5",
+        "benchmark": "Apple App Store user rating (~49K ratings, 2026-06)",
+        "benchmark_url": "https://apps.apple.com/us/app/procreate/id425073498",
+        "self_reported": false
+      }
+    ]
   }
 }

@@ -39,7 +39,7 @@ The library deliberately marks unverified fields instead of filling them with in
 | `usage_terms` | 0 / 26 | Every entry has a terms/automation stance. |
 | `data_governance` | 9 / 26 | Training-use verified this pass for Figma & Canva (opt-out) and Photoshop (no), on top of the task/research/comms/dev/booking sets. Remaining `unknown`s are per-entry where official terms make no clear statement (e.g. Google Tasks, Photopea). |
 | `operational_constraints` | 16 / 26 | New booking/communication/dev/research entries carry it; older task/design entries still need it. |
-| `quality` | 18 / 30 | Needs a consistent non-self-fulfilling metric per domain. Next cleanup target. |
+| `quality` | 8 / 30 | Sourced public ratings added 2026-06-11 (App Store / G2 / Trustpilot, each with benchmark_url) for 10 more tools. The remaining 8 have no solid public rating by design: Any.do (only a 35-review score found), Google Tasks (bundled/unrated), Apple Reminders (system app), Photopea (no store/G2 listing), and the four real-estate APIs — API quality needs domain metrics (coverage, freshness), not store stars. Not faked. |
 | `sla` | 19 / 30 | Published SLAs verified 2026-06-09 where they exist: Slack 99.99% (paid Business+/Enterprise), GitHub 99.9% (Enterprise Cloud), Gmail + Google Tasks 99.9% (Google Workspace covered services; paid tiers) — tier scoping recorded per entry. Most consumer tools publish no SLA; absence is recorded, not invented. |
 
 ## Next Cleanup Batch

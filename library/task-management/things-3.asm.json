@@ -64,5 +64,17 @@
     "exportable": true,
     "trains_on_user_data": "unknown",
     "lock_in_notes": "Apple-only; data in Things Cloud. No public cloud export API; export via app only."
+  },
+  "quality": {
+    "metrics": [
+      {
+        "name": "app_store_rating_ios",
+        "score": 4.8,
+        "scale": "0-5",
+        "benchmark": "Apple App Store user rating (~27K ratings, 2026-06)",
+        "benchmark_url": "https://apps.apple.com/us/app/things-3/id904237743",
+        "self_reported": false
+      }
+    ]
   }
 }
