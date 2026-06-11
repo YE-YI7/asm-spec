@@ -239,7 +239,7 @@ The `updated_at` + `ttl` pair solves the **manifest freshness problem**: agents 
 
 ### 4.2 Hierarchical Taxonomy
 
-ASM defines a 47-category taxonomy using a dot-separated hierarchical format: `<domain>.<category>[.<subcategory>]`. This enables prefix-based queries — an agent searching for `ai.llm.*` retrieves all LLM services regardless of subcategory. The taxonomy spans three top-level domains: AI/ML services (`ai.*`), infrastructure (`infra.*`), and developer/productivity tooling (`tool.*`):
+ASM defines an extensible hierarchical taxonomy — 47 categories at the original corpus snapshot — using a dot-separated format: `<domain>.<category>[.<subcategory>]`. This enables prefix-based queries — an agent searching for `ai.llm.*` retrieves all LLM services regardless of subcategory. The taxonomy spans three top-level domains: AI/ML services (`ai.*`), infrastructure (`infra.*`), and developer/productivity tooling (`tool.*`):
 
 ```
 ai.llm.chat                      ai.audio.tts                    tool.communication.email
