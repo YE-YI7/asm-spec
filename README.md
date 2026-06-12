@@ -67,7 +67,7 @@ from asm_tools import ASMToolSelectorTool
 agent_tools = [ASMToolSelectorTool()]   # name: asm_tool_selector
 ```
 
-A public instance runs at **https://asm-spec.onrender.com** (free tier — first request after idle may take ~50s to wake):
+A public instance runs at **https://asm-spec.onrender.com** (free tier — first request after idle may take ~50s to wake). It also dogfoods ASM's own publishing convention: `GET /.well-known/asm` serves the library catalog (one re-stampable `generated_at`, per-manifest links), and `GET /manifest/{service_id}` serves each full manifest — ASM is its own first publisher.
 
 ```bash
 curl -X POST https://asm-spec.onrender.com/select -H "Content-Type: application/json" \
