@@ -2,12 +2,15 @@
 """Hosted ASM selector API — stdlib-only HTTP wrapper around library_select.
 
 Endpoints:
-  POST /select   body: {task, taxonomy?, agent_reach?, user_platform?,
-                        required_functions?, require_approval_for?,
-                        require_agent_completable_setup?}
-                 -> structured selection decision (same shape as library_select.select)
-  GET  /tools    ?taxonomy=...  -> list of selectable tools
-  GET  /healthz  -> {"ok": true, "tools": N}
+  POST /select          body: {task, taxonomy?, agent_reach?, user_platform?,
+                               required_functions?, require_approval_for?,
+                               require_agent_completable_setup?}
+                        -> structured selection decision (same shape as library_select.select)
+  GET  /tools           ?taxonomy=...  -> list of selectable tools
+  GET  /.well-known/asm -> ASM catalog: one re-stampable generated_at + per-manifest
+                           links (the inline-vs-link convention, applied to ourselves)
+  GET  /manifest/{service_id} -> full ASM manifest for one tool
+  GET  /healthz         -> {"ok": true, "tools": N}
 
 Run:    python asm_select_api.py            (default 127.0.0.1:8787)
         ASM_API_HOST=0.0.0.0 ASM_API_PORT=8080 python asm_select_api.py
@@ -17,12 +20,15 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 from library_select import load_library, monthly_cost, select
 
 _LIBRARY = load_library()
+_BY_ID = {m.get("service_id"): m for m in _LIBRARY}
+_GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _tools_listing(taxonomy: str | None) -> list[dict]:
@@ -68,8 +74,31 @@ class Handler(BaseHTTPRequestHandler):
         elif url.path == "/tools":
             taxonomy = (parse_qs(url.query).get("taxonomy") or [None])[0]
             self._send(200, _tools_listing(taxonomy))
+        elif url.path == "/.well-known/asm":
+            # Dogfooding the inline-vs-link convention: one catalog with a single
+            # re-stampable generated_at; mutable detail lives behind per-manifest links.
+            self._send(200, {
+                "asm_catalog_version": "0.1",
+                "publisher": "asm-spec tool-value library",
+                "generated_at": _GENERATED_AT,
+                "schema": "https://github.com/calebguo007/asm-spec/blob/main/schema/asm-v0.3.schema.json",
+                "count": len(_LIBRARY),
+                "manifests": [
+                    {"service_id": m.get("service_id"), "taxonomy": m.get("taxonomy"),
+                     "display_name": m.get("display_name"),
+                     "url": f"/manifest/{m.get('service_id')}"}
+                    for m in _LIBRARY
+                ],
+            })
+        elif url.path.startswith("/manifest/"):
+            sid = unquote(url.path[len("/manifest/"):])
+            m = _BY_ID.get(sid)
+            if m:
+                self._send(200, m)
+            else:
+                self._send(404, {"error": f"no manifest with service_id={sid}"})
         else:
-            self._send(404, {"error": "unknown path; use POST /select, GET /tools, GET /healthz"})
+            self._send(404, {"error": "unknown path; use POST /select, GET /tools, GET /.well-known/asm, GET /manifest/{service_id}, GET /healthz"})
 
     def do_POST(self) -> None:
         if urlparse(self.path).path != "/select":

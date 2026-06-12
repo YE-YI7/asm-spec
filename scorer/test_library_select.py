@@ -86,5 +86,19 @@ def test_select_api_endpoints():
             assert False, "expected 400"
         except urllib.error.HTTPError as e:
             assert e.code == 400
+
+        # .well-known/asm catalog: one generated_at, per-manifest links
+        cat = json.loads(urllib.request.urlopen(
+            f"http://127.0.0.1:{port}/.well-known/asm").read())
+        assert cat["count"] >= 30 and cat["generated_at"]
+        assert all("service_id" in e and e["url"].startswith("/manifest/")
+                   for e in cat["manifests"])
+
+        # follow a catalog link to a full manifest
+        first = cat["manifests"][0]
+        man = json.loads(urllib.request.urlopen(
+            f"http://127.0.0.1:{port}{first['url']}").read())
+        assert man["service_id"] == first["service_id"]
+        assert man.get("asm_version") == "0.3"
     finally:
         srv.shutdown()
