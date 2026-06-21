@@ -1,0 +1,87 @@
+{
+  "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata via the ADR-0012 `metadata` extension point. Not an official ASM<->AI-Catalog binding; a runnable demonstration that the value layer fits the upstream cross-protocol standard without core-schema changes.",
+  "entries": [
+    {
+      "identifier": "urn:air:asm:todoist/todoist@current",
+      "displayName": "Todoist",
+      "mediaType": "application/asm+json",
+      "url": "https://asm-spec.onrender.com/manifest/todoist/todoist@current",
+      "metadata": {
+        "asm": {
+          "asm_version": "0.3",
+          "taxonomy": "tool.productivity.task_management",
+          "invocation": {
+            "interface": "rest_api",
+            "reach": "cloud",
+            "agent_operable": true
+          },
+          "manifest_url": "https://asm-spec.onrender.com/manifest/todoist/todoist@current"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:asm:culturedcode/things-3@current",
+      "displayName": "Things 3",
+      "mediaType": "application/asm+json",
+      "url": "https://asm-spec.onrender.com/manifest/culturedcode/things-3@current",
+      "metadata": {
+        "asm": {
+          "asm_version": "0.3",
+          "taxonomy": "tool.productivity.task_management",
+          "invocation": {
+            "interface": "applescript",
+            "reach": "local_device",
+            "agent_operable": true
+          },
+          "manifest_url": "https://asm-spec.onrender.com/manifest/culturedcode/things-3@current"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:asm:amadeus/self-service-api@current",
+      "displayName": "Amadeus Self-Service APIs",
+      "mediaType": "application/asm+json",
+      "url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
+      "metadata": {
+        "asm": {
+          "asm_version": "0.3",
+          "taxonomy": "tool.booking.travel",
+          "invocation": {
+            "interface": "rest_api",
+            "reach": "cloud",
+            "agent_operable": true
+          },
+          "manifest_url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
+          "operational": {
+            "risk_class": "critical",
+            "approval": "always"
+          }
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:asm:us-census/data-api@current",
+      "displayName": "US Census Bureau Data API",
+      "mediaType": "application/asm+json",
+      "url": "https://asm-spec.onrender.com/manifest/us-census/data-api@current",
+      "metadata": {
+        "asm": {
+          "asm_version": "0.3",
+          "taxonomy": "tool.data.real_estate",
+          "invocation": {
+            "interface": "rest_api",
+            "reach": "cloud",
+            "agent_operable": true,
+            "agent_completable_setup": true,
+            "setup_requires": []
+          },
+          "manifest_url": "https://asm-spec.onrender.com/manifest/us-census/data-api@current",
+          "operational": {
+            "risk_class": "low",
+            "approval": "never"
+          }
+        }
+      }
+    }
+  ]
+}
