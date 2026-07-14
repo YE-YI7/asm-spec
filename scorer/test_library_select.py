@@ -100,5 +100,16 @@ def test_select_api_endpoints():
             f"http://127.0.0.1:{port}{first['url']}").read())
         assert man["service_id"] == first["service_id"]
         assert man.get("asm_version") == "0.3"
+
+        # AI Catalog document: ADR-0012 entries with metadata.asm, url resolvable
+        aic = json.loads(urllib.request.urlopen(
+            f"http://127.0.0.1:{port}/.well-known/ai-catalog.json").read())
+        assert len(aic["entries"]) >= 30
+        e = aic["entries"][0]
+        assert e["identifier"].startswith("urn:air:asm:")
+        assert e["metadata"]["asm"]["taxonomy"]
+        assert e["url"].startswith(f"http://127.0.0.1:{port}/manifest/")
+        man2 = json.loads(urllib.request.urlopen(e["url"]).read())
+        assert f"urn:air:asm:{man2['service_id']}" == e["identifier"]
     finally:
         srv.shutdown()

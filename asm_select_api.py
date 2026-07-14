@@ -9,6 +9,9 @@ Endpoints:
   GET  /tools           ?taxonomy=...  -> list of selectable tools
   GET  /.well-known/asm -> ASM catalog: one re-stampable generated_at + per-manifest
                            links (the inline-vs-link convention, applied to ourselves)
+  GET  /.well-known/ai-catalog.json -> AI Catalog (Agent-Card/ai-catalog) document:
+                           every library tool as a catalog entry carrying its ASM
+                           value/selection block in the ADR-0012 `metadata` object
   GET  /manifest/{service_id} -> full ASM manifest for one tool
   GET  /healthz         -> {"ok": true, "tools": N}
 
@@ -29,6 +32,33 @@ from library_select import load_library, monthly_cost, select
 _LIBRARY = load_library()
 _BY_ID = {m.get("service_id"): m for m in _LIBRARY}
 _GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _ai_catalog_entry(m: dict, base: str) -> dict:
+    """AI Catalog entry (ADR-0012 shape): static ASM eligibility/selection signals
+    inline under metadata.asm; the full mutable manifest behind url."""
+    sid = m.get("service_id")
+    inv = m.get("invocation") or {}
+    ops = m.get("operational_constraints") or {}
+    asm_meta = {
+        "asm_version": m.get("asm_version", "0.3"),
+        "taxonomy": m.get("taxonomy"),
+        "invocation": {k: inv.get(k) for k in
+                       ("interface", "reach", "agent_operable",
+                        "agent_completable_setup", "setup_requires")
+                       if inv.get(k) is not None},
+        "manifest_url": f"{base}/manifest/{sid}",
+    }
+    if ops:
+        asm_meta["operational"] = {"risk_class": ops.get("risk_class"),
+                                   "approval": (ops.get("approval") or {}).get("required")}
+    return {
+        "identifier": f"urn:air:asm:{sid}",
+        "displayName": m.get("display_name"),
+        "mediaType": "application/asm+json",
+        "url": f"{base}/manifest/{sid}",
+        "metadata": {"asm": asm_meta},
+    }
 
 
 def _tools_listing(taxonomy: str | None) -> list[dict]:
@@ -89,6 +119,19 @@ class Handler(BaseHTTPRequestHandler):
                      "url": f"/manifest/{m.get('service_id')}"}
                     for m in _LIBRARY
                 ],
+            })
+        elif url.path == "/.well-known/ai-catalog.json":
+            # Cross-protocol discovery: the same library as an AI Catalog document,
+            # value/selection metadata riding the ADR-0012 `metadata` extension point.
+            host = self.headers.get("Host", "asm-spec.onrender.com")
+            scheme = "http" if host.split(":")[0] in ("localhost", "127.0.0.1") else "https"
+            base = f"{scheme}://{host}"
+            self._send(200, {
+                "$comment": "ASM tool-value library as AI Catalog entries; ASM value/"
+                            "selection metadata rides the ADR-0012 `metadata` object. "
+                            "Demonstration, not an official ai-catalog registry.",
+                "generated_at": _GENERATED_AT,
+                "entries": [_ai_catalog_entry(m, base) for m in _LIBRARY],
             })
         elif url.path.startswith("/manifest/"):
             sid = unquote(url.path[len("/manifest/"):])
