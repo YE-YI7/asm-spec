@@ -49,18 +49,19 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
     ops = m.get("operational_constraints") or {}
     base_id, _, ver = sid.partition("@")
     org, _, tool = base_id.partition("/")
-    asm_meta = {
-        "asm_version": m.get("asm_version", "0.3"),
-        "taxonomy": m.get("taxonomy"),
-        "invocation": {k: inv.get(k) for k in
-                       ("interface", "reach", "agent_operable",
-                        "agent_completable_setup", "setup_requires")
-                       if inv.get(k) is not None},
-        "manifest_url": f"{base}/manifest/{sid}",
-    }
-    if ops:
-        asm_meta["operational"] = {"risk_class": ops.get("risk_class"),
-                                   "approval": (ops.get("approval") or {}).get("required")}
+    # metadata values must be flat primitives (schema v1.0), so namespaced keys
+    asm_meta = {"asm:version": m.get("asm_version", "0.3"),
+                "asm:taxonomy": m.get("taxonomy"),
+                "asm:manifestUrl": f"{base}/manifest/{sid}"}
+    for k in ("interface", "reach", "agent_operable", "agent_completable_setup"):
+        if inv.get(k) is not None:
+            asm_meta[f"asm:{k}"] = inv[k]
+    if inv.get("setup_requires"):
+        asm_meta["asm:setup_requires"] = ",".join(inv["setup_requires"])
+    if ops.get("risk_class"):
+        asm_meta["asm:risk_class"] = ops["risk_class"]
+    if (ops.get("approval") or {}).get("required"):
+        asm_meta["asm:approval"] = ops["approval"]["required"]
     entry = {
         "identifier": f"urn:air:asm-spec:{_urn_part(org)}:{_urn_part(tool or org)}",
         "displayName": m.get("display_name"),
@@ -68,7 +69,7 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
         "url": f"{base}/manifest/{sid}",
         "tags": (m.get("taxonomy") or "tool").split("."),
         "updatedAt": _GENERATED_AT,
-        "metadata": {"asm": asm_meta},
+        "metadata": asm_meta,
     }
     if ver:
         entry["version"] = ver

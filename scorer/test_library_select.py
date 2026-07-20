@@ -112,7 +112,9 @@ def test_select_api_endpoints():
             assert urn.match(e["identifier"]), e["identifier"]
             assert e["type"] == "application/asm+json" and "mediaType" not in e
         e = aic["entries"][0]
-        assert e["metadata"]["asm"]["taxonomy"]
+        assert e["metadata"]["asm:taxonomy"]
+        assert all(isinstance(v, (str, int, float, bool)) or v is None
+                   for v in e["metadata"].values())  # schema v1.0: flat primitives
         assert e["url"].startswith(f"http://127.0.0.1:{port}/manifest/")
         man2 = json.loads(urllib.request.urlopen(e["url"]).read())
         assert man2["service_id"] in e["url"]
