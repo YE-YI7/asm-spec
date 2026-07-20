@@ -72,14 +72,14 @@ ASM implements exactly this track: every individual API call is a monetizable ev
 
 - **Dashboard demo**: https://asm-arc-circle-2026.vercel.app/
 - **Marketplace**: https://asm-arc-circle-2026.vercel.app/marketplace
-- **Source code**: https://github.com/calebguo007/asm-arc-circle-2026
+- **Source code**: https://github.com/YE-YI7/asm-arc-circle-2026
 - **On-chain proof**: Buyer wallet [`0xF5d4…b038`](https://testnet.arcscan.app/address/0xF5d426D5cdfaeB18Ea2cDec2F7c2CB88eEe6b038) · GatewayWallet [`0x0077…19B9`](https://testnet.arcscan.app/address/0x0077777d7EBA4688BDeF3E311b846F25870A19B9)
 
 ### Trust & ERC-8004 Alignment
 
 ASM's trust model maps directly to ERC-8004's computable trust dimensions: every manifest carries a `self_reported` flag (provenance), references third-party benchmarks with URLs (verification), and integrates Signed Receipts (IETF ACTA draft) for post-hoc performance proof. The formula `trust_delta = |declared - actual| / declared` produces a quantifiable credibility score that updates automatically with each transaction — making the payment-to-verification loop self-sustaining.
 
-**Open source · MIT License · github.com/calebguo007/asm-arc-circle-2026**
+**Open source · MIT License · github.com/YE-YI7/asm-arc-circle-2026**
 
 ---
 

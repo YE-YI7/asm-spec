@@ -16,7 +16,7 @@
         "algorithm": "sha256",
         "scope": "execution_payload",
         "digest": "sha256:e4b2c91f7a88d3ef1234567890abcdef1234567890abcdef1234567890abcdef",
-        "byte_range_spec": "https://github.com/calebguo007/asm-spec/blob/main/docs/integrations/akkhar-code-receipt-spec.md#2-seal-what-it-computes-over"
+        "byte_range_spec": "https://github.com/YE-YI7/asm-spec/blob/main/docs/integrations/akkhar-code-receipt-spec.md#2-seal-what-it-computes-over"
       },
       "billing": {
         "dimension": "pipeline_run",

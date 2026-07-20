@@ -5,7 +5,7 @@ This document maps every empirical claim in `paper/asm-paper-draft.md` to the sc
 ## TL;DR — one-shot reproduction
 
 ```bash
-git clone https://github.com/calebguo007/asm-spec.git && cd asm-spec
+git clone https://github.com/YE-YI7/asm-spec.git && cd asm-spec
 docker build -f Dockerfile.artifact -t asm-artifact .
 docker run --rm -v "$PWD/experiments/results:/app/experiments/results" asm-artifact make reproduce
 ```

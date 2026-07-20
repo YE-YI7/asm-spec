@@ -296,7 +296,7 @@ echo "  ║   OpenAPI describes what a service CAN DO.        ║"
 echo "  ║   ASM describes what a service IS WORTH.          ║"
 echo "  ║   Nanopayments make evaluation self-sustaining.   ║"
 echo "  ║                                                   ║"
-echo "  ║   github.com/calebguo007/asm-spec                 ║"
+echo "  ║   github.com/YE-YI7/asm-spec                 ║"
 echo "  ║   70 services • 47 categories • 50+ transactions  ║"
 echo "  ║                                                   ║"
 echo "  ╚═══════════════════════════════════════════════════╝"
@@ -428,6 +428,6 @@ npm run demo
 1. 视频上传到 YouTube（Unlisted）或 Loom
 2. 复制链接填入 lablab.ai 提交表单
 3. 同时提交：
-   - GitHub 仓库链接：https://github.com/calebguo007/asm-spec
+   - GitHub 仓库链接：https://github.com/YE-YI7/asm-spec
    - Demo URL（如果已部署）
    - Circle Product Feedback（已写好在 CIRCLE-PRODUCT-FEEDBACK.md）

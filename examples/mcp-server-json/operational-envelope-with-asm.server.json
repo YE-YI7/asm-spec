@@ -4,7 +4,7 @@
   "description": "MCP server example with ASM value metadata plus draft v0.4 operational constraints.",
   "status": "active",
   "repository": {
-    "url": "https://github.com/calebguo007/asm-spec",
+    "url": "https://github.com/YE-YI7/asm-spec",
     "source": "github"
   },
   "version": "1.0.0",

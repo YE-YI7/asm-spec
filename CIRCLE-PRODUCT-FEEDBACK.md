@@ -2,7 +2,7 @@
 
 > **Project**: ASM (Agent Service Manifest) — an open protocol for AI agents to discover, evaluate, and pay for services autonomously.
 > **Hackathon**: Agentic Economy on Arc (April 2026)
-> **Developer**: Yi Guo (@calebguo007)
+> **Developer**: Yi Guo (@YE-YI7)
 
 ---
 

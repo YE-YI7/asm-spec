@@ -227,7 +227,7 @@ Speaker note (15s): *"We're four people across four countries. Everything you se
 **Visual:** full-screen single line:
 
 ```
-github.com/calebguo007/asm-arc-circle-2026
+github.com/YE-YI7/asm-arc-circle-2026
 ```
 
 Beneath:

@@ -129,7 +129,7 @@ class Handler(BaseHTTPRequestHandler):
                 "asm_catalog_version": "0.1",
                 "publisher": "asm-spec tool-value library",
                 "generated_at": _GENERATED_AT,
-                "schema": "https://github.com/calebguo007/asm-spec/blob/main/schema/asm-v0.3.schema.json",
+                "schema": "https://github.com/YE-YI7/asm-spec/blob/main/schema/asm-v0.3.schema.json",
                 "count": len(_LIBRARY),
                 "manifests": [
                     {"service_id": m.get("service_id"), "taxonomy": m.get("taxonomy"),
@@ -152,7 +152,7 @@ class Handler(BaseHTTPRequestHandler):
                     "displayName": "ASM tool-value library (demonstration registry; "
                                    "value/selection metadata rides entry.metadata.asm)",
                     "identifier": "asm-spec.onrender.com",
-                    "documentationUrl": "https://github.com/calebguo007/asm-spec",
+                    "documentationUrl": "https://github.com/YE-YI7/asm-spec",
                 },
                 "entries": [_ai_catalog_entry(m, base) for m in _LIBRARY],
             })

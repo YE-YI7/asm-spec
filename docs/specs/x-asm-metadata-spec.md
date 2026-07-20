@@ -213,6 +213,6 @@ The linter checks:
 ## References
 
 - [MCP Specification](https://modelcontextprotocol.io)
-- [ASM Manifest Schema v0.3](https://github.com/calebguo007/asm-spec/blob/main/schema/asm-v0.3.schema.json)
+- [ASM Manifest Schema v0.3](https://github.com/YE-YI7/asm-spec/blob/main/schema/asm-v0.3.schema.json)
 - [TOPSIS Multi-Criteria Decision Making](https://en.wikipedia.org/wiki/TOPSIS)
-- [Trust Delta: Exponential Decay Weighted Scoring](https://github.com/calebguo007/asm-spec/blob/main/payments/src/trust-delta.ts)
+- [Trust Delta: Exponential Decay Weighted Scoring](https://github.com/YE-YI7/asm-spec/blob/main/payments/src/trust-delta.ts)

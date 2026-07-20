@@ -34,7 +34,7 @@
 - [ ] Slide Presentation (12 pages, see `deck-outline.md` — to be drafted 4/22)
 
 ### Code
-- [ ] Public GitHub Repository URL: https://github.com/calebguo007/asm-arc-circle-2026
+- [ ] Public GitHub Repository URL: https://github.com/YE-YI7/asm-arc-circle-2026
 - [ ] Demo Application Platform
 - [ ] Application URL (live demo)
 

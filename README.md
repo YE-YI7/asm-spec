@@ -9,7 +9,7 @@ It is **not** a model picker. The tools are real products — task managers, des
 ## Try it: pick a tool for a task
 
 ```bash
-git clone https://github.com/calebguo007/asm-spec.git && cd asm-spec
+git clone https://github.com/YE-YI7/asm-spec.git && cd asm-spec
 python library/select_demo.py
 ```
 
@@ -41,7 +41,7 @@ ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in M
 ASM ships an MCP server so any MCP client (Claude Desktop, Cursor, an agent host) can call the selector as a tool — no schema adoption required:
 
 ```bash
-git clone https://github.com/calebguo007/asm-spec && cd asm-spec
+git clone https://github.com/YE-YI7/asm-spec && cd asm-spec
 pip install mcp
 python asm_selector_mcp.py        # stdio MCP server
 ```
@@ -83,7 +83,7 @@ curl -X POST https://asm-spec.onrender.com/select -H "Content-Type: application/
 The same engine works for the AI-service taxonomy. No clone, no install (needs [uv](https://docs.astral.sh/uv/)):
 
 ```bash
-uvx --from git+https://github.com/calebguo007/asm-spec.git \
+uvx --from git+https://github.com/YE-YI7/asm-spec.git \
   asm openrouter 'best value coding model under $3 per 1M tokens'
 ```
 
@@ -106,7 +106,7 @@ Long-form results: [`docs/paper-results.md`](docs/paper-results.md). Reproducibi
 ## Try ASM in 60 Seconds
 
 ```bash
-git clone https://github.com/calebguo007/asm-spec.git
+git clone https://github.com/YE-YI7/asm-spec.git
 cd asm-spec
 pip install -e .
 asm openrouter 'cheap coding model under $0.50 per 1M tokens'
@@ -256,7 +256,7 @@ Real third-party services that have implemented ASM-compatible value metadata or
 
 | Service | Type | Status | Spec |
 |---|---|---|---|
-| **Akkhar-Code** (Akkhar-Labs) | Agentic IDE, `tool.code.orchestration` | Trust Delta receipt extension v0.1 | [`docs/integrations/akkhar-code-receipt-spec.md`](docs/integrations/akkhar-code-receipt-spec.md) · [reference receipt](examples/receipts/akkhar-code-receipt.json) · RFC [#7](https://github.com/calebguo007/asm-spec/issues/7), PR [#8](https://github.com/calebguo007/asm-spec/pull/8) |
+| **Akkhar-Code** (Akkhar-Labs) | Agentic IDE, `tool.code.orchestration` | Trust Delta receipt extension v0.1 | [`docs/integrations/akkhar-code-receipt-spec.md`](docs/integrations/akkhar-code-receipt-spec.md) · [reference receipt](examples/receipts/akkhar-code-receipt.json) · RFC [#7](https://github.com/YE-YI7/asm-spec/issues/7), PR [#8](https://github.com/YE-YI7/asm-spec/pull/8) |
 
 If you're implementing ASM (manifest, `.well-known/asm` endpoint, or a receipt emitter) and want a reference-integration row, open an issue with `integration` label.
 
@@ -347,7 +347,7 @@ Live LLM/API experiments require external credentials and are documented separat
 ## Contributing
 
 Good first issues: [`docs/good-first-issues.md`](docs/good-first-issues.md).
-Open starter issues: [Cohere](https://github.com/calebguo007/asm-spec/issues/1), [Mistral AI](https://github.com/calebguo007/asm-spec/issues/2), [Together AI](https://github.com/calebguo007/asm-spec/issues/3), [Groq](https://github.com/calebguo007/asm-spec/issues/4), [Fireworks AI](https://github.com/calebguo007/asm-spec/issues/5).
+Open starter issues: [Cohere](https://github.com/YE-YI7/asm-spec/issues/1), [Mistral AI](https://github.com/YE-YI7/asm-spec/issues/2), [Together AI](https://github.com/YE-YI7/asm-spec/issues/3), [Groq](https://github.com/YE-YI7/asm-spec/issues/4), [Fireworks AI](https://github.com/YE-YI7/asm-spec/issues/5).
 
 Common contribution paths:
 
@@ -368,7 +368,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md).
   title={Agent Service Manifest: Value-Aware Settlement for Autonomous Service Selection},
   author={Guo, Yi},
   year={2026},
-  howpublished={\url{https://github.com/calebguo007/asm-spec}}
+  howpublished={\url{https://github.com/YE-YI7/asm-spec}}
 }
 ```
 

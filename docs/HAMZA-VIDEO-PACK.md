@@ -58,7 +58,7 @@ Show slide on the 4-layer stack (MCP / ERC-8004 / ASM / Circle+Arc). Voiceover:
 
 **3:40–4:00 — Close**
 Show repo URL + demo URL on screen. Voiceover:
-> "Seventy manifests, fifty payments on Arc, all open source. github.com/calebguo007/asm-arc-circle-2026. Come build with us."
+> "Seventy manifests, fifty payments on Arc, all open source. github.com/YE-YI7/asm-arc-circle-2026. Come build with us."
 
 ---
 
@@ -92,7 +92,7 @@ The first open protocol that lets AI agents discover, rank & pay for AI services
 
 @buildoncircle @arc @lablabai
 
-github.com/calebguo007/asm-arc-circle-2026
+github.com/YE-YI7/asm-arc-circle-2026
 asm-arc-circle-2026.vercel.app
 
 #ArcAgenticEconomy
@@ -104,6 +104,6 @@ asm-arc-circle-2026.vercel.app
 
 ## 6. If anything is unclear
 
-Repo: https://github.com/calebguo007/asm-arc-circle-2026  
+Repo: https://github.com/YE-YI7/asm-arc-circle-2026  
 Long description (full submission copy): `docs/lablab-submission.md`  
 Circle integration deep-dive: `docs/circle-feedback-submission.md`

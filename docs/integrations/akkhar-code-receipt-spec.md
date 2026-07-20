@@ -3,7 +3,7 @@
 > **Original brief author**: Rahat Hasan, Akkhar-Labs Architecture
 > **Original date**: 2026-05-16
 > **Republished here**: 2026-05-16, with permission, full attribution.
-> **Status**: Reference integration for [RFC: Trust Delta receipt extension v0.1](https://github.com/calebguo007/asm-spec/issues).
+> **Status**: Reference integration for [RFC: Trust Delta receipt extension v0.1](https://github.com/YE-YI7/asm-spec/issues).
 > **Canonical home**: This document. If a newer revision exists upstream at Akkhar-Labs, this file links to it from the header.
 
 This is the first external reference integration for ASM Trust Delta receipts. It is preserved verbatim from the brief delivered by Akkhar-Labs on 2026-05-16, with light editorial framing only (this header and the bottom cross-reference). Akkhar-Labs retains authorship of the receipt schema, seal construction, and identifier convention described below; ASM retains authorship of the Trust Delta consumption logic that ingests them.
@@ -199,7 +199,7 @@ This lets Trust Delta resolve the full cost stack: pipeline-level settlement via
 
 ## 4. ASM-side decisions (consolidated from RFC)
 
-The four open questions from the original brief were resolved as follows. See the [RFC issue](https://github.com/calebguo007/asm-spec/issues) for the full reasoning.
+The four open questions from the original brief were resolved as follows. See the [RFC issue](https://github.com/YE-YI7/asm-spec/issues) for the full reasoning.
 
 | # | Question | Decision |
 |---|---|---|
@@ -212,7 +212,7 @@ The four open questions from the original brief were resolved as follows. See th
 
 ## Cross-references
 
-- RFC issue (canonical discussion): [Trust Delta receipt extension v0.1](https://github.com/calebguo007/asm-spec/issues)
+- RFC issue (canonical discussion): [Trust Delta receipt extension v0.1](https://github.com/YE-YI7/asm-spec/issues)
 - ASM schema (v0.3): [`schema/asm-v0.3.schema.json`](../../schema/asm-v0.3.schema.json)
 - ASM Trust Delta description in paper: §3.4, §6.3, §7.2 of [`paper/asm-paper-draft.md`](../../paper/asm-paper-draft.md)
 - Akkhar-Labs: external party authoring the receipt format described here.

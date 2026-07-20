@@ -180,14 +180,14 @@ that's closest to your ideal across all dimensions."
 ## Try It
 
 ```bash
-git clone https://github.com/calebguo007/asm-spec
+git clone https://github.com/YE-YI7/asm-spec
 cd asm-spec
 python3 integrations/langchain/demo_notebook.py
 ```
 
 ## Links
 
-- GitHub: [asm-spec](https://github.com/calebguo007/asm-spec)
+- GitHub: [asm-spec](https://github.com/YE-YI7/asm-spec)
 - Paper (coming soon): [arXiv link]
 ```
 
@@ -270,7 +270,7 @@ Would you be interested in:
 1. Reviewing this to make sure the data is accurate?
 2. Maybe hosting an official .asm.json on your docs site?
 
-The whole spec is open source: https://github.com/calebguo007/asm-spec
+The whole spec is open source: https://github.com/YE-YI7/asm-spec
 
 No pressure at all — just thought it might help your API get discovered 
 by autonomous agents more easily. Happy to answer any questions!

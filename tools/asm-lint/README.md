@@ -2,7 +2,7 @@
 
 Quality detection CLI for MCP Servers — scan, probe, and score any MCP Server.
 
-Part of the [ASM Protocol](https://github.com/calebguo007/asm-spec) (Agent Service Manifest).
+Part of the [ASM Protocol](https://github.com/YE-YI7/asm-spec) (Agent Service Manifest).
 
 ## Install
 
@@ -61,7 +61,7 @@ asm-lint --init
 After running `asm-lint`, it generates a README badge you can add to your project:
 
 ```markdown
-[![ASM Score](https://img.shields.io/badge/ASM_Score-72%2F100_B+-brightgreen)](https://github.com/calebguo007/asm-spec)
+[![ASM Score](https://img.shields.io/badge/ASM_Score-72%2F100_B+-brightgreen)](https://github.com/YE-YI7/asm-spec)
 ```
 
 ## x-asm Metadata

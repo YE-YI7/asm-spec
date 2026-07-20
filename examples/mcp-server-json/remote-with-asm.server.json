@@ -4,7 +4,7 @@
   "description": "Remote MCP server example with ASM pricing, SLA, quality, and provenance metadata.",
   "status": "active",
   "repository": {
-    "url": "https://github.com/calebguo007/asm-spec",
+    "url": "https://github.com/YE-YI7/asm-spec",
     "source": "github"
   },
   "version": "1.0.0",

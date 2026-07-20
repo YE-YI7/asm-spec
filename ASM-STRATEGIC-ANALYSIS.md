@@ -101,7 +101,7 @@ This means: demonstrate deep integration with Circle products = higher scores.
 | Cover Image | Not done | Create |
 | Video Presentation | Not done | Record after 4/20 |
 | Slide Presentation | Done (ASM-Pitch-Deck.pptx) | Review |
-| Public GitHub Repository | Ready (needs push) | Push to calebguo007/asm-spec |
+| Public GitHub Repository | Ready (needs push) | Push to YE-YI7/asm-spec |
 | Demo Application URL | Not done | Deploy to Render/Railway |
 | Circle Product Feedback | Done (CIRCLE-PRODUCT-FEEDBACK.md) | Polish with live data |
 | Margin Explanation | Not done | Write (see section 5) |

@@ -29,7 +29,7 @@ The protocol angle is MCP-compatible: publish `.well-known/asm`, or embed ASM un
 Important caveat: OpenRouter usage rank is a revealed-preference signal, not benchmark quality. The point is narrower: service selection should be reproducible before the API call happens.
 
 Repo:
-https://github.com/calebguo007/asm-spec
+https://github.com/YE-YI7/asm-spec
 ```
 
 ## Reddit / r/LocalLLaMA
@@ -58,7 +58,7 @@ Caveats:
 - Free models dominate cost-first queries, so quality-sensitive use cases still need better benchmark metadata.
 
 Repo:
-https://github.com/calebguo007/asm-spec
+https://github.com/YE-YI7/asm-spec
 
 I would especially like feedback on what metadata is missing for real model/API routing.
 ```
@@ -78,7 +78,7 @@ It ranks models by structured pricing/provenance/usage metadata and emits router
 MCP tells agents what services can do.
 ASM tells agents what services are worth.
 
-https://github.com/calebguo007/asm-spec
+https://github.com/YE-YI7/asm-spec
 ```
 
 ## LinkedIn
@@ -102,7 +102,7 @@ It can also emit router snippets:
 The goal is not to claim that any one quality metric is universally correct. The goal is to make pre-call service selection computable and reproducible: cost, constraints, provenance, verification, and eventually trust receipts.
 
 Repo:
-https://github.com/calebguo007/asm-spec
+https://github.com/YE-YI7/asm-spec
 ```
 
 ## 中文社区
@@ -133,7 +133,7 @@ Body:
 我不想把它包装成“证明了哪个模型最好”。更准确的说法是：如果没有结构化 value metadata，agent 选服务这件事不可复现。ASM 是把这一步变成可计算、可审计的一次尝试。
 
 Repo:
-https://github.com/calebguo007/asm-spec
+https://github.com/YE-YI7/asm-spec
 
 想听听大家真实选模型/API 时还缺哪些字段。
 ```

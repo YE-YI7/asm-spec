@@ -781,8 +781,8 @@ In the same-benchmark run all six selectors are within ~0.5 judge points (9.21�
 - Reference integration spec: [`docs/integrations/akkhar-code-receipt-spec.md`](../docs/integrations/akkhar-code-receipt-spec.md)
 - Reference receipt example: [`examples/receipts/akkhar-code-receipt.json`](../examples/receipts/akkhar-code-receipt.json)
 - Receipt envelope schema: [`schema/asm-receipt-envelope-v0.1.schema.json`](../schema/asm-receipt-envelope-v0.1.schema.json)
-- Tracking issue / public discussion: `github.com/calebguo007/asm-spec/issues/7`
-- Schema diff PR: `github.com/calebguo007/asm-spec/pull/8` (merged at commit 99a9773)
+- Tracking issue / public discussion: `github.com/YE-YI7/asm-spec/issues/7`
+- Schema diff PR: `github.com/YE-YI7/asm-spec/pull/8` (merged at commit 99a9773)
 - Cost-delta primitive + tests: `scorer/scorer.py::cost_delta_from_receipt`, `scorer/test_scorer.py::test_cost_delta_*`
 
 ### 6.5d Breadth: the Tool-Value Library and Gated Multi-Domain Selection
@@ -1054,7 +1054,7 @@ External parties have now shaped the protocol twice, through two different loops
 
 If agents are to become economic actors, tool selection cannot remain an unstructured browsing task — nor a blind one that ignores whether the agent can drive, is permitted to drive, or can even finish onboarding the tool it is about to pick. ASM makes settlement a computable, reproducible step in the agent stack.
 
-The protocol, reference implementation, all 75 service manifests, audit data, evaluation harnesses, and the artifact-evaluation Docker image are available at: <https://github.com/calebguo007/asm-spec>. Reproduction instructions are in `ARTIFACT.md`.
+The protocol, reference implementation, all 75 service manifests, audit data, evaluation harnesses, and the artifact-evaluation Docker image are available at: <https://github.com/YE-YI7/asm-spec>. Reproduction instructions are in `ARTIFACT.md`.
 
 ---
 
@@ -1090,7 +1090,7 @@ The protocol, reference implementation, all 75 service manifests, audit data, ev
 
 [15] OpenRouter Model Rankings, 7-day token volume per model variant. https://openrouter.ai/rankings
 
-[16] Akkhar-Labs. Akkhar-Code × ASM integration brief, 2026-05-16 (Rahat Hasan, Akkhar-Labs Architecture). First external reference integration of the ASM v0.3.2 receipt envelope; preserved with attribution at `docs/integrations/akkhar-code-receipt-spec.md`. Tracking issue: github.com/calebguo007/asm-spec/issues/7 ; merged at PR #8 / commit 99a9773 ; tagged at v0.3.2.
+[16] Akkhar-Labs. Akkhar-Code × ASM integration brief, 2026-05-16 (Rahat Hasan, Akkhar-Labs Architecture). First external reference integration of the ASM v0.3.2 receipt envelope; preserved with attribution at `docs/integrations/akkhar-code-receipt-spec.md`. Tracking issue: github.com/YE-YI7/asm-spec/issues/7 ; merged at PR #8 / commit 99a9773 ; tagged at v0.3.2.
 
 [17] Pipeworx. Open MCP gateway: 810 server packs on one origin with per-pack Server Cards and `.well-known/mcp/catalog.json` discovery. Production feedback documented in the SEP-2127 discussion (modelcontextprotocol/modelcontextprotocol PR #2127) and email correspondence, 2026-06. https://gateway.pipeworx.io
 

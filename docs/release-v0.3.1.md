@@ -26,7 +26,7 @@ Until a Zenodo DOI or arXiv identifier is available, cite the GitHub release tag
 
 ```text
 Guo, Y. Agent Service Manifest (ASM) v0.3.1. GitHub release, 2026.
-https://github.com/calebguo007/asm-spec/releases/tag/v0.3.1
+https://github.com/YE-YI7/asm-spec/releases/tag/v0.3.1
 Tag target: see the `v0.3.1` Git tag for the exact commit SHA.
 ```
 

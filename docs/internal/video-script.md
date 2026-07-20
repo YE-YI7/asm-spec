@@ -119,7 +119,7 @@ Circle + Arc   "how do we actually pay?"       ✅ Circle
 **On-screen final card (2:40–2:45):**
 ```
 ASM — Agent Service Manifest
-github.com/calebguo007/asm-arc-circle-2026
+github.com/YE-YI7/asm-arc-circle-2026
 Built on Arc + Circle · lablab hackathon 2026
 ```
 

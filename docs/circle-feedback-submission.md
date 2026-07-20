@@ -1,7 +1,7 @@
 # Circle Product Feedback — ASM (Agent Service Manifest)
 
 > **Submission for the Circle Product Feedback prize ($500 USDC).**
-> Project: Agent Service Manifest — `github.com/calebguo007/asm-arc-circle-2026`
+> Project: Agent Service Manifest — `github.com/YE-YI7/asm-arc-circle-2026`
 > Repo evidence: every claim below cites a file or commit. We invite Circle DevRel to spot-check.
 
 ---
@@ -159,7 +159,7 @@ If we had to start over, we'd skip the manual composition entirely and start fro
 
 ---
 
-**Repo**: github.com/calebguo007/asm-arc-circle-2026
+**Repo**: github.com/YE-YI7/asm-arc-circle-2026
 **Live demo**: asm-arc-circle-2026.vercel.app
 **Benchmark JSON**: payments/benchmark/result-2026-04-24.json
 **Code references inline above** — happy to walk Circle DevRel through any of them.

@@ -166,7 +166,7 @@ Circle Nanopayments on Arc:
 > "ASM — OpenAPI describes what a service CAN DO. ASM describes what a service IS WORTH. Nanopayments make the evaluation self-sustaining."
 
 **展示**：
-- GitHub: github.com/calebguo007/asm-spec
+- GitHub: github.com/YE-YI7/asm-spec
 - 70 services • 47 categories • 51 transactions • $0.243 USDC
 
 ---

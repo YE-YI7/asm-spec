@@ -83,12 +83,12 @@ Receipt envelope validation depends on `jsonschema`; everything else is stdlib.
 
 ```text
 Guo, Y. Agent Service Manifest (ASM) v0.3.2. GitHub release, 2026.
-https://github.com/calebguo007/asm-spec/releases/tag/v0.3.2
+https://github.com/YE-YI7/asm-spec/releases/tag/v0.3.2
 
 External schema contributions: Akkhar-Labs (Rahat Hasan) — supersedes
 correction convention, public_key_fingerprint Ed25519 key pinning,
 cost_delta aggregation, tool.code.orchestration taxonomy leaf.
-Tracking: github.com/calebguo007/asm-spec/issues/7, PR #8.
+Tracking: github.com/YE-YI7/asm-spec/issues/7, PR #8.
 ```
 
 ## Numbers at this tag
