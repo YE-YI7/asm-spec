@@ -67,6 +67,7 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
         "type": "application/asm+json",
         "url": f"{base}/manifest/{sid}",
         "tags": (m.get("taxonomy") or "tool").split("."),
+        "updatedAt": _GENERATED_AT,
         "metadata": {"asm": asm_meta},
     }
     if ver:
@@ -142,12 +143,16 @@ class Handler(BaseHTTPRequestHandler):
             host = self.headers.get("Host", "asm-spec.onrender.com")
             scheme = "http" if host.split(":")[0] in ("localhost", "127.0.0.1") else "https"
             base = f"{scheme}://{host}"
+            # Root is closed (specVersion/host/entries only); freshness moves to
+            # per-entry updatedAt, provenance note into host.displayName.
             self._send(200, {
-                "$comment": "ASM tool-value library as AI Catalog entries; ASM value/"
-                            "selection metadata rides the `metadata` extension object. "
-                            "Demonstration, not an official ai-catalog registry.",
                 "specVersion": "1.0",
-                "generated_at": _GENERATED_AT,
+                "host": {
+                    "displayName": "ASM tool-value library (demonstration registry; "
+                                   "value/selection metadata rides entry.metadata.asm)",
+                    "identifier": "asm-spec.onrender.com",
+                    "documentationUrl": "https://github.com/calebguo007/asm-spec",
+                },
                 "entries": [_ai_catalog_entry(m, base) for m in _LIBRARY],
             })
         elif url.path.startswith("/manifest/"):
