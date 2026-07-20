@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, unquote, urlparse
@@ -34,12 +35,20 @@ _BY_ID = {m.get("service_id"): m for m in _LIBRARY}
 _GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _urn_part(s: str) -> str:
+    """RFC 8141 urn:air segment: only [a-zA-Z0-9._-] survives."""
+    return re.sub(r"[^A-Za-z0-9._-]", "-", s)
+
+
 def _ai_catalog_entry(m: dict, base: str) -> dict:
-    """AI Catalog entry (ADR-0012 shape): static ASM eligibility/selection signals
-    inline under metadata.asm; the full mutable manifest behind url."""
+    """AI Catalog entry (schema v1.0, ARD-conformance-tested): static ASM
+    eligibility/selection signals inline under metadata.asm; the full mutable
+    manifest behind url. service_id org/tool@version maps to URN + version."""
     sid = m.get("service_id")
     inv = m.get("invocation") or {}
     ops = m.get("operational_constraints") or {}
+    base_id, _, ver = sid.partition("@")
+    org, _, tool = base_id.partition("/")
     asm_meta = {
         "asm_version": m.get("asm_version", "0.3"),
         "taxonomy": m.get("taxonomy"),
@@ -52,13 +61,20 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
     if ops:
         asm_meta["operational"] = {"risk_class": ops.get("risk_class"),
                                    "approval": (ops.get("approval") or {}).get("required")}
-    return {
-        "identifier": f"urn:air:asm:{sid}",
+    entry = {
+        "identifier": f"urn:air:asm-spec:{_urn_part(org)}:{_urn_part(tool or org)}",
         "displayName": m.get("display_name"),
-        "mediaType": "application/asm+json",
+        "type": "application/asm+json",
         "url": f"{base}/manifest/{sid}",
+        "tags": (m.get("taxonomy") or "tool").split("."),
         "metadata": {"asm": asm_meta},
     }
+    if ver:
+        entry["version"] = ver
+    desc = (m.get("description") or "").strip()
+    if desc:
+        entry["description"] = desc[:300]
+    return entry
 
 
 def _tools_listing(taxonomy: str | None) -> list[dict]:
@@ -128,8 +144,9 @@ class Handler(BaseHTTPRequestHandler):
             base = f"{scheme}://{host}"
             self._send(200, {
                 "$comment": "ASM tool-value library as AI Catalog entries; ASM value/"
-                            "selection metadata rides the ADR-0012 `metadata` object. "
+                            "selection metadata rides the `metadata` extension object. "
                             "Demonstration, not an official ai-catalog registry.",
+                "specVersion": "1.0",
                 "generated_at": _GENERATED_AT,
                 "entries": [_ai_catalog_entry(m, base) for m in _LIBRARY],
             })

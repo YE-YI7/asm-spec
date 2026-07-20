@@ -101,15 +101,20 @@ def test_select_api_endpoints():
         assert man["service_id"] == first["service_id"]
         assert man.get("asm_version") == "0.3"
 
-        # AI Catalog document: ADR-0012 entries with metadata.asm, url resolvable
+        # AI Catalog document (schema v1.0): entries with metadata.asm, url resolvable
         aic = json.loads(urllib.request.urlopen(
             f"http://127.0.0.1:{port}/.well-known/ai-catalog.json").read())
+        assert aic["specVersion"] == "1.0"
         assert len(aic["entries"]) >= 30
+        import re as _re
+        urn = _re.compile(r"^urn:air:[a-zA-Z0-9.-]+(?::[a-zA-Z0-9._:-]+)?:[a-zA-Z0-9._-]+$")
+        for e in aic["entries"]:
+            assert urn.match(e["identifier"]), e["identifier"]
+            assert e["type"] == "application/asm+json" and "mediaType" not in e
         e = aic["entries"][0]
-        assert e["identifier"].startswith("urn:air:asm:")
         assert e["metadata"]["asm"]["taxonomy"]
         assert e["url"].startswith(f"http://127.0.0.1:{port}/manifest/")
         man2 = json.loads(urllib.request.urlopen(e["url"]).read())
-        assert f"urn:air:asm:{man2['service_id']}" == e["identifier"]
+        assert man2["service_id"] in e["url"]
     finally:
         srv.shutdown()

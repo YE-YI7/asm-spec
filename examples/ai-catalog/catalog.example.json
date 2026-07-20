@@ -1,10 +1,11 @@
 {
-  "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata via the ADR-0012 `metadata` extension point. Not an official ASM<->AI-Catalog binding; a runnable demonstration that the value layer fits the upstream cross-protocol standard without core-schema changes.",
+  "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata via the `metadata` extension point. Not an official ASM<->AI-Catalog binding; a runnable demonstration that the value layer fits the upstream cross-protocol standard without core-schema changes.",
+  "specVersion": "1.0",
   "entries": [
     {
-      "identifier": "urn:air:asm:todoist/todoist@current",
+      "identifier": "urn:air:asm-spec:todoist:todoist",
       "displayName": "Todoist",
-      "mediaType": "application/asm+json",
+      "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/todoist/todoist@current",
       "metadata": {
         "asm": {
@@ -17,12 +18,13 @@
           },
           "manifest_url": "https://asm-spec.onrender.com/manifest/todoist/todoist@current"
         }
-      }
+      },
+      "version": "current"
     },
     {
-      "identifier": "urn:air:asm:culturedcode/things-3@current",
+      "identifier": "urn:air:asm-spec:culturedcode:things-3",
       "displayName": "Things 3",
-      "mediaType": "application/asm+json",
+      "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/culturedcode/things-3@current",
       "metadata": {
         "asm": {
@@ -35,12 +37,13 @@
           },
           "manifest_url": "https://asm-spec.onrender.com/manifest/culturedcode/things-3@current"
         }
-      }
+      },
+      "version": "current"
     },
     {
-      "identifier": "urn:air:asm:amadeus/self-service-api@current",
+      "identifier": "urn:air:asm-spec:amadeus:self-service-api",
       "displayName": "Amadeus Self-Service APIs",
-      "mediaType": "application/asm+json",
+      "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
       "metadata": {
         "asm": {
@@ -57,12 +60,13 @@
             "approval": "always"
           }
         }
-      }
+      },
+      "version": "current"
     },
     {
-      "identifier": "urn:air:asm:us-census/data-api@current",
+      "identifier": "urn:air:asm-spec:us-census:data-api",
       "displayName": "US Census Bureau Data API",
-      "mediaType": "application/asm+json",
+      "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/us-census/data-api@current",
       "metadata": {
         "asm": {
@@ -81,7 +85,8 @@
             "approval": "never"
           }
         }
-      }
+      },
+      "version": "current"
     }
   ]
 }

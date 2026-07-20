@@ -44,20 +44,28 @@ def to_entry(m: dict) -> dict:
     if ops:
         asm_meta["operational"] = {"risk_class": ops.get("risk_class"),
                                    "approval": (ops.get("approval") or {}).get("required")}
-    return {
-        "identifier": f"urn:air:asm:{m['service_id']}",
+    import re
+    base_id, _, ver = m["service_id"].partition("@")
+    org, _, tool = base_id.partition("/")
+    part = lambda s: re.sub(r"[^A-Za-z0-9._-]", "-", s)
+    entry = {
+        "identifier": f"urn:air:asm-spec:{part(org)}:{part(tool or org)}",
         "displayName": m.get("display_name"),
-        "mediaType": "application/asm+json",
+        "type": "application/asm+json",
         "url": f"{HOSTED}/{m['service_id']}",
         "metadata": {"asm": asm_meta},
     }
+    if ver:
+        entry["version"] = ver
+    return entry
 
 
 catalog = {
     "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata "
-                "via the ADR-0012 `metadata` extension point. Not an official ASM<->AI-Catalog "
+                "via the `metadata` extension point. Not an official ASM<->AI-Catalog "
                 "binding; a runnable demonstration that the value layer fits the upstream "
                 "cross-protocol standard without core-schema changes.",
+    "specVersion": "1.0",
     "entries": [to_entry(LIB[sid]) for sid in PICK if sid in LIB],
 }
 

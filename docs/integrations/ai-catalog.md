@@ -8,9 +8,10 @@ AI Catalog **ADR-0012** ("Extensibility via `metadata`", accepted) keeps the cor
 
 ```json
 {
-  "identifier": "urn:air:asm:amadeus/self-service-api@current",
+  "identifier": "urn:air:asm-spec:amadeus:self-service-api",
   "displayName": "Amadeus Self-Service APIs",
-  "mediaType": "application/asm+json",
+  "type": "application/asm+json",
+  "version": "current",
   "url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
   "metadata": {
     "asm": {
