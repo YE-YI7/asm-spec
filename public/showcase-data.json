@@ -1,0 +1,2123 @@
+{
+  "runDate": "2026-04-20T14:49:02.987Z",
+  "mode": "mock",
+  "chain": "arcTestnet",
+  "network": "eip155:5042002",
+  "distribution": {
+    "total": 50,
+    "byCategory": {
+      "image-gen": 4,
+      "copywrite": 6,
+      "translate": 6,
+      "tts": 3,
+      "video-gen": 3,
+      "embed": 5,
+      "scrape": 5,
+      "browse": 2,
+      "code-gen": 4,
+      "spreadsheet": 3,
+      "transcribe": 3,
+      "search": 3,
+      "todo": 1,
+      "database": 1,
+      "deploy": 1
+    },
+    "totalTargetCostUsd": 0.113
+  },
+  "arcResults": {
+    "totalTxs": 50,
+    "settledCount": 0,
+    "stubbedCount": 50,
+    "failedCount": 0,
+    "totalValueTransferredUsd": 0.25,
+    "totalArcFeesUsd": 0,
+    "uniqueRecipientCount": 15,
+    "fundsFlow": [
+      {
+        "address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+        "serviceId": "openai/gpt-4o@2024-11-20",
+        "displayName": "GPT-4o",
+        "txCount": 6,
+        "totalValueUsd": 0.03
+      },
+      {
+        "address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+        "serviceId": "google/translate@v3",
+        "displayName": "Google Cloud Translation",
+        "txCount": 6,
+        "totalValueUsd": 0.03
+      },
+      {
+        "address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+        "serviceId": "openai/text-embedding-3-large@3.0",
+        "displayName": "text-embedding-3-large",
+        "txCount": 5,
+        "totalValueUsd": 0.025
+      },
+      {
+        "address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+        "serviceId": "jina/reader@v1",
+        "displayName": "Jina Reader",
+        "txCount": 5,
+        "totalValueUsd": 0.025
+      },
+      {
+        "address": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+        "serviceId": "black-forest-labs/flux-1.1-pro@1.1",
+        "displayName": "FLUX 1.1 Pro",
+        "txCount": 4,
+        "totalValueUsd": 0.02
+      },
+      {
+        "address": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+        "serviceId": "github/copilot@v1",
+        "displayName": "GitHub Copilot",
+        "txCount": 4,
+        "totalValueUsd": 0.02
+      },
+      {
+        "address": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+        "serviceId": "openai/tts-1@1.0",
+        "displayName": "OpenAI TTS",
+        "txCount": 3,
+        "totalValueUsd": 0.015
+      },
+      {
+        "address": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+        "serviceId": "kuaishou/kling-3.0@3.0",
+        "displayName": "Kling 3.0",
+        "txCount": 3,
+        "totalValueUsd": 0.015
+      },
+      {
+        "address": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+        "serviceId": "google/sheets-api@v4",
+        "displayName": "Google Sheets",
+        "txCount": 3,
+        "totalValueUsd": 0.015
+      },
+      {
+        "address": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+        "serviceId": "deepgram/nova@v2",
+        "displayName": "Deepgram Nova-2",
+        "txCount": 3,
+        "totalValueUsd": 0.015
+      },
+      {
+        "address": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+        "serviceId": "tavily/search-api@v1",
+        "displayName": "Tavily Search",
+        "txCount": 3,
+        "totalValueUsd": 0.015
+      },
+      {
+        "address": "0x82c0538b1eD43E8eA88158D988D24c7647735e04",
+        "serviceId": "steel/browser@v1",
+        "displayName": "Steel Browser",
+        "txCount": 2,
+        "totalValueUsd": 0.01
+      },
+      {
+        "address": "0x29e22B366fBbcE9bdc12De5FD992D1925174F9C1",
+        "serviceId": "todoist/api@v2",
+        "displayName": "Todoist",
+        "txCount": 1,
+        "totalValueUsd": 0.005
+      },
+      {
+        "address": "0x0C3eEB38519A5e39702f9D5C04084f2ca19C05E7",
+        "serviceId": "neon/serverless-postgres@v1",
+        "displayName": "Neon Serverless Postgres",
+        "txCount": 1,
+        "totalValueUsd": 0.005
+      },
+      {
+        "address": "0xf321B3EA2469266CA49b571c416B157b76eda49d",
+        "serviceId": "vercel/platform@v1",
+        "displayName": "Vercel",
+        "txCount": 1,
+        "totalValueUsd": 0.005
+      }
+    ],
+    "wallClockMs": 291,
+    "avgLatencyMs": 6,
+    "minLatencyMs": 4,
+    "maxLatencyMs": 23
+  },
+  "ethereumHypothetical": {
+    "note": "Filled in Phase 2 via Etherscan gas + CoinGecko ETH price fetch at runtime."
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "category": "image-gen",
+      "taxonomy": "ai.vision.image_generation",
+      "prompt": "Hero image, ADHD user working peacefully, calm palette, 1024x1024",
+      "targetPriceUsd": 0.004,
+      "actualPriceUsd": 0.005,
+      "pickedService": "black-forest-labs/flux-1.1-pro@1.1",
+      "winnerOnchainAddress": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+      "candidates": [
+        {
+          "service_id": "black-forest-labs/flux-1.1-pro@1.1",
+          "display_name": "FLUX 1.1 Pro",
+          "price_usd": 0.04,
+          "quality": 0.904,
+          "latency_p50_ms": 8000,
+          "score": 0.9934,
+          "onchain_address": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/imagen-3@3.0",
+          "display_name": "Imagen 3",
+          "price_usd": 0.04,
+          "quality": 0.72,
+          "latency_p50_ms": 10000,
+          "score": 0.35,
+          "onchain_address": "0x444155D692b646f872a6501eEbD9F8ceff1F1DD9",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "openai/dall-e-3@3.0",
+          "display_name": "DALL-E 3",
+          "price_usd": 0.04,
+          "quality": 0.67,
+          "latency_p50_ms": 12000,
+          "score": 0.0066,
+          "onchain_address": "0xcDa5313778bf7E0220521aA80208D2C5619abaD0",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "FLUX 1.1 Pro wins on price ($0.040000/call, trust 0.90) among 3 candidates; +0.643 ahead of Imagen 3.",
+      "latencyMs": 23,
+      "status": "stubbed"
+    },
+    {
+      "id": 2,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "Instagram caption, 150 chars, witty, target ADHD adults 25-40",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 11,
+      "status": "stubbed"
+    },
+    {
+      "id": 3,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate launch caption to Japanese, keep witty tone",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 11,
+      "status": "stubbed"
+    },
+    {
+      "id": 4,
+      "category": "tts",
+      "taxonomy": "ai.audio.tts",
+      "prompt": "Voiceover script A, female voice, 30s, warm conversational",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/tts-1@1.0",
+      "winnerOnchainAddress": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+      "candidates": [
+        {
+          "service_id": "openai/tts-1@1.0",
+          "display_name": "OpenAI TTS",
+          "price_usd": 0.000015,
+          "quality": 0.75,
+          "latency_p50_ms": 500,
+          "score": 0.8587,
+          "onchain_address": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "elevenlabs/tts-v2@2.0",
+          "display_name": "ElevenLabs TTS v2",
+          "price_usd": 0.00018,
+          "quality": 0.875,
+          "latency_p50_ms": 400,
+          "score": 0.1413,
+          "onchain_address": "0x3c985A6578134cbB485f97EB8526D2bd6247a1CA",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "OpenAI TTS wins on price ($0.000015/call, trust 0.75) among 2 candidates; +0.717 ahead of ElevenLabs TTS v2.",
+      "latencyMs": 9,
+      "status": "stubbed"
+    },
+    {
+      "id": 5,
+      "category": "video-gen",
+      "taxonomy": "ai.video.generation",
+      "prompt": "6s product demo, screen recording style, highlight timer feature",
+      "targetPriceUsd": 0.005,
+      "actualPriceUsd": 0.005,
+      "pickedService": "kuaishou/kling-3.0@3.0",
+      "winnerOnchainAddress": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+      "candidates": [
+        {
+          "service_id": "kuaishou/kling-3.0@3.0",
+          "display_name": "Kling 3.0",
+          "price_usd": 0.029,
+          "quality": 0.835,
+          "latency_p50_ms": 60000,
+          "score": 0.8635,
+          "onchain_address": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/veo-3.1@3.1",
+          "display_name": "Veo 3.1",
+          "price_usd": 0.2,
+          "quality": 0.847,
+          "latency_p50_ms": 45000,
+          "score": 0.1365,
+          "onchain_address": "0xa7cDe0B6F843AcBFA7552d72B8899Ae1937da2d9",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Kling 3.0 wins on price ($0.029000/call, trust 0.83) among 2 candidates; +0.727 ahead of Veo 3.1.",
+      "latencyMs": 9,
+      "status": "stubbed"
+    },
+    {
+      "id": 6,
+      "category": "embed",
+      "taxonomy": "ai.llm.embedding",
+      "prompt": "Embed 10 caption variants to find most semantically distinct 3",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/text-embedding-3-large@3.0",
+      "winnerOnchainAddress": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+      "candidates": [
+        {
+          "service_id": "openai/text-embedding-3-large@3.0",
+          "display_name": "text-embedding-3-large",
+          "price_usd": 1.3e-7,
+          "quality": 0.646,
+          "latency_p50_ms": 100,
+          "score": 0.944,
+          "onchain_address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "voyageai/voyage-3-large@3.0",
+          "display_name": "Voyage 3 Large",
+          "price_usd": 1.8e-7,
+          "quality": 0.662,
+          "latency_p50_ms": 150,
+          "score": 0.056,
+          "onchain_address": "0x14D9a01533cecB6FaB0b74C363727f702C259a61",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "text-embedding-3-large wins on price ($0.000000/call, trust 0.65) among 2 candidates; +0.888 ahead of Voyage 3 Large.",
+      "latencyMs": 8,
+      "status": "stubbed"
+    },
+    {
+      "id": 7,
+      "category": "scrape",
+      "taxonomy": "tool.data.scraping",
+      "prompt": "Scrape competitor Focusmate latest 10 posts + engagement",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "jina/reader@v1",
+      "winnerOnchainAddress": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+      "candidates": [
+        {
+          "service_id": "jina/reader@v1",
+          "display_name": "Jina Reader",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0.9995,
+          "onchain_address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "firecrawl/scrape@v1",
+          "display_name": "Firecrawl",
+          "price_usd": 0.001,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0.0005,
+          "onchain_address": "0xF2BF8B0dEfd8dD49DC02F99518e81B132e96Bbd8",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Jina Reader wins on price ($0.000000/call, trust 0.50) among 2 candidates; +0.999 ahead of Firecrawl.",
+      "latencyMs": 7,
+      "status": "stubbed"
+    },
+    {
+      "id": 8,
+      "category": "browse",
+      "taxonomy": "tool.automation.browser",
+      "prompt": "Open competitor pricing page in headless browser, capture full-page screenshot",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "steel/browser@v1",
+      "winnerOnchainAddress": "0x82c0538b1eD43E8eA88158D988D24c7647735e04",
+      "candidates": [
+        {
+          "service_id": "steel/browser@v1",
+          "display_name": "Steel Browser",
+          "price_usd": 0.005,
+          "quality": 1,
+          "latency_p50_ms": 1500,
+          "score": 0.997,
+          "onchain_address": "0x82c0538b1eD43E8eA88158D988D24c7647735e04",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "browserbase/api@v1",
+          "display_name": "Browserbase",
+          "price_usd": 0.01,
+          "quality": 0.96,
+          "latency_p50_ms": 2000,
+          "score": 0.003,
+          "onchain_address": "0x52CBd6295A7813e50aa8FA3A3E2b8148A01bD6a1",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Steel Browser wins on price ($0.005000/call, trust 1.00) among 2 candidates; +0.994 ahead of Browserbase.",
+      "latencyMs": 8,
+      "status": "stubbed"
+    },
+    {
+      "id": 9,
+      "category": "code-gen",
+      "taxonomy": "ai.code.completion",
+      "prompt": "Generate Google Analytics 4 snippet for campaign tracking",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "github/copilot@v1",
+      "winnerOnchainAddress": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+      "candidates": [
+        {
+          "service_id": "github/copilot@v1",
+          "display_name": "GitHub Copilot",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "cursor/editor@v1",
+          "display_name": "Cursor",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x58C2ac638A77CfCd22Af2750b453C0DAe32400E0",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "GitHub Copilot wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Cursor.",
+      "latencyMs": 7,
+      "status": "stubbed"
+    },
+    {
+      "id": 10,
+      "category": "spreadsheet",
+      "taxonomy": "tool.productivity.spreadsheet",
+      "prompt": "Tag 100 App Store review snippets by sentiment (pos/neg/neutral) in a sheet",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/sheets-api@v4",
+      "winnerOnchainAddress": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+      "candidates": [
+        {
+          "service_id": "google/sheets-api@v4",
+          "display_name": "Google Sheets",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 100,
+          "score": 1,
+          "onchain_address": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "airtable/api@v1",
+          "display_name": "Airtable",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 120,
+          "score": 0,
+          "onchain_address": "0x53d11edF5B0B7a447431FAF42260f22BEA9FFB66",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Sheets wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Airtable.",
+      "latencyMs": 7,
+      "status": "stubbed"
+    },
+    {
+      "id": 11,
+      "category": "transcribe",
+      "taxonomy": "ai.audio.stt",
+      "prompt": "Transcribe 3-min competitor Focusmate demo video for theme extraction",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "deepgram/nova@v2",
+      "winnerOnchainAddress": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+      "candidates": [
+        {
+          "service_id": "deepgram/nova@v2",
+          "display_name": "Deepgram Nova-2",
+          "price_usd": 0.0043,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 1,
+          "onchain_address": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "openai/whisper@v1",
+          "display_name": "OpenAI Whisper",
+          "price_usd": 0.006,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0,
+          "onchain_address": "0x9CbFa1086aAd16E50Be4E654E88C59d08D6b01ae",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Deepgram Nova-2 wins on price ($0.004300/call, trust 0.50) among 2 candidates; +1.000 ahead of OpenAI Whisper.",
+      "latencyMs": 6,
+      "status": "stubbed"
+    },
+    {
+      "id": 12,
+      "category": "search",
+      "taxonomy": "tool.data.search",
+      "prompt": "Find top 5 ADHD productivity blogs with DA > 40",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "tavily/search-api@v1",
+      "winnerOnchainAddress": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+      "candidates": [
+        {
+          "service_id": "tavily/search-api@v1",
+          "display_name": "Tavily Search",
+          "price_usd": 0.001,
+          "quality": 0.92,
+          "latency_p50_ms": 800,
+          "score": 0.8238,
+          "onchain_address": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "exa/search-api@v1",
+          "display_name": "Exa Search",
+          "price_usd": 0.003,
+          "quality": 0.95,
+          "latency_p50_ms": 600,
+          "score": 0.1762,
+          "onchain_address": "0x553984Bb7100978F763f67Ed2fC5B5AA4778E1e1",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Tavily Search wins on price ($0.001000/call, trust 0.92) among 2 candidates; +0.648 ahead of Exa Search.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 13,
+      "category": "todo",
+      "taxonomy": "tool.productivity.todo",
+      "prompt": "Create launch-day checklist: 8 tasks w/ owners + due times across US/EU/JP timezones",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "todoist/api@v2",
+      "winnerOnchainAddress": "0x29e22B366fBbcE9bdc12De5FD992D1925174F9C1",
+      "candidates": [
+        {
+          "service_id": "todoist/api@v2",
+          "display_name": "Todoist",
+          "price_usd": 0,
+          "quality": 0.044,
+          "latency_p50_ms": 120,
+          "score": 0.9363,
+          "onchain_address": "0x29e22B366fBbcE9bdc12De5FD992D1925174F9C1",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "ticktick/api@v2",
+          "display_name": "TickTick",
+          "price_usd": 0,
+          "quality": 0.045,
+          "latency_p50_ms": 150,
+          "score": 0.637,
+          "onchain_address": "0xB81Af5546eEe9FD9cc60320116dEce3858F042A8",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/tasks-api@v1",
+          "display_name": "Google Tasks",
+          "price_usd": 0,
+          "quality": 0.042,
+          "latency_p50_ms": 200,
+          "score": 0.0029,
+          "onchain_address": "0x82C23955a94bA6BCe870e67aC47d080be3b50299",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "Todoist wins on price ($0.000000/call, trust 0.04) among 3 candidates; +0.299 ahead of TickTick.",
+      "latencyMs": 6,
+      "status": "stubbed"
+    },
+    {
+      "id": 14,
+      "category": "database",
+      "taxonomy": "infra.database.postgres",
+      "prompt": "Insert campaign_metrics row: run_id, total_cost, txs, ts — for later dashboard query",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "neon/serverless-postgres@v1",
+      "winnerOnchainAddress": "0x0C3eEB38519A5e39702f9D5C04084f2ca19C05E7",
+      "candidates": [
+        {
+          "service_id": "neon/serverless-postgres@v1",
+          "display_name": "Neon Serverless Postgres",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 8,
+          "score": 1,
+          "onchain_address": "0x0C3eEB38519A5e39702f9D5C04084f2ca19C05E7",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "supabase/database@v2",
+          "display_name": "Supabase",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 15,
+          "score": 0,
+          "onchain_address": "0x8955Cd6ee061aA0a15d21e08Ce9631A5774D6F2c",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Neon Serverless Postgres wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Supabase.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 15,
+      "category": "deploy",
+      "taxonomy": "tool.devops.deployment",
+      "prompt": "Deploy landing page to production, return public URL",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "vercel/platform@v1",
+      "winnerOnchainAddress": "0xf321B3EA2469266CA49b571c416B157b76eda49d",
+      "candidates": [
+        {
+          "service_id": "vercel/platform@v1",
+          "display_name": "Vercel",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 1000,
+          "score": 1,
+          "onchain_address": "0xf321B3EA2469266CA49b571c416B157b76eda49d",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "fly/machines@v1",
+          "display_name": "Fly.io",
+          "price_usd": 0.0000031,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0,
+          "onchain_address": "0xeac1843e2eAD31237CA8fC46d22bC77fc025D2F4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Vercel wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Fly.io.",
+      "latencyMs": 7,
+      "status": "stubbed"
+    },
+    {
+      "id": 16,
+      "category": "image-gen",
+      "taxonomy": "ai.vision.image_generation",
+      "prompt": "App icon, focus bear mascot, flat design, 512x512",
+      "targetPriceUsd": 0.004,
+      "actualPriceUsd": 0.005,
+      "pickedService": "black-forest-labs/flux-1.1-pro@1.1",
+      "winnerOnchainAddress": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+      "candidates": [
+        {
+          "service_id": "black-forest-labs/flux-1.1-pro@1.1",
+          "display_name": "FLUX 1.1 Pro",
+          "price_usd": 0.04,
+          "quality": 0.904,
+          "latency_p50_ms": 8000,
+          "score": 0.9934,
+          "onchain_address": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/imagen-3@3.0",
+          "display_name": "Imagen 3",
+          "price_usd": 0.04,
+          "quality": 0.72,
+          "latency_p50_ms": 10000,
+          "score": 0.35,
+          "onchain_address": "0x444155D692b646f872a6501eEbD9F8ceff1F1DD9",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "openai/dall-e-3@3.0",
+          "display_name": "DALL-E 3",
+          "price_usd": 0.04,
+          "quality": 0.67,
+          "latency_p50_ms": 12000,
+          "score": 0.0066,
+          "onchain_address": "0xcDa5313778bf7E0220521aA80208D2C5619abaD0",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "FLUX 1.1 Pro wins on price ($0.040000/call, trust 0.90) among 3 candidates; +0.643 ahead of Imagen 3.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 17,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "Twitter/X post, 240 chars, product launch announcement",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 18,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate to Simplified Chinese, localize idioms",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 19,
+      "category": "tts",
+      "taxonomy": "ai.audio.tts",
+      "prompt": "Voiceover script B, male voice, 15s, energetic",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/tts-1@1.0",
+      "winnerOnchainAddress": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+      "candidates": [
+        {
+          "service_id": "openai/tts-1@1.0",
+          "display_name": "OpenAI TTS",
+          "price_usd": 0.000015,
+          "quality": 0.75,
+          "latency_p50_ms": 500,
+          "score": 0.8587,
+          "onchain_address": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "elevenlabs/tts-v2@2.0",
+          "display_name": "ElevenLabs TTS v2",
+          "price_usd": 0.00018,
+          "quality": 0.875,
+          "latency_p50_ms": 400,
+          "score": 0.1413,
+          "onchain_address": "0x3c985A6578134cbB485f97EB8526D2bd6247a1CA",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "OpenAI TTS wins on price ($0.000015/call, trust 0.75) among 2 candidates; +0.717 ahead of ElevenLabs TTS v2.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 20,
+      "category": "video-gen",
+      "taxonomy": "ai.video.generation",
+      "prompt": "6s lifestyle clip, ADHD user feeling focused at desk",
+      "targetPriceUsd": 0.005,
+      "actualPriceUsd": 0.005,
+      "pickedService": "kuaishou/kling-3.0@3.0",
+      "winnerOnchainAddress": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+      "candidates": [
+        {
+          "service_id": "kuaishou/kling-3.0@3.0",
+          "display_name": "Kling 3.0",
+          "price_usd": 0.029,
+          "quality": 0.835,
+          "latency_p50_ms": 60000,
+          "score": 0.8635,
+          "onchain_address": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/veo-3.1@3.1",
+          "display_name": "Veo 3.1",
+          "price_usd": 0.2,
+          "quality": 0.847,
+          "latency_p50_ms": 45000,
+          "score": 0.1365,
+          "onchain_address": "0xa7cDe0B6F843AcBFA7552d72B8899Ae1937da2d9",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Kling 3.0 wins on price ($0.029000/call, trust 0.83) among 2 candidates; +0.727 ahead of Veo 3.1.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 21,
+      "category": "embed",
+      "taxonomy": "ai.llm.embedding",
+      "prompt": "Embed competitor taglines to cluster their positioning angles",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/text-embedding-3-large@3.0",
+      "winnerOnchainAddress": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+      "candidates": [
+        {
+          "service_id": "openai/text-embedding-3-large@3.0",
+          "display_name": "text-embedding-3-large",
+          "price_usd": 1.3e-7,
+          "quality": 0.646,
+          "latency_p50_ms": 100,
+          "score": 0.944,
+          "onchain_address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "voyageai/voyage-3-large@3.0",
+          "display_name": "Voyage 3 Large",
+          "price_usd": 1.8e-7,
+          "quality": 0.662,
+          "latency_p50_ms": 150,
+          "score": 0.056,
+          "onchain_address": "0x14D9a01533cecB6FaB0b74C363727f702C259a61",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "text-embedding-3-large wins on price ($0.000000/call, trust 0.65) among 2 candidates; +0.888 ahead of Voyage 3 Large.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 22,
+      "category": "scrape",
+      "taxonomy": "tool.data.scraping",
+      "prompt": "Scrape Reddit r/ADHD top posts of past week mentioning productivity apps",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "jina/reader@v1",
+      "winnerOnchainAddress": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+      "candidates": [
+        {
+          "service_id": "jina/reader@v1",
+          "display_name": "Jina Reader",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0.9995,
+          "onchain_address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "firecrawl/scrape@v1",
+          "display_name": "Firecrawl",
+          "price_usd": 0.001,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0.0005,
+          "onchain_address": "0xF2BF8B0dEfd8dD49DC02F99518e81B132e96Bbd8",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Jina Reader wins on price ($0.000000/call, trust 0.50) among 2 candidates; +0.999 ahead of Firecrawl.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 23,
+      "category": "browse",
+      "taxonomy": "tool.automation.browser",
+      "prompt": "Automate Product Hunt submission flow draft, screenshot each step",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "steel/browser@v1",
+      "winnerOnchainAddress": "0x82c0538b1eD43E8eA88158D988D24c7647735e04",
+      "candidates": [
+        {
+          "service_id": "steel/browser@v1",
+          "display_name": "Steel Browser",
+          "price_usd": 0.005,
+          "quality": 1,
+          "latency_p50_ms": 1500,
+          "score": 0.997,
+          "onchain_address": "0x82c0538b1eD43E8eA88158D988D24c7647735e04",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "browserbase/api@v1",
+          "display_name": "Browserbase",
+          "price_usd": 0.01,
+          "quality": 0.96,
+          "latency_p50_ms": 2000,
+          "score": 0.003,
+          "onchain_address": "0x52CBd6295A7813e50aa8FA3A3E2b8148A01bD6a1",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Steel Browser wins on price ($0.005000/call, trust 1.00) among 2 candidates; +0.994 ahead of Browserbase.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 24,
+      "category": "code-gen",
+      "taxonomy": "ai.code.completion",
+      "prompt": "Generate TikTok Pixel install snippet for the landing page",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "github/copilot@v1",
+      "winnerOnchainAddress": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+      "candidates": [
+        {
+          "service_id": "github/copilot@v1",
+          "display_name": "GitHub Copilot",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "cursor/editor@v1",
+          "display_name": "Cursor",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x58C2ac638A77CfCd22Af2750b453C0DAe32400E0",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "GitHub Copilot wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Cursor.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 25,
+      "category": "spreadsheet",
+      "taxonomy": "tool.productivity.spreadsheet",
+      "prompt": "Log 50 Reddit comments + pain-point category into tracking sheet",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/sheets-api@v4",
+      "winnerOnchainAddress": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+      "candidates": [
+        {
+          "service_id": "google/sheets-api@v4",
+          "display_name": "Google Sheets",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 100,
+          "score": 1,
+          "onchain_address": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "airtable/api@v1",
+          "display_name": "Airtable",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 120,
+          "score": 0,
+          "onchain_address": "0x53d11edF5B0B7a447431FAF42260f22BEA9FFB66",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Sheets wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Airtable.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 26,
+      "category": "transcribe",
+      "taxonomy": "ai.audio.stt",
+      "prompt": "Transcribe ADHD-creator TikTok voiceover (30s) to match their tone",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "deepgram/nova@v2",
+      "winnerOnchainAddress": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+      "candidates": [
+        {
+          "service_id": "deepgram/nova@v2",
+          "display_name": "Deepgram Nova-2",
+          "price_usd": 0.0043,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 1,
+          "onchain_address": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "openai/whisper@v1",
+          "display_name": "OpenAI Whisper",
+          "price_usd": 0.006,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0,
+          "onchain_address": "0x9CbFa1086aAd16E50Be4E654E88C59d08D6b01ae",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Deepgram Nova-2 wins on price ($0.004300/call, trust 0.50) among 2 candidates; +1.000 ahead of OpenAI Whisper.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 27,
+      "category": "search",
+      "taxonomy": "tool.data.search",
+      "prompt": "Find ADHD-focused newsletter sponsorship opportunities",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "tavily/search-api@v1",
+      "winnerOnchainAddress": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+      "candidates": [
+        {
+          "service_id": "tavily/search-api@v1",
+          "display_name": "Tavily Search",
+          "price_usd": 0.001,
+          "quality": 0.92,
+          "latency_p50_ms": 800,
+          "score": 0.8238,
+          "onchain_address": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "exa/search-api@v1",
+          "display_name": "Exa Search",
+          "price_usd": 0.003,
+          "quality": 0.95,
+          "latency_p50_ms": 600,
+          "score": 0.1762,
+          "onchain_address": "0x553984Bb7100978F763f67Ed2fC5B5AA4778E1e1",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Tavily Search wins on price ($0.001000/call, trust 0.92) among 2 candidates; +0.648 ahead of Exa Search.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 28,
+      "category": "image-gen",
+      "taxonomy": "ai.vision.image_generation",
+      "prompt": "Social ad banner, product UI screenshot + tagline, 1200x628",
+      "targetPriceUsd": 0.004,
+      "actualPriceUsd": 0.005,
+      "pickedService": "black-forest-labs/flux-1.1-pro@1.1",
+      "winnerOnchainAddress": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+      "candidates": [
+        {
+          "service_id": "black-forest-labs/flux-1.1-pro@1.1",
+          "display_name": "FLUX 1.1 Pro",
+          "price_usd": 0.04,
+          "quality": 0.904,
+          "latency_p50_ms": 8000,
+          "score": 0.9934,
+          "onchain_address": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/imagen-3@3.0",
+          "display_name": "Imagen 3",
+          "price_usd": 0.04,
+          "quality": 0.72,
+          "latency_p50_ms": 10000,
+          "score": 0.35,
+          "onchain_address": "0x444155D692b646f872a6501eEbD9F8ceff1F1DD9",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "openai/dall-e-3@3.0",
+          "display_name": "DALL-E 3",
+          "price_usd": 0.04,
+          "quality": 0.67,
+          "latency_p50_ms": 12000,
+          "score": 0.0066,
+          "onchain_address": "0xcDa5313778bf7E0220521aA80208D2C5619abaD0",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "FLUX 1.1 Pro wins on price ($0.040000/call, trust 0.90) among 3 candidates; +0.643 ahead of Imagen 3.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 29,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "LinkedIn post, 500 chars, founder-voice, tell the ADHD pain point",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 30,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate to Spanish (LATAM), casual register",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 31,
+      "category": "tts",
+      "taxonomy": "ai.audio.tts",
+      "prompt": "Short tag jingle voice, neutral, 8s",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/tts-1@1.0",
+      "winnerOnchainAddress": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+      "candidates": [
+        {
+          "service_id": "openai/tts-1@1.0",
+          "display_name": "OpenAI TTS",
+          "price_usd": 0.000015,
+          "quality": 0.75,
+          "latency_p50_ms": 500,
+          "score": 0.8587,
+          "onchain_address": "0x2b0a2e691866F6B6D50A3B10c5ADD78fa7124CF7",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "elevenlabs/tts-v2@2.0",
+          "display_name": "ElevenLabs TTS v2",
+          "price_usd": 0.00018,
+          "quality": 0.875,
+          "latency_p50_ms": 400,
+          "score": 0.1413,
+          "onchain_address": "0x3c985A6578134cbB485f97EB8526D2bd6247a1CA",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "OpenAI TTS wins on price ($0.000015/call, trust 0.75) among 2 candidates; +0.717 ahead of ElevenLabs TTS v2.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 32,
+      "category": "video-gen",
+      "taxonomy": "ai.video.generation",
+      "prompt": "3s logo sting, bear mascot animates, brand palette",
+      "targetPriceUsd": 0.005,
+      "actualPriceUsd": 0.005,
+      "pickedService": "kuaishou/kling-3.0@3.0",
+      "winnerOnchainAddress": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+      "candidates": [
+        {
+          "service_id": "kuaishou/kling-3.0@3.0",
+          "display_name": "Kling 3.0",
+          "price_usd": 0.029,
+          "quality": 0.835,
+          "latency_p50_ms": 60000,
+          "score": 0.8635,
+          "onchain_address": "0x45A190637BFF49449131A54054b2fb0DB4B13d30",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/veo-3.1@3.1",
+          "display_name": "Veo 3.1",
+          "price_usd": 0.2,
+          "quality": 0.847,
+          "latency_p50_ms": 45000,
+          "score": 0.1365,
+          "onchain_address": "0xa7cDe0B6F843AcBFA7552d72B8899Ae1937da2d9",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Kling 3.0 wins on price ($0.029000/call, trust 0.83) among 2 candidates; +0.727 ahead of Veo 3.1.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 33,
+      "category": "embed",
+      "taxonomy": "ai.llm.embedding",
+      "prompt": "Embed landing-page headline candidates, find closest to 'relief'",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/text-embedding-3-large@3.0",
+      "winnerOnchainAddress": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+      "candidates": [
+        {
+          "service_id": "openai/text-embedding-3-large@3.0",
+          "display_name": "text-embedding-3-large",
+          "price_usd": 1.3e-7,
+          "quality": 0.646,
+          "latency_p50_ms": 100,
+          "score": 0.944,
+          "onchain_address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "voyageai/voyage-3-large@3.0",
+          "display_name": "Voyage 3 Large",
+          "price_usd": 1.8e-7,
+          "quality": 0.662,
+          "latency_p50_ms": 150,
+          "score": 0.056,
+          "onchain_address": "0x14D9a01533cecB6FaB0b74C363727f702C259a61",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "text-embedding-3-large wins on price ($0.000000/call, trust 0.65) among 2 candidates; +0.888 ahead of Voyage 3 Large.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 34,
+      "category": "scrape",
+      "taxonomy": "tool.data.scraping",
+      "prompt": "Scrape Product Hunt ADHD-related launches past 30 days",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "jina/reader@v1",
+      "winnerOnchainAddress": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+      "candidates": [
+        {
+          "service_id": "jina/reader@v1",
+          "display_name": "Jina Reader",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0.9995,
+          "onchain_address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "firecrawl/scrape@v1",
+          "display_name": "Firecrawl",
+          "price_usd": 0.001,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0.0005,
+          "onchain_address": "0xF2BF8B0dEfd8dD49DC02F99518e81B132e96Bbd8",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Jina Reader wins on price ($0.000000/call, trust 0.50) among 2 candidates; +0.999 ahead of Firecrawl.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 35,
+      "category": "code-gen",
+      "taxonomy": "ai.code.completion",
+      "prompt": "Generate UTM-tagged link builder helper in TS",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "github/copilot@v1",
+      "winnerOnchainAddress": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+      "candidates": [
+        {
+          "service_id": "github/copilot@v1",
+          "display_name": "GitHub Copilot",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "cursor/editor@v1",
+          "display_name": "Cursor",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x58C2ac638A77CfCd22Af2750b453C0DAe32400E0",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "GitHub Copilot wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Cursor.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 36,
+      "category": "spreadsheet",
+      "taxonomy": "tool.productivity.spreadsheet",
+      "prompt": "Build competitor feature-overlap matrix, FocusBear vs 5 rivals",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/sheets-api@v4",
+      "winnerOnchainAddress": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+      "candidates": [
+        {
+          "service_id": "google/sheets-api@v4",
+          "display_name": "Google Sheets",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 100,
+          "score": 1,
+          "onchain_address": "0x71C4eDf7182028794Ab4dC85C9a372394D5439A4",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "airtable/api@v1",
+          "display_name": "Airtable",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 120,
+          "score": 0,
+          "onchain_address": "0x53d11edF5B0B7a447431FAF42260f22BEA9FFB66",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Sheets wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Airtable.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 37,
+      "category": "transcribe",
+      "taxonomy": "ai.audio.stt",
+      "prompt": "Transcribe ADHD productivity podcast clip (90s) for quotable lines",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "deepgram/nova@v2",
+      "winnerOnchainAddress": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+      "candidates": [
+        {
+          "service_id": "deepgram/nova@v2",
+          "display_name": "Deepgram Nova-2",
+          "price_usd": 0.0043,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 1,
+          "onchain_address": "0x71710D38155B3A09936147f67DBB18b5F3818e43",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "openai/whisper@v1",
+          "display_name": "OpenAI Whisper",
+          "price_usd": 0.006,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0,
+          "onchain_address": "0x9CbFa1086aAd16E50Be4E654E88C59d08D6b01ae",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Deepgram Nova-2 wins on price ($0.004300/call, trust 0.50) among 2 candidates; +1.000 ahead of OpenAI Whisper.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 38,
+      "category": "search",
+      "taxonomy": "tool.data.search",
+      "prompt": "Find TikTok creators in ADHD niche with 10k-100k followers",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "tavily/search-api@v1",
+      "winnerOnchainAddress": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+      "candidates": [
+        {
+          "service_id": "tavily/search-api@v1",
+          "display_name": "Tavily Search",
+          "price_usd": 0.001,
+          "quality": 0.92,
+          "latency_p50_ms": 800,
+          "score": 0.8238,
+          "onchain_address": "0xF7cDd620b3C9e20203bf12440973989743Baf92F",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "exa/search-api@v1",
+          "display_name": "Exa Search",
+          "price_usd": 0.003,
+          "quality": 0.95,
+          "latency_p50_ms": 600,
+          "score": 0.1762,
+          "onchain_address": "0x553984Bb7100978F763f67Ed2fC5B5AA4778E1e1",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Tavily Search wins on price ($0.001000/call, trust 0.92) among 2 candidates; +0.648 ahead of Exa Search.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 39,
+      "category": "image-gen",
+      "taxonomy": "ai.vision.image_generation",
+      "prompt": "Thumbnail for short video, bold text overlay, 720x1280",
+      "targetPriceUsd": 0.004,
+      "actualPriceUsd": 0.005,
+      "pickedService": "black-forest-labs/flux-1.1-pro@1.1",
+      "winnerOnchainAddress": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+      "candidates": [
+        {
+          "service_id": "black-forest-labs/flux-1.1-pro@1.1",
+          "display_name": "FLUX 1.1 Pro",
+          "price_usd": 0.04,
+          "quality": 0.904,
+          "latency_p50_ms": 8000,
+          "score": 0.9934,
+          "onchain_address": "0x746b0F52b979b18225CC31FC7EB1dd89a67100a9",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "google/imagen-3@3.0",
+          "display_name": "Imagen 3",
+          "price_usd": 0.04,
+          "quality": 0.72,
+          "latency_p50_ms": 10000,
+          "score": 0.35,
+          "onchain_address": "0x444155D692b646f872a6501eEbD9F8ceff1F1DD9",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "openai/dall-e-3@3.0",
+          "display_name": "DALL-E 3",
+          "price_usd": 0.04,
+          "quality": 0.67,
+          "latency_p50_ms": 12000,
+          "score": 0.0066,
+          "onchain_address": "0xcDa5313778bf7E0220521aA80208D2C5619abaD0",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "FLUX 1.1 Pro wins on price ($0.040000/call, trust 0.90) among 3 candidates; +0.643 ahead of Imagen 3.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 40,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "TikTok hook line, 8 words, stop-the-scroll energy",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 41,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate to German, professional tone",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 42,
+      "category": "embed",
+      "taxonomy": "ai.llm.embedding",
+      "prompt": "Embed 20 Reddit pain-point quotes, cluster into top 5 themes",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/text-embedding-3-large@3.0",
+      "winnerOnchainAddress": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+      "candidates": [
+        {
+          "service_id": "openai/text-embedding-3-large@3.0",
+          "display_name": "text-embedding-3-large",
+          "price_usd": 1.3e-7,
+          "quality": 0.646,
+          "latency_p50_ms": 100,
+          "score": 0.944,
+          "onchain_address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "voyageai/voyage-3-large@3.0",
+          "display_name": "Voyage 3 Large",
+          "price_usd": 1.8e-7,
+          "quality": 0.662,
+          "latency_p50_ms": 150,
+          "score": 0.056,
+          "onchain_address": "0x14D9a01533cecB6FaB0b74C363727f702C259a61",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "text-embedding-3-large wins on price ($0.000000/call, trust 0.65) among 2 candidates; +0.888 ahead of Voyage 3 Large.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 43,
+      "category": "scrape",
+      "taxonomy": "tool.data.scraping",
+      "prompt": "Scrape App Store reviews for top 3 ADHD apps, latest 20 each",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "jina/reader@v1",
+      "winnerOnchainAddress": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+      "candidates": [
+        {
+          "service_id": "jina/reader@v1",
+          "display_name": "Jina Reader",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0.9995,
+          "onchain_address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "firecrawl/scrape@v1",
+          "display_name": "Firecrawl",
+          "price_usd": 0.001,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0.0005,
+          "onchain_address": "0xF2BF8B0dEfd8dD49DC02F99518e81B132e96Bbd8",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Jina Reader wins on price ($0.000000/call, trust 0.50) among 2 candidates; +0.999 ahead of Firecrawl.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 44,
+      "category": "code-gen",
+      "taxonomy": "ai.code.completion",
+      "prompt": "Generate webhook handler for Circle payment confirmation",
+      "targetPriceUsd": 0.003,
+      "actualPriceUsd": 0.005,
+      "pickedService": "github/copilot@v1",
+      "winnerOnchainAddress": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+      "candidates": [
+        {
+          "service_id": "github/copilot@v1",
+          "display_name": "GitHub Copilot",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0xb76797Ad243fAD4643D419D52ed4bA44C301Dd5c",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "cursor/editor@v1",
+          "display_name": "Cursor",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x58C2ac638A77CfCd22Af2750b453C0DAe32400E0",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "GitHub Copilot wins on price ($0.000000/call, trust 0.50) among 2 candidates; +1.000 ahead of Cursor.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 45,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "Email subject line, under 50 chars, curiosity-driven",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 46,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate to Brazilian Portuguese, friendly tone",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 47,
+      "category": "embed",
+      "taxonomy": "ai.llm.embedding",
+      "prompt": "Embed founder-voice LinkedIn drafts, pick the most on-brand one",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/text-embedding-3-large@3.0",
+      "winnerOnchainAddress": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+      "candidates": [
+        {
+          "service_id": "openai/text-embedding-3-large@3.0",
+          "display_name": "text-embedding-3-large",
+          "price_usd": 1.3e-7,
+          "quality": 0.646,
+          "latency_p50_ms": 100,
+          "score": 0.944,
+          "onchain_address": "0x5e7d5fc2A62623a72322cC4C1C9Eda4d08F3a353",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "voyageai/voyage-3-large@3.0",
+          "display_name": "Voyage 3 Large",
+          "price_usd": 1.8e-7,
+          "quality": 0.662,
+          "latency_p50_ms": 150,
+          "score": 0.056,
+          "onchain_address": "0x14D9a01533cecB6FaB0b74C363727f702C259a61",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "text-embedding-3-large wins on price ($0.000000/call, trust 0.65) among 2 candidates; +0.888 ahead of Voyage 3 Large.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 48,
+      "category": "scrape",
+      "taxonomy": "tool.data.scraping",
+      "prompt": "Scrape YouTube titles of ADHD productivity videos past 7 days",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "jina/reader@v1",
+      "winnerOnchainAddress": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+      "candidates": [
+        {
+          "service_id": "jina/reader@v1",
+          "display_name": "Jina Reader",
+          "price_usd": 0,
+          "quality": 0.5,
+          "latency_p50_ms": 2000,
+          "score": 0.9995,
+          "onchain_address": "0x2142D2a1BBD5C4a6277D121B1DCc1B09176c390b",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "firecrawl/scrape@v1",
+          "display_name": "Firecrawl",
+          "price_usd": 0.001,
+          "quality": 0.5,
+          "latency_p50_ms": 3000,
+          "score": 0.0005,
+          "onchain_address": "0xF2BF8B0dEfd8dD49DC02F99518e81B132e96Bbd8",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Jina Reader wins on price ($0.000000/call, trust 0.50) among 2 candidates; +0.999 ahead of Firecrawl.",
+      "latencyMs": 5,
+      "status": "stubbed"
+    },
+    {
+      "id": 49,
+      "category": "copywrite",
+      "taxonomy": "ai.llm.chat",
+      "prompt": "Product Hunt tagline, under 60 chars, benefit-led",
+      "targetPriceUsd": 0.002,
+      "actualPriceUsd": 0.005,
+      "pickedService": "openai/gpt-4o@2024-11-20",
+      "winnerOnchainAddress": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+      "candidates": [
+        {
+          "service_id": "openai/gpt-4o@2024-11-20",
+          "display_name": "GPT-4o",
+          "price_usd": 0.00000775,
+          "quality": 0.808,
+          "latency_p50_ms": 600,
+          "score": 0.9318,
+          "onchain_address": "0xfd8A69A33Cd564B13E7f7195fE98d8Af6063dcFc",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "anthropic/claude-sonnet-4@4.0",
+          "display_name": "Claude Sonnet 4",
+          "price_usd": 0.0000114,
+          "quality": 0.817,
+          "latency_p50_ms": 800,
+          "score": 0.4913,
+          "onchain_address": "0xbA5Ae65c6fC3928075Bf3a47F450cA6b2da26c82",
+          "picked": false,
+          "rank": 2
+        },
+        {
+          "service_id": "google/gemini-2.5-pro@2.5",
+          "display_name": "Gemini 2.5 Pro",
+          "price_usd": 0.00000737,
+          "quality": 0.833,
+          "latency_p50_ms": 1500,
+          "score": 0.4367,
+          "onchain_address": "0xe0b9Bf2350Af7BC5e6F8d3eAd3Cf33515cb9F025",
+          "picked": false,
+          "rank": 3
+        }
+      ],
+      "reasoning": "GPT-4o wins on latency (600ms p50, $0.000008/call) among 3 candidates; +0.440 ahead of Claude Sonnet 4.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    },
+    {
+      "id": 50,
+      "category": "translate",
+      "taxonomy": "ai.nlp.translation",
+      "prompt": "Translate to Korean, preserve product name in katakana-style",
+      "targetPriceUsd": 0.001,
+      "actualPriceUsd": 0.005,
+      "pickedService": "google/translate@v3",
+      "winnerOnchainAddress": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+      "candidates": [
+        {
+          "service_id": "google/translate@v3",
+          "display_name": "Google Cloud Translation",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 150,
+          "score": 1,
+          "onchain_address": "0x6abA07310EcFD9ce836C920295293fDc43329EC5",
+          "picked": true,
+          "rank": 1
+        },
+        {
+          "service_id": "deepl/translate@v2",
+          "display_name": "DeepL Translate",
+          "price_usd": 0.00002,
+          "quality": 0.5,
+          "latency_p50_ms": 200,
+          "score": 0,
+          "onchain_address": "0x3B720a048CF91d011B696040a952e0754f921af4",
+          "picked": false,
+          "rank": 2
+        }
+      ],
+      "reasoning": "Google Cloud Translation wins on price ($0.000020/call, trust 0.50) among 2 candidates; +1.000 ahead of DeepL Translate.",
+      "latencyMs": 4,
+      "status": "stubbed"
+    }
+  ]
+}

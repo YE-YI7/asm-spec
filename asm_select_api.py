@@ -26,6 +26,7 @@ import os
 import re
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
 from library_select import load_library, monthly_cost, select
@@ -33,6 +34,14 @@ from library_select import load_library, monthly_cost, select
 _LIBRARY = load_library()
 _BY_ID = {m.get("service_id"): m for m in _LIBRARY}
 _GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+# Static launch assets (agent-commerce showcase): served from public/ if present.
+_PUBLIC = Path(__file__).resolve().parent / "public"
+_STATIC = {
+    "/showcase": ("showcase.html", "text/html; charset=utf-8"),
+    "/showcase.html": ("showcase.html", "text/html; charset=utf-8"),
+    "/showcase-data.json": ("showcase-data.json", "application/json; charset=utf-8"),
+}
 
 
 def _urn_part(s: str) -> str:
@@ -115,9 +124,24 @@ class Handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self) -> None:  # CORS preflight
         self._send(204, {})
 
+    def _send_static(self, filename: str, content_type: str) -> None:
+        path = _PUBLIC / filename
+        if not path.is_file():
+            self._send(404, {"error": f"static asset not found: {filename}"})
+            return
+        body = path.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self) -> None:
         url = urlparse(self.path)
-        if url.path == "/healthz":
+        if url.path in _STATIC:
+            self._send_static(*_STATIC[url.path])
+        elif url.path == "/healthz":
             self._send(200, {"ok": True, "tools": len(_LIBRARY)})
         elif url.path == "/tools":
             taxonomy = (parse_qs(url.query).get("taxonomy") or [None])[0]
