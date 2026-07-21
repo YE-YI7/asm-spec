@@ -28,8 +28,17 @@ LIBRARY_DIR = Path(os.environ.get("ASM_LIBRARY_DIR")
 
 def load_library(library_dir: str | Path | None = None) -> list[dict]:
     d = Path(library_dir) if library_dir else LIBRARY_DIR
-    return [json.loads(Path(p).read_text(encoding="utf-8"))
-            for p in glob.glob(str(d / "**" / "*.asm.json"), recursive=True)]
+    manifests = [json.loads(Path(p).read_text(encoding="utf-8"))
+                 for p in glob.glob(str(d / "**" / "*.asm.json"), recursive=True)]
+    if manifests:
+        return manifests
+    # Installed context: the on-disk library/ isn't shipped alongside a flat
+    # module, so fall back to the frozen bundle (see build_library_bundle.py).
+    try:
+        from _asm_library_data import MANIFESTS
+        return [dict(m) for m in MANIFESTS]
+    except ImportError:
+        return manifests
 
 
 def monthly_cost(m: dict) -> float:
