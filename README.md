@@ -1,10 +1,22 @@
 # Agent Service Manifest (ASM)
 
-**MCP tells agents what services can do. ASM tells agents what services are worth.**
+**The agent economy has discovery and it's getting payment rails. The layer in between — deciding which tool an agent uses and who gets paid — is missing. ASM is our bid to build it.**
 
-ASM is the value-metadata layer for **agent tool selection**. When an agent carries out a task for a human, it faces many candidate tools — GUI apps, CLIs, and APIs; free and paid; cloud and local-only. ASM gives it the structured metadata to quickly pick one it *can actually drive*, is *allowed* to use, and that *fits the task* — then rank the survivors on cost, quality, latency, and data terms.
+```
+Discovery    MCP · ARD · AI-Catalog        what tools exist
+    │
+    ▼
+Selection    ASM  ← the missing layer      which one the agent can use, should use, and pays
+    │
+    ▼
+Settlement   x402 · AP2 · ACP              how the payment executes
+```
 
-It is **not** a model picker. The tools are real products — task managers, design apps, data tools, schedulers — anything an agent might invoke on a user's behalf.
+The layers above and below are being built by Anthropic, Google, AWS, Coinbase, Visa. The **selection layer** between them — can the agent even drive this tool, is it allowed to, which of the eligible ones fits the task at what cost/quality/risk, and therefore who gets the work and the money — is the unfilled slot. ASM fills it with structured eligibility + value metadata (the substrate), a gated selector (the mechanism), and a hand-off to settlement.
+
+It is **not** a model picker. The tools are real products — task managers, design apps, data tools, schedulers, booking APIs — anything an agent might invoke on a user's behalf.
+
+**Honest status:** this is the layer we're *building*, with receipts (a measured benchmark, a working selector, a live on-chain demo below), not a layer with production traffic yet. We're early and say so.
 
 ## Try it: pick a tool for a task
 
@@ -15,7 +27,7 @@ python library/select_demo.py
 
 For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it picks free, scriptable **Photopea** over paid Photoshop — and filters **Affinity Designer**, which exposes no automation API at all.
 
-The library it selects over is in [`library/`](library/) — 26 real tools across task management, creative design, research, communication, developer tools, and booking/travel today, each carrying:
+The library it selects over is in [`library/`](library/) — 30 real tools across task management, creative design, research, communication, developer tools, booking, and real-estate data today, each carrying:
 
 - **invocation** — can an agent drive it, and from where (cloud API / local script / GUI-only)
 - **pricing**, **quality**, **sla**, **payment**
@@ -24,7 +36,7 @@ The library it selects over is in [`library/`](library/) — 26 real tools acros
 
 Entries are schema-validated and source-linked; unverified dimensions are marked, not faked.
 
-June 2026 coverage update: the tool-selection library now includes 26 source-linked tools across task management, creative design, research, communication, developer tools, and booking/travel. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights.
+June 2026 coverage update: the tool-selection library now includes 30 source-linked tools across seven domains. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights.
 
 Productization/distribution plan: [`docs/productization-distribution.md`](docs/productization-distribution.md).
 
@@ -32,7 +44,9 @@ Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs
 
 ## The gap ASM fills
 
-The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + payment together in machine-actionable form. ASM is that missing value/selection layer — and it rides on top of the connection layers, not against them.
+The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + payment together in machine-actionable form. ASM is that missing selection layer — and it rides on top of the connection layers, not against them.
+
+**Receipt that the layer is needed:** in [ToolSelect-Bench](benchmark/RESULTS.md), six frontier models choosing among real tools with only names vs. with ASM metadata — the metadata improved correct selection for **6/6** models and cut user-constraint violations for **5/6**; the strongest (GPT-5, Llama-3.3-70B) went from ~35% violations to ~8-10% and topped 90% correct. Honest caveat: gains are strongest on eligibility; the library skews to well-known tools, which *understates* long-tail value.
 
 ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`. Convention: inline blocks carry *static* facts; *mutable* value data (pricing/SLA/quality) should live behind `asm_url` so freshness has a single re-stampable source — guidance hardened by a production multi-server host (see [`docs/integrations/mcp-registry.md`](docs/integrations/mcp-registry.md)).
 
@@ -96,6 +110,7 @@ Latest paper signals:
 - 0/50 MCP-related GitHub repos and 0/14,519 registry/directory entries expose complete value metadata.
 - 75 source-linked manifests across 47 taxonomies validate against `schema/asm-v0.3.schema.json`.
 - Raw-doc LLM selection reaches 63.9-72.2% top-1 accuracy; ASM-manifest selection reaches 100.0%.
+- ToolSelect-Bench (6 frontier models, names-only vs ASM metadata): correct selection up for 6/6, violations down for 5/6; best models >90% correct, violations to ~8-10%.
 - Live execution shows ASM works only when quality metrics are semantically comparable; mixed benchmark scales are a real failure mode.
 - External Arena/OpenRouter analysis is reported as a stress test, not a claim that any quality metric is universally correct.
 
