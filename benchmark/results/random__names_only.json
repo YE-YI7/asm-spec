@@ -6,7 +6,30 @@
     "correct_rate": 0.24,
     "violation_rate": 0.56,
     "unparsed": 0,
-    "mean_overspend_usd_month": 6.45
+    "mean_overspend_usd_month": 6.45,
+    "by_type": {
+      "cheapest_eligible": {
+        "n": 18,
+        "correct_rate": 0.056,
+        "violation_rate": 0.444,
+        "unparsed": 0,
+        "mean_overspend_usd_month": 8.42
+      },
+      "governance": {
+        "n": 11,
+        "correct_rate": 0.455,
+        "violation_rate": 0.455,
+        "unparsed": 0,
+        "mean_overspend_usd_month": 3.17
+      },
+      "unique_eligible": {
+        "n": 21,
+        "correct_rate": 0.286,
+        "violation_rate": 0.714,
+        "unparsed": 0,
+        "mean_overspend_usd_month": null
+      }
+    }
   },
   "picks": {
     "tsb-0001": "amadeus/self-service-api@current",

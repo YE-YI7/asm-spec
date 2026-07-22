@@ -52,20 +52,37 @@ def subject_random(task: dict, condition: str, seed: int = 7) -> str:
     return rng.choice(task["candidates"])
 
 
-def _openrouter_chat(model: str, prompt: str, retries: int = 3) -> str:
-    key = os.environ.get("OPENROUTER_API_KEY")
-    if not key:
-        raise SystemExit("OPENROUTER_API_KEY not set — needed for llm:* subjects")
-    body = json.dumps({"model": model, "temperature": 0,
+# Any OpenAI-compatible chat endpoint (OpenRouter, AIML API, OpenAI, ...).
+# Configure via env: ASM_BENCH_BASE_URL / ASM_BENCH_API_KEY, falling back to the
+# OPENAI_* pair, then OPENROUTER_*.
+_BASE_URL = (os.environ.get("ASM_BENCH_BASE_URL") or os.environ.get("OPENAI_BASE_URL")
+             or "https://openrouter.ai/api/v1").rstrip("/")
+_API_KEY = (os.environ.get("ASM_BENCH_API_KEY") or os.environ.get("OPENAI_API_KEY")
+            or os.environ.get("OPENROUTER_API_KEY"))
+
+
+def _chat(model: str, prompt: str, retries: int = 6) -> str:
+    if not _API_KEY:
+        raise SystemExit("no API key — set ASM_BENCH_API_KEY (or OPENAI_API_KEY)")
+    body = json.dumps({"model": model, "temperature": 0, "max_tokens": 64,
                        "messages": [{"role": "user", "content": prompt}]}).encode()
     req = urllib.request.Request(
-        "https://openrouter.ai/api/v1/chat/completions", data=body,
-        headers={"Authorization": f"Bearer {key}",
-                 "Content-Type": "application/json"})
+        f"{_BASE_URL}/chat/completions", data=body,
+        headers={"Authorization": f"Bearer {_API_KEY}",
+                 "Content-Type": "application/json",
+                 # some hosts sit behind Cloudflare, which blocks the default
+                 # Python-urllib UA (error 1010); present a normal client UA.
+                 "User-Agent": "curl/8.4.0"})
     for attempt in range(retries):
         try:
             with urllib.request.urlopen(req, timeout=120) as r:
                 return json.loads(r.read())["choices"][0]["message"]["content"]
+        except urllib.error.HTTPError as e:
+            # transient upstream errors (500/502/503/504/429) — back off & retry
+            if e.code in (429, 500, 502, 503, 504) and attempt < retries - 1:
+                time.sleep(min(2 ** attempt, 20))
+                continue
+            raise
         except Exception:
             if attempt == retries - 1:
                 raise
@@ -97,12 +114,20 @@ def _parse_pick(text: str, candidates: list[str]) -> str | None:
 def subject_llm(model: str, task: dict, condition: str) -> str | None:
     prompt = (f"{task['prompt']}\n\n{_materials(task, condition)}\n\n"
               "Reply with exactly one service_id and nothing else.")
-    return _parse_pick(_openrouter_chat(model, prompt), task["candidates"])
+    try:
+        return _parse_pick(_chat(model, prompt), task["candidates"])
+    except Exception as e:
+        # one persistently-failing call must not discard the whole run;
+        # record as no-pick (counts as unparsed) and continue.
+        print(f"    ! {model} {condition} {task['task_id']}: {type(e).__name__} {e}")
+        return None
 
 
 # ----------------------------------------------------------------- scoring --
-def score(tasks: list[dict], picks: dict[str, str | None]) -> dict:
+def _score_subset(tasks: list[dict], picks: dict[str, str | None]) -> dict:
     n = len(tasks)
+    if not n:
+        return {"n": 0}
     correct = violations = unparsed = 0
     overspends: list[float] = []
     for t in tasks:
@@ -126,6 +151,16 @@ def score(tasks: list[dict], picks: dict[str, str | None]) -> dict:
         "mean_overspend_usd_month": (round(sum(overspends) / len(overspends), 2)
                                      if overspends else None),
     }
+
+
+def score(tasks: list[dict], picks: dict[str, str | None]) -> dict:
+    out = _score_subset(tasks, picks)
+    # value metadata should matter most where names/descriptions can't reveal
+    # the deciding fact (price, data-governance): break down by task type.
+    out["by_type"] = {}
+    for ttype in sorted({t["type"] for t in tasks}):
+        out["by_type"][ttype] = _score_subset([t for t in tasks if t["type"] == ttype], picks)
+    return out
 
 
 def main() -> None:
@@ -160,7 +195,11 @@ def main() -> None:
         print(f"{args.subject:40} {cond:11} correct={s['correct_rate']:.0%} "
               f"violations={s['violation_rate']:.0%} "
               f"overspend=${s['mean_overspend_usd_month']}/mo "
-              f"unparsed={s['unparsed']}  -> {out.relative_to(HERE.parent)}")
+              f"unparsed={s['unparsed']}")
+        for ttype, st in s["by_type"].items():
+            print(f"    {ttype:20} n={st['n']:2} correct={st['correct_rate']:.0%} "
+                  f"violations={st['violation_rate']:.0%} "
+                  f"overspend=${st['mean_overspend_usd_month']}/mo")
 
 
 if __name__ == "__main__":
