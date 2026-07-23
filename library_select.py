@@ -16,9 +16,17 @@ money, mutate a repo) before invoking.
 from __future__ import annotations
 
 import glob
+import hashlib
 import json
 import os
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
+
+SELECTOR_VERSION = "asm-protocol/0.5.1"
+SELECTION_POLICY = ("gate: agent_operable + reach + agent_completable_setup + "
+                    "usage_terms.automation_allowed + platform + required_functions; "
+                    "rank: monthly_cost asc, then functions desc")
 
 # Default to the library/ next to this module (works from a checkout); override
 # with ASM_LIBRARY_DIR so the MCP server / API can point at any library location.
@@ -114,11 +122,50 @@ def rank(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
     return kept, rejected
 
 
+def manifest_digest(m: dict) -> str:
+    """Canonical sha256 of a manifest — pins the evidence state a decision saw.
+    Manifests are mutable; the digest lets a receipt prove what the fields said
+    at selection time (e.g. that data_governance.trains_on_user_data was 'no')."""
+    canon = json.dumps(m, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return "sha256:" + hashlib.sha256(canon.encode("utf-8")).hexdigest()
+
+
+def build_selection_receipt(decision: dict, pool: list[dict], *,
+                            request: dict) -> dict:
+    """Selection Receipt v0.1 — the accountable record of WHY this provider.
+
+    Upstream complement of the execution-receipt family
+    (docs/integrations/akkhar-code-receipt-spec.md): an execution receipt says
+    what a service did; a selection receipt says why it was chosen over the
+    alternatives, on what evidence, under which constraints. Together with a
+    payment mandate (AP2) and settlement (x402) they form a complete audit
+    chain for autonomous, human-not-present spending.
+    """
+    return {
+        "receipt_type": "selection",
+        "receipt_version": "0.1",
+        "selection_id": str(uuid.uuid4()),
+        "issued_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "selector": {"name": SELECTOR_VERSION, "policy": SELECTION_POLICY},
+        "request": request,
+        "evidence": [{"service_id": m.get("service_id"),
+                      "manifest_digest": manifest_digest(m)} for m in pool],
+        "selected": decision.get("selected"),
+        "selection_reason": decision.get("reason"),
+        "risk_class": decision.get("risk_class"),
+        "approval_required": decision.get("approval_required"),
+        "side_effects": decision.get("side_effects", []),
+        "alternatives": decision.get("alternatives", []),
+        "rejected": decision.get("rejected", []),
+    }
+
+
 def select(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
            user_platform: str = "any", required_functions=(),
            require_approval_for=(), require_agent_completable_setup: bool = False,
-           library=None) -> dict:
-    """Structured selection decision (used by the CLI, MCP server, hosted API)."""
+           library=None, receipt: bool = False) -> dict:
+    """Structured selection decision (used by the CLI, MCP server, hosted API).
+    With receipt=True the decision carries a Selection Receipt (audit record)."""
     kept, rejected = rank(task, taxonomy=taxonomy, agent_reach=agent_reach,
                           user_platform=user_platform,
                           required_functions=required_functions,
@@ -155,4 +202,14 @@ def select(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud"
             {"service_id": m.get("service_id"), "display_name": m.get("display_name"),
              "monthly_cost_usd": round(monthly_cost(m), 2)} for m in kept[1:]
         ]
+    if receipt:
+        entries = library if library is not None else load_library()
+        pool = [m for m in entries if taxonomy is None or m.get("taxonomy") == taxonomy]
+        out["receipt"] = build_selection_receipt(out, pool, request={
+            "task": task, "taxonomy": taxonomy, "agent_reach": agent_reach,
+            "user_platform": user_platform,
+            "required_functions": list(required_functions),
+            "require_approval_for": list(require_approval_for or ()),
+            "require_agent_completable_setup": require_agent_completable_setup,
+        })
     return out

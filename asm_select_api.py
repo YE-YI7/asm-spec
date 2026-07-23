@@ -213,6 +213,7 @@ class Handler(BaseHTTPRequestHandler):
             require_approval_for=req.get("require_approval_for") or [],
             require_agent_completable_setup=bool(req.get("require_agent_completable_setup", False)),
             library=_LIBRARY,
+            receipt=bool(req.get("receipt", False)),
         )
         self._send(200, result)
 

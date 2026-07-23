@@ -57,6 +57,34 @@ def test_monthly_cost_free_tier_is_zero():
     assert monthly_cost(todoist) == 0.0
 
 
+def test_selection_receipt_shape_and_evidence_digests():
+    from library_select import manifest_digest
+
+    r = select("book a flight", taxonomy="tool.booking.travel",
+               agent_reach="cloud", user_platform="windows",
+               required_functions=["flight_search", "flight_order_create"],
+               require_approval_for=["financial_charge"], receipt=True)
+    rec = r["receipt"]
+    assert rec["receipt_type"] == "selection" and rec["receipt_version"] == "0.1"
+    assert rec["request"]["required_functions"] == ["flight_search", "flight_order_create"]
+    # evidence covers the full considered pool (taxonomy match), digests deterministic
+    lib = load_library()
+    pool = [m for m in lib if m.get("taxonomy") == "tool.booking.travel"]
+    assert {e["service_id"] for e in rec["evidence"]} == {m["service_id"] for m in pool}
+    for e, m in zip(sorted(rec["evidence"], key=lambda x: x["service_id"]),
+                    sorted(pool, key=lambda x: x["service_id"])):
+        assert e["manifest_digest"] == manifest_digest(m)
+        assert e["manifest_digest"].startswith("sha256:")
+    # the operational policy is in the receipt (audit before invocation)
+    assert rec["approval_required"] is True and rec["risk_class"] == "critical"
+
+
+def test_receipt_absent_by_default():
+    r = select("book a flight", taxonomy="tool.booking.travel",
+               required_functions=["flight_search"])
+    assert "receipt" not in r
+
+
 def test_select_api_endpoints():
     import asm_select_api as api
 
@@ -73,11 +101,14 @@ def test_select_api_endpoints():
 
         body = json.dumps({"task": "book a flight", "taxonomy": "tool.booking.travel",
                            "user_platform": "windows",
-                           "required_functions": ["flight_search", "flight_order_create"]}).encode()
+                           "required_functions": ["flight_search", "flight_order_create"],
+                           "receipt": True}).encode()
         req = urllib.request.Request(f"http://127.0.0.1:{port}/select", data=body,
                                      headers={"Content-Type": "application/json"})
         r = json.loads(urllib.request.urlopen(req).read())
         assert r["selected"] is not None and r["risk_class"] == "critical"
+        assert r["receipt"]["receipt_type"] == "selection"
+        assert all(e["manifest_digest"].startswith("sha256:") for e in r["receipt"]["evidence"])
 
         bad = urllib.request.Request(f"http://127.0.0.1:{port}/select", data=b"{}",
                                      headers={"Content-Type": "application/json"})

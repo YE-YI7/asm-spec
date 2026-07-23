@@ -1,0 +1,62 @@
+{
+  "receipt_type": "selection",
+  "receipt_version": "0.1",
+  "selection_id": "5ec25744-858e-46d6-ac05-c093a2b00976",
+  "issued_at": "2026-07-23T13:07:26Z",
+  "selector": {
+    "name": "asm-protocol/0.5.1",
+    "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly_cost asc, then functions desc"
+  },
+  "request": {
+    "task": "find and book a refundable flight",
+    "taxonomy": "tool.booking.travel",
+    "agent_reach": "cloud",
+    "user_platform": "windows",
+    "required_functions": [
+      "flight_search",
+      "flight_order_create"
+    ],
+    "require_approval_for": [
+      "financial_charge"
+    ],
+    "require_agent_completable_setup": false
+  },
+  "evidence": [
+    {
+      "service_id": "amadeus/self-service-api@current",
+      "manifest_digest": "sha256:5fe8f51205f52ecf9889d76152f143f4d3c0b2b3ca92b4e08e4789e205816481"
+    },
+    {
+      "service_id": "duffel/flights-api@current",
+      "manifest_digest": "sha256:7210686d93f68eac2d2a5f9d5d4ec2c2a702b72379cc0059e3130fd2c754b0c9"
+    }
+  ],
+  "selected": {
+    "service_id": "amadeus/self-service-api@current",
+    "display_name": "Amadeus Self-Service APIs",
+    "monthly_cost_usd": 0.0,
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_completable_setup": null,
+    "setup_requires": []
+  },
+  "selection_reason": "Eligible critical-risk tool with the required functions; approval required before invocation.",
+  "risk_class": "critical",
+  "approval_required": true,
+  "side_effects": [
+    "external_api_call",
+    "network_access",
+    "financial_charge",
+    "persistent_state",
+    "passenger_pii",
+    "booking_commitment"
+  ],
+  "alternatives": [
+    {
+      "service_id": "duffel/flights-api@current",
+      "display_name": "Duffel Flights API",
+      "monthly_cost_usd": 0.0
+    }
+  ],
+  "rejected": []
+}
