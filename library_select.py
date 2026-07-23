@@ -117,8 +117,11 @@ def rank(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
                              "service_id": m.get("service_id"), "reason": why})
         else:
             kept.append(m)
+    # deterministic tie-break (service_id): identical evidence must yield an
+    # identical pick on any OS/filesystem — receipts demand reproducibility
     kept.sort(key=lambda m: (monthly_cost(m),
-                             -len((m.get("capabilities") or {}).get("functions", []))))
+                             -len((m.get("capabilities") or {}).get("functions", [])),
+                             m.get("service_id", "")))
     return kept, rejected
 
 
