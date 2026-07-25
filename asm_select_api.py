@@ -49,6 +49,46 @@ def _urn_part(s: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]", "-", s)
 
 
+def _access_signal(m: dict) -> dict:
+    """Derive the discovery-time access/monetization signal (ai-catalog#83)
+    from real manifest pricing/payment. Flat namespaced primitives only
+    (schema v1.0). Kept under our own `asm:` namespace — not squatting a generic
+    `access:` prefix before the WG blesses one; renames trivially when it does."""
+    pricing = m.get("pricing") or {}
+    payment = m.get("payment") or {}
+    dims = pricing.get("billing_dimensions") or []
+    methods = payment.get("methods") or []
+    has_free = "free_tier" in methods
+    paid = [d for d in dims if (d.get("cost_per_unit") or 0) > 0]
+    if has_free and paid:
+        tier = "freemium"
+    elif has_free:
+        tier = "free"
+    elif paid:
+        tier = "subscription" if "subscription" in methods else "paid"
+    else:
+        tier = "negotiated"  # no free tier, no public priced dimension
+    out = {"asm:accessTier": tier, "asm:freeTier": has_free}
+    if paid:
+        cheapest = min(paid, key=lambda d: d["cost_per_unit"])
+        out["asm:priceEchoAmount"] = cheapest["cost_per_unit"]
+        out["asm:priceEchoCurrency"] = cheapest.get("currency", "USD")
+        out["asm:priceEchoUnit"] = cheapest.get("unit", "")
+    url = payment.get("signup_url") or (m.get("provenance") or {}).get("source_url")
+    if url:
+        out["asm:pricingUrl"] = url
+    asof = (m.get("provenance") or {}).get("last_verified_at")
+    if asof:
+        out["asm:priceEchoAsOf"] = asof
+    # coarse mechanism, only where the manifest states it unambiguously
+    mech = {"api_key_prepaid": "prepaid-key", "subscription": "subscription"}
+    for k, v in mech.items():
+        if k in methods:
+            out["asm:accessMechanism"] = v
+            break
+    return out
+
+
 def _ai_catalog_entry(m: dict, base: str) -> dict:
     """AI Catalog entry (schema v1.0, ARD-conformance-tested): static ASM
     eligibility/selection signals inline under metadata.asm; the full mutable
@@ -71,6 +111,7 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
         asm_meta["asm:risk_class"] = ops["risk_class"]
     if (ops.get("approval") or {}).get("required"):
         asm_meta["asm:approval"] = ops["approval"]["required"]
+    asm_meta.update(_access_signal(m))  # discovery-time access/monetization signal
     entry = {
         "identifier": f"urn:air:asm-spec:{_urn_part(org)}:{_urn_part(tool or org)}",
         "displayName": m.get("display_name"),
