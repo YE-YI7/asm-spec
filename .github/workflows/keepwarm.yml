@@ -1,0 +1,28 @@
+concurrency:
+  group: keep-warm
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Ping /healthz until the instance answers
+        env:
+          URL: https://asm-spec.onrender.com/healthz
+        run: |
+          set -u
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -s -o /tmp/body.txt -w "%{http_code}" --max-time 120 "$URL" || echo "000")
+            if [ "$code" = "200" ]; then
+              echo "attempt $i: HTTP 200 -> $(cat /tmp/body.txt)"
+              exit 0
+            fi
+            echo "attempt $i: HTTP $code (still waking)"
+            sleep 20
+          done
+          echo "::warning title=Instance did not wake::6 attempts, no 200 from $URL"
+          # Deliberately not failing: a slow wake is not a code defect, and a red X
+          # on every cold miss would train us to ignore this workflow. Change the
+          # line below to `exit 1` if you want hard alerting instead.
+          exit 0
