@@ -1,0 +1,44 @@
+{
+  "current_projection": {
+    "free_tier_detail_string_count": 8,
+    "free_tier_marked_count": 22,
+    "machine_readable_free_tier_rule_count": 0,
+    "services_with_multiple_positive_price_dimensions": [
+      {
+        "dimensions": 2,
+        "service_id": "perplexity/api@current"
+      }
+    ],
+    "tier_distribution": {
+      "free": 17,
+      "freemium": 5,
+      "negotiated": 2,
+      "paid": 4,
+      "subscription": 2
+    }
+  },
+  "dataset": {
+    "grain": "one committed library manifest per service",
+    "manifest_count": 30,
+    "source": "library/**/*.asm.json"
+  },
+  "interpretation": {
+    "free_tier_loss": "The boolean projection marks availability but cannot express caps, reset windows, scopes, or caller-specific allowances.",
+    "resolver_candidates_caveat": "Candidates are a text heuristic for follow-up, not verified evidence that every service exposes caller-specific pricing.",
+    "scalar_price_loss": "The legacy cheapest-price projection drops dimensions for every service listed under services_with_multiple_positive_price_dimensions."
+  },
+  "quality_findings": {
+    "known_tier_conflicts": [
+      "attom/property-api@current"
+    ],
+    "resolver_review_candidates": [
+      "amadeus/self-service-api@current",
+      "calendly/api@current",
+      "attom/property-api@current",
+      "reso/web-api@current",
+      "perplexity/api@current",
+      "semantic-scholar/academic-graph@current"
+    ],
+    "resolver_review_candidates_count": 6
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ASM AI Catalog Access Extension v0.1",
+  "description": "Candidate signal-only access extension for ai-catalog#83. Price echoes are non-authoritative; runtime settlement remains outside discovery.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tier", "mechanisms", "priceEchoes", "freeTierRules"],
+  "properties": {
+    "version": {
+      "const": "0.1"
+    },
+    "tier": {
+      "enum": ["free", "freemium", "subscription", "paid", "negotiated"]
+    },
+    "mechanisms": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "pricingUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "pricingResolver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "type": { "enum": ["http", "mcp", "agent"] },
+        "authRequired": { "type": "boolean" }
+      }
+    },
+    "priceEchoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dimension", "unit", "amount", "currency"],
+        "properties": {
+          "dimension": { "type": "string", "minLength": 1 },
+          "unit": { "type": "string", "minLength": 1 },
+          "amount": { "type": "number", "exclusiveMinimum": 0 },
+          "currency": { "type": "string", "minLength": 3 },
+          "asOf": { "type": "string", "format": "date-time" },
+          "estimated": { "type": "boolean" },
+          "scope": { "type": "string" }
+        }
+      }
+    },
+    "freeTierRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "anyOf": [
+          { "required": ["description"] },
+          { "required": ["dimension", "limit", "period"] }
+        ],
+        "properties": {
+          "dimension": { "type": "string", "minLength": 1 },
+          "limit": { "type": "number", "minimum": 0 },
+          "period": { "type": "string", "minLength": 1 },
+          "reset": { "type": "string" },
+          "scope": { "type": "string" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
