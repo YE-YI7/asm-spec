@@ -94,4 +94,3 @@ def derive_access_extension(manifest: dict[str, Any]) -> dict[str, Any]:
         extension["pricingResolver"] = resolver
 
     return extension
-

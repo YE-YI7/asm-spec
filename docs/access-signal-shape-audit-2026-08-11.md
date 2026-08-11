@@ -1,8 +1,8 @@
 # Access-signal shape audit — 30-tool ASM library
 
-> Run date: 2026-08-11  
+> Run date: 2026-08-11
 > Question: does the discovery projection used in ai-catalog#83 preserve the
-> pricing and free-tier facts needed for agent selection?  
+> pricing and free-tier facts needed for agent selection?
 > Reproduce: `python experiments/access_signal_shape_audit.py --pretty`
 
 ## Dataset and grain
@@ -103,4 +103,3 @@ outside discovery.
 **Ready to share with caveats.** Counts and loss checks are deterministic over
 the committed 30-manifest library. Vendor price freshness and the six resolver
 candidates require a separate live-source verification pass.
-
