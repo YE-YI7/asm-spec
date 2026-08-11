@@ -24,7 +24,7 @@ asm-mcp-validate = "mcp_server_json_asm:main"
 asm-select-api = "asm_select_api:main"
 
 [tool.setuptools]
-py-modules = ["asm_cli", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
+py-modules = ["asm_cli", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "asm_access_extension", "_asm_library_data"]
 packages = ["scorer"]
 
 [tool.setuptools.package-data]
