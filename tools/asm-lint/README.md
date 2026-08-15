@@ -1,19 +1,18 @@
 # asm-lint
 
-Quality detection CLI for MCP Servers — scan, probe, and score any MCP Server.
+Experimental MCP Server inspection prototype. It is not a certification tool,
+is not published to npm, and its aggregate score must not be used as an ASM
+conformance claim.
 
 Part of the [ASM Protocol](https://github.com/YE-YI7/asm-spec) (Agent Service Manifest).
 
-## Install
+## Run from this repository
 
 ```bash
-npm install -g asm-lint
-```
-
-Or run directly:
-
-```bash
-npx asm-lint <mcp-server-command>
+cd tools/asm-lint
+npm ci
+npm run build
+node dist/cli.js <mcp-server-command>
 ```
 
 ## Usage
@@ -56,13 +55,13 @@ asm-lint --init
 | 40-49 | D |
 | <40 | F |
 
-## Badge
+## Status warning
 
-After running `asm-lint`, it generates a README badge you can add to your project:
-
-```markdown
-[![ASM Score](https://img.shields.io/badge/ASM_Score-72%2F100_B+-brightgreen)](https://github.com/YE-YI7/asm-spec)
-```
+The current heuristic score mixes documentation style with operational hints.
+It does not validate a service manifest's provenance, freshness, or runtime
+claims. The production path is a deterministic report with separate statuses
+(`schema`, `provenance`, `freshness`, `selection readiness`) linked to an exact
+artifact digest. Until that replaces this prototype, do not publish its badge.
 
 ## x-asm Metadata
 

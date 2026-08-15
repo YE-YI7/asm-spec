@@ -370,17 +370,7 @@ function generateInitTemplate() {
   console.log();
   console.log(JSON.stringify(template, null, 2));
   console.log();
-  console.log(c.dim("See: https://github.com/calebguo007/asm-spec for full specification"));
-}
-
-// ── Badge 生成 ──────────────────────────────────────────
-
-function generateBadge(score: number, grade: string) {
-  const color = score >= 70 ? "brightgreen" : score >= 50 ? "yellow" : "red";
-  const badgeUrl = `https://img.shields.io/badge/ASM_Score-${score}%2F100_${grade}-${color}`;
-  console.log(`\n${c.bold("🏷️ README Badge:")}`);
-  console.log(`   ${c.dim("Markdown:")} [![ASM Score](${badgeUrl})](https://github.com/calebguo007/asm-spec)`);
-  console.log(`   ${c.dim("HTML:")}     <img src="${badgeUrl}" alt="ASM Score" />`);
+  console.log(c.dim("See: https://github.com/YE-YI7/asm-spec for the current specification"));
 }
 
 // ── CLI 入口 ─────────────────────────────────────────────
@@ -412,7 +402,8 @@ ${c.bold("What it checks:")}
   • Security patterns (risky operations detection)
   • Idempotency hints (read-only markers)
 
-${c.dim("Part of the ASM Protocol — https://github.com/calebguo007/asm-spec")}
+${c.dim("Experimental prototype — not an ASM conformance certificate")}
+${c.dim("https://github.com/YE-YI7/asm-spec")}
 `);
     process.exit(0);
   }
@@ -439,7 +430,7 @@ ${c.dim("Part of the ASM Protocol — https://github.com/calebguo007/asm-spec")}
     if (jsonMode) {
       console.log("\n" + JSON.stringify(result, null, 2));
     } else {
-      generateBadge(result.score, result.grade);
+      console.log(c.yellow("Experimental heuristic only; do not publish this score as an ASM certification."));
     }
 
     // 退出码：0=pass(>=60), 1=fail(<60)

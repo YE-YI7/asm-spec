@@ -1,0 +1,2031 @@
+{
+  "report_version": "1",
+  "generated_at": "2026-08-15T16:26:13.564156Z",
+  "as_of": "2026-08-16T23:59:59Z",
+  "policy": {
+    "fresh": "verification age <= 30 days",
+    "stale": "31-90 days; exclude from current-fact claims until reviewed",
+    "expired": "> 90 days; fixture/benchmark use only until re-verified",
+    "unknown_or_invalid": "do not use for selection without an explicit override",
+    "cache_ttl_note": "Manifest ttl is a client cache directive, not evidence that checked-in claims are fresh.",
+    "url_note": "401/403/429 mean access_restricted, not dead. Only 404/410 are not_found."
+  },
+  "summary": {
+    "entries": 105,
+    "schema": {
+      "valid": 105
+    },
+    "freshness": {
+      "expired": 75,
+      "stale": 30
+    },
+    "verification": {
+      "manual_verified": 15,
+      "self_reported": 90
+    },
+    "provenance_complete": 105,
+    "source_urls_present": 105,
+    "unique_source_urls": 99,
+    "source_reachability": {
+      "access_restricted": 2,
+      "http_error": 1,
+      "not_found": 1,
+      "reachable": 95
+    }
+  },
+  "collections": {
+    "manifests": {
+      "entries": 75,
+      "schema": {
+        "valid": 75
+      },
+      "freshness": {
+        "expired": 75
+      },
+      "verification": {
+        "manual_verified": 5,
+        "self_reported": 70
+      },
+      "provenance_complete": 75,
+      "source_urls_present": 75
+    },
+    "library": {
+      "entries": 30,
+      "schema": {
+        "valid": 30
+      },
+      "freshness": {
+        "stale": 30
+      },
+      "verification": {
+        "manual_verified": 10,
+        "self_reported": 20
+      },
+      "provenance_complete": 30,
+      "source_urls_present": 30
+    }
+  },
+  "entries": [
+    {
+      "path": "manifests/airtable-api.asm.json",
+      "collection": "manifests",
+      "service_id": "airtable/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://airtable.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/anthropic-claude-sonnet-4.asm.json",
+      "collection": "manifests",
+      "service_id": "anthropic/claude-sonnet-4@4.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.anthropic.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/betterstack-logs.asm.json",
+      "collection": "manifests",
+      "service_id": "betterstack/logs@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://betterstack.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/bfl-flux-1.1-pro.asm.json",
+      "collection": "manifests",
+      "service_id": "black-forest-labs/flux-1.1-pro@1.1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://replicate.com/black-forest-labs/flux-1.1-pro",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/browserbase-api.asm.json",
+      "collection": "manifests",
+      "service_id": "browserbase/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://browserbase.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/cal-com.asm.json",
+      "collection": "manifests",
+      "service_id": "cal/scheduling@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cal.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/circleci.asm.json",
+      "collection": "manifests",
+      "service_id": "circleci/cloud@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://circleci.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/clerk-auth.asm.json",
+      "collection": "manifests",
+      "service_id": "clerk/auth@v5",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://clerk.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/cloudconvert.asm.json",
+      "collection": "manifests",
+      "service_id": "cloudconvert/api@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cloudconvert.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/cloudflare-dns.asm.json",
+      "collection": "manifests",
+      "service_id": "cloudflare/dns@v4",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.cloudflare.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/cloudflare-r2.asm.json",
+      "collection": "manifests",
+      "service_id": "cloudflare/r2@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.cloudflare.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/cursor-ai.asm.json",
+      "collection": "manifests",
+      "service_id": "cursor/editor@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cursor.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/deepgram-stt.asm.json",
+      "collection": "manifests",
+      "service_id": "deepgram/nova@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://deepgram.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/deepl-translate.asm.json",
+      "collection": "manifests",
+      "service_id": "deepl/translate@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.deepl.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/deepseek-v4-flash.asm.json",
+      "collection": "manifests",
+      "service_id": "deepseek/deepseek-v4-flash@4.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 106,
+      "verification_status": "manual_verified",
+      "source_url": "https://api.deepseek.com",
+      "last_verified_at": "2026-05-02T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/discord-api.asm.json",
+      "collection": "manifests",
+      "service_id": "discord/api@v10",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://discord.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/e2b-sandbox.asm.json",
+      "collection": "manifests",
+      "service_id": "e2b/sandbox@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://e2b.dev",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/elevenlabs-tts.asm.json",
+      "collection": "manifests",
+      "service_id": "elevenlabs/tts-v2@2.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://elevenlabs.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/exa-search.asm.json",
+      "collection": "manifests",
+      "service_id": "exa/search-api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://exa.ai",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/firecrawl-scrape.asm.json",
+      "collection": "manifests",
+      "service_id": "firecrawl/scrape@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://firecrawl.dev",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/fly-io.asm.json",
+      "collection": "manifests",
+      "service_id": "fly/machines@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://fly.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/github-actions.asm.json",
+      "collection": "manifests",
+      "service_id": "github/actions@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://github.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/github-copilot.asm.json",
+      "collection": "manifests",
+      "service_id": "github/copilot@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://github.com/features/copilot",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-calendar.asm.json",
+      "collection": "manifests",
+      "service_id": "google/calendar-api@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://calendar.google.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-docs.asm.json",
+      "collection": "manifests",
+      "service_id": "google/docs-api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://docs.google.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-gemini-2.5-pro.asm.json",
+      "collection": "manifests",
+      "service_id": "google/gemini-2.5-pro@2.5",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://ai.google.dev",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-imagen-3.asm.json",
+      "collection": "manifests",
+      "service_id": "google/imagen-3@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/image/overview",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-maps.asm.json",
+      "collection": "manifests",
+      "service_id": "google/maps-platform@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://mapsplatform.google.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-sheets.asm.json",
+      "collection": "manifests",
+      "service_id": "google/sheets-api@v4",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://sheets.google.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-tasks-api.asm.json",
+      "collection": "manifests",
+      "service_id": "google/tasks-api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://workspace.google.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-translate.asm.json",
+      "collection": "manifests",
+      "service_id": "google/translate@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cloud.google.com/translate",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-veo-3.1.asm.json",
+      "collection": "manifests",
+      "service_id": "google/veo-3.1@3.1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cloud.google.com/vertex-ai",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/google-vision-ocr.asm.json",
+      "collection": "manifests",
+      "service_id": "google/vision-ocr@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://cloud.google.com/vision",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/hubspot-crm.asm.json",
+      "collection": "manifests",
+      "service_id": "hubspot/crm@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.hubspot.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/infisical-secrets.asm.json",
+      "collection": "manifests",
+      "service_id": "infisical/secrets@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://infisical.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/jina-reader.asm.json",
+      "collection": "manifests",
+      "service_id": "jina/reader@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://jina.ai",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/kuaishou-kling-3.0.asm.json",
+      "collection": "manifests",
+      "service_id": "kuaishou/kling-3.0@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://klingai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/linear-api.asm.json",
+      "collection": "manifests",
+      "service_id": "linear/api@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://linear.app",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/minimax-m2-7.asm.json",
+      "collection": "manifests",
+      "service_id": "minimax/m2.7@2.7",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 106,
+      "verification_status": "manual_verified",
+      "source_url": "https://api.minimax.chat",
+      "last_verified_at": "2026-05-02T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/modal-serverless.asm.json",
+      "collection": "manifests",
+      "service_id": "modal/serverless@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://modal.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/moonshot-kimi-k2-5.asm.json",
+      "collection": "manifests",
+      "service_id": "moonshot/kimi-k2.5@2.5",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 106,
+      "verification_status": "manual_verified",
+      "source_url": "https://platform.moonshot.cn",
+      "last_verified_at": "2026-05-02T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/neon-serverless-pg.asm.json",
+      "collection": "manifests",
+      "service_id": "neon/serverless-postgres@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://neon.tech",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/notion-api.asm.json",
+      "collection": "manifests",
+      "service_id": "notion/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://notion.so",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openai-dall-e-3.asm.json",
+      "collection": "manifests",
+      "service_id": "openai/dall-e-3@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openai-embedding-3-large.asm.json",
+      "collection": "manifests",
+      "service_id": "openai/text-embedding-3-large@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openai-gpt-4o.asm.json",
+      "collection": "manifests",
+      "service_id": "openai/gpt-4o@2024-11-20",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openai-tts.asm.json",
+      "collection": "manifests",
+      "service_id": "openai/tts-1@1.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openai-whisper.asm.json",
+      "collection": "manifests",
+      "service_id": "openai/whisper@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/openweathermap.asm.json",
+      "collection": "manifests",
+      "service_id": "openweathermap/api@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://openweathermap.org",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/pdf-co.asm.json",
+      "collection": "manifests",
+      "service_id": "pdfco/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://pdf.co",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/pinecone-vectordb.asm.json",
+      "collection": "manifests",
+      "service_id": "pinecone/index@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.pinecone.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/posthog-analytics.asm.json",
+      "collection": "manifests",
+      "service_id": "posthog/analytics@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://posthog.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/qdrant-vectordb.asm.json",
+      "collection": "manifests",
+      "service_id": "qdrant/cloud@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://qdrant.tech",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/quickchart.asm.json",
+      "collection": "manifests",
+      "service_id": "quickchart/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://quickchart.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/qwen-qwen3-max.asm.json",
+      "collection": "manifests",
+      "service_id": "qwen/qwen3-max@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 106,
+      "verification_status": "manual_verified",
+      "source_url": "https://dashscope.aliyuncs.com",
+      "last_verified_at": "2026-05-02T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/replicate-gpu.asm.json",
+      "collection": "manifests",
+      "service_id": "replicate/gpu-serverless@1.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://replicate.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/resend-email.asm.json",
+      "collection": "manifests",
+      "service_id": "resend/email-api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://resend.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/runpod-gpu.asm.json",
+      "collection": "manifests",
+      "service_id": "runpod/gpu-serverless@1.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.runpod.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/screenshotone.asm.json",
+      "collection": "manifests",
+      "service_id": "screenshotone/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://screenshotone.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/sendgrid-email.asm.json",
+      "collection": "manifests",
+      "service_id": "twilio/sendgrid@v3",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://sendgrid.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/sentry-monitoring.asm.json",
+      "collection": "manifests",
+      "service_id": "sentry/error-tracking@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://sentry.io",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/slack-api.asm.json",
+      "collection": "manifests",
+      "service_id": "slack/web-api@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://slack.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/steel-browser.asm.json",
+      "collection": "manifests",
+      "service_id": "steel/browser@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://steel.dev",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/stripe-payments.asm.json",
+      "collection": "manifests",
+      "service_id": "stripe/payments@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://stripe.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/supabase-db.asm.json",
+      "collection": "manifests",
+      "service_id": "supabase/database@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://supabase.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/tavily-search.asm.json",
+      "collection": "manifests",
+      "service_id": "tavily/search-api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://tavily.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/ticktick-api.asm.json",
+      "collection": "manifests",
+      "service_id": "ticktick/api@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://ticktick.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/todoist-api.asm.json",
+      "collection": "manifests",
+      "service_id": "todoist/api@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://todoist.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/twilio-sms.asm.json",
+      "collection": "manifests",
+      "service_id": "twilio/sms@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.twilio.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/typeform-api.asm.json",
+      "collection": "manifests",
+      "service_id": "typeform/api@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.typeform.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/upstash-qstash.asm.json",
+      "collection": "manifests",
+      "service_id": "upstash/qstash@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://upstash.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/upstash-redis.asm.json",
+      "collection": "manifests",
+      "service_id": "upstash/redis@v2",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://upstash.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/vercel-deploy.asm.json",
+      "collection": "manifests",
+      "service_id": "vercel/platform@v1",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://vercel.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/voyageai-voyage-3-large.asm.json",
+      "collection": "manifests",
+      "service_id": "voyageai/voyage-3-large@3.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 110,
+      "verification_status": "self_reported",
+      "source_url": "https://www.voyageai.com",
+      "last_verified_at": "2026-04-28T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "manifests/zhipu-glm-5.asm.json",
+      "collection": "manifests",
+      "service_id": "zhipu/glm-5@5.0",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "expired",
+      "verification_age_days": 106,
+      "verification_status": "manual_verified",
+      "source_url": "https://open.bigmodel.cn",
+      "last_verified_at": "2026-05-02T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/booking/amadeus-self-service-api.asm.json",
+      "collection": "library",
+      "service_id": "amadeus/self-service-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://developers.amadeus.com/self-service/apis-docs/guides/developer-guides/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/booking/calendly-api.asm.json",
+      "collection": "library",
+      "service_id": "calendly/api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://calendly.com/help/calendly-api-overview",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/booking/duffel-flights-api.asm.json",
+      "collection": "library",
+      "service_id": "duffel/flights-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://duffel.com/docs/api/v2/orders",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/communication/gmail-api.asm.json",
+      "collection": "library",
+      "service_id": "google/gmail-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://developers.google.com/workspace/gmail/api/reference/quota",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/communication/slack-api.asm.json",
+      "collection": "library",
+      "service_id": "slack/web-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://api.slack.com/apis/rate-limits",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/affinity-designer.asm.json",
+      "collection": "library",
+      "service_id": "serif/affinity-designer@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://affinity.serif.com/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/canva.asm.json",
+      "collection": "library",
+      "service_id": "canva/canva@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://www.canva.dev/docs/connect/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/figma.asm.json",
+      "collection": "library",
+      "service_id": "figma/figma@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developers.figma.com/docs/rest-api/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/gimp.asm.json",
+      "collection": "library",
+      "service_id": "gimp/gimp@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://www.gimp.org/docs/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/photopea.asm.json",
+      "collection": "library",
+      "service_id": "photopea/photopea@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://www.photopea.com/learn/scripts",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/photoshop.asm.json",
+      "collection": "library",
+      "service_id": "adobe/photoshop@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developer.adobe.com/photoshop/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/creative-design/procreate.asm.json",
+      "collection": "library",
+      "service_id": "procreate/procreate@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://procreate.com/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/developer-tools/github-api.asm.json",
+      "collection": "library",
+      "service_id": "github/rest-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/developer-tools/linear-api.asm.json",
+      "collection": "library",
+      "service_id": "linear/graphql-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://linear.app/developers/rate-limiting",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/real-estate-data/attom-property-api.asm.json",
+      "collection": "library",
+      "service_id": "attom/property-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 68,
+      "verification_status": "self_reported",
+      "source_url": "https://api.developer.attomdata.com/signup",
+      "last_verified_at": "2026-06-09T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/real-estate-data/hud-user-api.asm.json",
+      "collection": "library",
+      "service_id": "hud/hud-user-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 68,
+      "verification_status": "self_reported",
+      "source_url": "https://www.huduser.gov/portal/dataset/fmr-api.html",
+      "last_verified_at": "2026-06-09T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/real-estate-data/reso-web-api.asm.json",
+      "collection": "library",
+      "service_id": "reso/web-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 68,
+      "verification_status": "self_reported",
+      "source_url": "https://www.reso.org/reso-web-api/",
+      "last_verified_at": "2026-06-09T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/real-estate-data/us-census-data-api.asm.json",
+      "collection": "library",
+      "service_id": "us-census/data-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 68,
+      "verification_status": "self_reported",
+      "source_url": "https://www.census.gov/data/developers.html",
+      "last_verified_at": "2026-06-09T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/research/perplexity-api.asm.json",
+      "collection": "library",
+      "service_id": "perplexity/api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://docs.perplexity.ai/docs/getting-started/pricing",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/research/semantic-scholar-api.asm.json",
+      "collection": "library",
+      "service_id": "semantic-scholar/academic-graph@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://www.semanticscholar.org/product/api",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/research/zotero-web-api.asm.json",
+      "collection": "library",
+      "service_id": "zotero/web-api@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "manual_verified",
+      "source_url": "https://www.zotero.org/support/dev/web_api/v3/basics",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/any-do.asm.json",
+      "collection": "library",
+      "service_id": "any-do/any-do@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://support.any.do/en/articles/8619416-any-do-zapier",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/apple-reminders.asm.json",
+      "collection": "library",
+      "service_id": "apple/reminders@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://support.apple.com/guide/shortcuts/welcome/ios",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/google-tasks.asm.json",
+      "collection": "library",
+      "service_id": "google/tasks@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developers.google.com/tasks",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/microsoft-to-do.asm.json",
+      "collection": "library",
+      "service_id": "microsoft/to-do@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://learn.microsoft.com/en-us/graph/api/resources/todo-overview",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/motion.asm.json",
+      "collection": "library",
+      "service_id": "usemotion/motion@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://docs.usemotion.com/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/notion.asm.json",
+      "collection": "library",
+      "service_id": "notion/notion@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developers.notion.com/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/things-3.asm.json",
+      "collection": "library",
+      "service_id": "culturedcode/things-3@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://culturedcode.com/things/support/articles/2967034/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/ticktick.asm.json",
+      "collection": "library",
+      "service_id": "ticktick/ticktick@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developer.ticktick.com/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    },
+    {
+      "path": "library/task-management/todoist.asm.json",
+      "collection": "library",
+      "service_id": "todoist/todoist@current",
+      "schema_status": "valid",
+      "schema_errors": [],
+      "freshness_status": "stale",
+      "verification_age_days": 69,
+      "verification_status": "self_reported",
+      "source_url": "https://developer.todoist.com/api/v1/",
+      "last_verified_at": "2026-06-08T00:00:00Z",
+      "provenance_issues": []
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://affinity.serif.com/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.affinity.studio/"
+    },
+    {
+      "url": "https://ai.google.dev",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://ai.google.dev"
+    },
+    {
+      "url": "https://airtable.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.airtable.com/"
+    },
+    {
+      "url": "https://api.deepseek.com",
+      "status": "access_restricted",
+      "http_status": 401,
+      "final_url": "https://api.deepseek.com"
+    },
+    {
+      "url": "https://api.developer.attomdata.com/signup",
+      "status": "http_error",
+      "http_status": 405,
+      "final_url": "https://api.developer.attomdata.com/signup"
+    },
+    {
+      "url": "https://api.minimax.chat",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.minimaxi.com/"
+    },
+    {
+      "url": "https://api.slack.com/apis/rate-limits",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://docs.slack.dev/apis/web-api/rate-limits/"
+    },
+    {
+      "url": "https://betterstack.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://betterstack.com"
+    },
+    {
+      "url": "https://browserbase.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.browserbase.com/"
+    },
+    {
+      "url": "https://cal.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cal.com"
+    },
+    {
+      "url": "https://calendar.google.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https://calendar.google.com/calendar/u/0/r&emr=1&followup=https://calendar.google.com/calendar/u/0/r&osid=1&passive=1209600&service=cl&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S-549705755:1786811168915667"
+    },
+    {
+      "url": "https://calendly.com/help/calendly-api-overview",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://calendly.com/help/calendly-api-overview"
+    },
+    {
+      "url": "https://circleci.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://circleci.com"
+    },
+    {
+      "url": "https://clerk.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://clerk.com"
+    },
+    {
+      "url": "https://cloud.google.com/translate",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cloud.google.com/translate"
+    },
+    {
+      "url": "https://cloud.google.com/vertex-ai",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cloud.google.com/products/gemini-enterprise-agent-platform"
+    },
+    {
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/image/overview",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/image/overview"
+    },
+    {
+      "url": "https://cloud.google.com/vision",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cloud.google.com/vision"
+    },
+    {
+      "url": "https://cloudconvert.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cloudconvert.com"
+    },
+    {
+      "url": "https://culturedcode.com/things/support/articles/2967034/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://culturedcode.com/things/support/articles/2967034/"
+    },
+    {
+      "url": "https://cursor.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://cursor.com"
+    },
+    {
+      "url": "https://dashscope.aliyuncs.com",
+      "status": "not_found",
+      "http_status": 404,
+      "final_url": "https://dashscope.aliyuncs.com"
+    },
+    {
+      "url": "https://deepgram.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://deepgram.com"
+    },
+    {
+      "url": "https://developer.adobe.com/photoshop/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developer.adobe.com/photoshop/"
+    },
+    {
+      "url": "https://developer.ticktick.com/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developer.ticktick.com/"
+    },
+    {
+      "url": "https://developer.todoist.com/api/v1/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developer.todoist.com/api/v1/"
+    },
+    {
+      "url": "https://developers.amadeus.com/self-service/apis-docs/guides/developer-guides/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developers.amadeus.com/"
+    },
+    {
+      "url": "https://developers.figma.com/docs/rest-api/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developers.figma.com/docs/rest-api/"
+    },
+    {
+      "url": "https://developers.google.com/tasks",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developers.google.com/workspace/tasks"
+    },
+    {
+      "url": "https://developers.google.com/workspace/gmail/api/reference/quota",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developers.google.com/workspace/gmail/api/reference/quota"
+    },
+    {
+      "url": "https://developers.notion.com/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://developers.notion.com/guides/get-started/overview"
+    },
+    {
+      "url": "https://discord.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://discord.com"
+    },
+    {
+      "url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api"
+    },
+    {
+      "url": "https://docs.google.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https://docs.google.com/&emr=1&followup=https://docs.google.com/&osid=1&passive=1209600&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S-1522929573:1786811169525243"
+    },
+    {
+      "url": "https://docs.perplexity.ai/docs/getting-started/pricing",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://docs.perplexity.ai/docs/getting-started/pricing"
+    },
+    {
+      "url": "https://docs.usemotion.com/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://docs.usemotion.com/"
+    },
+    {
+      "url": "https://duffel.com/docs/api/v2/orders",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://duffel.com/docs/api/v2/orders"
+    },
+    {
+      "url": "https://e2b.dev",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://e2b.dev"
+    },
+    {
+      "url": "https://elevenlabs.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://elevenlabs.io"
+    },
+    {
+      "url": "https://exa.ai",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://exa.ai"
+    },
+    {
+      "url": "https://firecrawl.dev",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.firecrawl.dev/"
+    },
+    {
+      "url": "https://fly.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://fly.io"
+    },
+    {
+      "url": "https://github.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://github.com"
+    },
+    {
+      "url": "https://github.com/features/copilot",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://github.com/features/copilot"
+    },
+    {
+      "url": "https://infisical.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://infisical.com"
+    },
+    {
+      "url": "https://jina.ai",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://jina.ai"
+    },
+    {
+      "url": "https://klingai.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://kling.ai/"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/todo-overview",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0"
+    },
+    {
+      "url": "https://linear.app",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://linear.app"
+    },
+    {
+      "url": "https://linear.app/developers/rate-limiting",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://linear.app/developers/rate-limiting"
+    },
+    {
+      "url": "https://mapsplatform.google.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://mapsplatform.google.com"
+    },
+    {
+      "url": "https://modal.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://modal.com"
+    },
+    {
+      "url": "https://neon.tech",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://neon.com/"
+    },
+    {
+      "url": "https://notion.so",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.notion.com/"
+    },
+    {
+      "url": "https://open.bigmodel.cn",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://open.bigmodel.cn"
+    },
+    {
+      "url": "https://openai.com",
+      "status": "access_restricted",
+      "http_status": 403,
+      "final_url": "https://openai.com"
+    },
+    {
+      "url": "https://openweathermap.org",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://openweathermap.org"
+    },
+    {
+      "url": "https://pdf.co",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://pdf.co"
+    },
+    {
+      "url": "https://platform.moonshot.cn",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://platform.kimi.com/"
+    },
+    {
+      "url": "https://posthog.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://posthog.com"
+    },
+    {
+      "url": "https://procreate.com/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://procreate.com/"
+    },
+    {
+      "url": "https://qdrant.tech",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://qdrant.tech"
+    },
+    {
+      "url": "https://quickchart.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://quickchart.io"
+    },
+    {
+      "url": "https://replicate.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://replicate.com"
+    },
+    {
+      "url": "https://replicate.com/black-forest-labs/flux-1.1-pro",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://replicate.com/black-forest-labs/flux-1.1-pro"
+    },
+    {
+      "url": "https://resend.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://resend.com"
+    },
+    {
+      "url": "https://screenshotone.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://screenshotone.com"
+    },
+    {
+      "url": "https://sendgrid.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.twilio.com/en-us/sendgrid"
+    },
+    {
+      "url": "https://sentry.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://sentry.io/welcome/"
+    },
+    {
+      "url": "https://sheets.google.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://workspace.google.com/products/sheets/"
+    },
+    {
+      "url": "https://slack.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://slack.com"
+    },
+    {
+      "url": "https://steel.dev",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://steel.dev"
+    },
+    {
+      "url": "https://stripe.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://stripe.com"
+    },
+    {
+      "url": "https://supabase.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://supabase.com"
+    },
+    {
+      "url": "https://support.any.do/en/articles/8619416-any-do-zapier",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://support.any.do/en/articles/8619416-any-do-zapier"
+    },
+    {
+      "url": "https://support.apple.com/guide/shortcuts/welcome/ios",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://support.apple.com/guide/shortcuts/welcome/ios"
+    },
+    {
+      "url": "https://tavily.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.tavily.com/"
+    },
+    {
+      "url": "https://ticktick.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://ticktick.com"
+    },
+    {
+      "url": "https://todoist.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.todoist.com/"
+    },
+    {
+      "url": "https://upstash.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://upstash.com"
+    },
+    {
+      "url": "https://vercel.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://vercel.com"
+    },
+    {
+      "url": "https://workspace.google.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://workspace.google.com"
+    },
+    {
+      "url": "https://www.anthropic.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.anthropic.com"
+    },
+    {
+      "url": "https://www.canva.dev/docs/connect/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.canva.dev/docs/connect/"
+    },
+    {
+      "url": "https://www.census.gov/data/developers.html",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.census.gov/data/developers.html"
+    },
+    {
+      "url": "https://www.cloudflare.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.cloudflare.com"
+    },
+    {
+      "url": "https://www.deepl.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.deepl.com/en"
+    },
+    {
+      "url": "https://www.gimp.org/docs/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.gimp.org/docs/"
+    },
+    {
+      "url": "https://www.hubspot.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.hubspot.com"
+    },
+    {
+      "url": "https://www.huduser.gov/portal/dataset/fmr-api.html",
+      "status": "reachable",
+      "http_status": 202,
+      "final_url": "https://www.huduser.gov/portal/dataset/fmr-api.html"
+    },
+    {
+      "url": "https://www.photopea.com/learn/scripts",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.photopea.com/learn/scripts"
+    },
+    {
+      "url": "https://www.pinecone.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.pinecone.io"
+    },
+    {
+      "url": "https://www.reso.org/reso-web-api/",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.reso.org/reso-web-api/"
+    },
+    {
+      "url": "https://www.runpod.io",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.runpod.io"
+    },
+    {
+      "url": "https://www.semanticscholar.org/product/api",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.semanticscholar.org/product/api"
+    },
+    {
+      "url": "https://www.twilio.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.twilio.com/en-us"
+    },
+    {
+      "url": "https://www.typeform.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.typeform.com"
+    },
+    {
+      "url": "https://www.voyageai.com",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.voyageai.com"
+    },
+    {
+      "url": "https://www.zotero.org/support/dev/web_api/v3/basics",
+      "status": "reachable",
+      "http_status": 200,
+      "final_url": "https://www.zotero.org/support/dev/web_api/v3/basics"
+    }
+  ]
+}

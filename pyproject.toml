@@ -15,13 +15,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mcp = ["mcp>=1.2"]
+mcp = ["mcp>=2,<3"]
 langchain = ["langchain-core>=0.3"]
 
 [project.scripts]
 asm = "asm_cli:main"
 asm-mcp-validate = "mcp_server_json_asm:main"
 asm-select-api = "asm_select_api:main"
+asm-selector = "asm_selector_mcp:main"
 
 [tool.setuptools]
 py-modules = ["asm_cli", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
@@ -29,3 +30,7 @@ packages = ["scorer"]
 
 [tool.setuptools.package-data]
 scorer = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["scorer", "tools/asm-gen"]
+python_files = ["test_*.py"]

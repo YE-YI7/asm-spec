@@ -56,11 +56,11 @@ ASM ships an MCP server so any MCP client (Claude Desktop, Cursor, an agent host
 
 ```bash
 git clone https://github.com/YE-YI7/asm-spec && cd asm-spec
-pip install mcp
-python asm_selector_mcp.py        # stdio MCP server
+python3 -m pip install -e ".[mcp]"
+asm-selector                     # stdio MCP server (MCP SDK 2.x)
 ```
 
-It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `python /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The same selector is importable directly: `from library_select import select`.
+It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `asm-selector`, or at `python3 /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The Python server uses the stable MCP SDK 2.x line and supports the modern `2026-07-28` protocol era. The same selector is importable directly: `from library_select import select`.
 
 The same engine is also available as:
 

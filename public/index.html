@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ASM is the selection layer for agents: eligibility, value, policy, and an auditable reason before a tool call or payment.">
+  <title>ASM — The selection layer for agents</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07100c;
+      --panel: #0d1913;
+      --ink: #f2fff7;
+      --soft: #a8bcb0;
+      --line: #24362c;
+      --green: #72f5a5;
+      --amber: #ffd37a;
+      --red: #ff8e8e;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at 70% 0, #173e28 0, transparent 36rem), var(--bg); color: var(--ink); }
+    a { color: inherit; }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; font-size: 14px; }
+    nav strong { letter-spacing: .13em; }
+    nav div { display: flex; gap: 18px; color: var(--soft); }
+    .hero { min-height: 70vh; display: grid; align-content: center; padding: 72px 0 96px; }
+    .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: .15em; font: 600 12px ui-monospace, monospace; }
+    h1 { max-width: 920px; margin: 18px 0 22px; font-size: clamp(46px, 8vw, 92px); line-height: .98; letter-spacing: -.055em; }
+    .lead { max-width: 720px; color: var(--soft); font-size: clamp(18px, 2vw, 23px); line-height: 1.55; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    button, .button { border: 1px solid var(--green); border-radius: 10px; padding: 12px 17px; background: var(--green); color: #061109; font-weight: 750; text-decoration: none; cursor: pointer; }
+    .button.secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+    .receipts, .flow { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 72px; }
+    .card { padding: 26px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--panel) 92%, transparent); }
+    .number { display: block; color: var(--green); font-size: clamp(38px, 6vw, 66px); font-weight: 800; letter-spacing: -.05em; }
+    .card h2, section h2 { margin: 8px 0 10px; font-size: 22px; }
+    .card p, .note { color: var(--soft); line-height: 1.6; }
+    .demo { margin: 0 0 72px; padding: clamp(22px, 5vw, 46px); border: 1px solid var(--line); border-radius: 20px; background: #08150e; }
+    .demo-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 24px; }
+    .demo h2 { margin: 7px 0; font-size: clamp(28px, 4vw, 44px); letter-spacing: -.035em; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .request { padding: 16px; border: 1px solid var(--line); border-radius: 12px; color: #d7e5dc; background: #050b08; overflow-x: auto; line-height: 1.55; }
+    #result { min-height: 140px; white-space: pre-wrap; }
+    .status { color: var(--amber); }
+    .status.ok { color: var(--green); }
+    .status.error { color: var(--red); }
+    .step { position: relative; padding-left: 50px; }
+    .step b { position: absolute; left: 0; display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 50%; color: var(--green); }
+    .step h3 { margin: 3px 0 8px; }
+    footer { margin-top: 80px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--soft); font-size: 13px; line-height: 1.6; }
+    @media (max-width: 720px) {
+      .receipts, .flow { grid-template-columns: 1fr; }
+      .demo-head { display: block; }
+      .demo-head button { margin-top: 18px; }
+      nav div a:not(:last-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <strong>ASM</strong>
+      <div>
+        <a href="/.well-known/asm">Catalog</a>
+        <a href="/showcase">Settlement receipt</a>
+        <a href="https://github.com/YE-YI7/asm-spec">GitHub</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <span class="eyebrow">The selection layer for agents</span>
+      <h1>Agents can call tools. They still need to choose the right one.</h1>
+      <p class="lead">ASM turns eligibility, cost, risk, provenance, and policy into a reproducible decision before an agent invokes a service or pays it.</p>
+      <div class="actions">
+        <a class="button" href="#demo">Run the decision</a>
+        <a class="button secondary" href="https://github.com/YE-YI7/asm-spec">Inspect the evidence</a>
+      </div>
+    </section>
+
+    <section class="receipts" aria-label="Evidence">
+      <article class="card">
+        <span class="number">0 / 14,519</span>
+        <h2>Complete selection records in the audited MCP data</h2>
+        <p>Across five registries and directories, no entry combined comparable price, SLA/rate-limit, quality, and access-mechanism signals in machine-actionable form. Runtime payment remains the selected rail's job. Snapshot: May 2, 2026.</p>
+      </article>
+      <article class="card">
+        <span class="number">6 / 6</span>
+        <h2>Models selected better with structured metadata</h2>
+        <p>In ToolSelect-Bench v0, every tested model improved correct selection with ASM metadata; constraint violations fell for five of six. Raw picks are committed for rescoring.</p>
+      </article>
+    </section>
+
+    <section class="demo" id="demo">
+      <div class="demo-head">
+        <div>
+          <span class="eyebrow">One concrete decision</span>
+          <h2>Book a flight I can later cancel.</h2>
+          <p class="note">The selector must reject ineligible tools, surface financial risk, require approval, and preserve the evidence it used.</p>
+        </div>
+        <button id="run" type="button">Run live selector</button>
+      </div>
+      <pre class="request">task: book a flight I can later cancel
+taxonomy: tool.booking.travel
+requires: flight_search, flight_order_create, booking_cancel
+approval gate: financial_charge</pre>
+      <p id="state" class="status">Ready. No account or payment required.</p>
+      <pre id="result" class="request">The live result will appear here.</pre>
+    </section>
+
+    <section>
+      <span class="eyebrow">The boundary</span>
+      <h2>Discovery → selection → settlement → evidence</h2>
+      <div class="flow">
+        <article class="step card"><b>1</b><h3>MCP / ARD / catalogs</h3><p>What services exist and how an agent reaches them.</p></article>
+        <article class="step card"><b>2</b><h3>ASM</h3><p>Which candidates are eligible, which one fits the user's policy, and why.</p></article>
+        <article class="step card"><b>3</b><h3>MPP / x402 / ACP</h3><p>How authorization and payment execute after a service is selected.</p></article>
+        <article class="step card"><b>4</b><h3>Observed evidence</h3><p>What actually happened, so the next decision can distrust stale or inaccurate claims.</p></article>
+      </div>
+    </section>
+
+    <footer>
+      Honest status: ASM has reproducible benchmarks, a working selector, selection receipts, and a separate historical testnet-settlement experiment; it does not yet claim production selection traffic. The hosted library is a demonstration dataset. Every production consumer should enforce freshness and verification policy.
+    </footer>
+  </main>
+  <script>
+    const run = document.querySelector('#run');
+    const state = document.querySelector('#state');
+    const result = document.querySelector('#result');
+    run.addEventListener('click', async () => {
+      run.disabled = true;
+      state.className = 'status';
+      state.textContent = 'Selecting and generating a receipt…';
+      try {
+        const response = await fetch('/select', {
+          method: 'POST',
+          headers: {'content-type': 'application/json'},
+          body: JSON.stringify({
+            task: 'book a flight I can later cancel',
+            taxonomy: 'tool.booking.travel',
+            required_functions: ['flight_search', 'flight_order_create', 'booking_cancel'],
+            require_approval_for: ['financial_charge'],
+            receipt: true
+          })
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        const selected = data.selected || {};
+        result.textContent = JSON.stringify({
+          selected: selected.display_name,
+          service_id: selected.service_id,
+          risk_class: data.risk_class,
+          approval_required: data.approval_required,
+          rejected: (data.rejected || []).map(x => ({service: x.service, reason: x.reason})),
+          receipt: {
+            type: data.receipt?.receipt_type,
+            selection_id: data.receipt?.selection_id,
+            evidence_count: data.receipt?.evidence?.length,
+            evidence: data.receipt?.evidence
+          }
+        }, null, 2);
+        state.className = 'status ok';
+        state.textContent = 'Decision complete. The evidence set is digest-bound in the receipt.';
+      } catch (error) {
+        state.className = 'status error';
+        state.textContent = `The hosted selector did not answer: ${error}. The source and offline reproduction remain available on GitHub.`;
+      } finally {
+        run.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

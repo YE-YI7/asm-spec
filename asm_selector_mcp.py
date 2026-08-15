@@ -7,15 +7,19 @@ calls `select_tool` and gets back which tool to use, why, and the operational
 policy (risk / approval / side-effects) to gate the action.
 
 Run (stdio):  python asm_selector_mcp.py     (or `asm-selector` once installed)
-Requires:     pip install mcp   (or: pip install "asm-protocol[mcp]")
+Requires:     pip install "asm-protocol[mcp]"
 """
 from __future__ import annotations
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server import MCPServer
 
 from library_select import load_library, monthly_cost, select
 
-mcp = FastMCP("asm-selector")
+mcp = MCPServer(
+    "asm-selector",
+    version="0.5.1",
+    description="Select agent-operable tools using ASM value and policy metadata.",
+)
 
 
 @mcp.tool()
