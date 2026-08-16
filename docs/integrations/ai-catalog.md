@@ -1,38 +1,61 @@
 # ASM × AI Catalog (cross-protocol)
 
-The [AI Catalog](https://github.com/Agent-Card/ai-catalog) is a cross-protocol standard (MCP, A2A, and others) for discovering heterogeneous AI artifacts. Like MCP Server Cards, its core schema covers *identification and discovery* — not the economic/eligibility metadata an agent needs to *choose among* several capable entries. ASM fills that layer here the same way it does for MCP: as metadata riding an official extension point, with no core-schema change.
+The [AI Catalog](https://github.com/Agent-Card/ai-catalog) discovers heterogeneous
+AI artifacts across MCP, A2A, skills, datasets, and other formats. Its core tells
+a client what an artifact is and where to fetch it. ASM adds the separate facts
+an agent needs before choosing among otherwise capable services.
 
-## Where ASM fits: the `metadata` extension point
+## Current extension mapping
 
-AI Catalog **ADR-0012** ("Extensibility via `metadata`", accepted) keeps the core entry schema *closed* and routes all custom properties into an optional `metadata` object — and states explicitly: *"Registries can define their own metadata schemas for entries they host without requiring changes to the core specification."* ASM's value/selection layer is a natural `metadata.asm` namespace.
+The public AI Catalog specification checked on 2026-08-16 exposes an optional
+`extensions` object on each catalog entry. Every extension key must be a valid
+URL or reverse-DNS string. This repository uses the provisional namespace
+`io.github.ye-yi7.asm.selection`:
 
 ```json
 {
-  "identifier": "urn:air:asm-spec:amadeus:self-service-api",
+  "identifier": "urn:air:github.com:ye-yi7:asm:amadeus:self-service-api",
   "displayName": "Amadeus Self-Service APIs",
   "type": "application/asm+json",
   "version": "current",
   "url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
-  "metadata": {
-    "asm": {
+  "extensions": {
+    "io.github.ye-yi7.asm.selection": {
       "asm_version": "0.3",
       "taxonomy": "tool.booking.travel",
-      "invocation": { "interface": "rest_api", "reach": "cloud", "agent_operable": true },
-      "operational": { "risk_class": "critical", "approval": "always" },
+      "invocation": {
+        "interface": "rest_api",
+        "reach": "cloud",
+        "agent_operable": true
+      },
+      "operational": {
+        "risk_class": "critical",
+        "approval": "always"
+      },
       "manifest_url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current"
     }
   }
 }
 ```
 
-## Convention: inline static, link mutable
+This is an illustrative, unratified mapping. AI Catalog issue #83 remains the
+place where discovery-time access and monetization signals are being discussed;
+the example above must not be described as an accepted upstream namespace.
 
-We apply ASM's own inline-vs-link rule inside the catalog entry: `metadata.asm` carries the **static** eligibility/selection signals an agent gates on (taxonomy, invocation reach/operability, operational risk and approval), while `url` points at the full, **mutable** ASM manifest (pricing, quality, SLA) served at a canonical endpoint — so freshness has a single source and the catalog entry never drifts.
+## Inline stable facts, resolve mutable facts
 
-A runnable, source-linked example spanning the invocability spectrum (cloud API, local-device-only, critical-risk booking, keyless data) is in [`examples/ai-catalog/catalog.example.json`](../../examples/ai-catalog/catalog.example.json), generated from the live library by [`examples/ai-catalog/_build.py`](../../examples/ai-catalog/_build.py).
+The entry may carry compact eligibility signals needed for coarse filtering.
+Mutable or caller-specific price, allowance, quality, and SLA data should keep
+source and retrieval timestamps and be resolved from the linked ASM snapshot or
+the runtime provider. A discovery-time scalar is never the final payable amount.
 
-## Status and caveats
+The generated example is
+[`examples/ai-catalog/catalog.example.json`](../../examples/ai-catalog/catalog.example.json),
+built by [`examples/ai-catalog/_build.py`](../../examples/ai-catalog/_build.py).
 
-- **Not an official binding.** This is a demonstration that ASM's value layer fits the upstream standard's extension point cleanly; it is not a ratified ASM↔AI-Catalog mapping. No proposal has been filed with the AI Catalog project.
-- **The spec is evolving.** At the time of writing, AI Catalog PRs are renaming `mediaType`→`type` and adopting `urn:air:` identifiers; the examples track the current ADR-0012 shape and will need updating as those land.
-- **Why this matters.** The AI Catalog is more upstream than any single protocol's registry, and its `metadata` extension point is exactly where cross-protocol value/selection metadata could live without contention — a path worth watching as the standard matures.
+## Boundary
+
+- AI Catalog identifies and locates artifacts.
+- ASM normalizes selection facts, applies local policy, and emits a selection receipt.
+- MPP, x402, Stripe, ACP, or UCP owns its runtime quote/payment/commerce receipt.
+- Observed outcome evidence remains a separate artifact linked by subject/version/digest.

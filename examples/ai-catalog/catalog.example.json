@@ -1,14 +1,14 @@
 {
-  "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata via the `metadata` extension point. Not an official ASM<->AI-Catalog binding; a runnable demonstration that the value layer fits the upstream cross-protocol standard without core-schema changes.",
+  "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata via a namespaced `extensions` entry. Not an official ASM<->AI-Catalog binding; a runnable demonstration that the value layer fits the upstream cross-protocol standard without core-schema changes.",
   "specVersion": "1.0",
   "entries": [
     {
-      "identifier": "urn:air:asm-spec:todoist:todoist",
+      "identifier": "urn:air:github.com:ye-yi7:asm:todoist:todoist",
       "displayName": "Todoist",
       "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/todoist/todoist@current",
-      "metadata": {
-        "asm": {
+      "extensions": {
+        "io.github.ye-yi7.asm.selection": {
           "asm_version": "0.3",
           "taxonomy": "tool.productivity.task_management",
           "invocation": {
@@ -22,12 +22,12 @@
       "version": "current"
     },
     {
-      "identifier": "urn:air:asm-spec:culturedcode:things-3",
+      "identifier": "urn:air:github.com:ye-yi7:asm:culturedcode:things-3",
       "displayName": "Things 3",
       "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/culturedcode/things-3@current",
-      "metadata": {
-        "asm": {
+      "extensions": {
+        "io.github.ye-yi7.asm.selection": {
           "asm_version": "0.3",
           "taxonomy": "tool.productivity.task_management",
           "invocation": {
@@ -41,12 +41,12 @@
       "version": "current"
     },
     {
-      "identifier": "urn:air:asm-spec:amadeus:self-service-api",
+      "identifier": "urn:air:github.com:ye-yi7:asm:amadeus:self-service-api",
       "displayName": "Amadeus Self-Service APIs",
       "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/amadeus/self-service-api@current",
-      "metadata": {
-        "asm": {
+      "extensions": {
+        "io.github.ye-yi7.asm.selection": {
           "asm_version": "0.3",
           "taxonomy": "tool.booking.travel",
           "invocation": {
@@ -64,12 +64,12 @@
       "version": "current"
     },
     {
-      "identifier": "urn:air:asm-spec:us-census:data-api",
+      "identifier": "urn:air:github.com:ye-yi7:asm:us-census:data-api",
       "displayName": "US Census Bureau Data API",
       "type": "application/asm+json",
       "url": "https://asm-spec.onrender.com/manifest/us-census/data-api@current",
-      "metadata": {
-        "asm": {
+      "extensions": {
+        "io.github.ye-yi7.asm.selection": {
           "asm_version": "0.3",
           "taxonomy": "tool.data.real_estate",
           "invocation": {

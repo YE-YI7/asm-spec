@@ -6,8 +6,8 @@
  * Agents can query, filter, compare, and score services.
  */
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { McpServer } from "@modelcontextprotocol/server";
+import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { z } from "zod";
 import * as fs from "fs";
 import * as path from "path";
@@ -634,7 +634,7 @@ export function formatManifestSummary(m: ASMManifest): string {
 
 // ── Main ───────────────────────────────────────────────
 
-async function main() {
+export function buildMcpServer() {
   // Load manifests
   const registry = new ASMRegistry();
   const manifestDir = path.resolve(__dirname, "..", "..", "manifests");
@@ -654,10 +654,12 @@ async function main() {
   });
 
   // ── Tool: asm_list ──
-  server.tool(
+  server.registerTool(
     "asm_list",
-    "List all services in the ASM registry with summary info. Use this for an overview of available services. Shows receipt support status.",
-    {},
+    {
+      description: "List all services in the ASM registry with summary info. Use this for an overview of available services. Shows receipt support status.",
+      inputSchema: z.object({}),
+    },
     async () => {
       const all = registry.getAll();
       const lines = all.map(
@@ -678,11 +680,13 @@ async function main() {
   );
 
   // ── Tool: asm_get ──
-  server.tool(
+  server.registerTool(
     "asm_get",
-    "Get the full ASM manifest for a specific service by its service_id. Returns complete pricing, quality, SLA, and payment information.",
     {
-      service_id: z.string().describe("Service ID (e.g., 'anthropic/claude-sonnet-4@4.0')"),
+      description: "Get the full ASM manifest for a specific service by its service_id. Returns complete pricing, quality, SLA, and payment information.",
+      inputSchema: z.object({
+        service_id: z.string().describe("Service ID (e.g., 'anthropic/claude-sonnet-4@4.0')"),
+      }),
     },
     async ({ service_id }) => {
       const m = registry.getById(service_id);
@@ -732,38 +736,40 @@ async function main() {
   );
 
   // ── Tool: asm_query ──
-  server.tool(
+  server.registerTool(
     "asm_query",
-    "Query the ASM registry with filters. Find services by taxonomy (category), cost, quality, latency, or modality. All filters are optional — combine them to narrow results.",
     {
-      taxonomy: z
-        .string()
-        .optional()
-        .describe("Taxonomy prefix filter (e.g., 'ai.llm', 'ai.vision.image_generation', 'ai.audio.tts')"),
-      max_cost: z
-        .number()
-        .optional()
-        .describe("Maximum cost per unit (normalized to per-1 basis)"),
-      min_quality: z
-        .number()
-        .optional()
-        .describe("Minimum quality score (0-1 normalized)"),
-      max_latency_s: z
-        .number()
-        .optional()
-        .describe("Maximum p50 latency in seconds"),
-      input_modality: z
-        .string()
-        .optional()
-        .describe("Required input modality (text, image, audio, video)"),
-      output_modality: z
-        .string()
-        .optional()
-        .describe("Required output modality (text, image, audio, video)"),
-      has_receipts: z
-        .boolean()
-        .optional()
-        .describe("If true, only return services that have a receipt_endpoint (support Signed Receipts)"),
+      description: "Query the ASM registry with filters. Find services by taxonomy (category), cost, quality, latency, or modality. All filters are optional — combine them to narrow results.",
+      inputSchema: z.object({
+        taxonomy: z
+          .string()
+          .optional()
+          .describe("Taxonomy prefix filter (e.g., 'ai.llm', 'ai.vision.image_generation', 'ai.audio.tts')"),
+        max_cost: z
+          .number()
+          .optional()
+          .describe("Maximum cost per unit (normalized to per-1 basis)"),
+        min_quality: z
+          .number()
+          .optional()
+          .describe("Minimum quality score (0-1 normalized)"),
+        max_latency_s: z
+          .number()
+          .optional()
+          .describe("Maximum p50 latency in seconds"),
+        input_modality: z
+          .string()
+          .optional()
+          .describe("Required input modality (text, image, audio, video)"),
+        output_modality: z
+          .string()
+          .optional()
+          .describe("Required output modality (text, image, audio, video)"),
+        has_receipts: z
+          .boolean()
+          .optional()
+          .describe("If true, only return services that have a receipt_endpoint (support Signed Receipts)"),
+      }),
     },
     async (params) => {
       let results = registry.query(params);
@@ -799,15 +805,17 @@ async function main() {
   );
 
   // ── Tool: asm_compare ──
-  server.tool(
+  server.registerTool(
     "asm_compare",
-    "Compare 2-5 services side by side on pricing, quality, SLA, and payment. Provide service IDs to compare.",
     {
-      service_ids: z
-        .array(z.string())
-        .min(2)
-        .max(5)
-        .describe("Array of service_ids to compare"),
+      description: "Compare 2-5 services side by side on pricing, quality, SLA, and payment. Provide service IDs to compare.",
+      inputSchema: z.object({
+        service_ids: z
+          .array(z.string())
+          .min(2)
+          .max(5)
+          .describe("Array of service_ids to compare"),
+      }),
     },
     async ({ service_ids }) => {
       const manifests: ASMManifest[] = [];
@@ -913,28 +921,30 @@ async function main() {
   );
 
   // ── Tool: asm_score ──
-  server.tool(
+  server.registerTool(
     "asm_score",
-    "Score and rank services based on user preferences. Supports two methods: 'topsis' (default, multi-criteria decision analysis aligned with Python scorer) and 'weighted_average'. Also supports io_ratio for configurable input/output token cost blending.",
     {
-      taxonomy: z
-        .string()
-        .optional()
-        .describe("Taxonomy prefix to filter before scoring (e.g., 'ai.llm.chat')"),
-      w_cost: z.number().min(0).max(1).default(0.3).describe("Weight for cost (lower is better). Default 0.3"),
-      w_quality: z.number().min(0).max(1).default(0.3).describe("Weight for quality (higher is better). Default 0.3"),
-      w_speed: z.number().min(0).max(1).default(0.2).describe("Weight for speed/latency (lower is better). Default 0.2"),
-      w_reliability: z.number().min(0).max(1).default(0.2).describe("Weight for reliability/uptime (higher is better). Default 0.2"),
-      method: z
-        .enum(["topsis", "weighted_average"])
-        .default("topsis")
-        .describe("Scoring method. 'topsis' = TOPSIS multi-criteria analysis (default, aligned with Python scorer). 'weighted_average' = simple weighted average."),
-      io_ratio: z
-        .number()
-        .min(0)
-        .max(1)
-        .default(0.3)
-        .describe("Input/output token cost blend ratio. 0.3 = chat (default), 0.8 = RAG, 0.1 = creative writing, 0.5 = balanced."),
+      description: "Score and rank services based on user preferences. Supports two methods: 'topsis' (default, multi-criteria decision analysis aligned with Python scorer) and 'weighted_average'. Also supports io_ratio for configurable input/output token cost blending.",
+      inputSchema: z.object({
+        taxonomy: z
+          .string()
+          .optional()
+          .describe("Taxonomy prefix to filter before scoring (e.g., 'ai.llm.chat')"),
+        w_cost: z.number().min(0).max(1).default(0.3).describe("Weight for cost (lower is better). Default 0.3"),
+        w_quality: z.number().min(0).max(1).default(0.3).describe("Weight for quality (higher is better). Default 0.3"),
+        w_speed: z.number().min(0).max(1).default(0.2).describe("Weight for speed/latency (lower is better). Default 0.2"),
+        w_reliability: z.number().min(0).max(1).default(0.2).describe("Weight for reliability/uptime (higher is better). Default 0.2"),
+        method: z
+          .enum(["topsis", "weighted_average"])
+          .default("topsis")
+          .describe("Scoring method. 'topsis' = TOPSIS multi-criteria analysis (default, aligned with Python scorer). 'weighted_average' = simple weighted average."),
+        io_ratio: z
+          .number()
+          .min(0)
+          .max(1)
+          .default(0.3)
+          .describe("Input/output token cost blend ratio. 0.3 = chat (default), 0.8 = RAG, 0.1 = creative writing, 0.5 = balanced."),
+      }),
     },
     async ({ taxonomy, w_cost, w_quality, w_speed, w_reliability, method, io_ratio }) => {
       // Normalize weights
@@ -989,10 +999,12 @@ async function main() {
   );
 
   // ── Tool: asm_taxonomies ──
-  server.tool(
+  server.registerTool(
     "asm_taxonomies",
-    "List all available service taxonomies (categories) in the registry.",
-    {},
+    {
+      description: "List all available service taxonomies (categories) in the registry.",
+      inputSchema: z.object({}),
+    },
     async () => {
       const taxonomies = registry.listTaxonomies();
       const grouped: Record<string, string[]> = {};
@@ -1019,7 +1031,7 @@ async function main() {
   );
 
   // ── Resource: schema ──
-  server.resource(
+  server.registerResource(
     "asm-schema",
     "asm://schema/v0.3",
     { description: "ASM v0.3 JSON Schema specification", mimeType: "application/json" },
@@ -1030,14 +1042,20 @@ async function main() {
     }
   );
 
-  // ── Start server ─────────────────────────────────────
-
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("ASM Registry MCP Server running on stdio");
+  return server;
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
-  process.exit(1);
-});
+async function main() {
+  // `serveStdio` negotiates both the legacy initialize era and the modern
+  // 2026-07-28 `server/discover` era, pinning one server instance per
+  // connection. Connecting a hand-built server directly to a stdio transport
+  // would continue to serve the legacy era only.
+  await serveStdio(buildMcpServer);
+}
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error("Fatal error:", err);
+    process.exit(1);
+  });
+}

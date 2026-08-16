@@ -92,6 +92,9 @@ def test_select_api_endpoints():
     port = srv.server_address[1]
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
+        landing = urllib.request.urlopen(f"http://127.0.0.1:{port}/").read().decode()
+        assert "The selection layer for agents" in landing
+
         h = json.loads(urllib.request.urlopen(f"http://127.0.0.1:{port}/healthz").read())
         assert h["ok"] and h["tools"] >= 30
 
@@ -132,7 +135,7 @@ def test_select_api_endpoints():
         assert man["service_id"] == first["service_id"]
         assert man.get("asm_version") == "0.3"
 
-        # AI Catalog document (schema v1.0): entries with metadata.asm, url resolvable
+        # AI Catalog document (schema v1.0): namespaced extension, URL resolvable
         aic = json.loads(urllib.request.urlopen(
             f"http://127.0.0.1:{port}/.well-known/ai-catalog.json").read())
         assert aic["specVersion"] == "1.0"
@@ -143,9 +146,10 @@ def test_select_api_endpoints():
             assert urn.match(e["identifier"]), e["identifier"]
             assert e["type"] == "application/asm+json" and "mediaType" not in e
         e = aic["entries"][0]
-        assert e["metadata"]["asm:taxonomy"]
+        ext = e["extensions"]["io.github.ye-yi7.asm.selection"]
+        assert ext["asm:taxonomy"]
         assert all(isinstance(v, (str, int, float, bool)) or v is None
-                   for v in e["metadata"].values())  # schema v1.0: flat primitives
+                   for v in ext.values())
         assert e["url"].startswith(f"http://127.0.0.1:{port}/manifest/")
         man2 = json.loads(urllib.request.urlopen(e["url"]).read())
         assert man2["service_id"] in e["url"]

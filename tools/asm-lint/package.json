@@ -1,6 +1,7 @@
 {
   "name": "@asm-protocol/lint",
   "version": "0.1.0",
+  "private": true,
   "description": "Quality detection CLI for MCP Servers — scan, probe, and score any MCP Server",
   "bin": {
     "asm-lint": "./dist/cli.js"

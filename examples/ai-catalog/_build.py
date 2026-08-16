@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 """Map ASM library entries into AI Catalog (Agent-Card/ai-catalog) entries.
 
-ADR-0012 (accepted): the AI Catalog entry core schema is closed; all custom
-properties live in an optional `metadata` object, and "registries can define
-their own metadata schemas for entries they host without requiring changes to
-the core specification." ASM's value/selection layer is therefore a natural
-`metadata.asm` namespace — no core-schema change required.
+The current AI Catalog entry schema puts custom properties in `extensions`.
+Extension keys must be a valid URL or reverse-DNS string, so ASM uses the
+`io.github.ye-yi7.asm.selection` namespace without changing the core schema.
 
-We follow ASM's own inline-vs-link convention inside the entry: `metadata.asm`
+We follow ASM's own inline-vs-link convention inside the entry: the extension
 carries the STATIC eligibility/selection signals an agent gates on (taxonomy,
 invocation, operational risk); `url` points at the full, mutable ASM manifest
 served by the live instance, so pricing/quality/SLA have a single fresh source.
 
-Spec is evolving (PR #37 mediaType->type, PR #36 urn:air: identifiers); fields
-here use the current ADR-0012 shape and are annotated in docs/integrations/ai-catalog.md.
+Fields here follow the public specification checked on 2026-08-16 and are
+annotated in docs/integrations/ai-catalog.md.
 """
 from __future__ import annotations
 import json, sys
@@ -24,6 +22,7 @@ sys.path.insert(0, str(ROOT))
 from library_select import load_library  # noqa: E402
 
 HOSTED = "https://asm-spec.onrender.com/manifest"
+EXTENSION_KEY = "io.github.ye-yi7.asm.selection"
 PICK = ["todoist/todoist@current", "culturedcode/things-3@current",
         "amadeus/self-service-api@current", "us-census/data-api@current"]
 LIB = {m["service_id"]: m for m in load_library()}
@@ -49,11 +48,11 @@ def to_entry(m: dict) -> dict:
     org, _, tool = base_id.partition("/")
     part = lambda s: re.sub(r"[^A-Za-z0-9._-]", "-", s)
     entry = {
-        "identifier": f"urn:air:asm-spec:{part(org)}:{part(tool or org)}",
+        "identifier": f"urn:air:github.com:ye-yi7:asm:{part(org)}:{part(tool or org)}",
         "displayName": m.get("display_name"),
         "type": "application/asm+json",
         "url": f"{HOSTED}/{m['service_id']}",
-        "metadata": {"asm": asm_meta},
+        "extensions": {EXTENSION_KEY: asm_meta},
     }
     if ver:
         entry["version"] = ver
@@ -62,7 +61,7 @@ def to_entry(m: dict) -> dict:
 
 catalog = {
     "$comment": "Illustrative AI Catalog document carrying ASM value/selection metadata "
-                "via the `metadata` extension point. Not an official ASM<->AI-Catalog "
+                "via a namespaced `extensions` entry. Not an official ASM<->AI-Catalog "
                 "binding; a runnable demonstration that the value layer fits the upstream "
                 "cross-protocol standard without core-schema changes.",
     "specVersion": "1.0",
@@ -73,7 +72,7 @@ out = Path(__file__).resolve().parent / "catalog.example.json"
 out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False), encoding="utf-8")
 print(f"wrote {out} with {len(catalog['entries'])} entries")
 for e in catalog["entries"]:
-    a = e["metadata"]["asm"]
+    a = e["extensions"][EXTENSION_KEY]
     print(f"  {e['displayName']:24} reach={a['invocation'].get('reach')} "
           f"setup_ok={a['invocation'].get('agent_completable_setup')} "
           f"risk={a.get('operational',{}).get('risk_class')}")

@@ -1,3 +1,27 @@
+# Keeps the public API instance from sleeping.
+#
+# Why: the free hosting tier sleeps after ~15 minutes idle, and waking it is slow
+# and unreliable — a cold instance can refuse to answer for several minutes before
+# it comes back. The README "Try it" endpoint and the catalog URL referenced from
+# spec discussions both live on that host, so a visitor's first request is the one
+# most likely to time out.
+#
+# Cost: none. Scheduled Actions are free on public repositories.
+#
+# Known limits: GitHub's cron can drift under load, and scheduled workflows are
+# disabled automatically after 60 days without repository activity.
+
+name: keep-warm
+
+on:
+  schedule:
+    # Every 10 minutes — the instance sleeps at 15, so this leaves headroom.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 concurrency:
   group: keep-warm
   cancel-in-progress: true

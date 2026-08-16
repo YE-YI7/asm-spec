@@ -11,7 +11,7 @@ Endpoints:
                            links (the inline-vs-link convention, applied to ourselves)
   GET  /.well-known/ai-catalog.json -> AI Catalog (Agent-Card/ai-catalog) document:
                            every library tool as a catalog entry carrying its ASM
-                           value/selection block in the ADR-0012 `metadata` object
+                           value/selection block in a namespaced `extensions` entry
   GET  /manifest/{service_id} -> full ASM manifest for one tool
   GET  /healthz         -> {"ok": true, "tools": N}
 
@@ -37,7 +37,9 @@ _GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 # Static launch assets (agent-commerce showcase): served from public/ if present.
 _PUBLIC = Path(__file__).resolve().parent / "public"
+_AI_CATALOG_EXTENSION = "io.github.ye-yi7.asm.selection"
 _STATIC = {
+    "/": ("index.html", "text/html; charset=utf-8"),
     "/showcase": ("showcase.html", "text/html; charset=utf-8"),
     "/showcase.html": ("showcase.html", "text/html; charset=utf-8"),
     "/showcase-data.json": ("showcase-data.json", "application/json; charset=utf-8"),
@@ -90,15 +92,16 @@ def _access_signal(m: dict) -> dict:
 
 
 def _ai_catalog_entry(m: dict, base: str) -> dict:
-    """AI Catalog entry (schema v1.0, ARD-conformance-tested): static ASM
-    eligibility/selection signals inline under metadata.asm; the full mutable
+    """AI Catalog entry (schema v1.0): static ASM eligibility/selection signals
+    inline under a namespaced extension; the full mutable
     manifest behind url. service_id org/tool@version maps to URN + version."""
     sid = m.get("service_id")
     inv = m.get("invocation") or {}
     ops = m.get("operational_constraints") or {}
     base_id, _, ver = sid.partition("@")
     org, _, tool = base_id.partition("/")
-    # metadata values must be flat primitives (schema v1.0), so namespaced keys
+    # Keep the payload flat; the outer key follows the spec's required
+    # reverse-DNS/URL namespace convention.
     asm_meta = {"asm:version": m.get("asm_version", "0.3"),
                 "asm:taxonomy": m.get("taxonomy"),
                 "asm:manifestUrl": f"{base}/manifest/{sid}"}
@@ -113,13 +116,13 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
         asm_meta["asm:approval"] = ops["approval"]["required"]
     asm_meta.update(_access_signal(m))  # discovery-time access/monetization signal
     entry = {
-        "identifier": f"urn:air:asm-spec:{_urn_part(org)}:{_urn_part(tool or org)}",
+        "identifier": f"urn:air:github.com:ye-yi7:asm:{_urn_part(org)}:{_urn_part(tool or org)}",
         "displayName": m.get("display_name"),
         "type": "application/asm+json",
         "url": f"{base}/manifest/{sid}",
         "tags": (m.get("taxonomy") or "tool").split("."),
         "updatedAt": _GENERATED_AT,
-        "metadata": asm_meta,
+        "extensions": {_AI_CATALOG_EXTENSION: asm_meta},
     }
     if ver:
         entry["version"] = ver
@@ -205,7 +208,7 @@ class Handler(BaseHTTPRequestHandler):
             })
         elif url.path == "/.well-known/ai-catalog.json":
             # Cross-protocol discovery: the same library as an AI Catalog document,
-            # value/selection metadata riding the ADR-0012 `metadata` extension point.
+            # with value/selection metadata in a namespaced extension.
             host = self.headers.get("Host", "asm-spec.onrender.com")
             scheme = "http" if host.split(":")[0] in ("localhost", "127.0.0.1") else "https"
             base = f"{scheme}://{host}"
@@ -215,7 +218,7 @@ class Handler(BaseHTTPRequestHandler):
                 "specVersion": "1.0",
                 "host": {
                     "displayName": "ASM tool-value library (demonstration registry; "
-                                   "value/selection metadata rides entry.metadata.asm)",
+                                   "selection metadata rides a namespaced entry extension)",
                     "identifier": "asm-spec.onrender.com",
                     "documentationUrl": "https://github.com/YE-YI7/asm-spec",
                 },
