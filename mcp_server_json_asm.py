@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.resources
 import json
 import sys
 from dataclasses import dataclass, field
@@ -87,7 +88,11 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         required = {"asm_version", "service_id", "taxonomy"}
         return [f"Missing required field: {field}" for field in sorted(required - set(manifest))]
 
-    schema = load_json(SCHEMA_PATH)
+    if SCHEMA_PATH.exists():
+        schema = load_json(SCHEMA_PATH)
+    else:
+        resource = importlib.resources.files("asm_schema").joinpath("asm-v0.3.schema.json")
+        schema = json.loads(resource.read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema)
     errors = []
     for err in sorted(validator.iter_errors(manifest), key=lambda e: list(e.path)):

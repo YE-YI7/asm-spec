@@ -18,9 +18,20 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install package and test dependencies
-        run: python -m pip install -e ".[mcp]" pytest
+        run: python -m pip install -e ".[mcp]" pytest build
       - name: Run Python tests
         run: python -m pytest -v
+      - name: Build and smoke-test the distributable wheel
+        run: |
+          python -m build
+          python -m venv /tmp/asm-wheel-smoke
+          wheel=$(find "$GITHUB_WORKSPACE/dist" -maxdepth 1 -name 'asm_protocol-*.whl' -print -quit)
+          /tmp/asm-wheel-smoke/bin/python -m pip install "$wheel" "mcp>=2,<3"
+          cd /tmp
+          /tmp/asm-wheel-smoke/bin/asm-lint \
+            "$GITHUB_WORKSPACE/examples/mcp-server-json/remote-with-asm.server.json" \
+            --format json --as-of 2026-05-20
+          test -x /tmp/asm-wheel-smoke/bin/asm-selector
 
   registry:
     runs-on: ubuntu-latest
