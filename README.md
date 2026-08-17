@@ -18,6 +18,40 @@ It is **not** a model picker. The tools are real products — task managers, des
 
 **Honest status:** this is the layer we're *building*, with receipts (a measured benchmark, a working selector, a live on-chain demo below), not a layer with production traffic yet. We're early and say so.
 
+## Validate your service in 60 seconds
+
+ASM's adoption primitive is a deterministic lint report, not a universal score.
+It accepts either a standalone ASM manifest or an MCP Registry `server.json`
+with publisher-provided ASM metadata:
+
+```bash
+python -m pip install "asm-protocol==0.5.2"
+asm-lint server.json --format markdown --output asm-lint-report.md
+```
+
+The report records schema validity, provenance completeness, claim freshness,
+selection readiness, and a digest of the exact manifest inspected. Schema
+errors fail CI by default; stricter projects can add `--fail-on not-ready`,
+`--fail-on expired`, or `--fail-on stale`.
+
+To keep the check enabled in GitHub Actions:
+
+```yaml
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-python@v5
+    with:
+      python-version: "3.12"
+  - uses: YE-YI7/asm-spec/.github/actions/asm-lint@v0.5.2
+    with:
+      path: server.json
+      fail-on: invalid
+```
+
+The Action adds the full Markdown report to the job summary. It does not call
+an ASM-hosted API or upload the inspected manifest. See the
+[lint and CI guide](docs/adoption/asm-lint.md) for status semantics.
+
 ## Try it: pick a tool for a task
 
 ```bash
@@ -44,7 +78,7 @@ Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs
 
 ## The gap ASM fills
 
-The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + payment together in machine-actionable form. ASM is that missing selection layer — and it rides on top of the connection layers, not against them.
+The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + an access/payment signal together in machine-actionable form. ASM is that missing selection layer — and it rides on top of the connection layers, not against them.
 
 **Receipt that the layer is needed:** in [ToolSelect-Bench](benchmark/RESULTS.md), six frontier models choosing among real tools with only names vs. with ASM metadata — the metadata improved correct selection for **6/6** models and cut user-constraint violations for **5/6**; the strongest (GPT-5, Llama-3.3-70B) went from ~35% violations to ~8-10% and topped 90% correct. Honest caveat: gains are strongest on eligibility; the library skews to well-known tools, which *understates* long-tail value.
 
@@ -55,8 +89,7 @@ ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in M
 ASM ships an MCP server so any MCP client (Claude Desktop, Cursor, an agent host) can call the selector as a tool — no schema adoption required:
 
 ```bash
-git clone https://github.com/YE-YI7/asm-spec && cd asm-spec
-python3 -m pip install -e ".[mcp]"
+python3 -m pip install "asm-protocol[mcp]==0.5.2"
 asm-selector                     # stdio MCP server (MCP SDK 2.x)
 ```
 
@@ -81,7 +114,7 @@ from asm_tools import ASMToolSelectorTool
 agent_tools = [ASMToolSelectorTool()]   # name: asm_tool_selector
 ```
 
-A public instance runs at **https://asm-spec.onrender.com** (free tier — first request after idle may take ~50s to wake). It also dogfoods ASM's own publishing convention: `GET /.well-known/asm` serves the library catalog (one re-stampable `generated_at`, per-manifest links), and `GET /manifest/{service_id}` serves each full manifest — ASM is its own first publisher.
+A public reference instance runs at **https://asm-spec.onrender.com**. It also dogfoods ASM's own publishing convention: `GET /.well-known/asm` serves the library catalog (one re-stampable `generated_at`, per-manifest links), and `GET /manifest/{service_id}` serves each full manifest — ASM is its own first publisher.
 
 ```bash
 curl -X POST https://asm-spec.onrender.com/select -H "Content-Type: application/json" \

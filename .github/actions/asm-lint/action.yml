@@ -1,0 +1,37 @@
+name: ASM lint
+description: Validate ASM selection metadata and add an evidence-linked report to the job summary.
+
+inputs:
+  path:
+    description: Path to an ASM manifest or MCP Registry server.json.
+    required: false
+    default: server.json
+  fail-on:
+    description: "Failure threshold: invalid, not-ready, expired, or stale."
+    required: false
+    default: invalid
+  report:
+    description: Markdown report path.
+    required: false
+    default: asm-lint-report.md
+
+runs:
+  using: composite
+  steps:
+    - name: Install ASM lint
+      shell: bash
+      run: python -m pip install "asm-protocol==0.5.2"
+    - name: Validate ASM metadata
+      shell: bash
+      env:
+        ASM_INPUT: ${{ inputs.path }}
+        ASM_FAIL_ON: ${{ inputs.fail-on }}
+        ASM_REPORT: ${{ inputs.report }}
+      run: |
+        set +e
+        asm-lint "$ASM_INPUT" --format markdown --output "$ASM_REPORT" --fail-on "$ASM_FAIL_ON"
+        status=$?
+        if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+          cat "$ASM_REPORT" >> "$GITHUB_STEP_SUMMARY"
+        fi
+        exit "$status"

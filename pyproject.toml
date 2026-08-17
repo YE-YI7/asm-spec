@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "asm-protocol"
-version = "0.5.1"
+version = "0.5.2"
 description = "Agent Service Manifest: value metadata and scoring for autonomous service selection"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Yi Guo" }]
 dependencies = [
   "jsonschema>=4.0",
@@ -21,15 +21,20 @@ langchain = ["langchain-core>=0.3"]
 [project.scripts]
 asm = "asm_cli:main"
 asm-mcp-validate = "mcp_server_json_asm:main"
+asm-lint = "asm_lint:main"
 asm-select-api = "asm_select_api:main"
 asm-selector = "asm_selector_mcp:main"
 
 [tool.setuptools]
-py-modules = ["asm_cli", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
-packages = ["scorer"]
+py-modules = ["asm_cli", "asm_lint", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
+packages = ["scorer", "asm_schema"]
+
+[tool.setuptools.package-dir]
+asm_schema = "schema"
 
 [tool.setuptools.package-data]
 scorer = ["data/*.json"]
+asm_schema = ["*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["scorer", "tools/asm-gen"]
