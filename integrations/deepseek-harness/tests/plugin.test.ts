@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
-import { createAsmSelectTool, requestSelection } from '../src/index.ts'
+import { createAsmListTool, createAsmSelectTool, requestSelection, requestServices } from '../src/index.ts'
 
 const openSignal = new AbortController().signal
 
@@ -49,6 +49,26 @@ describe('ASM DeepSeek Harness plugin', () => {
     assert.equal(tool.name, 'choose_service')
     assert.match(tool.description, /does not execute/i)
     assert.equal(tool.timeoutMs, 15_000)
+    assert.deepEqual((tool.parameters as { required?: string[] }).required, ['task', 'taxonomy'])
+  })
+
+  it('lists the bounded catalog without sending task text', async () => {
+    let capturedUrl = ''
+    const fetchImpl: typeof fetch = async input => {
+      capturedUrl = String(input)
+      return new Response(JSON.stringify([
+        { service_id: 'example/service@1', taxonomy: 'tool.example' },
+      ]), { status: 200 })
+    }
+    const result = await requestServices(
+      'https://example.test',
+      'tool.example',
+      openSignal,
+      fetchImpl,
+    )
+    assert.equal(capturedUrl, 'https://example.test/tools?taxonomy=tool.example')
+    assert.equal((result as Array<Record<string, unknown>>)[0]?.service_id, 'example/service@1')
+    assert.equal(createAsmListTool().name, 'asm_list_services')
   })
 
   it('rejects embedded endpoint credentials', () => {
@@ -61,15 +81,23 @@ describe('ASM DeepSeek Harness plugin', () => {
   it('fails closed on malformed selector responses', async () => {
     const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({ selected: null }), { status: 200 })
     await assert.rejects(
-      requestSelection('https://example.test', { task: 'x' }, openSignal, fetchImpl),
+      requestSelection('https://example.test', { task: 'x', taxonomy: 'tool.example' }, openSignal, fetchImpl),
       /missing selected\/reason/,
+    )
+  })
+
+  it('fails closed on malformed catalog responses', async () => {
+    const fetchImpl: typeof fetch = async () => new Response(JSON.stringify([{ name: 'missing ids' }]), { status: 200 })
+    await assert.rejects(
+      requestServices('https://example.test', undefined, openSignal, fetchImpl),
+      /invalid service list/,
     )
   })
 
   it('surfaces bounded HTTP errors', async () => {
     const fetchImpl: typeof fetch = async () => new Response('bad '.repeat(200), { status: 503 })
     await assert.rejects(
-      requestSelection('https://example.test', { task: 'x' }, openSignal, fetchImpl),
+      requestSelection('https://example.test', { task: 'x', taxonomy: 'tool.example' }, openSignal, fetchImpl),
       (error: unknown) => error instanceof Error
         && error.message.startsWith('asm-selector: HTTP 503:')
         && error.message.length < 340,

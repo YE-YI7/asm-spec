@@ -1,8 +1,8 @@
 # ASM for DeepSeek Harness
 
-This package adds one native DeepSeek Harness tool, `asm_select`. The tool asks
-an ASM selector to choose among services that are already described in its
-catalog and returns the decision with a Selection Receipt.
+This package adds two native DeepSeek Harness tools: `asm_list_services` shows
+what the configured catalog actually covers, and `asm_select` chooses within
+one explicit taxonomy and returns the decision with a Selection Receipt.
 
 It is deliberately narrow:
 
@@ -40,10 +40,15 @@ contributes its `cordis.patch.yml` automatically.
 
 ## What the Agent sees
 
-The tool accepts the same constraints as `POST /select`: task, taxonomy,
+The selection tool accepts the same constraints as `POST /select`: task, taxonomy,
 runtime reach, user platform, required functions, approval-triggering side
 effects, and whether setup must be agent-completable. It always requests a
 Selection Receipt.
+
+`taxonomy` is required by the Harness adapter. The current ASM library selector
+does not infer taxonomy from natural-language task text, so allowing an
+unbounded cross-category call would create a plausible-looking but invalid
+choice. Use `asm_list_services` first when the taxonomy is unknown.
 
 Use it when several catalogued services can satisfy a consequential task. Do
 not use it as a generic web search or as evidence that an uncatalogued tool is

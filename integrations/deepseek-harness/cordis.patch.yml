@@ -7,3 +7,4 @@
         endpoint: !!js process.env.ASM_SELECTOR_URL ?? 'http://127.0.0.1:8787'
         timeoutMs: 15000
         toolName: asm_select
+        listToolName: asm_list_services

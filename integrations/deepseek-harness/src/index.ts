@@ -14,6 +14,7 @@ export const inject = ['tools']
 export const DEFAULT_ENDPOINT = 'http://127.0.0.1:8787'
 export const DEFAULT_TIMEOUT_MS = 15_000
 export const DEFAULT_TOOL_NAME = 'asm_select'
+export const DEFAULT_LIST_TOOL_NAME = 'asm_list_services'
 
 export interface Config {
   /** Base URL of an ASM selector API. Task text is sent to this endpoint. */
@@ -22,23 +23,27 @@ export interface Config {
   timeoutMs?: number
   /** Model-facing tool name. */
   toolName?: string
+  /** Model-facing catalog-listing tool name. */
+  listToolName?: string
 }
 
 export const Config: z<Config> = z.object({
   endpoint: z.string().default(DEFAULT_ENDPOINT),
   timeoutMs: z.number().default(DEFAULT_TIMEOUT_MS),
   toolName: z.string().default(DEFAULT_TOOL_NAME),
+  listToolName: z.string().default(DEFAULT_LIST_TOOL_NAME),
 })
 
 interface ResolvedConfig {
   endpoint: string
   timeoutMs: number
   toolName: string
+  listToolName: string
 }
 
 export interface SelectRequest {
   task: string
-  taxonomy?: string
+  taxonomy: string
   agent_reach?: string
   user_platform?: string
   required_functions?: string[]
@@ -64,10 +69,16 @@ function resolveConfig(config: Config): ResolvedConfig {
   }
 
   const toolName = config.toolName ?? DEFAULT_TOOL_NAME
-  if (!/^[A-Za-z0-9_-]+$/.test(toolName)) {
-    throw new Error('asm-selector: toolName must contain only letters, digits, underscores, or hyphens')
+  const listToolName = config.listToolName ?? DEFAULT_LIST_TOOL_NAME
+  for (const [field, value] of [['toolName', toolName], ['listToolName', listToolName]]) {
+    if (!/^[A-Za-z0-9_-]+$/.test(value)) {
+      throw new Error(`asm-selector: ${field} must contain only letters, digits, underscores, or hyphens`)
+    }
   }
-  return { endpoint, timeoutMs, toolName }
+  if (toolName === listToolName) {
+    throw new Error('asm-selector: toolName and listToolName must be different')
+  }
+  return { endpoint, timeoutMs, toolName, listToolName }
 }
 
 function assertDecision(value: unknown): asserts value is JsonValue {
@@ -129,19 +140,56 @@ export async function requestSelection(
   return value
 }
 
+export async function requestServices(
+  endpoint: string,
+  taxonomy: string | undefined,
+  signal: AbortSignal,
+  fetchImpl: typeof fetch = fetch,
+): Promise<JsonValue> {
+  const url = new URL(`${endpoint}/tools`)
+  if (taxonomy) url.searchParams.set('taxonomy', taxonomy)
+  let response: Response
+  try {
+    response = await fetchImpl(url, { signal })
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    throw new Error(`asm-selector: catalog request failed: ${message}`)
+  }
+  if (!response.ok) {
+    const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 300)
+    throw new Error(`asm-selector: catalog HTTP ${response.status}${detail ? `: ${detail}` : ''}`)
+  }
+  let value: unknown
+  try {
+    value = await response.json()
+  } catch {
+    throw new Error('asm-selector: catalog returned invalid JSON')
+  }
+  if (!Array.isArray(value) || value.some(item => item === null || typeof item !== 'object'
+    || typeof (item as Record<string, unknown>).service_id !== 'string'
+    || typeof (item as Record<string, unknown>).taxonomy !== 'string')) {
+    throw new Error('asm-selector: catalog returned an invalid service list')
+  }
+  return value as JsonValue
+}
+
 export function createAsmSelectTool(config: Config = {}): ToolDefinition {
   const resolved = resolveConfig(config)
   return defineTool({
     name: resolved.toolName,
     description:
-      'Choose among ASM-described services before a consequential call. Returns eligibility, risk, approval requirement, alternatives, and an unsigned Selection Receipt. It does not execute a service or grant authorization. Use it only when the configured ASM catalog covers the candidate category.',
+      'Choose within one explicit ASM taxonomy before a consequential service call. Returns eligibility, risk, approval requirement, alternatives, and an unsigned Selection Receipt. It does not infer taxonomy from task text. It does not execute a service or grant authorization. Call the catalog-listing tool first if the taxonomy is unknown.',
     parameters: {
       task: {
         type: 'string',
         required: true,
         description: 'Concrete task the selected service must perform. This text is sent to the configured ASM endpoint.',
       },
-      taxonomy: { type: 'string', description: 'Optional ASM taxonomy used to bound the candidate pool.' },
+      taxonomy: {
+        type: 'string',
+        required: true,
+        description: 'Exact ASM taxonomy that bounds the candidate pool; task text does not infer this value.',
+      },
       agent_reach: { type: 'string', description: 'Runtime reach, for example cloud or local.' },
       user_platform: { type: 'string', description: 'User platform constraint, for example macos, windows, or any.' },
       required_functions: {
@@ -175,6 +223,32 @@ export function createAsmSelectTool(config: Config = {}): ToolDefinition {
   })
 }
 
+export function createAsmListTool(config: Config = {}): ToolDefinition {
+  const resolved = resolveConfig(config)
+  return defineTool({
+    name: resolved.listToolName,
+    description:
+      'List services and taxonomies in the configured ASM catalog. Use this before asm_select when the exact taxonomy is unknown. This is a bounded catalog listing, not web search or proof that unlisted services are ineligible.',
+    parameters: {
+      taxonomy: { type: 'string', description: 'Optional exact taxonomy filter.' },
+    },
+    output: {
+      schema: { type: 'json' },
+      render: (_args, value) => [{ type: 'text', text: JSON.stringify(value, null, 2) }],
+    },
+    timeoutMs: resolved.timeoutMs,
+    async execute(args, exec) {
+      const linked = linkedSignal(exec.signal, resolved.timeoutMs)
+      try {
+        return await requestServices(resolved.endpoint, args.taxonomy, linked.signal)
+      } finally {
+        linked.dispose()
+      }
+    },
+  })
+}
+
 export function apply(ctx: Context, config: Config): void {
   ctx.tools.register(createAsmSelectTool(config))
+  ctx.tools.register(createAsmListTool(config))
 }
