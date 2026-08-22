@@ -113,17 +113,27 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
 
     safe_record = next(r for r in bundle_records if "search-safe" in r["service_id"])
     old_safe = next(s for s in sidecars if "search-safe" in s["service_id"])
+    safe_bundle_digest_before = bundle_tree_digest(
+        FIXTURE / "bundles" / "search-safe"
+    )
+    safe_bundle_digest_after = bundle_tree_digest(
+        FIXTURE / "bundles" / "search-safe"
+    )
+    candidate_set = sorted(sidecar["service_id"] for sidecar in sidecars)
+    receipt_candidate_set = sorted(e["service_id"] for e in receipt["evidence"])
     result = {
         "fixture_version": "0.1",
         "scope": "dsh-m3-artifact-identity-selection-facts-boundary",
         "bundle_records": bundle_records,
         "metadata_only_update_check": {
             "service_id": old_safe["service_id"],
-            "artifact_digest_before": safe_record["artifact_digest"],
-            "artifact_digest_after": safe_record["artifact_digest"],
+            "artifact_digest_before": safe_bundle_digest_before,
+            "artifact_digest_after": safe_bundle_digest_after,
             "facts_digest_before": manifest_digest(old_safe),
             "facts_digest_after": manifest_digest(updated_safe),
-            "artifact_identity_unchanged": True,
+            "artifact_identity_unchanged": safe_bundle_digest_before
+            == safe_bundle_digest_after
+            == safe_record["artifact_digest"],
             "selection_facts_changed": manifest_digest(old_safe)
             != manifest_digest(updated_safe),
         },
@@ -132,7 +142,7 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
             "digest": canonical_digest(receipt),
             "verification_status": "unsigned",
             "authorization": False,
-            "candidate_set": sorted(e["service_id"] for e in receipt["evidence"]),
+            "candidate_set": receipt_candidate_set,
             "taxonomy": receipt["request"]["taxonomy"],
             "constraints": receipt["request"],
         },
@@ -141,12 +151,15 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
                 r["selection_facts"]["schema_uri"] == SCHEMA_URI
                 for r in bundle_records
             ),
-            "receipt_pins_full_candidate_set": len(receipt["evidence"]) == 2,
+            "receipt_pins_full_candidate_set": receipt_candidate_set
+            == candidate_set,
             "approval_is_selection_fact_not_authorization": receipt[
                 "approval_required"
             ]
             is True,
-            "no_execution_or_adoption_claim": True,
+            "receipt_has_no_signature": "signature" not in receipt,
+            "receipt_has_no_authorization": "authorization" not in receipt,
+            "receipt_has_no_execution_record": "execution" not in receipt,
         },
     }
     return receipt, result

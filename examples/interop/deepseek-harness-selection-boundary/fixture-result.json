@@ -1,7 +1,9 @@
 {
   "assertions": {
     "approval_is_selection_fact_not_authorization": true,
-    "no_execution_or_adoption_claim": true,
+    "receipt_has_no_authorization": true,
+    "receipt_has_no_execution_record": true,
+    "receipt_has_no_signature": true,
     "receipt_pins_full_candidate_set": true,
     "sidecar_schema_uri_is_namespaced": true
   },

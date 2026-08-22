@@ -75,5 +75,6 @@ def test_receipt_is_audit_only_and_generated_files_are_current():
     assert forbidden.isdisjoint(receipt)
     assert result["selection_receipt"]["verification_status"] == "unsigned"
     assert result["selection_receipt"]["authorization"] is False
+    assert all(result["assertions"].values())
     assert (FIXTURE / "selection-receipt.json").read_text(encoding="utf-8") == render(receipt)
     assert (FIXTURE / "fixture-result.json").read_text(encoding="utf-8") == render(result)

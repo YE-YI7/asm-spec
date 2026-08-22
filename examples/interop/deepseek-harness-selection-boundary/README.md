@@ -46,6 +46,22 @@ v0.1, so `fixture-result.json` records `unsigned` alongside the receipt digest.
 That explicit limitation must remain until the receipt contract itself grows a
 machine-readable verification field.
 
+The Selection Receipt pins the mutable facts used for selection; it does **not**
+bind the selected service to the Bundle digest recorded in `fixture-result.json`.
+Exact-artifact binding is a separate runner/evaluator seam and is not proven by
+this fixture.
+
+Before a Python-produced receipt digest is consumed by a JavaScript evaluator,
+both sides must also agree on one canonical JSON algorithm and shared test
+vectors. Recursive key sorting alone is insufficient: valid JSON numbers such
+as `3.0` can serialize differently across runtimes. This fixture makes no
+cross-language digest-interoperability claim.
+
+The current `dsh-guarded-hcl` EvaluationEvidence v0.1 contract also disallows
+unknown properties and has no artifact-binding field. A future integration
+therefore needs an agreed schema extension or binding-digest reference; adding
+an ASM-only runner document would not constitute machine interoperability.
+
 This fixture is not a task planner, installer, evaluator, CommitDecision,
 security sandbox, official DSH standard, official DeepSeek integration, or
 adoption claim. The installable DSH adapter in
