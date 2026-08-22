@@ -1,4 +1,4 @@
-.PHONY: test test-py test-ts validate-mcp-examples data-quality-audit eval ablations selection-baselines preference-alignment llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce refresh-elo clean clean-cache help
+.PHONY: test test-py test-ts validate-mcp-examples data-quality-audit logion-interop-fixture eval ablations selection-baselines preference-alignment llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce refresh-elo clean clean-cache help
 
 LLM_PROVIDER ?= deepseek
 LLM_MODEL ?= deepseek-chat
@@ -14,6 +14,7 @@ help:
 	@echo "  make test-ts       Run TypeScript MCP server tests only"
 	@echo "  make validate-mcp-examples  Validate ASM metadata embedded in MCP server.json examples"
 	@echo "  make data-quality-audit  Audit checked-in manifest freshness, schema, and provenance"
+	@echo "  make logion-interop-fixture  Verify the bounded ASM-Logion selection fixture"
 	@echo "  make eval          Run A/B evaluation (Section 6.5)"
 	@echo "  make ablations     Run ablation studies (Section 6.3a)"
 	@echo "  make selection-baselines  Run 7-policy regret analysis (Section 6.6)"
@@ -48,6 +49,9 @@ validate-mcp-examples:
 
 data-quality-audit:
 	@$(PYTHON) tools/audit_manifest_data.py
+
+logion-interop-fixture:
+	$(PYTHON) tools/build_logion_interop_fixture.py --check
 
 refresh-elo:
 	$(PYTHON) tools/refresh_arena_elo.py

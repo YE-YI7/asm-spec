@@ -23,7 +23,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-SELECTOR_VERSION = "asm-protocol/0.5.1"
+SELECTOR_VERSION = "asm-protocol/0.5.3"
 SELECTION_POLICY = ("gate: agent_operable + reach + agent_completable_setup + "
                     "usage_terms.automation_allowed + platform + required_functions; "
                     "rank: monthly_cost asc, then functions desc")
@@ -134,7 +134,8 @@ def manifest_digest(m: dict) -> str:
 
 
 def build_selection_receipt(decision: dict, pool: list[dict], *,
-                            request: dict) -> dict:
+                            request: dict, selection_id: str | None = None,
+                            issued_at: str | None = None) -> dict:
     """Selection Receipt v0.1 — the accountable record of WHY this provider.
 
     Upstream complement of the execution-receipt family
@@ -147,8 +148,10 @@ def build_selection_receipt(decision: dict, pool: list[dict], *,
     return {
         "receipt_type": "selection",
         "receipt_version": "0.1",
-        "selection_id": str(uuid.uuid4()),
-        "issued_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "verification_status": "unsigned",
+        "selection_id": selection_id or str(uuid.uuid4()),
+        "issued_at": issued_at
+        or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "selector": {"name": SELECTOR_VERSION, "policy": SELECTION_POLICY},
         "request": request,
         "evidence": [{"service_id": m.get("service_id"),
