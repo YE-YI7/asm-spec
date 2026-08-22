@@ -7,3 +7,4 @@ examples/interop/deepseek-harness-selection-boundary/bundles/** text eol=lf
 # Keep those artifacts and the versioned receipt schema stable on Windows.
 examples/interop/deepseek-harness-guarded-evidence/** text eol=lf
 schema/selection-receipt-v0.1.schema.json text eol=lf
+schema/selection-receipt-v0.2.schema.json text eol=lf

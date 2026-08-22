@@ -4,15 +4,14 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from library_select import ASM_JSON_CANONICALIZATION, HASH_ALGORITHM, manifest_digest
 from mcp_server_json_asm import extract_asm, load_json, validate_manifest
-
 
 PROVENANCE_FIELDS = ("source_url", "retrieved_at", "last_verified_at", "verification_status")
 VALUE_FIELDS = ("pricing", "quality", "sla")
@@ -51,11 +50,6 @@ def freshness_status(last_verified_at: str | None, as_of: datetime) -> tuple[str
     if age_days <= STALE_DAYS:
         return "stale", age_days
     return "expired", age_days
-
-
-def manifest_digest(manifest: dict[str, Any]) -> str:
-    canonical = json.dumps(manifest, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    return "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def build_report(path: str | Path, as_of: datetime) -> dict[str, Any]:
@@ -124,6 +118,8 @@ def build_report(path: str | Path, as_of: datetime) -> dict[str, Any]:
         "path": str(path),
         "source_kind": source_kind,
         "service_id": manifest.get("service_id"),
+        "hash_algorithm": HASH_ALGORITHM,
+        "canonicalization": ASM_JSON_CANONICALIZATION,
         "manifest_digest": manifest_digest(manifest),
         "as_of": as_of.isoformat().replace("+00:00", "Z"),
         "statuses": {
@@ -143,6 +139,8 @@ def render_human(report: dict[str, Any]) -> str:
     lines = [
         f"ASM lint: {report['path']}",
         f"Service: {report.get('service_id') or 'unknown'}",
+        f"Hash algorithm: {report.get('hash_algorithm') or 'unavailable'}",
+        f"Canonicalization: {report.get('canonicalization') or 'unavailable'}",
         f"Digest: {report.get('manifest_digest') or 'unavailable'}",
         f"Schema: {statuses['schema']}",
         f"Provenance: {statuses['provenance']}",
@@ -163,6 +161,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- **File:** `{report['path']}`",
         f"- **Service:** `{report.get('service_id') or 'unknown'}`",
+        f"- **Hash algorithm:** `{report.get('hash_algorithm') or 'unavailable'}`",
+        f"- **Canonicalization:** `{report.get('canonicalization') or 'unavailable'}`",
         f"- **Manifest digest:** `{report.get('manifest_digest') or 'unavailable'}`",
         "",
         "| Check | Status |",

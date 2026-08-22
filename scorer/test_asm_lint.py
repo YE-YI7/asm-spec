@@ -24,6 +24,8 @@ def test_lints_embedded_manifest_with_reproducible_digest():
 
     assert report["source_kind"] == "mcp_server_json"
     assert report["service_id"] == "example/remote-search@1.0"
+    assert report["hash_algorithm"] == "sha256"
+    assert report["canonicalization"] == "asm-json-sort-keys-v1"
     assert report["manifest_digest"].startswith("sha256:")
     assert report["statuses"] == {
         "schema": "valid",
@@ -66,5 +68,6 @@ def test_markdown_report_is_suitable_for_action_summary():
     markdown = render_markdown(report)
 
     assert "# ASM lint report" in markdown
+    assert "asm-json-sort-keys-v1" in markdown
     assert "| Schema | `valid` |" in markdown
     assert report["manifest_digest"] in markdown

@@ -1,6 +1,6 @@
 {
   "receipt_type": "selection",
-  "receipt_version": "0.1",
+  "receipt_version": "0.2",
   "verification_status": "unsigned",
   "selection_id": "00000000-0000-4000-8000-000000000001",
   "issued_at": "2026-08-22T00:00:00Z",
@@ -22,6 +22,8 @@
   "evidence": [
     {
       "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
       "manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f"
     }
   ],
