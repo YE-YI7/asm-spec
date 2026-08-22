@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/YE-YI7/asm-spec/main/schema/asm-selection-receipt-v0.1.schema.json",
+  "title": "ASM Selection Receipt v0.1",
+  "description": "Unsigned record of a selector decision and the manifest evidence consulted before invocation.",
+  "type": "object",
+  "required": [
+    "receipt_type",
+    "receipt_version",
+    "verification_status",
+    "selection_id",
+    "issued_at",
+    "selector",
+    "request",
+    "evidence",
+    "selected",
+    "selection_reason",
+    "risk_class",
+    "approval_required",
+    "side_effects",
+    "alternatives",
+    "rejected"
+  ],
+  "properties": {
+    "receipt_type": {
+      "const": "selection"
+    },
+    "receipt_version": {
+      "const": "0.1"
+    },
+    "verification_status": {
+      "const": "unsigned",
+      "description": "Applies to this receipt envelope. It does not verify selector.name as an issuer identity."
+    },
+    "selection_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "selector": {
+      "type": "object",
+      "required": [
+        "name",
+        "policy"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Claimed producer label; not a verified issuer in v0.1."
+        },
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "request": {
+      "type": "object",
+      "description": "Selection inputs. Real deployments must treat task text and related fields as potentially sensitive.",
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "service_id",
+          "hash_algorithm",
+          "canonicalization",
+          "manifest_digest"
+        ],
+        "properties": {
+          "service_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash_algorithm": {
+            "const": "sha256"
+          },
+          "canonicalization": {
+            "const": "asm-json-sort-keys-v1"
+          },
+          "manifest_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "selected": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "service_id"
+          ],
+          "properties": {
+            "service_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "selection_reason": {
+      "type": "string"
+    },
+    "risk_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approval_required": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "A pre-call policy result, not evidence that authorization occurred."
+    },
+    "side_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "rejected": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "selected": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "selected"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

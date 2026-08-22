@@ -25,10 +25,14 @@
   "evidence": [
     {
       "service_id": "amadeus/self-service-api@current",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
       "manifest_digest": "sha256:5fe8f51205f52ecf9889d76152f143f4d3c0b2b3ca92b4e08e4789e205816481"
     },
     {
       "service_id": "duffel/flights-api@current",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
       "manifest_digest": "sha256:7210686d93f68eac2d2a5f9d5d4ec2c2a702b72379cc0059e3130fd2c754b0c9"
     }
   ],

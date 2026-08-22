@@ -1,44 +1,74 @@
 {
-  "mapping_version": "0.1",
+  "mapping_version": "0.2",
+  "protocol_basis": {
+    "ai_catalog_spec_version": "1.0",
+    "ai_catalog_commit": "28825483143ce9f3b344ed01dc2771d4adf02d01",
+    "ard_schema_commit": "5fa2f5aef790b478319f6a3b43adf4661b0ed0e0"
+  },
   "manifest_validator": {
     "package": "asm-protocol",
     "version": "0.5.2",
     "expected_schema_status": "valid",
     "expected_selection_readiness": "ready",
+    "expected_hash_algorithm": "sha256",
+    "expected_canonicalization": "asm-json-sort-keys-v1",
     "expected_manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f"
   },
   "ai_catalog_subject": {
+    "catalog_uri": "https://asm-logion.example/.well-known/ai-catalog.json",
     "identifier": "urn:air:asm-logion.example:service:deterministic-echo",
     "version": "1.0.0",
     "source_revision": "fixture-v1"
   },
   "resource_artifact": {
     "media_type": "application/json",
+    "hash_algorithm": "sha256",
+    "digest_input": "raw-bytes",
     "digest": "sha256:adf5ded220e7566913e24258e73f024dc0f531aca350e8ae513c4f67053789fd"
   },
   "asm_selection_descriptor": {
     "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+    "hash_algorithm": "sha256",
+    "canonicalization": "asm-json-sort-keys-v1",
     "manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f",
     "metadata_update_manifest_digest": "sha256:81d14018cacaf9f9fa01e9a231e3117625fd081a2938c54dba9432b4f09a6f72"
+  },
+  "selection_receipt_artifact": {
+    "receipt_type": "selection",
+    "receipt_version": "0.1",
+    "verification_status": "unsigned",
+    "hash_algorithm": "sha256",
+    "canonicalization": "asm-json-sort-keys-v1",
+    "digest": "sha256:bf5cfcfa4ab4cd0a46031946261f727ca13c7d92fe7a4940600b24b48cf54a29"
   },
   "logion_binding_requirements": {
     "resource_id": null,
     "version_id": null,
-    "resource_anchor": {
-      "source_protocol": "ai-catalog",
-      "identifier": "urn:air:asm-logion.example:service:deterministic-echo"
+    "resource_source": {
+      "source_kind": "ai-catalog",
+      "source_uri": "https://asm-logion.example/.well-known/ai-catalog.json",
+      "external_id": "urn:air:asm-logion.example:service:deterministic-echo"
     },
     "resource_version_anchor": {
-      "algorithm": "sha256",
-      "digest": "sha256:adf5ded220e7566913e24258e73f024dc0f531aca350e8ae513c4f67053789fd"
+      "digest_algorithm": "sha256",
+      "digest_input": "raw-bytes",
+      "digest": "sha256:adf5ded220e7566913e24258e73f024dc0f531aca350e8ae513c4f67053789fd",
+      "media_type": "application/json"
     },
     "id_assignment_authority": "logion"
   },
-  "expected_behavior": {
-    "metadata_update_keeps_resource": true,
-    "metadata_update_keeps_resource_version": true,
+  "asm_verified_behavior": {
+    "metadata_update_keeps_artifact_digest": true,
     "metadata_update_changes_selection_evidence": true,
-    "selection_receipt_verification_status": "unsigned",
-    "usage_observation_shape_changes": false
+    "selection_receipt_verification_status": "unsigned"
+  },
+  "logion_verification": {
+    "status": "pending",
+    "required_checks": [
+      "map the AI Catalog identifier to one stable Logion Resource",
+      "map the unchanged artifact digest to one stable ResourceVersion",
+      "keep the current Logion usage-observation shape unchanged",
+      "reference the unsigned Selection Receipt only from a later evidence event"
+    ]
   }
 }

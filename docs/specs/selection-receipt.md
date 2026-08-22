@@ -18,7 +18,7 @@ Execution Receipt      what the service did        (execution-receipt family)
 
 ## Shape (v0.1)
 
-Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": true` on `POST /select`). A real, generated example: [`examples/receipts/selection-receipt.json`](../../examples/receipts/selection-receipt.json).
+Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": true` on `POST /select`). A real, generated example: [`examples/receipts/selection-receipt.json`](../../examples/receipts/selection-receipt.json). The machine contract is [`schema/asm-selection-receipt-v0.1.schema.json`](../../schema/asm-selection-receipt-v0.1.schema.json).
 
 | Field | Meaning |
 |---|---|
@@ -27,17 +27,23 @@ Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": 
 | `selection_id`, `issued_at` | UUID + UTC timestamp of the decision |
 | `selector` | Claimed producer and policy — engine version + a human-readable gate/rank policy string. In v0.1 this identity is not cryptographically verified. |
 | `request` | The full selection request: task, taxonomy, agent reach, platform, required functions, approval triggers, setup requirement |
-| `evidence` | **The audit teeth.** One entry per manifest consulted: `service_id` + `manifest_digest` (canonical sha256) |
+| `evidence` | **The audit teeth.** One entry per manifest consulted: `service_id` + `hash_algorithm` + `canonicalization` + `manifest_digest` |
 | `selected`, `selection_reason` | The pick and the stated reason |
 | `risk_class`, `approval_required`, `side_effects` | The operational policy surfaced *before* invocation |
 | `alternatives`, `rejected` | Ranked runners-up, and every excluded candidate with its nameable gate reason |
 
 ### The evidence digest
 
-Manifests are mutable — prices change, terms change. `manifest_digest` is a canonical sha256 (`json.dumps(manifest, sort_keys=True, separators=(",",":"))`, UTF-8) that pins the exact evidence state the decision saw. If a provider later edits `data_governance.trains_on_user_data`, the receipt still proves what the field said when the agent chose — the property disputes actually turn on.
+Manifests are mutable — prices change, terms change. `manifest_digest` pins the exact evidence state the decision saw. The v0.1 `asm-json-sort-keys-v1` profile uses UTF-8 JSON with recursively sorted object keys, preserved array order, no insignificant whitespace, `ensure_ascii=False`, and Python standard-library primitive serialization. If a provider later edits `data_governance.trains_on_user_data`, the receipt still records what the field said when the agent chose.
+
+The profile is deliberately versioned and is **not** labeled RFC 8785 JCS: number and property-order edge cases differ. Cross-language consumers should verify against the checked-in fixture vectors. Moving to JCS requires a new `canonicalization` label rather than silently changing existing digests. The cryptographic `hash_algorithm` remains `sha256`.
+
+`asm-protocol` 0.5.3 is the first package release intended to emit the complete machine schema above. The 0.5.2 generator also labeled receipts as v0.1 but omitted `verification_status`, `hash_algorithm`, and `canonicalization`; those legacy outputs must not be silently upgraded or represented as schema-conformant receipts.
 
 ## Honest scope
 
 - v0.1 receipts are **unsigned** and carry `verification_status: "unsigned"` — they are an honest record from the selector's perspective, not a cryptographic proof against a malicious selector. The `selector.name` value is a claimed producer label, not a verified issuer. A `seal` construction consistent with the execution-receipt family is the natural v0.2 once anyone needs it.
 - The digest pins the manifest *as consulted*; it does not attest the manifest's claims were *true*. Truth-of-claims is the verification layer's job (`provenance`, `verification` blocks).
+- `approval_required` is a pre-call policy result. It is not evidence that a person or mandate authorized an invocation or payment.
+- `request.task` and other request fields may contain sensitive user intent. Evidence systems should reference a receipt by digest and status rather than copy or upload the raw receipt without an explicit privacy policy and consent.
 - No adoption claim: this is a shipped mechanism with a generated example, not an ecosystem convention. Filed here so settlement-side designs (AP2 mandates, x402 extensions) have a concrete upstream artifact to point at if they want one.
