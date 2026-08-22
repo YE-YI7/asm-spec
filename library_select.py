@@ -23,7 +23,10 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-SELECTOR_VERSION = "asm-protocol/0.5.1"
+from asm_version import SELECTOR_VERSION
+
+HASH_ALGORITHM = "sha256"
+ASM_JSON_CANONICALIZATION = "asm-json-sort-keys-v1"
 SELECTION_POLICY = ("gate: agent_operable + reach + agent_completable_setup + "
                     "usage_terms.automation_allowed + platform + required_functions; "
                     "rank: monthly_cost asc, then functions desc")
@@ -125,16 +128,36 @@ def rank(task: str, *, taxonomy: str | None = None, agent_reach: str = "cloud",
     return kept, rejected
 
 
+def canonical_json_bytes(document: object) -> bytes:
+    """Serialize one JSON value using ASM's versioned v1 digest profile.
+
+    This preserves array order, sorts object keys, emits no insignificant
+    whitespace, keeps non-ASCII text as UTF-8, and uses Python's standard JSON
+    primitive serialization. It is intentionally named and versioned rather
+    than mislabeled as RFC 8785 JCS.
+    """
+    return json.dumps(
+        document,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
+
+
+def document_digest(document: object) -> str:
+    """Return a sha256 digest over the ASM v1 canonical JSON representation."""
+    return "sha256:" + hashlib.sha256(canonical_json_bytes(document)).hexdigest()
+
+
 def manifest_digest(m: dict) -> str:
-    """Canonical sha256 of a manifest — pins the evidence state a decision saw.
-    Manifests are mutable; the digest lets a receipt prove what the fields said
-    at selection time (e.g. that data_governance.trains_on_user_data was 'no')."""
-    canon = json.dumps(m, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
-    return "sha256:" + hashlib.sha256(canon.encode("utf-8")).hexdigest()
+    """Pin the exact manifest evidence state consulted by a selector."""
+    return document_digest(m)
 
 
 def build_selection_receipt(decision: dict, pool: list[dict], *,
-                            request: dict) -> dict:
+                            request: dict, selection_id: str | None = None,
+                            issued_at: str | None = None) -> dict:
     """Selection Receipt v0.1 — the accountable record of WHY this provider.
 
     Upstream complement of the execution-receipt family
@@ -147,11 +170,15 @@ def build_selection_receipt(decision: dict, pool: list[dict], *,
     return {
         "receipt_type": "selection",
         "receipt_version": "0.1",
-        "selection_id": str(uuid.uuid4()),
-        "issued_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "verification_status": "unsigned",
+        "selection_id": selection_id or str(uuid.uuid4()),
+        "issued_at": issued_at
+        or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "selector": {"name": SELECTOR_VERSION, "policy": SELECTION_POLICY},
         "request": request,
         "evidence": [{"service_id": m.get("service_id"),
+                      "hash_algorithm": HASH_ALGORITHM,
+                      "canonicalization": ASM_JSON_CANONICALIZATION,
                       "manifest_digest": manifest_digest(m)} for m in pool],
         "selected": decision.get("selected"),
         "selection_reason": decision.get("reason"),

@@ -1,0 +1,11 @@
+{
+  "artifact_version": "1.0.0",
+  "capability": "deterministic_echo",
+  "description": "Immutable content used only by the offline ASM-Logion interoperability fixture.",
+  "input_schema": {
+    "type": "string"
+  },
+  "output_schema": {
+    "type": "string"
+  }
+}

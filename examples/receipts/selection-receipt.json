@@ -1,10 +1,11 @@
 {
   "receipt_type": "selection",
   "receipt_version": "0.1",
+  "verification_status": "unsigned",
   "selection_id": "5ec25744-858e-46d6-ac05-c093a2b00976",
   "issued_at": "2026-07-23T13:07:26Z",
   "selector": {
-    "name": "asm-protocol/0.5.1",
+    "name": "asm-protocol/0.5.3",
     "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly_cost asc, then functions desc"
   },
   "request": {
@@ -24,10 +25,14 @@
   "evidence": [
     {
       "service_id": "amadeus/self-service-api@current",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
       "manifest_digest": "sha256:5fe8f51205f52ecf9889d76152f143f4d3c0b2b3ca92b4e08e4789e205816481"
     },
     {
       "service_id": "duffel/flights-api@current",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
       "manifest_digest": "sha256:7210686d93f68eac2d2a5f9d5d4ec2c2a702b72379cc0059e3130fd2c754b0c9"
     }
   ],

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 import threading
 import urllib.request
@@ -12,6 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from asm_version import PACKAGE_VERSION, SELECTOR_VERSION  # noqa: E402
 from library_select import load_library, monthly_cost, select  # noqa: E402
 
 
@@ -66,6 +68,8 @@ def test_selection_receipt_shape_and_evidence_digests():
                require_approval_for=["financial_charge"], receipt=True)
     rec = r["receipt"]
     assert rec["receipt_type"] == "selection" and rec["receipt_version"] == "0.1"
+    assert rec["verification_status"] == "unsigned"
+    assert rec["selector"]["name"] == "asm-protocol/0.5.3"
     assert rec["request"]["required_functions"] == ["flight_search", "flight_order_create"]
     # evidence covers the full considered pool (taxonomy match), digests deterministic
     lib = load_library()
@@ -74,6 +78,8 @@ def test_selection_receipt_shape_and_evidence_digests():
     for e, m in zip(sorted(rec["evidence"], key=lambda x: x["service_id"]),
                     sorted(pool, key=lambda x: x["service_id"])):
         assert e["manifest_digest"] == manifest_digest(m)
+        assert e["hash_algorithm"] == "sha256"
+        assert e["canonicalization"] == "asm-json-sort-keys-v1"
         assert e["manifest_digest"].startswith("sha256:")
     # the operational policy is in the receipt (audit before invocation)
     assert rec["approval_required"] is True and rec["risk_class"] == "critical"
@@ -83,6 +89,15 @@ def test_receipt_absent_by_default():
     r = select("book a flight", taxonomy="tool.booking.travel",
                required_functions=["flight_search"])
     assert "receipt" not in r
+
+
+def test_package_and_selector_versions_cannot_drift():
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    match = re.search(r'^version = "([^"]+)"$', pyproject, flags=re.MULTILINE)
+
+    assert match is not None
+    assert match.group(1) == PACKAGE_VERSION
+    assert SELECTOR_VERSION == f"asm-protocol/{PACKAGE_VERSION}"
 
 
 def test_select_api_endpoints():
