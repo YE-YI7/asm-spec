@@ -23,8 +23,9 @@ Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": 
 | Field | Meaning |
 |---|---|
 | `receipt_type` / `receipt_version` | `"selection"` / `"0.1"` |
+| `verification_status` | `"unsigned"` in v0.1. This status applies to the receipt envelope; it does not verify the selector identity. |
 | `selection_id`, `issued_at` | UUID + UTC timestamp of the decision |
-| `selector` | Who decided and under what policy — engine version + a human-readable gate/rank policy string |
+| `selector` | Claimed producer and policy — engine version + a human-readable gate/rank policy string. In v0.1 this identity is not cryptographically verified. |
 | `request` | The full selection request: task, taxonomy, agent reach, platform, required functions, approval triggers, setup requirement |
 | `evidence` | **The audit teeth.** One entry per manifest consulted: `service_id` + `manifest_digest` (canonical sha256) |
 | `selected`, `selection_reason` | The pick and the stated reason |
@@ -42,7 +43,7 @@ Manifests are mutable — prices change, terms change. `manifest_digest` is a ca
 
 ## Honest scope
 
-- v0.1 receipts are **unsigned** — they are an honest record from the selector's perspective, not a cryptographic proof against a malicious selector. A `seal` construction consistent with the execution-receipt family is the natural v0.2 once anyone needs it.
+- v0.1 receipts are **unsigned** and carry `verification_status: "unsigned"` — they are an honest record from the selector's perspective, not a cryptographic proof against a malicious selector. The `selector.name` value is a claimed producer label, not a verified issuer. A `seal` construction consistent with the execution-receipt family is the natural v0.2 once anyone needs it.
 - The digest pins the manifest *as consulted*; it does not attest the manifest's claims were *true*. Truth-of-claims is the verification layer's job (`provenance`, `verification` blocks).
 - No adoption claim: this is a shipped mechanism with a generated example, not an ecosystem convention. Filed here so settlement-side designs (AP2 mandates, x402 extensions) have a concrete upstream artifact to point at if they want one.
 - When a RunnerBinding refers to this receipt, its receipt digest uses the digest profile named by that binding. The guarded-HCL interoperability fixture uses RFC 8785 JCS + SHA-256; that is distinct from the historical Python sorted-JSON construction used for each `manifest_digest` inside the receipt.

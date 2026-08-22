@@ -1,10 +1,11 @@
 {
   "receipt_type": "selection",
   "receipt_version": "0.1",
+  "verification_status": "unsigned",
   "selection_id": "5ec25744-858e-46d6-ac05-c093a2b00976",
   "issued_at": "2026-07-23T13:07:26Z",
   "selector": {
-    "name": "asm-protocol/0.5.1",
+    "name": "asm-protocol/0.5.3",
     "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly_cost asc, then functions desc"
   },
   "request": {

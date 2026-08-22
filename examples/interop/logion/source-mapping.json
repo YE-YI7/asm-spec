@@ -1,0 +1,44 @@
+{
+  "mapping_version": "0.1",
+  "manifest_validator": {
+    "package": "asm-protocol",
+    "version": "0.5.2",
+    "expected_schema_status": "valid",
+    "expected_selection_readiness": "ready",
+    "expected_manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f"
+  },
+  "ai_catalog_subject": {
+    "identifier": "urn:air:asm-logion.example:service:deterministic-echo",
+    "version": "1.0.0",
+    "source_revision": "fixture-v1"
+  },
+  "resource_artifact": {
+    "media_type": "application/json",
+    "digest": "sha256:adf5ded220e7566913e24258e73f024dc0f531aca350e8ae513c4f67053789fd"
+  },
+  "asm_selection_descriptor": {
+    "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+    "manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f",
+    "metadata_update_manifest_digest": "sha256:81d14018cacaf9f9fa01e9a231e3117625fd081a2938c54dba9432b4f09a6f72"
+  },
+  "logion_binding_requirements": {
+    "resource_id": null,
+    "version_id": null,
+    "resource_anchor": {
+      "source_protocol": "ai-catalog",
+      "identifier": "urn:air:asm-logion.example:service:deterministic-echo"
+    },
+    "resource_version_anchor": {
+      "algorithm": "sha256",
+      "digest": "sha256:adf5ded220e7566913e24258e73f024dc0f531aca350e8ae513c4f67053789fd"
+    },
+    "id_assignment_authority": "logion"
+  },
+  "expected_behavior": {
+    "metadata_update_keeps_resource": true,
+    "metadata_update_keeps_resource_version": true,
+    "metadata_update_changes_selection_evidence": true,
+    "selection_receipt_verification_status": "unsigned",
+    "usage_observation_shape_changes": false
+  }
+}
