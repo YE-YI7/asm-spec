@@ -106,6 +106,12 @@ asm select "find and book a refundable flight" --taxonomy tool.booking.travel \
 python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
 ```
 
+DeepSeek Harness developer-preview users can install the native
+[`asm_select` tool adapter](integrations/deepseek-harness/README.md). It uses
+the same HTTP contract and returns an unsigned Selection Receipt, but never
+invokes or authorizes the selected service. The adapter defaults to a local
+selector so task text is not sent to a hosted endpoint implicitly.
+
 LangChain / LangGraph builders get the same selector as a drop-in tool (`pip install langchain-core`):
 
 ```python

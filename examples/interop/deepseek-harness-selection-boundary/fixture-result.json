@@ -1,0 +1,77 @@
+{
+  "assertions": {
+    "approval_is_selection_fact_not_authorization": true,
+    "receipt_has_no_authorization": true,
+    "receipt_has_no_execution_record": true,
+    "receipt_has_no_signature": true,
+    "receipt_pins_full_candidate_set": true,
+    "sidecar_schema_uri_is_namespaced": true
+  },
+  "bundle_records": [
+    {
+      "artifact": {
+        "kind": "dsh-bundle",
+        "name": "@fixture/dsh-search-fast",
+        "version": "1.0.0"
+      },
+      "artifact_digest": "sha256:8987e01b9a9511e17f87bd04872a845258d1322d45fe7bb9c135c45d3358273e",
+      "artifact_digest_scope": "canonical map of Bundle-relative paths to raw byte digests",
+      "selection_facts": {
+        "facts_digest": "sha256:8c823b1487caa3e23ace57f5bae6b844efbb6d94fdb8b13d7403c8c75f73afe6",
+        "schema_uri": "https://asm-protocol.org/schema/v0.3/manifest.json",
+        "sidecar_locator": "https://registry.asm.example/dsh/search-fast/selection-facts.json"
+      },
+      "service_id": "dsh-fixture/search-fast@1.0.0"
+    },
+    {
+      "artifact": {
+        "kind": "dsh-bundle",
+        "name": "@fixture/dsh-search-safe",
+        "version": "1.0.0"
+      },
+      "artifact_digest": "sha256:54be4db453ea9f331602ee1e569118bcd1be9eeb0ada69a29e948dc69f9642dc",
+      "artifact_digest_scope": "canonical map of Bundle-relative paths to raw byte digests",
+      "selection_facts": {
+        "facts_digest": "sha256:ff1354f237ff8f3efb9b7918473a3a62fa900268cd0f23ea6e2e5d4aaa5d3e72",
+        "schema_uri": "https://asm-protocol.org/schema/v0.3/manifest.json",
+        "sidecar_locator": "https://registry.asm.example/dsh/search-safe/selection-facts.json"
+      },
+      "service_id": "dsh-fixture/search-safe@1.0.0"
+    }
+  ],
+  "fixture_version": "0.1",
+  "metadata_only_update_check": {
+    "artifact_digest_after": "sha256:54be4db453ea9f331602ee1e569118bcd1be9eeb0ada69a29e948dc69f9642dc",
+    "artifact_digest_before": "sha256:54be4db453ea9f331602ee1e569118bcd1be9eeb0ada69a29e948dc69f9642dc",
+    "artifact_identity_unchanged": true,
+    "facts_digest_after": "sha256:43e6f23a80c2351f3d39e81ba555509311dcb4f144255f932d0080748e5e3dbd",
+    "facts_digest_before": "sha256:ff1354f237ff8f3efb9b7918473a3a62fa900268cd0f23ea6e2e5d4aaa5d3e72",
+    "selection_facts_changed": true,
+    "service_id": "dsh-fixture/search-safe@1.0.0"
+  },
+  "scope": "dsh-m3-artifact-identity-selection-facts-boundary",
+  "selection_receipt": {
+    "authorization": false,
+    "candidate_set": [
+      "dsh-fixture/search-fast@1.0.0",
+      "dsh-fixture/search-safe@1.0.0"
+    ],
+    "constraints": {
+      "agent_reach": "cloud",
+      "require_agent_completable_setup": true,
+      "require_approval_for": [
+        "network_access"
+      ],
+      "required_functions": [
+        "web_search"
+      ],
+      "task": "choose a read-only web-search plugin",
+      "taxonomy": "tool.research.web",
+      "user_platform": "any"
+    },
+    "digest": "sha256:1dd84f47dc35adee91dce3efff790c28080e3bc66099a96f35c516688a73c6fa",
+    "path": "selection-receipt.json",
+    "taxonomy": "tool.research.web",
+    "verification_status": "unsigned"
+  }
+}

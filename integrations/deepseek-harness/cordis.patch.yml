@@ -1,0 +1,10 @@
+# ASM is a decision aid, not an execution or authorization provider. The
+# default stays local so task text is not sent to a hosted service implicitly.
+- insert:
+    - id: asm-selector
+      name: '@asm-protocol/dsh-plugin'
+      config:
+        endpoint: !!js process.env.ASM_SELECTOR_URL ?? 'http://127.0.0.1:8787'
+        timeoutMs: 15000
+        toolName: asm_select
+        listToolName: asm_list_services

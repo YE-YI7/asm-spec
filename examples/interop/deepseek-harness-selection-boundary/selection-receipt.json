@@ -1,0 +1,57 @@
+{
+  "alternatives": [
+    {
+      "display_name": "DSH Fixture Fast Search",
+      "monthly_cost_usd": 9,
+      "service_id": "dsh-fixture/search-fast@1.0.0"
+    }
+  ],
+  "approval_required": true,
+  "evidence": [
+    {
+      "manifest_digest": "sha256:ff1354f237ff8f3efb9b7918473a3a62fa900268cd0f23ea6e2e5d4aaa5d3e72",
+      "service_id": "dsh-fixture/search-safe@1.0.0"
+    },
+    {
+      "manifest_digest": "sha256:8c823b1487caa3e23ace57f5bae6b844efbb6d94fdb8b13d7403c8c75f73afe6",
+      "service_id": "dsh-fixture/search-fast@1.0.0"
+    }
+  ],
+  "issued_at": "2026-08-22T00:00:00Z",
+  "receipt_type": "selection",
+  "receipt_version": "0.1",
+  "rejected": [],
+  "request": {
+    "agent_reach": "cloud",
+    "require_agent_completable_setup": true,
+    "require_approval_for": [
+      "network_access"
+    ],
+    "required_functions": [
+      "web_search"
+    ],
+    "task": "choose a read-only web-search plugin",
+    "taxonomy": "tool.research.web",
+    "user_platform": "any"
+  },
+  "risk_class": "low",
+  "selected": {
+    "agent_completable_setup": true,
+    "display_name": "DSH Fixture Safe Search",
+    "interface": "plugin",
+    "monthly_cost_usd": 3,
+    "reach": "cloud",
+    "service_id": "dsh-fixture/search-safe@1.0.0",
+    "setup_requires": []
+  },
+  "selection_id": "fixture-dsh-selection-boundary-0001",
+  "selection_reason": "Eligible low-risk tool with the required functions; approval required before invocation.",
+  "selector": {
+    "name": "asm-protocol/0.5.1",
+    "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly_cost asc, then functions desc"
+  },
+  "side_effects": [
+    "network_access",
+    "external_api_call"
+  ]
+}
