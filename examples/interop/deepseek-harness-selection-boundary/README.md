@@ -34,6 +34,11 @@ Use `--write` after intentionally editing a source Bundle document or sidecar.
 The builder validates every sidecar against ASM v0.3 before generating the
 receipt and result document.
 
+Bundle identity is the digest of a canonical map from POSIX relative paths to
+raw file-byte digests. The committed `.gitattributes` forces LF checkout bytes
+for these synthetic Bundles so `core.autocrlf` cannot change their identity;
+the focused Windows CI job checks the generated fixture from a fresh checkout.
+
 ## Trust and scope
 
 The receipt is an **unsigned audit record**. It is not authorization, an

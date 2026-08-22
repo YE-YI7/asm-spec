@@ -14,6 +14,7 @@ from tools.build_dsh_selection_fixture import (  # noqa: E402
     FIXTURE,
     META_KEY,
     SCHEMA_URI,
+    bundle_content_map,
     bundle_tree_digest,
     build_fixture,
     load_json,
@@ -36,6 +37,14 @@ def test_bundle_metadata_uses_stable_namespaced_sidecar_reference():
         assert ref["schema_uri"] == SCHEMA_URI
         assert ref["sidecar_locator"].startswith("https://registry.asm.example/")
         assert "digest" not in ref
+
+
+def test_bundle_digest_keys_are_platform_independent_posix_paths():
+    for path in sorted((FIXTURE / "bundles").iterdir()):
+        content_map = bundle_content_map(path)
+        assert content_map
+        assert all("\\" not in key for key in content_map)
+        assert set(content_map) == {"cordis.patch.yml", "index.js", "package.json"}
 
 
 def test_metadata_update_changes_facts_not_artifact_identity():

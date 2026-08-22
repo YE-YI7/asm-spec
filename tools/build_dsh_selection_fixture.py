@@ -36,12 +36,17 @@ def raw_file_digest(path: Path) -> str:
     return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def bundle_tree_digest(path: Path) -> str:
-    """Digest a fixture Bundle as a stable map of relative path to byte digest."""
-    content_map = {
-        str(file.relative_to(path)): raw_file_digest(file)
+def bundle_content_map(path: Path) -> dict[str, str]:
+    """Map POSIX Bundle-relative paths to raw byte digests."""
+    return {
+        file.relative_to(path).as_posix(): raw_file_digest(file)
         for file in sorted(item for item in path.rglob("*") if item.is_file())
     }
+
+
+def bundle_tree_digest(path: Path) -> str:
+    """Digest a fixture Bundle using its portable relative-path content map."""
+    content_map = bundle_content_map(path)
     return canonical_digest(content_map)
 
 
