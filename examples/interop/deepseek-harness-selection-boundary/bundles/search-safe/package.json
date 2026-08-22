@@ -1,0 +1,23 @@
+{
+  "name": "@fixture/dsh-search-safe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "metadata": {
+    "io.github.ye-yi7.asm.selection-facts": {
+      "schema_uri": "https://asm-protocol.org/schema/v0.3/manifest.json",
+      "sidecar_locator": "https://registry.asm.example/dsh/search-safe/selection-facts.json"
+    }
+  }
+}
+

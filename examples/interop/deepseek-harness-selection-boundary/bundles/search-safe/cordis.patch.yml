@@ -1,0 +1,4 @@
+- insert:
+    - id: fixture-search-safe
+      name: '@fixture/dsh-search-safe'
+

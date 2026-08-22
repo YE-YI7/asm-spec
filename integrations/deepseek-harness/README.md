@@ -66,3 +66,11 @@ The boundary is intentionally only `ctx.tools.register(defineTool(...))` plus
 the documented bundle patch, so future Harness changes are isolated here. The
 Cordis and tool-runtime peer packages are supplied by the Harness base bundle;
 they remain development dependencies here for type checking and tests.
+
+## M3 contract-seam fixture
+
+The synthetic conformance fixture at
+`examples/interop/deepseek-harness-selection-boundary/` separately proves the
+proposed DSH Bundle-identity versus mutable Selection-Facts-digest boundary.
+It is one M3 contract seam, not a planner, installer, evaluator, or adoption
+claim.
