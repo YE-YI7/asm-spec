@@ -80,7 +80,7 @@ Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs
 
 The discovery layer is crowded — MCP / Server Cards, Zapier (8000+ apps), Composio (850+) all tell an agent *how to connect* to a tool. None tells it *which of several to pick*. We audited 14,519 entries across five MCP registries/directories: **0** expose pricing + SLA + quality + an access/payment signal together in machine-actionable form. ASM is that missing selection layer — and it rides on top of the connection layers, not against them.
 
-**Receipt that the layer is needed:** in [ToolSelect-Bench](benchmark/RESULTS.md), six frontier models choosing among real tools with only names vs. with ASM metadata — the metadata improved correct selection for **6/6** models and cut user-constraint violations for **5/6**; the strongest (GPT-5, Llama-3.3-70B) went from ~35% violations to ~8-10% and topped 90% correct. Honest caveat: gains are strongest on eligibility; the library skews to well-known tools, which *understates* long-tail value.
+**Receipt that structured selection facts help:** in [ToolSelect-Bench](benchmark/RESULTS.md), six models choosing among real tools with only names vs. with ASM metadata improved correct selection descriptively in **6/6** cases and cut user-constraint violations in **5/6**. The fixed-panel, task-clustered mean effects were +17 points correct (95% bootstrap CI +8.0 to +25.3) and −12 points violations (−20.3 to −3.3). This v0 result has no official-page-text control, so it does not yet prove that ASM's specific format is uniquely necessary.
 
 ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in MCP Registry `server.json` under `_meta.io.modelcontextprotocol.registry/publisher-provided.asm`. Convention: inline blocks carry *static* facts; *mutable* value data (pricing/SLA/quality) should live behind `asm_url` so freshness has a single re-stampable source — guidance hardened by a production multi-server host (see [`docs/integrations/mcp-registry.md`](docs/integrations/mcp-registry.md)).
 
@@ -142,8 +142,8 @@ Latest paper signals:
 
 - 0/50 MCP-related GitHub repos and 0/14,519 registry/directory entries expose complete value metadata.
 - 75 source-linked manifests across 47 taxonomies validate against `schema/asm-v0.3.schema.json`.
-- Raw-doc LLM selection reaches 63.9-72.2% top-1 accuracy; ASM-manifest selection reaches 100.0%.
-- ToolSelect-Bench (6 frontier models, names-only vs ASM metadata): correct selection up for 6/6, violations down for 5/6; best models >90% correct, violations to ~8-10%.
+- In a separate 36-task value-ranking suite, a naive single-source-page snippet pipeline reaches 63.9-72.2% top-1 accuracy while curated ASM manifests reach 100.0%. Because source coverage was not matched fact-for-fact, this measures the end-to-end information pipeline, not a format-only effect.
+- ToolSelect-Bench v0 (same 50 tasks across 6 models, names-only vs ASM metadata): descriptive improvement in 6/6 for correct selection and 5/6 for violations; task-clustered fixed-panel intervals exclude zero, but an official-page-text control is still missing.
 - Live execution shows ASM works only when quality metrics are semantically comparable; mixed benchmark scales are a real failure mode.
 - External Arena/OpenRouter analysis is reported as a stress test, not a claim that any quality metric is universally correct.
 

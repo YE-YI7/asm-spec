@@ -12,11 +12,13 @@ and we will report that.
 
 ## Design
 
-50 tasks over the [30-tool ASM library](../library/), 5 domains
+50 tasks using 26 candidates from the [30-tool ASM library](../library/), 5 domains
 (productivity, creative, booking, research, real-estate data). Three task
-types, each with **logic-provable ground truth** derived from manifest facts
-at generation time — never from our own ranker, so the benchmark cannot be
-circular:
+types, each with deterministic ground truth produced by applying the stated
+eligibility and cost rules to manifest facts at generation time. The ranker's
+scores are not used, but the facts and their semantics are author-maintained;
+this benchmark therefore does **not** independently validate that a manifest's
+claims are true:
 
 | type | correct answer is provable because | n |
 |---|---|---|
@@ -34,14 +36,22 @@ today this metadata is not published in machine-readable form anywhere.)
   agent choosing today, without value metadata.
 - **`asm`** — the candidates' ASM manifests (invocation, pricing, usage terms,
   governance, operational constraints).
-- *(planned, v1)* **`raw_pages`** — real pricing/marketing page text, to
-  separate "information missing" from "information unstructured".
+- **`raw_pages`** — versioned text snapshots of official provider pages. This
+  condition is admitted only when every task-relevant manifest fact for every
+  candidate has a cited page, content hash, retrieval timestamp, and reviewed
+  fact-path mapping. No complete v1 bundle has been published yet.
 
 ### Metrics (pre-registered)
 
 1. **correct rate** — pick ∈ ground-truth correct set
 2. **violation rate** — pick breaches a nameable constraint (`violations_if`)
 3. **mean overspend** — picked cost − min eligible cost, USD/month (cost-typed tasks)
+
+Inference is paired at the task level. We report an exact two-sided McNemar
+test and task-bootstrap interval for each model. A task-clustered bootstrap
+summarizes the fixed six-model panel without treating the models as six
+independent replications. Per-model p-values and intervals are unadjusted for
+multiple comparisons and should be read as descriptive follow-up evidence.
 
 ### Reference floor
 
@@ -52,18 +62,38 @@ identical across conditions by construction.
 
 - Metrics and task types are pre-registered in this file before any LLM run;
   results are reported for **all** runs, including ones unfavorable to ASM.
-- `library_select` (our ranker) is **not** a subject or an oracle.
+- `library_select` (our ranker) is **not** a subject. Its deterministic
+  eligibility and cost semantics are used when generating ground truth; that
+  coupling is disclosed and tested separately from model behavior.
 - The full dataset (`tasks.jsonl`) including ground truth, violations, and
-  costs is open; every subject's raw picks are saved under `results/` so all
-  scores are independently re-checkable.
+  costs is open; every subject's parsed picks are saved under `results/` so all
+  scores are independently re-checkable. Legacy v0 result files do not contain
+  the original response text; future runs save both raw responses and a task-file
+  digest.
 - Known limits: 30 tools and 50 templated tasks is small; prompts are
-  template-generated (v1: human paraphrases); manifests were researched and
+  template-generated. The v1 generator can vary surface forms, but that is not
+  a substitute for human-authored natural tasks. Manifests were researched and
   written by the ASM authors (sources cited per entry in `library/`).
+- Provider text may be mutable or copyrighted. Raw-page snapshot bundles are
+  research artifacts: use only official sources, preserve hashes and retrieval
+  times, and do not commit text without permission or a compatible license.
 
 ## Run it
 
 ```bash
-python benchmark/generate_tasks.py                  # rebuild tasks.jsonl (deterministic)
+python benchmark/generate_tasks.py                  # rebuild from the current library (stable order)
 python benchmark/harness.py --subject random        # floor
 OPENROUTER_API_KEY=... python benchmark/harness.py --subject llm:openai/gpt-4o-mini
+
+# Build a separate v1 dataset; fail closed unless raw-page evidence is complete.
+python benchmark/build_raw_pages_template.py \
+  --output /path/to/raw-pages-review.json
+# A reviewer now fills pages[], verifies each fact-path mapping, and hashes text.
+python benchmark/generate_tasks.py --prompt-style varied \
+  --raw-page-bundle /path/to/reviewed-snapshots.json \
+  --output benchmark/tasks-v1.jsonl
+python benchmark/harness.py --tasks benchmark/tasks-v1.jsonl \
+  --results-dir benchmark/results-v1 --subject llm:<model-id>
+python benchmark/aggregate.py --tasks benchmark/tasks-v1.jsonl \
+  --results-dir benchmark/results-v1 --left raw_pages --right asm
 ```

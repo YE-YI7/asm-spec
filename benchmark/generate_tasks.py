@@ -22,10 +22,13 @@ Each task ships two evaluation conditions:
   asm         the candidates' ASM manifests (trimmed to the relevant blocks)
 
 Ground truth, candidate pool, and rejection reasons are all emitted so scoring
-is reproducible without this codebase. Deterministic output (no RNG).
+is reproducible without this codebase. Ground truth applies deterministic ASM
+eligibility/cost semantics to author-researched manifest facts; it does not
+independently prove those facts. Deterministic output (no RNG).
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from collections import Counter
@@ -36,6 +39,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from library_select import eligibility, load_library, monthly_cost  # noqa: E402
+from benchmark.raw_pages import attach_raw_pages, load_snapshot_bundle  # noqa: E402
 
 MAX_PER_BUCKET = 6          # cap per (taxonomy, type) to keep the set diverse
 REACHES = ["cloud", "local_device"]
@@ -65,13 +69,26 @@ def _human(fn: str) -> str:
     return fn.replace("_", " ")
 
 
-def _scenario(taxonomy: str) -> str:
+def _scenario(taxonomy: str, variant: int = 0) -> str:
     seg = (taxonomy or "tool").split(".")[-1].replace("_", " ")
-    return f"I need you to handle a {seg} job for me, and you will drive the tool yourself (not just recommend it)."
+    scenarios = (
+        f"I need you to handle a {seg} job for me, and you will drive the tool yourself (not just recommend it).",
+        f"Complete this {seg} task on my behalf; you must operate the chosen tool rather than merely suggest one.",
+        f"Act as the operator for my {seg} workflow and choose the tool you can actually use end to end.",
+        f"You are responsible for executing a {seg} task, including operating the selected service yourself.",
+    )
+    return scenarios[variant % len(scenarios)]
 
 
-def _prompt(taxonomy: str, ctx: dict, objective: str) -> str:
-    bits = [_scenario(taxonomy)]
+def _prompt(taxonomy: str, ctx: dict, objective: str, style: str = "v0") -> str:
+    if style == "v0":
+        variant = 0
+    elif style == "varied":
+        signature = json.dumps([taxonomy, ctx, objective], sort_keys=True)
+        variant = sum(signature.encode("utf-8")) % 4
+    else:
+        raise ValueError(f"unknown prompt style: {style}")
+    bits = [_scenario(taxonomy, variant)]
     bits.append("You are my cloud-hosted assistant with no hands on my device."
                 if ctx["agent_reach"] == "cloud" else
                 "You are running on my device and can operate local apps.")
@@ -129,8 +146,10 @@ def _gov_reason(m: dict, gov: dict) -> str:
         else "violates the stated data-governance requirement"
 
 
-def build_tasks() -> list[dict]:
-    lib = load_library()
+def build_tasks(prompt_style: str = "v0") -> list[dict]:
+    # glob enumeration order is filesystem-dependent; candidate presentation
+    # order is part of the model input, so make it stable explicitly.
+    lib = sorted(load_library(), key=lambda manifest: manifest["service_id"])
     platforms = _platforms(lib)
     # group at the domain level (tool.research.*, tool.booking.*, ...): tools in
     # sibling sub-taxonomies genuinely compete for the same user task
@@ -168,7 +187,8 @@ def build_tasks() -> list[dict]:
                                                    correct=elig,
                                                    objective="Pick the tool that satisfies every constraint.",
                                                    reason="only candidate passing all hard constraints; "
-                                                          "every alternative fails a named gate"))
+                                                          "every alternative fails a named gate",
+                                                   prompt_style=prompt_style))
 
                         # -- cheapest_eligible ----------------------------------
                         if len(elig) >= 2 and buckets[(tax, "cheap")] < MAX_PER_BUCKET:
@@ -185,7 +205,7 @@ def build_tasks() -> list[dict]:
                                                              "pick the one with the lowest monthly cost.",
                                                    reason=f"min monthly cost {lo} among eligible; "
                                                           "cost-dominance is provable from pricing facts",
-                                                   costs=costs))
+                                                   costs=costs, prompt_style=prompt_style))
 
                         # -- governance -----------------------------------------
                         if len(elig) >= 2 and buckets[(tax, "gov")] < MAX_PER_BUCKET:
@@ -215,7 +235,8 @@ def build_tasks() -> list[dict]:
                                                               "compliant subset",
                                                        costs=costs,
                                                        gov_violators={s: _gov_reason(by_id[s], gov)
-                                                                      for s in sorted(set(elig) - set(ok))}))
+                                                                      for s in sorted(set(elig) - set(ok))},
+                                                       prompt_style=prompt_style))
                                     break
     for i, t in enumerate(tasks, 1):
         t["task_id"] = f"tsb-{i:04d}"
@@ -223,12 +244,12 @@ def build_tasks() -> list[dict]:
 
 
 def _emit(ttype, tax, ctx, pool, rej, *, correct, objective, reason,
-          costs=None, gov_violators=None) -> dict:
+          costs=None, gov_violators=None, prompt_style="v0") -> dict:
     violations = {sid: why for sid, why in rej.items() if why}
     violations.update(gov_violators or {})
     return {
         "task_id": None, "type": ttype, "taxonomy": tax,
-        "prompt": _prompt(tax, ctx, objective),
+        "prompt": _prompt(tax, ctx, objective, prompt_style),
         "context": ctx,
         "candidates": sorted(m["service_id"] for m in pool),
         "ground_truth": {"correct": correct, "provable_reason": reason,
@@ -240,8 +261,26 @@ def _emit(ttype, tax, ctx, pool, rej, *, correct, objective, reason,
 
 
 def main() -> None:
-    tasks = build_tasks()
-    out = Path(__file__).resolve().parent / "tasks.jsonl"
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--raw-page-bundle",
+        type=Path,
+        help="attach raw_pages only after complete official-page coverage validation",
+    )
+    parser.add_argument(
+        "--prompt-style", choices=("v0", "varied"), default="v0",
+        help="v0 preserves the published dataset; varied uses deterministic surface variants",
+    )
+    parser.add_argument(
+        "--output", type=Path,
+        help="output path (default: benchmark/tasks.jsonl)",
+    )
+    args = parser.parse_args()
+    tasks = build_tasks(args.prompt_style)
+    if args.raw_page_bundle:
+        tasks = attach_raw_pages(tasks, load_snapshot_bundle(args.raw_page_bundle))
+    out = args.output or Path(__file__).resolve().parent / "tasks.jsonl"
+    out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8") as f:
         for t in tasks:
             f.write(json.dumps(t, ensure_ascii=False) + "\n")

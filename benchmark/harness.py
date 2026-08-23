@@ -6,6 +6,9 @@ Conditions
               approximating an agent choosing tools today, without machine-
               readable value metadata.
   asm         the subject sees the candidates' ASM manifests (trimmed).
+  raw_pages   the subject sees cached text from the provider pages that were
+              used as sources. This condition is available only when every
+              task contains a versioned raw-page snapshot bundle.
 
 Metrics (pre-registered; see README.md)
   correct      pick is in the ground-truth correct set
@@ -29,6 +32,7 @@ Usage
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import random
@@ -38,12 +42,16 @@ import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-CONDITIONS = ("names_only", "asm")
+CONDITIONS = ("names_only", "raw_pages", "asm")
 
 
-def load_tasks(limit: int | None = None) -> list[dict]:
-    tasks = [json.loads(l) for l in (HERE / "tasks.jsonl").open(encoding="utf-8")]
+def load_tasks(path: Path, limit: int | None = None) -> list[dict]:
+    tasks = [json.loads(l) for l in path.open(encoding="utf-8")]
     return tasks[:limit] if limit else tasks
+
+
+def tasks_digest(path: Path) -> str:
+    return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 # ---------------------------------------------------------------- subjects --
@@ -95,32 +103,48 @@ def _materials(task: dict, condition: str) -> str:
         lines = [f"- {c['service_id']}: {c['name']} — {c['description'] or '(no description)'}"
                  for c in task["conditions"]["names_only"]]
         return "Candidate tools:\n" + "\n".join(lines)
+    if condition == "raw_pages":
+        return ("Candidate tools (provider-page snapshots):\n"
+                + json.dumps(task["conditions"]["raw_pages"], ensure_ascii=False))
     return ("Candidate tools (ASM manifests):\n"
             + json.dumps(task["conditions"]["asm"], ensure_ascii=False))
 
 
 def _parse_pick(text: str, candidates: list[str]) -> str | None:
-    for sid in sorted(candidates, key=len, reverse=True):
-        if sid in text:
-            return sid
-    # bare name fallback: match the org/tool stem
-    for sid in candidates:
-        stem = re.split(r"[/@]", sid)[1] if "/" in sid else sid
-        if stem and stem.lower() in text.lower():
-            return sid
-    return None
+    """Return one unambiguous canonical service_id from a model response.
+
+    The benchmark asks for an exact ID. Bare stems and arbitrary substrings are
+    deliberately rejected because they can map one response to the wrong
+    candidate. Explanatory text is tolerated only when it contains exactly one
+    complete candidate token.
+    """
+    token_chars = r"A-Za-z0-9._/@-"
+    matches = {
+        sid
+        for sid in candidates
+        if re.search(
+            rf"(?<![{token_chars}]){re.escape(sid)}(?![{token_chars}])",
+            text,
+        )
+    }
+    return next(iter(matches)) if len(matches) == 1 else None
 
 
-def subject_llm(model: str, task: dict, condition: str) -> str | None:
+def _query_llm(model: str, task: dict, condition: str) -> tuple[str | None, str | None]:
     prompt = (f"{task['prompt']}\n\n{_materials(task, condition)}\n\n"
               "Reply with exactly one service_id and nothing else.")
     try:
-        return _parse_pick(_chat(model, prompt), task["candidates"])
+        raw = _chat(model, prompt)
+        return _parse_pick(raw, task["candidates"]), raw
     except Exception as e:
         # one persistently-failing call must not discard the whole run;
         # record as no-pick (counts as unparsed) and continue.
         print(f"    ! {model} {condition} {task['task_id']}: {type(e).__name__} {e}")
-        return None
+        return None, None
+
+
+def subject_llm(model: str, task: dict, condition: str) -> str | None:
+    return _query_llm(model, task, condition)[0]
 
 
 # ----------------------------------------------------------------- scoring --
@@ -170,20 +194,32 @@ def main() -> None:
     ap.add_argument("--condition", choices=CONDITIONS, default=None,
                     help="default: run both")
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--tasks", type=Path, default=HERE / "tasks.jsonl")
+    ap.add_argument("--results-dir", type=Path, default=HERE / "results")
     args = ap.parse_args()
 
-    tasks = load_tasks(args.limit)
-    conditions = [args.condition] if args.condition else list(CONDITIONS)
-    results_dir = HERE / "results"
+    tasks = load_tasks(args.tasks, args.limit)
+    available = [condition for condition in CONDITIONS
+                 if all(condition in task["conditions"] for task in tasks)]
+    if args.condition and args.condition not in available:
+        raise SystemExit(
+            f"condition {args.condition!r} is unavailable in tasks.jsonl; "
+            "build a complete, versioned snapshot bundle first"
+        )
+    conditions = [args.condition] if args.condition else available
+    results_dir = args.results_dir
     results_dir.mkdir(exist_ok=True)
 
     for cond in conditions:
         picks: dict[str, str | None] = {}
+        raw_responses: dict[str, str | None] = {}
         for t in tasks:
             if args.subject == "random":
                 picks[t["task_id"]] = subject_random(t, cond)
             elif args.subject.startswith("llm:"):
-                picks[t["task_id"]] = subject_llm(args.subject[4:], t, cond)
+                pick, raw = _query_llm(args.subject[4:], t, cond)
+                picks[t["task_id"]] = pick
+                raw_responses[t["task_id"]] = raw
             else:
                 raise SystemExit(f"unknown subject: {args.subject}")
         s = score(tasks, picks)
@@ -191,7 +227,10 @@ def main() -> None:
         out = results_dir / f"{tag}__{cond}.json"
         out.write_text(json.dumps(
             {"subject": args.subject, "condition": cond, "metrics": s,
-             "picks": picks}, indent=2, ensure_ascii=False), encoding="utf-8")
+             "tasks_digest": tasks_digest(args.tasks), "picks": picks,
+             **({"raw_responses": raw_responses}
+                if args.subject.startswith("llm:") else {})},
+            indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"{args.subject:40} {cond:11} correct={s['correct_rate']:.0%} "
               f"violations={s['violation_rate']:.0%} "
               f"overspend=${s['mean_overspend_usd_month']}/mo "
