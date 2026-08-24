@@ -1,0 +1,59 @@
+{
+  "asm_version": "0.3",
+  "service_id": "dsh-fixture/search-safe@1.0.0",
+  "taxonomy": "tool.research.web",
+  "display_name": "DSH Fixture Safe Search",
+  "capabilities": {
+    "description": "Synthetic read-only search candidate for the DSH selection-boundary fixture.",
+    "functions": ["web_search"],
+    "input_modalities": ["text"],
+    "output_modalities": ["structured_data"]
+  },
+  "invocation": {
+    "interface": "plugin",
+    "reach": "cloud",
+    "agent_operable": true,
+    "agent_completable_setup": true,
+    "setup_requires": [],
+    "auth_to_invoke": "api_token",
+    "platforms": ["any"]
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "subscription",
+        "unit": "per_month",
+        "cost_per_unit": 3,
+        "currency": "USD"
+      }
+    ],
+    "estimated": false
+  },
+  "payment": {
+    "methods": ["subscription"],
+    "auth_type": "api_key"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes"
+  },
+  "operational_constraints": {
+    "risk_class": "low",
+    "side_effects": ["network_access", "external_api_call"],
+    "approval": {
+      "required": "conditional",
+      "conditions": ["network access is not already authorized for this task"],
+      "human_readable": "A separate permission boundary decides whether network access is authorized."
+    },
+    "receipt_required": false
+  },
+  "provenance": {
+    "source_url": "https://evidence.asm.example/dsh/search-safe/observation-1.json",
+    "retrieved_at": "2026-08-22T00:00:00Z",
+    "last_verified_at": "2026-08-22T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Synthetic conformance data; no service execution was observed."
+  },
+  "updated_at": "2026-08-22T00:00:00Z",
+  "ttl": 3600
+}
+

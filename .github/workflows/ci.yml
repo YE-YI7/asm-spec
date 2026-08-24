@@ -51,3 +51,34 @@ jobs:
       - name: Run registry tests
         working-directory: registry
         run: npm test
+
+  deepseek-harness-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: integrations/deepseek-harness/package-lock.json
+      - name: Install plugin dependencies
+        working-directory: integrations/deepseek-harness
+        run: npm ci
+      - name: Build, test, and inspect the package
+        working-directory: integrations/deepseek-harness
+        run: npm run check
+
+  dsh-selection-fixture-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install fixture test dependencies
+        run: python -m pip install -e . pytest
+      - name: Verify generated fixture is checkout-stable
+        run: python tools/build_dsh_selection_fixture.py --check
+      - name: Run focused conformance tests
+        run: python -m pytest -q tools/asm-gen/test_dsh_selection_fixture.py
