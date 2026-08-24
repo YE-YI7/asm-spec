@@ -31,6 +31,11 @@ Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": 
 | `risk_class`, `approval_required`, `side_effects` | The operational policy surfaced *before* invocation |
 | `alternatives`, `rejected` | Ranked runners-up, and every excluded candidate with its nameable gate reason |
 
+The selected-service invocation fields `interface`, `reach`,
+`agent_completable_setup`, and `setup_requires` may be `null` when the consulted
+manifest does not declare that fact. `null` means unknown or undeclared; it must
+not be interpreted as a negative capability claim.
+
 ### The evidence digest
 
 Manifests are mutable — prices change, terms change. `manifest_digest` is a canonical sha256 (`json.dumps(manifest, sort_keys=True, separators=(",",":"))`, UTF-8) that pins the exact evidence state the decision saw. If a provider later edits `data_governance.trains_on_user_data`, the receipt still proves what the field said when the agent chose — the property disputes actually turn on.

@@ -134,11 +134,21 @@
         "service_id": { "type": "string", "minLength": 1 },
         "display_name": { "type": "string", "minLength": 1 },
         "monthly_cost_usd": { "type": "number", "minimum": 0 },
-        "interface": { "type": "string", "minLength": 1 },
-        "reach": { "type": "string", "minLength": 1 },
-        "agent_completable_setup": { "type": "boolean" },
+        "interface": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "reach": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "agent_completable_setup": { "type": ["boolean", "null"] },
         "setup_requires": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": { "type": "string", "minLength": 1 }
         }
       }

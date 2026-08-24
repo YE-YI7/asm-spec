@@ -13,7 +13,7 @@
     "selectionReceipt": "examples/interop/deepseek-harness-selection-boundary/selection-receipt.json",
     "selectionReceiptSchema": {
       "uri": "https://raw.githubusercontent.com/YE-YI7/asm-spec/main/schema/selection-receipt-v0.1.schema.json",
-      "sourceDigest": "sha256:d4fbc06356a1cf80f62b2839463341e0bc69dacc74fa7fbca67abab3d7914973"
+      "sourceDigest": "sha256:d84c3688c136c685eaedfd4cffbbde06616becdbc1588f8449f9bdf24a73bae9"
     }
   },
   "identities": {
