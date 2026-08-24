@@ -173,6 +173,12 @@ export function verifyFixtureInputs({
       'Selection Receipt JCS digest does not match RunnerBinding selectionReceipt.digest.',
     )
   }
+  if (artifact.kind !== runnerBinding.artifact.kind) {
+    failFixture(
+      'ARTIFACT_KIND_MISMATCH',
+      'Immutable Git artifact kind does not match RunnerBinding artifact.kind.',
+    )
+  }
   const artifactDigest = digestArtifact(artifact)
   if (artifactDigest !== runnerBinding.artifact.digest) {
     failFixture(

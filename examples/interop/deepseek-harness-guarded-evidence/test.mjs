@@ -91,6 +91,36 @@ test('rejects a valid but wrong Selection Receipt schema URI', async () => {
   )
 })
 
+test('rejects a wrong Selection Receipt digest profile', async () => {
+  const fixture = await buildFixture()
+  const runnerBinding = clone(fixture.runnerBinding)
+  runnerBinding.selectionReceipt.digestProfile = 'jcs-sha256:v0.2'
+  expectCode(
+    () => verifyFixtureInputs({ ...fixture, runnerBinding }),
+    FixtureBindingError,
+    'SELECTION_RECEIPT_DIGEST_PROFILE_MISMATCH',
+  )
+})
+
+test('rejects artifact kind substitution before CommitDecision', async () => {
+  const fixture = await buildFixture()
+  const runnerBinding = clone(fixture.runnerBinding)
+  runnerBinding.artifact.kind = 'blob'
+  const evidence = clone(fixture.evidence)
+  evidence.runnerBindingRef.digest = digestRunnerBinding(runnerBinding)
+  let commitDecisionReached = false
+  expectCode(
+    () => {
+      verifyFixtureInputs({ ...fixture, runnerBinding })
+      commitDecisionReached = true
+      return evaluateCandidate(fixture.policy, evidence, { runnerBinding })
+    },
+    FixtureBindingError,
+    'ARTIFACT_KIND_MISMATCH',
+  )
+  assert.equal(commitDecisionReached, false)
+})
+
 test('rejects exact artifact byte mutation before CommitDecision', async () => {
   const fixture = await buildFixture()
   const artifact = clone(fixture.artifact)
