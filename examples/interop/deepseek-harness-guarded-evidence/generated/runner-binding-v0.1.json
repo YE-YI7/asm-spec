@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "0.1",
+  "candidateId": "dsh-fixture/search-safe@1.0.0",
+  "artifact": {
+    "profile": "urn:dsh-guarded-hcl:digest-profile:artifact-jcs-sha256:v0.1",
+    "kind": "tree",
+    "digest": "sha256:ae6da1a2c6621561f238a732301dfe07c86d16e617db7a4f1204181665e4cbeb"
+  },
+  "selectionReceipt": {
+    "schemaUri": "https://raw.githubusercontent.com/YE-YI7/asm-spec/main/schema/selection-receipt-v0.1.schema.json",
+    "digestProfile": "urn:dsh-guarded-hcl:digest-profile:jcs-sha256:v0.1",
+    "digest": "sha256:1dd84f47dc35adee91dce3efff790c28080e3bc66099a96f35c516688a73c6fa"
+  }
+}

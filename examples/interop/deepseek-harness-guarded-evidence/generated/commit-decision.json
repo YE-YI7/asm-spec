@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "0.1",
+  "accepted": true,
+  "candidateId": "dsh-fixture/search-safe@1.0.0",
+  "reasons": [],
+  "metrics": {
+    "currentImprovement": 1,
+    "weightedRetentionLoss": 0,
+    "costIncreaseRatio": null
+  },
+  "policyDigest": "sha256:c22538381e11cd9f62c4d54097337263abad89b92ca6d90a69abde0df104a61f",
+  "evidenceDigest": "sha256:eb6ce79754efbf4ce6c9c2380864a8f9ee31a372e23315db1d854bf50269a8a8",
+  "decisionDigest": "sha256:87e438cd2cbf3c124be39183258e13cc76983ea2407f6769ebb3830aa06dcfa8"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "asm-dsh-guarded-evidence-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "generate": "node build.mjs --write",
+    "check": "node build.mjs --check && node --test test.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "dsh-guarded-hcl": "https://github.com/Jstn-1g/dsh-guarded-hcl/archive/2c1eede7af4928afca422ff034fcf1fa622609e6.tar.gz"
+  }
+}
