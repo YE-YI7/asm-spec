@@ -2,3 +2,8 @@
 # representation so the same Git revision has the same artifact digest on
 # Windows, macOS, and Linux regardless of core.autocrlf.
 examples/interop/deepseek-harness-selection-boundary/bundles/** text eol=lf
+
+# The guarded-evidence fixture compares generated contract files byte-for-byte.
+# Keep those artifacts and the versioned receipt schema stable on Windows.
+examples/interop/deepseek-harness-guarded-evidence/** text eol=lf
+schema/selection-receipt-v0.1.schema.json text eol=lf

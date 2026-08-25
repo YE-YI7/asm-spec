@@ -82,3 +82,23 @@ jobs:
         run: python tools/build_dsh_selection_fixture.py --check
       - name: Run focused conformance tests
         run: python -m pytest -q tools/asm-gen/test_dsh_selection_fixture.py
+
+  dsh-guarded-hcl-asm-validation:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: examples/interop/deepseek-harness-guarded-evidence/package-lock.json
+      - name: Install the pinned independent contract consumer
+        working-directory: examples/interop/deepseek-harness-guarded-evidence
+        run: npm ci --ignore-scripts
+      - name: Verify generated identities and mutation matrix
+        working-directory: examples/interop/deepseek-harness-guarded-evidence
+        run: npm run check

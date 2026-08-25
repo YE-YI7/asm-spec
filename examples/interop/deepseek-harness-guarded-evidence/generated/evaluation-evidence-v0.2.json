@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "0.2",
+  "candidateId": "dsh-fixture/search-safe@1.0.0",
+  "baselineDigest": "urn:asm-fixture:baseline:not-executed",
+  "candidateDigest": "sha256:ae6da1a2c6621561f238a732301dfe07c86d16e617db7a4f1204181665e4cbeb",
+  "runnerBindingRef": {
+    "schemaUri": "https://raw.githubusercontent.com/Jstn-1g/dsh-guarded-hcl/main/schemas/runner-binding-v0.1.schema.json",
+    "digestProfile": "urn:dsh-guarded-hcl:digest-profile:jcs-sha256:v0.1",
+    "digest": "sha256:c3284441d982352a0da9dc580b53ad2f108a4d40cfd92513f71bf188ae5cac19"
+  },
+  "currentTask": {
+    "metric": "contract_conformance",
+    "baselineScore": 0,
+    "candidateScore": 1
+  },
+  "requiredAnchorIds": [],
+  "retention": [],
+  "validity": [
+    {
+      "checkId": "selection-receipt-schema-valid",
+      "passed": true,
+      "severity": "critical"
+    },
+    {
+      "checkId": "git-artifact-byte-source-pinned",
+      "passed": true,
+      "severity": "critical"
+    },
+    {
+      "checkId": "candidate-receipt-artifact-join-valid",
+      "passed": true,
+      "severity": "critical"
+    }
+  ],
+  "cost": null
+}

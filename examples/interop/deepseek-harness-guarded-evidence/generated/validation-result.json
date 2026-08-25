@@ -1,0 +1,36 @@
+{
+  "fixtureVersion": "0.1",
+  "scope": "contract-conformance-only",
+  "upstreamContract": {
+    "repository": "Jstn-1g/dsh-guarded-hcl",
+    "mergeCommit": "2c1eede7af4928afca422ff034fcf1fa622609e6",
+    "archive": "https://github.com/Jstn-1g/dsh-guarded-hcl/archive/2c1eede7af4928afca422ff034fcf1fa622609e6.tar.gz",
+    "archiveIntegrity": "sha512-sfXSFO4kd9CPmQgX6E9N/DaloFadzL6p+LhmNtiei4DGlzZ1e5klulNjST4z/vuKCwZY38fDMJ1irXMqU/fBow=="
+  },
+  "sources": {
+    "artifactByteSource": "Git blobs and modes at this repository HEAD",
+    "selectedBundle": "examples/interop/deepseek-harness-selection-boundary/bundles/search-safe",
+    "selectionReceipt": "examples/interop/deepseek-harness-selection-boundary/selection-receipt.json",
+    "selectionReceiptSchema": {
+      "uri": "https://raw.githubusercontent.com/YE-YI7/asm-spec/main/schema/selection-receipt-v0.1.schema.json",
+      "sourceDigest": "sha256:d84c3688c136c685eaedfd4cffbbde06616becdbc1588f8449f9bdf24a73bae9"
+    }
+  },
+  "identities": {
+    "candidateId": "dsh-fixture/search-safe@1.0.0",
+    "artifactDigest": "sha256:ae6da1a2c6621561f238a732301dfe07c86d16e617db7a4f1204181665e4cbeb",
+    "selectionReceiptDigest": "sha256:1dd84f47dc35adee91dce3efff790c28080e3bc66099a96f35c516688a73c6fa",
+    "runnerBindingDigest": "sha256:c3284441d982352a0da9dc580b53ad2f108a4d40cfd92513f71bf188ae5cac19",
+    "decisionDigest": "sha256:87e438cd2cbf3c124be39183258e13cc76983ea2407f6769ebb3830aa06dcfa8"
+  },
+  "assertions": {
+    "selectionReceiptSchemaValid": true,
+    "candidateJoinValid": true,
+    "artifactIdentityValid": true,
+    "runnerBindingResolvedBeforeDecision": true,
+    "commitDecisionAccepted": true,
+    "authorizationClaimed": false,
+    "executionClaimed": false,
+    "deepSeekAdoptionClaimed": false
+  }
+}
