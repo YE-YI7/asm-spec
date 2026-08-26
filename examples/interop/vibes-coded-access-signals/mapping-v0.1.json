@@ -1,0 +1,55 @@
+{
+  "mapping_id": "asm-vibes-coded-access-signals",
+  "mapping_version": "0.1",
+  "status": "external-review-candidate",
+  "source_document": "source-observation.json",
+  "target_schema": "../../../schema/asm-ai-catalog-access-v0.1.schema.json",
+  "target_document": "vibes-coded-access.example.json",
+  "target_is_extension_value_only": true,
+  "namespace_owner_must_choose_key": true,
+  "mappings": [
+    {
+      "source_pointer": "/facts/mechanisms",
+      "target_pointer": "/mechanisms",
+      "transform": "copy the three observed coarse mechanism identifiers"
+    },
+    {
+      "source_pointer": "/facts/pricing_url",
+      "target_pointer": "/pricingUrl",
+      "transform": "copy"
+    },
+    {
+      "source_pointer": "/facts/live_terms_url",
+      "target_pointer": "/pricingResolver/url",
+      "transform": "copy as the public live-terms resolver; do not imply caller authentication"
+    },
+    {
+      "source_pointer": "/facts/action_receipt",
+      "target_pointer": "/priceEchoes/0",
+      "transform": "map the endpoint-specific USD amount to one non-authoritative per-call echo"
+    },
+    {
+      "source_pointer": "/facts/day_pass",
+      "target_pointer": "/priceEchoes/1",
+      "transform": "map the 24-hour pass amount and scope to one non-authoritative echo"
+    },
+    {
+      "source_pointer": "/facts/prepaid_trial",
+      "target_pointer": "/freeTierRules/0",
+      "transform": "convert grant cents to USD credit; retain TTL and cooldown in reset text"
+    },
+    {
+      "source_pointer": "/source",
+      "target_pointer": "/source",
+      "transform": "copy url and rename retrieved_at to retrievedAt; no raw digest is claimed because the dynamic response snapshot is not retained"
+    }
+  ],
+  "excluded_runtime_fields": [
+    "accepts[] payment challenge",
+    "payment signature",
+    "wallet or chain address",
+    "settlement result",
+    "caller balance",
+    "access token value"
+  ]
+}

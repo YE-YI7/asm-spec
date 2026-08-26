@@ -1,0 +1,35 @@
+{
+  "observation_version": "0.1",
+  "source": {
+    "url": "https://vibes-coded.com/api/v1/outcomes/meta",
+    "retrieved_at": "2026-08-26T16:23:42Z",
+    "media_type": "application/json"
+  },
+  "verification_status": "live_observed_not_provider_confirmed",
+  "facts": {
+    "mechanisms": [
+      "x402",
+      "prepaid-key",
+      "day-pass"
+    ],
+    "pricing_url": "https://vibes-coded.com/start",
+    "live_terms_url": "https://vibes-coded.com/api/v1/outcomes/meta",
+    "action_receipt": {
+      "path": "/api/v1/outcomes/action-receipt",
+      "price_usd": 0.02
+    },
+    "prepaid_trial": {
+      "grant_cents": 15,
+      "ttl_hours": 72,
+      "cooldown_days": 30,
+      "header": "X-Vibes-Key"
+    },
+    "day_pass": {
+      "url": "https://vibes-coded.com/api/v1/outcomes/day-pass",
+      "price_usd": 0.5,
+      "hours": 24,
+      "scope": "guards",
+      "header": "X-Day-Pass"
+    }
+  }
+}
