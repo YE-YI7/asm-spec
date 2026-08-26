@@ -1,0 +1,57 @@
+{
+  "alternatives": [
+    {
+      "display_name": "AgentWeave Fixture Priority Tracker",
+      "monthly_cost_usd": 9,
+      "service_id": "agentweave-fixture/tracker-priority@1.0.0"
+    }
+  ],
+  "approval_required": true,
+  "evidence": [
+    {
+      "manifest_digest": "sha256:5217a641416f79f60789a3c9d435b2463ecc0089b1af2f70649845466e09db01",
+      "service_id": "agentweave-fixture/tracker-standard@1.0.0"
+    },
+    {
+      "manifest_digest": "sha256:cdbfa31d07f588d90a9d1a75b849e18c9546f8d60104f499a20143549fef2ab4",
+      "service_id": "agentweave-fixture/tracker-priority@1.0.0"
+    }
+  ],
+  "issued_at": "2026-08-26T00:00:00Z",
+  "receipt_type": "selection",
+  "receipt_version": "0.1",
+  "rejected": [],
+  "request": {
+    "agent_reach": "cloud",
+    "require_agent_completable_setup": true,
+    "require_approval_for": [
+      "persistent_state"
+    ],
+    "required_functions": [
+      "issue_create"
+    ],
+    "task": "Create one issue without executing either tool in this fixture.",
+    "taxonomy": "tool.issue_tracking",
+    "user_platform": "any"
+  },
+  "risk_class": "medium",
+  "selected": {
+    "agent_completable_setup": true,
+    "display_name": "AgentWeave Fixture Standard Tracker",
+    "interface": "mcp",
+    "monthly_cost_usd": 4,
+    "reach": "cloud",
+    "service_id": "agentweave-fixture/tracker-standard@1.0.0",
+    "setup_requires": []
+  },
+  "selection_id": "fixture-agentweave-selection-boundary-0001",
+  "selection_reason": "Eligible medium-risk tool with required functions; candidate monthly costs are comparable under the resolved cost model; approval required before invocation.",
+  "selector": {
+    "name": "asm-protocol/0.6.0",
+    "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly cost only when all candidates are comparable; otherwise no decision unless the caller explicitly requests capability_breadth fallback"
+  },
+  "side_effects": [
+    "persistent_state",
+    "external_api_call"
+  ]
+}

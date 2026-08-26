@@ -399,7 +399,7 @@ def select(
             out["side_effects"] = policy["side_effects"]
             out["selection_status"] = "selected"
             cost_reason = (
-                "candidate costs are comparable for the supplied workload"
+                "candidate monthly costs are comparable under the resolved cost model"
                 if comparable_costs
                 else f"candidate costs are not fully comparable; explicit {fallback_policy} fallback was used"
             )

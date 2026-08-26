@@ -1,0 +1,42 @@
+{
+  "tools": [
+    {
+      "name": "tracker_standard_create_issue",
+      "description": "Create an issue in the standard project tracker.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "project",
+          "title"
+        ]
+      }
+    },
+    {
+      "name": "tracker_priority_create_issue",
+      "description": "Create an issue through the priority project tracker.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "project",
+          "title"
+        ]
+      }
+    }
+  ]
+}

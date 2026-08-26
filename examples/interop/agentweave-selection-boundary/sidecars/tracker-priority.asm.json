@@ -1,0 +1,72 @@
+{
+  "asm_version": "0.3",
+  "service_id": "agentweave-fixture/tracker-priority@1.0.0",
+  "taxonomy": "tool.issue_tracking",
+  "display_name": "AgentWeave Fixture Priority Tracker",
+  "capabilities": {
+    "description": "Synthetic higher-cost issue-creation candidate for the AgentWeave selection-boundary fixture.",
+    "functions": [
+      "issue_create"
+    ],
+    "input_modalities": [
+      "text"
+    ],
+    "output_modalities": [
+      "structured_data"
+    ]
+  },
+  "invocation": {
+    "interface": "mcp",
+    "reach": "cloud",
+    "agent_operable": true,
+    "agent_completable_setup": true,
+    "setup_requires": [],
+    "auth_to_invoke": "none",
+    "platforms": [
+      "any"
+    ]
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "subscription",
+        "unit": "per_month",
+        "cost_per_unit": 9,
+        "currency": "USD"
+      }
+    ],
+    "estimated": false
+  },
+  "usage_terms": {
+    "automation_allowed": "yes"
+  },
+  "operational_constraints": {
+    "risk_class": "medium",
+    "side_effects": [
+      "persistent_state",
+      "external_api_call"
+    ],
+    "approval": {
+      "required": "conditional",
+      "conditions": [
+        "the client has not already approved creation of the issue"
+      ],
+      "human_readable": "The client remains responsible for approving this state-changing call."
+    },
+    "receipt_required": false
+  },
+  "provenance": {
+    "source_url": "https://example.invalid/agentweave-fixture/tracker-priority.json",
+    "retrieved_at": "2026-08-26T00:00:00Z",
+    "last_verified_at": "2026-08-26T00:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Synthetic fixture data; no service or price was observed."
+  },
+  "updated_at": "2026-08-26T00:00:00Z",
+  "ttl": 3600,
+  "extensions": {
+    "io.github.sauravsingla.agentweave.fixture": {
+      "mcp_tool_name": "tracker_priority_create_issue"
+    }
+  }
+}

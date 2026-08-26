@@ -1,0 +1,13 @@
+{
+  "task": "Create one issue without executing either tool in this fixture.",
+  "taxonomy": "tool.issue_tracking",
+  "agent_reach": "cloud",
+  "user_platform": "any",
+  "required_functions": [
+    "issue_create"
+  ],
+  "require_approval_for": [
+    "persistent_state"
+  ],
+  "require_agent_completable_setup": true
+}

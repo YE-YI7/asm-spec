@@ -1,0 +1,99 @@
+{
+  "agentweave_provenance_boundary": {
+    "handoff": "AgentWeave remains responsible for its native policy/router drops, model call, authorization, execution, and stage telemetry.",
+    "native_record_generated": false,
+    "reason": "This fixture runs outside AgentWeave at the reviewer's request."
+  },
+  "agentweave_reference": {
+    "commit": "1f2e9c88c6e85dc072e17fb06ff67038c4d45687",
+    "mcp_example": "examples/mcp_tool_routing.py",
+    "native_provenance": "agentweave_security/routing_provenance.py",
+    "repository": "https://github.com/sauravsingla/agentweave"
+  },
+  "assertions": {
+    "approval_is_not_authorization": true,
+    "exactly_one_model_visible_tool": true,
+    "receipt_has_no_execution_record": true,
+    "receipt_has_no_signature": true,
+    "receipt_pins_exact_two_sidecars": true,
+    "selected_descriptor_is_byte_for_byte_source_value": true,
+    "task_text_is_audit_only": true
+  },
+  "fixture_version": "0.1",
+  "routing_decision": {
+    "approval_required_before_invocation": true,
+    "execution_attempted": false,
+    "filtered_out_before_inference": [
+      "tracker_priority_create_issue"
+    ],
+    "model_visible_tools": [
+      {
+        "description": "Create an issue in the standard project tracker.",
+        "inputSchema": {
+          "properties": {
+            "project": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "project",
+            "title"
+          ],
+          "type": "object"
+        },
+        "name": "tracker_standard_create_issue"
+      }
+    ],
+    "selected_mcp_tool_name": "tracker_standard_create_issue",
+    "selected_service_id": "agentweave-fixture/tracker-standard@1.0.0",
+    "selection_status": "selected"
+  },
+  "scope": "asm-selection-facts-to-agentweave-model-visible-tool",
+  "selection_facts": [
+    {
+      "manifest_digest": "sha256:5217a641416f79f60789a3c9d435b2463ecc0089b1af2f70649845466e09db01",
+      "mcp_tool_name": "tracker_standard_create_issue",
+      "service_id": "agentweave-fixture/tracker-standard@1.0.0"
+    },
+    {
+      "manifest_digest": "sha256:cdbfa31d07f588d90a9d1a75b849e18c9546f8d60104f499a20143549fef2ab4",
+      "mcp_tool_name": "tracker_priority_create_issue",
+      "service_id": "agentweave-fixture/tracker-priority@1.0.0"
+    }
+  ],
+  "selection_receipt": {
+    "authorization": false,
+    "digest": "sha256:ab099b8febf7d0b2fe3177df2774bf803ff9d452245b1105552fd63cded92514",
+    "path": "selection-receipt.json",
+    "verification_status": "unsigned"
+  },
+  "source_catalog": {
+    "digest": "sha256:2ca91d1b40746d93c2e7cd10a94fbbd329a6312d9fbeb24dd93e638bfbc33f82",
+    "path": "mcp-tools.json",
+    "tool_names": [
+      "tracker_standard_create_issue",
+      "tracker_priority_create_issue"
+    ]
+  },
+  "task_constraint": {
+    "digest": "sha256:6d55d4fd35d10140ed56e350b495c53198745d5c0aaa2779dd6e08964ed303e3",
+    "path": "task-constraint.json",
+    "task_text_interpreted_by_asm": false,
+    "value": {
+      "agent_reach": "cloud",
+      "require_agent_completable_setup": true,
+      "require_approval_for": [
+        "persistent_state"
+      ],
+      "required_functions": [
+        "issue_create"
+      ],
+      "task": "Create one issue without executing either tool in this fixture.",
+      "taxonomy": "tool.issue_tracking",
+      "user_platform": "any"
+    }
+  }
+}
