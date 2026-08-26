@@ -59,7 +59,13 @@ git clone https://github.com/YE-YI7/asm-spec.git && cd asm-spec
 python library/select_demo.py
 ```
 
-For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it picks free, scriptable **Photopea** over paid Photoshop — and filters **Affinity Designer**, which exposes no automation API at all.
+The deterministic core does **not** pretend to understand the task sentence. The
+caller supplies structured facts such as `taxonomy`, `required_functions`,
+platform, reach, and expected workload; `task` remains audit/display text. If
+taxonomy and required functions are both absent, selection returns
+`under_specified` instead of choosing an unrelated globally cheap tool.
+
+For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest from those explicit constraints. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it filters **Affinity Designer**, which exposes no automation API at all.
 
 The library it selects over is in [`library/`](library/) — 30 real tools across task management, creative design, research, communication, developer tools, booking, and real-estate data today, each carrying:
 
@@ -89,18 +95,26 @@ ASM is MCP-compatible: publish a standalone `.well-known/asm`, or embed ASM in M
 ASM ships an MCP server so any MCP client (Claude Desktop, Cursor, an agent host) can call the selector as a tool — no schema adoption required:
 
 ```bash
-python3 -m pip install "asm-protocol[mcp]==0.5.2"
+python3 -m pip install "asm-protocol[mcp]==0.6.0"
 asm-selector                     # stdio MCP server (MCP SDK 2.x)
 ```
 
 It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `asm-selector`, or at `python3 /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The Python server uses the stable MCP SDK 2.x line and supports the modern `2026-07-28` protocol era. The same selector is importable directly: `from library_select import select`.
+
+Cost output has an explicit `known`, `partial`, or `unknown` status. Metered
+prices need expected monthly usage; one-time licenses need an amortization
+period; prose-only free tiers remain unknown because their allowance and reset
+rules are not machine-readable. If every eligible candidate does not have a
+known cost in the same currency, the selector returns `needs_cost_facts` rather
+than guessing. A caller may explicitly request the `capability_breadth` fallback;
+it is never applied implicitly.
 
 The same engine is also available as:
 
 ```bash
 # CLI (human or scripted)
 asm select "find and book a refundable flight" --taxonomy tool.booking.travel \
-  --requires flight_search,flight_order_create --json
+  --requires flight_search,flight_order_create --fallback-policy capability_breadth --json
 
 # Hosted HTTP API (stdlib-only; deploy anywhere that runs Python)
 python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
@@ -364,9 +378,10 @@ Schema: [`schema/asm-v0.3.schema.json`](schema/asm-v0.3.schema.json).
 
 ```text
 schema/                         ASM JSON Schema
+src/asm_protocol/               Canonical Python SDK: selection, cost, version
 library/                        Tool-value library (agent tool selection) + select_demo.py
 manifests/                      75 source-linked manifests
-scorer/                         Python TOPSIS scorer and tests
+scorer/                         Legacy experimental per-unit TOPSIS scorer and tests
 registry/                       MCP registry server exposing ASM tools
 examples/mcp-server-json/       MCP Registry server.json examples
 docs/integrations/              MCP Registry and aggregator integration docs

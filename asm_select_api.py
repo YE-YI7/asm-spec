@@ -4,7 +4,8 @@
 Endpoints:
   POST /select          body: {task, taxonomy?, agent_reach?, user_platform?,
                                required_functions?, require_approval_for?,
-                               require_agent_completable_setup?}
+                               require_agent_completable_setup?, workload?: {
+                                 monthly_units?, amortization_months?}}
                         -> structured selection decision (same shape as library_select.select)
   GET  /tools           ?taxonomy=...  -> list of selectable tools
   GET  /.well-known/asm -> ASM catalog: one re-stampable generated_at + per-manifest
@@ -29,7 +30,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
-from library_select import load_library, monthly_cost, select
+from library_select import estimate_monthly_cost, load_library, select
 
 _LIBRARY = load_library()
 _BY_ID = {m.get("service_id"): m for m in _LIBRARY}
@@ -138,6 +139,7 @@ def _tools_listing(taxonomy: str | None) -> list[dict]:
         if taxonomy and m.get("taxonomy") != taxonomy:
             continue
         inv = m.get("invocation") or {}
+        estimate = estimate_monthly_cost(m)
         out.append({
             "service_id": m.get("service_id"),
             "display_name": m.get("display_name"),
@@ -146,7 +148,8 @@ def _tools_listing(taxonomy: str | None) -> list[dict]:
             "reach": inv.get("reach"),
             "agent_operable": inv.get("agent_operable"),
             "agent_completable_setup": inv.get("agent_completable_setup"),
-            "monthly_cost_usd": round(monthly_cost(m), 2),
+            "monthly_cost_usd": estimate.monthly_total,
+            "cost_estimate": estimate.to_dict(),
         })
     return out
 
@@ -248,18 +251,24 @@ class Handler(BaseHTTPRequestHandler):
         if not task:
             self._send(400, {"error": "'task' is required"})
             return
-        result = select(
-            task,
-            taxonomy=req.get("taxonomy"),
-            agent_reach=req.get("agent_reach", "cloud"),
-            user_platform=req.get("user_platform", "any"),
-            required_functions=req.get("required_functions") or [],
-            require_approval_for=req.get("require_approval_for") or [],
-            require_agent_completable_setup=bool(req.get("require_agent_completable_setup", False)),
-            library=_LIBRARY,
-            receipt=bool(req.get("receipt", False)),
-        )
-        self._send(200, result)
+        try:
+            result = select(
+                task,
+                taxonomy=req.get("taxonomy"),
+                agent_reach=req.get("agent_reach", "cloud"),
+                user_platform=req.get("user_platform", "any"),
+                required_functions=req.get("required_functions") or [],
+                require_approval_for=req.get("require_approval_for") or [],
+                require_agent_completable_setup=bool(req.get("require_agent_completable_setup", False)),
+                workload=req.get("workload"),
+                fallback_policy=req.get("fallback_policy"),
+                library=_LIBRARY,
+                receipt=bool(req.get("receipt", False)),
+            )
+        except (TypeError, ValueError) as error:
+            self._send(400, {"error": str(error)})
+            return
+        self._send(422 if result["selection_status"] == "under_specified" else 200, result)
 
     def log_message(self, fmt, *args):  # quiet default logging
         pass

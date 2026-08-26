@@ -20,6 +20,15 @@ Execution Receipt      what the service did        (execution-receipt family)
 
 Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": true` on `POST /select`). The closed, versioned machine contract is [`schema/selection-receipt-v0.1.schema.json`](../../schema/selection-receipt-v0.1.schema.json). A real, generated example is [`examples/receipts/selection-receipt.json`](../../examples/receipts/selection-receipt.json).
 
+Compatibility boundary: v0.1 requires a scalar `monthly_cost_usd` and cannot
+represent workload, free-tier allowance uncertainty, or an unknown total. The
+current selector response therefore carries the authoritative structured
+`cost_estimate`; the v0.1 receipt keeps its historical scalar projection so
+existing fixtures and consumers remain byte-compatible. Do not use that legacy
+projection alone for new cost-sensitive routing. A future receipt revision must
+carry the estimate status, workload, assumptions, and unknown dimensions rather
+than silently changing v0.1.
+
 | Field | Meaning |
 |---|---|
 | `receipt_type` / `receipt_version` | `"selection"` / `"0.1"` |

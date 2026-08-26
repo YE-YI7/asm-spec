@@ -86,6 +86,7 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
         require_agent_completable_setup=True,
         library=sidecars,
         receipt=True,
+        selection_profile="legacy-0.5.2",
     )
     receipt = decision["receipt"]
     # Make the conformance artifact reproducible without changing its semantics.

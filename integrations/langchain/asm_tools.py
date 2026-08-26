@@ -317,13 +317,27 @@ class ASMToolSelectorTool(BaseTool):
         )
         sel = result["selected"]
         if not sel:
-            lines = [f"No eligible tool for: {task}", "Rejected candidates:"]
+            lines = [
+                f"No selection for: {task}",
+                f"Status: {result['selection_status']}",
+                f"Reason: {result['reason']}",
+            ]
+            if result["alternatives"]:
+                lines.append("Eligible candidates needing comparable cost facts:")
+                lines += [
+                    f"  - {a['display_name']}: {a['cost_estimate']['status']} cost"
+                    for a in result["alternatives"][:6]
+                ]
+            lines.append("Rejected candidates:")
             lines += [f"  - {r['service']}: {r['reason']}" for r in result["rejected"]]
             return "\n".join(lines)
 
         lines = [
             f"Selected tool: {sel['display_name']} ({sel['service_id']})",
-            f"  cost: ${sel['monthly_cost_usd']}/mo | interface: {sel['interface']} | reach: {sel['reach']}",
+            (f"  cost: ${sel['monthly_cost_usd']}/mo"
+             if sel["monthly_cost_usd"] is not None
+             else f"  cost: {sel['cost_estimate']['status']} (workload facts required)")
+            + f" | interface: {sel['interface']} | reach: {sel['reach']}",
             f"  risk_class: {result['risk_class']} | approval_required: {result['approval_required']}",
             f"  side_effects: {', '.join(result['side_effects']) or 'none declared'}",
         ]
@@ -335,7 +349,10 @@ class ASMToolSelectorTool(BaseTool):
         lines.append(f"  reason: {result['reason']}")
         if result["alternatives"]:
             lines.append("Alternatives: " + ", ".join(
-                f"{a['display_name']} (${a['monthly_cost_usd']}/mo)" for a in result["alternatives"][:4]))
+                (f"{a['display_name']} (${a['monthly_cost_usd']}/mo)"
+                 if a["monthly_cost_usd"] is not None
+                 else f"{a['display_name']} ({a['cost_estimate']['status']} cost)")
+                for a in result["alternatives"][:4]))
         if result["rejected"]:
             lines.append("Filtered out:")
             lines += [f"  - {r['service']}: {r['reason']}" for r in result["rejected"][:6]]

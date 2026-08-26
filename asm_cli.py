@@ -515,6 +515,7 @@ def cmd_select(args: argparse.Namespace) -> int:
         required_functions=[f for f in (args.requires or "").split(",") if f],
         require_approval_for=[s for s in (args.approval_for or "").split(",") if s],
         require_agent_completable_setup=args.agent_setup_only,
+        fallback_policy=args.fallback_policy,
     )
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))
@@ -522,18 +523,26 @@ def cmd_select(args: argparse.Namespace) -> int:
 
     sel = result["selected"]
     if not sel:
-        print("No eligible tool.")
+        print(f"No selection ({result['selection_status']}): {result['reason']}")
+        for candidate in result["alternatives"][: args.limit]:
+            print(f"  candidate: {candidate['display_name']} ({candidate['cost_estimate']['status']} cost)")
         for r in result["rejected"][: args.limit]:
             print(f"  - {r['service']}: {r['reason']}")
         return 2
     print(f"Selected: {sel['display_name']} ({sel['service_id']})")
-    print(f"  cost=${sel['monthly_cost_usd']}/mo, interface={sel['interface']}, reach={sel['reach']}")
+    estimate = sel["cost_estimate"]
+    cost = (f"${sel['monthly_cost_usd']}/mo" if sel["monthly_cost_usd"] is not None
+            else f"{estimate['status']} (workload or allowance facts required)")
+    print(f"  cost={cost}, interface={sel['interface']}, reach={sel['reach']}")
     if sel.get("agent_completable_setup") is not None:
         print(f"  setup: agent_completable={sel['agent_completable_setup']}, requires={sel.get('setup_requires', [])}")
     print(f"  risk={result['risk_class']}, approval_required={result['approval_required']}, side_effects={result['side_effects']}")
     print(f"  reason: {result['reason']}")
     for alt in result["alternatives"][: args.limit]:
-        print(f"  alt: {alt['display_name']} (${alt['monthly_cost_usd']}/mo)")
+        alt_cost = (f"${alt['monthly_cost_usd']}/mo"
+                    if alt["monthly_cost_usd"] is not None
+                    else alt["cost_estimate"]["status"])
+        print(f"  alt: {alt['display_name']} ({alt_cost})")
     if result["rejected"]:
         print("  filtered out:")
         for r in result["rejected"][: args.limit]:
@@ -556,6 +565,8 @@ def build_parser() -> argparse.ArgumentParser:
                      help="Comma-separated side-effects that force approval, e.g. financial_charge,sends_message")
     sel.add_argument("--agent-setup-only", action="store_true",
                      help="Drop tools needing human-in-the-loop setup (paid signup, OAuth consent, approval)")
+    sel.add_argument("--fallback-policy", choices=["capability_breadth"],
+                     help="Explicit fallback when eligible candidate costs are not comparable")
     sel.add_argument("--json", action="store_true", help="Emit the structured decision as JSON")
     sel.add_argument("--limit", type=int, default=5, help="Maximum alternatives/rejections to print")
     sel.set_defaults(func=cmd_select)

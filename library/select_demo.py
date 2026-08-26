@@ -12,7 +12,14 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo root for library_select
-from library_select import rank, policy_of, monthly_cost  # noqa: E402
+from library_select import estimate_monthly_cost, policy_of, rank  # noqa: E402
+
+
+def cost_label(manifest):
+    estimate = estimate_monthly_cost(manifest)
+    if estimate.monthly_total is not None:
+        return f"${estimate.monthly_total:.2f}/mo"
+    return f"{estimate.status} cost"
 
 
 def show(title, task, **ctx):
@@ -23,7 +30,7 @@ def show(title, task, **ctx):
     if kept:
         top = kept[0]
         pol = policy_of(top)
-        print(f"\n  PICK -> {top['display_name']} (${monthly_cost(top):.2f}/mo)")
+        print(f"\n  PICK -> {top['display_name']} ({cost_label(top)})")
         if top.get("operational_constraints"):
             print("  policy:",
                   f"risk={pol['risk_class']},",
@@ -34,7 +41,7 @@ def show(title, task, **ctx):
             print(f"  setup: agent_completable={inv.get('agent_completable_setup')},",
                   f"requires={inv.get('setup_requires', [])}")
         for m in kept[1:]:
-            print(f"   alt:  {m['display_name']} (${monthly_cost(m):.2f}/mo)")
+            print(f"   alt:  {m['display_name']} ({cost_label(m)})")
     else:
         print("\n  PICK -> (none eligible)")
     print("  filtered out:")

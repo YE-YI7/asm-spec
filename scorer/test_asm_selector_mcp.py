@@ -34,6 +34,7 @@ def test_selector_stdio_negotiates_modern_era_and_exposes_tools() -> None:
                     "taxonomy": "tool.booking.travel",
                     "required_functions": ["flight_search", "flight_order_create"],
                     "require_approval_for": ["financial_charge"],
+                    "fallback_policy": "capability_breadth",
                 },
             )
             assert result.is_error is False

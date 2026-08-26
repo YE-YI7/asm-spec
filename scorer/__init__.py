@@ -1,4 +1,4 @@
-"""Public Python imports for ASM scoring."""
+"""Legacy experimental scorer; canonical selection lives in ``asm_protocol``."""
 
 from .scorer import (
     Constraints,
