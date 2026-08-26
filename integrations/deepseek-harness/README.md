@@ -8,7 +8,7 @@ It is deliberately narrow:
 
 - it selects; it does not invoke the selected service;
 - an `approval_required` result is not user authorization;
-- Selection Receipt v0.1 is unsigned evidence, not cryptographic attestation;
+- Selection Receipts are unsigned evidence, not cryptographic attestation;
 - it does not claim that the configured ASM catalog covers every Harness tool;
 - it does not send task text to a remote endpoint unless you configure one.
 

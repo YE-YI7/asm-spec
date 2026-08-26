@@ -46,10 +46,15 @@ execution mandate, a payment instruction, or evidence that either candidate
 ran. `approval_required: true` remains a selection fact for an independent
 permission boundary to enforce.
 
-ASM 0.5.2 does not yet encode `verification_status` inside Selection Receipt
-v0.1, so `fixture-result.json` records `unsigned` alongside the receipt digest.
-That explicit limitation must remain until the receipt contract itself grows a
-machine-readable verification field.
+ASM 0.5.2 does not encode `verification_status` inside the frozen Selection
+Receipt v0.1 contract, so `fixture-result.json` records `unsigned` alongside
+the receipt digest. Selection Receipt v0.2 adds the machine-readable field,
+but this externally reviewed v0.1 fixture remains byte-for-byte unchanged.
+
+The fixture builder uses an explicit compatibility projection to reproduce the
+historical v0.1 bytes from the current producer. Its `asm-protocol/0.5.1`
+selector label belongs to that frozen artifact; it is not a claim that the
+current selector still runs 0.5.1.
 
 The Selection Receipt pins the mutable facts used for selection; it does **not**
 bind the selected service to the Bundle digest recorded in `fixture-result.json`.

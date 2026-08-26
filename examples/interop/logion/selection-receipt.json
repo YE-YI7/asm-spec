@@ -1,0 +1,47 @@
+{
+  "receipt_type": "selection",
+  "receipt_version": "0.2",
+  "verification_status": "unsigned",
+  "selection_id": "00000000-0000-4000-8000-000000000001",
+  "issued_at": "2026-08-22T00:00:00Z",
+  "selector": {
+    "name": "asm-protocol/0.5.3",
+    "policy": "gate: agent_operable + reach + agent_completable_setup + usage_terms.automation_allowed + platform + required_functions; rank: monthly_cost asc, then functions desc"
+  },
+  "request": {
+    "task": "exercise the deterministic interoperability fixture",
+    "taxonomy": "tool.interop.fixture",
+    "agent_reach": "cloud",
+    "user_platform": "any",
+    "required_functions": [
+      "deterministic_echo"
+    ],
+    "require_approval_for": [],
+    "require_agent_completable_setup": true
+  },
+  "evidence": [
+    {
+      "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+      "hash_algorithm": "sha256",
+      "canonicalization": "asm-json-sort-keys-v1",
+      "manifest_digest": "sha256:60347dd44cbc0851c1f2c08b0eb6b864ec186c244d1f047de4a254cd73af276f"
+    }
+  ],
+  "selected": {
+    "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+    "display_name": "ASM-Logion deterministic echo fixture",
+    "monthly_cost_usd": 0.0,
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_completable_setup": true,
+    "setup_requires": []
+  },
+  "selection_reason": "Eligible low-risk tool with the required functions; no approval gate triggered.",
+  "risk_class": "low",
+  "approval_required": false,
+  "side_effects": [
+    "read_only"
+  ],
+  "alternatives": [],
+  "rejected": []
+}

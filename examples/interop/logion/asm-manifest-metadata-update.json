@@ -1,0 +1,74 @@
+{
+  "asm_version": "0.3",
+  "service_id": "asm-logion.example/deterministic-echo@1.0.0",
+  "taxonomy": "tool.interop.fixture",
+  "display_name": "ASM-Logion deterministic echo fixture",
+  "capabilities": {
+    "description": "Returns its input unchanged for a deterministic offline interoperability fixture.",
+    "functions": [
+      "deterministic_echo"
+    ],
+    "input_modalities": [
+      "text"
+    ],
+    "output_modalities": [
+      "text"
+    ]
+  },
+  "invocation": {
+    "interface": "rest_api",
+    "reach": "cloud",
+    "agent_operable": true,
+    "auth_to_invoke": "none",
+    "agent_completable_setup": true,
+    "setup_requires": [],
+    "platforms": [
+      "any"
+    ],
+    "docs_url": "https://github.com/YE-YI7/asm-spec/tree/main/examples/interop/logion"
+  },
+  "pricing": {
+    "billing_dimensions": [
+      {
+        "dimension": "request",
+        "unit": "per_1",
+        "cost_per_unit": 0.01,
+        "currency": "USD"
+      }
+    ],
+    "estimated": false
+  },
+  "payment": {
+    "methods": [
+      "invoice"
+    ],
+    "auth_type": "none"
+  },
+  "usage_terms": {
+    "automation_allowed": "yes",
+    "license": "MIT",
+    "tos_url": "https://github.com/YE-YI7/asm-spec/blob/main/LICENSE"
+  },
+  "operational_constraints": {
+    "risk_class": "low",
+    "side_effects": [
+      "read_only"
+    ],
+    "approval": {
+      "required": "never",
+      "conditions": [],
+      "human_readable": "The fixture is offline and read-only."
+    },
+    "receipt_required": false,
+    "policy_notes": "Metadata-only pricing update; the immutable resource artifact is unchanged."
+  },
+  "provenance": {
+    "source_url": "https://github.com/YE-YI7/asm-spec/tree/main/examples/interop/logion",
+    "retrieved_at": "2026-08-22T01:00:00Z",
+    "last_verified_at": "2026-08-22T01:00:00Z",
+    "verification_status": "self_reported",
+    "notes": "Metadata-only mutation fixture; no production endpoint or adoption claim."
+  },
+  "updated_at": "2026-08-22T01:00:00Z",
+  "ttl": 0
+}
