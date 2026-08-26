@@ -67,7 +67,7 @@ def test_selection_receipt_shape_and_evidence_digests():
                required_functions=["flight_search", "flight_order_create"],
                require_approval_for=["financial_charge"], receipt=True)
     rec = r["receipt"]
-    assert rec["receipt_type"] == "selection" and rec["receipt_version"] == "0.1"
+    assert rec["receipt_type"] == "selection" and rec["receipt_version"] == "0.2"
     assert rec["verification_status"] == "unsigned"
     assert rec["selector"]["name"] == "asm-protocol/0.5.3"
     assert rec["request"]["required_functions"] == ["flight_search", "flight_order_create"]

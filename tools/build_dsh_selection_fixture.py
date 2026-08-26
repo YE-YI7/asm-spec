@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import sys
@@ -19,6 +20,28 @@ if str(ROOT) not in sys.path:
 
 from library_select import manifest_digest, select  # noqa: E402
 from mcp_server_json_asm import validate_manifest  # noqa: E402
+
+
+def frozen_v01_receipt(receipt: dict[str, Any]) -> dict[str, Any]:
+    """Project the current producer output onto the externally pinned v0.1 shape.
+
+    The guarded-HCL fixture pins both the v0.1 schema bytes and receipt digest.
+    Keep that historical conformance artifact reproducible while new producers
+    move to v0.2; fail loudly if the expected v0.2 source shape changes again.
+    """
+    if receipt.get("receipt_version") != "0.2":
+        raise ValueError("expected a Selection Receipt v0.2 producer output")
+    if receipt.get("verification_status") != "unsigned":
+        raise ValueError("expected an explicitly unsigned v0.2 receipt")
+
+    projected = copy.deepcopy(receipt)
+    projected["receipt_version"] = "0.1"
+    projected.pop("verification_status")
+    projected["selector"]["name"] = "asm-protocol/0.5.1"
+    for item in projected["evidence"]:
+        item.pop("hash_algorithm")
+        item.pop("canonicalization")
+    return projected
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -87,7 +110,7 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
         library=sidecars,
         receipt=True,
     )
-    receipt = decision["receipt"]
+    receipt = frozen_v01_receipt(decision["receipt"])
     # Make the conformance artifact reproducible without changing its semantics.
     receipt["selection_id"] = "fixture-dsh-selection-boundary-0001"
     receipt["issued_at"] = "2026-08-22T00:00:00Z"

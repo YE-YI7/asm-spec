@@ -34,92 +34,36 @@
     },
     "selection_id": {
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
     "issued_at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
     },
-    "selector": {
-      "type": "object",
-      "required": [
-        "name",
-        "policy"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Claimed producer label; not a verified issuer in v0.2."
-        },
-        "policy": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "additionalProperties": false
-    },
-    "request": {
-      "type": "object",
-      "description": "Selection inputs. Real deployments must treat task text and related fields as potentially sensitive.",
-      "additionalProperties": true
-    },
+    "selector": { "$ref": "#/$defs/selector" },
+    "request": { "$ref": "#/$defs/request" },
     "evidence": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "service_id",
-          "hash_algorithm",
-          "canonicalization",
-          "manifest_digest"
-        ],
-        "properties": {
-          "service_id": {
-            "type": "string",
-            "minLength": 1
-          },
-          "hash_algorithm": {
-            "const": "sha256"
-          },
-          "canonicalization": {
-            "const": "asm-json-sort-keys-v1"
-          },
-          "manifest_digest": {
-            "type": "string",
-            "pattern": "^sha256:[0-9a-f]{64}$"
-          }
-        },
-        "additionalProperties": false
-      }
+      "items": { "$ref": "#/$defs/evidence" }
     },
     "selected": {
       "oneOf": [
         {
           "type": "null"
         },
-        {
-          "type": "object",
-          "required": [
-            "service_id"
-          ],
-          "properties": {
-            "service_id": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "additionalProperties": true
-        }
+        { "$ref": "#/$defs/selected" }
       ]
     },
     "selection_reason": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "risk_class": {
-      "type": [
-        "string",
-        "null"
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "null" }
       ]
     },
     "approval_required": {
@@ -132,19 +76,145 @@
     "side_effects": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
       }
     },
     "alternatives": {
       "type": "array",
-      "items": {
-        "type": "object"
-      }
+      "items": { "$ref": "#/$defs/alternative" }
     },
     "rejected": {
       "type": "array",
-      "items": {
-        "type": "object"
+      "items": { "$ref": "#/$defs/rejected" }
+    }
+  },
+  "$defs": {
+    "sha256Digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "policy"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Claimed producer label; not a verified issuer in v0.2."
+        },
+        "policy": { "type": "string", "minLength": 1 }
+      }
+    },
+    "request": {
+      "type": "object",
+      "description": "Selection inputs. Real deployments must treat task text and related fields as potentially sensitive.",
+      "additionalProperties": false,
+      "required": [
+        "task",
+        "taxonomy",
+        "agent_reach",
+        "user_platform",
+        "required_functions",
+        "require_approval_for",
+        "require_agent_completable_setup"
+      ],
+      "properties": {
+        "task": { "type": "string", "minLength": 1 },
+        "taxonomy": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "agent_reach": { "type": "string", "minLength": 1 },
+        "user_platform": { "type": "string", "minLength": 1 },
+        "required_functions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "require_approval_for": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "require_agent_completable_setup": { "type": "boolean" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_id",
+        "hash_algorithm",
+        "canonicalization",
+        "manifest_digest"
+      ],
+      "properties": {
+        "service_id": { "type": "string", "minLength": 1 },
+        "hash_algorithm": { "const": "sha256" },
+        "canonicalization": { "const": "asm-json-sort-keys-v1" },
+        "manifest_digest": { "$ref": "#/$defs/sha256Digest" }
+      }
+    },
+    "selected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_id",
+        "display_name",
+        "monthly_cost_usd",
+        "interface",
+        "reach",
+        "agent_completable_setup",
+        "setup_requires"
+      ],
+      "properties": {
+        "service_id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "monthly_cost_usd": { "type": "number", "minimum": 0 },
+        "interface": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "reach": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "agent_completable_setup": { "type": ["boolean", "null"] },
+        "setup_requires": {
+          "type": ["array", "null"],
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "alternative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service_id", "display_name", "monthly_cost_usd"],
+      "properties": {
+        "service_id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "monthly_cost_usd": { "type": "number", "minimum": 0 }
+      }
+    },
+    "rejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service", "service_id", "reason"],
+      "properties": {
+        "service": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "service_id": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
       }
     }
   },
@@ -152,19 +222,13 @@
     {
       "if": {
         "properties": {
-          "selected": {
-            "type": "object"
-          }
+          "selected": { "type": "object" }
         },
-        "required": [
-          "selected"
-        ]
+        "required": ["selected"]
       },
       "then": {
         "properties": {
-          "evidence": {
-            "minItems": 1
-          }
+          "evidence": { "minItems": 1 }
         }
       }
     }
