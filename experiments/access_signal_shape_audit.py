@@ -22,7 +22,6 @@ if str(ROOT) not in sys.path:
 
 from asm_access_extension import derive_access_extension, infer_access_tier
 
-
 LIBRARY = ROOT / "library"
 RESOLVER_HINT = re.compile(
     r"pricing via sales|pricing varies|model-dependent|tier-dependent|"
@@ -64,7 +63,7 @@ def audit(manifests: list[dict[str, Any]]) -> dict[str, Any]:
             free_marked.append(service_id)
         if isinstance(free_tier, str) and free_tier.strip():
             free_detail_strings.append(service_id)
-        if isinstance(free_tier, dict) or isinstance(free_tier, list):
+        if isinstance(free_tier, (dict, list)):
             structured_free_rules.append(service_id)
         if len(positive) > 1:
             multi_price.append({"service_id": service_id, "dimensions": len(positive)})

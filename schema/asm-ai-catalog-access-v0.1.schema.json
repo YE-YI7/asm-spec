@@ -4,7 +4,7 @@
   "description": "Candidate signal-only access extension for ai-catalog#83. Price echoes are non-authoritative; runtime settlement remains outside discovery.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "tier", "mechanisms", "priceEchoes", "freeTierRules"],
+  "required": ["version", "tier", "mechanisms", "priceEchoes", "freeTierRules", "source"],
   "properties": {
     "version": {
       "const": "0.1"
@@ -20,6 +20,25 @@
     "pricingUrl": {
       "type": "string",
       "format": "uri"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "retrievedAt"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "retrievedAt": { "type": "string", "format": "date-time" },
+        "contentDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "contentDigestProfile": {
+          "const": "sha256-http-response-body"
+        }
+      },
+      "dependentRequired": {
+        "contentDigest": ["contentDigestProfile"]
+      }
     },
     "pricingResolver": {
       "type": "object",

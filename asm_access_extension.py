@@ -10,7 +10,6 @@ from __future__ import annotations
 
 from typing import Any
 
-
 ACCESS_EXTENSION_KEY = "io.github.ye-yi7.asm.access"
 ACCESS_EXTENSION_VERSION = "0.1"
 
@@ -83,6 +82,10 @@ def derive_access_extension(manifest: dict[str, Any]) -> dict[str, Any]:
         "mechanisms": list(dict.fromkeys(methods)),
         "priceEchoes": _price_echoes(manifest),
         "freeTierRules": _free_tier_rules(manifest),
+        "source": {
+            "url": provenance.get("source_url"),
+            "retrievedAt": provenance.get("last_verified_at"),
+        },
     }
 
     pricing_url = payment.get("signup_url") or provenance.get("source_url")

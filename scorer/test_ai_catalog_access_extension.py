@@ -8,7 +8,6 @@ import jsonschema
 from asm_access_extension import derive_access_extension
 from experiments.access_signal_shape_audit import audit, load_manifests
 
-
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = json.loads(
     (ROOT / "schema" / "asm-ai-catalog-access-v0.1.schema.json").read_text(encoding="utf-8")

@@ -1,0 +1,46 @@
+{
+  "freeTierRules": [
+    {
+      "dimension": "prepaid_credit_usd",
+      "limit": 0.15,
+      "period": "per_claim",
+      "reset": "expires after 72 hours; claim cooldown 30 days",
+      "scope": "prepaid trial via X-Vibes-Key"
+    }
+  ],
+  "mechanisms": [
+    "x402",
+    "prepaid-key",
+    "day-pass"
+  ],
+  "priceEchoes": [
+    {
+      "amount": 0.02,
+      "asOf": "2026-08-26T16:23:42Z",
+      "currency": "USD",
+      "dimension": "action_receipt_call",
+      "scope": "/api/v1/outcomes/action-receipt",
+      "unit": "per_call"
+    },
+    {
+      "amount": 0.5,
+      "asOf": "2026-08-26T16:23:42Z",
+      "currency": "USD",
+      "dimension": "day_pass",
+      "scope": "guards",
+      "unit": "per_24_hours"
+    }
+  ],
+  "pricingResolver": {
+    "authRequired": false,
+    "type": "http",
+    "url": "https://vibes-coded.com/api/v1/outcomes/meta"
+  },
+  "pricingUrl": "https://vibes-coded.com/start",
+  "source": {
+    "retrievedAt": "2026-08-26T16:23:42Z",
+    "url": "https://vibes-coded.com/api/v1/outcomes/meta"
+  },
+  "tier": "freemium",
+  "version": "0.1"
+}
