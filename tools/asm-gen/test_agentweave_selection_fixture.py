@@ -33,6 +33,12 @@ def test_agentweave_fixture_is_schema_valid_and_bounded() -> None:
     assert len(result["routing_decision"]["model_visible_tools"]) == 1
     assert result["routing_decision"]["execution_attempted"] is False
     assert result["agentweave_provenance_boundary"]["native_record_generated"] is False
+    receipt_reference = result["selection_receipt"]
+    assert receipt_reference["uri"] == "selection-receipt.json"
+    assert receipt_reference["digest"].startswith("sha256:")
+    assert receipt_reference["purpose"] == "provenance_only"
+    assert receipt_reference["required_by_agentweave"] is False
+    assert receipt_reference["validated_by_agentweave"] is False
     assert all(result["assertions"].values())
 
 

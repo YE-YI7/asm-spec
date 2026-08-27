@@ -158,8 +158,12 @@ def build_fixture() -> tuple[dict[str, Any], dict[str, Any]]:
             "execution_attempted": False,
         },
         "selection_receipt": {
-            "path": "selection-receipt.json",
+            "uri": "selection-receipt.json",
             "digest": canonical_digest(receipt),
+            "digest_profile": "python-json-sort-keys-compact-utf8-v0.1",
+            "purpose": "provenance_only",
+            "required_by_agentweave": False,
+            "validated_by_agentweave": False,
             "verification_status": "unsigned",
             "authorization": False,
         },

@@ -34,7 +34,8 @@ fields or AgentWeave, and it is not an AgentWeave adoption claim.
   facts, and selector version.
 - [`fixture-result.json`](fixture-result.json) pins the source-catalog digest,
   exact selected descriptor, filtered descriptor, and the boundary with
-  AgentWeave's native routing-provenance record.
+  AgentWeave's native routing-provenance record. Its optional receipt reference
+  uses a relative URI plus digest and remains provenance-only.
 
 Both candidates satisfy the structured capability constraints. Their declared
 costs are unambiguous USD monthly subscriptions ($4 and $9), so ASM selects the
@@ -67,19 +68,27 @@ does not fabricate that native record. It references AgentWeave commit
 `1f2e9c88c6e85dc072e17fb06ff67038c4d45687`, where the MCP example and native
 provenance implementation were inspected.
 
+Following [Saurav Singla's maintainer review](https://github.com/YE-YI7/asm-spec/pull/16#issuecomment-5428062251),
+the fixture records a candidate optional reference as a relative `uri` plus a
+`sha256:` digest. The URI is resolved relative to this fixture directory. The
+digest profile is the fixture's explicitly named compact, sorted-key UTF-8 JSON
+encoding. The reference is marked `purpose: provenance_only`,
+`required_by_agentweave: false`, and `validated_by_agentweave: false`; it is not
+an AgentWeave native field or an assertion that AgentWeave validated ASM.
+
 The receipt is unsigned and does not attest that either synthetic price is true.
 `approval_required: true` is a policy input, not authorization. The fixture does
 not call either tool, create an issue, perform a payment, or prove production
 interoperability.
 
-## Review questions
+## Review result and remaining confirmation
 
-1. Is the provisional sidecar-to-MCP-descriptor binding sufficient and placed at
-   the right boundary?
-2. Does the Selection Receipt contain enough pre-inference provenance for an
-   AgentWeave consumer to inspect and reproduce this decision?
-3. What minimal reference should AgentWeave's native provenance carry back to
-   this receipt: its digest, URI plus digest, or neither?
+The maintainer found the provisional namespaced binding sufficient for this
+review fixture and the receipt adequate for independently inspecting and
+reproducing the pre-inference decision. His preferred minimal reference is an
+optional URI plus digest, kept as provenance metadata only. The remaining
+confirmation is whether the neutral candidate representation in
+`fixture-result.json` matches that preference; no AgentWeave adoption is implied.
 
 Upstream context:
 

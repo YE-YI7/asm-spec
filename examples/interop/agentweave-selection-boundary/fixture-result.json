@@ -67,7 +67,11 @@
   "selection_receipt": {
     "authorization": false,
     "digest": "sha256:ab099b8febf7d0b2fe3177df2774bf803ff9d452245b1105552fd63cded92514",
-    "path": "selection-receipt.json",
+    "digest_profile": "python-json-sort-keys-compact-utf8-v0.1",
+    "purpose": "provenance_only",
+    "required_by_agentweave": false,
+    "uri": "selection-receipt.json",
+    "validated_by_agentweave": false,
     "verification_status": "unsigned"
   },
   "source_catalog": {
