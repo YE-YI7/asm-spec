@@ -20,7 +20,7 @@ runs:
   steps:
     - name: Install ASM lint
       shell: bash
-      run: python -m pip install "asm-protocol==0.5.2"
+      run: python -m pip install "asm-protocol==0.6.0"
     - name: Validate ASM metadata
       shell: bash
       env:

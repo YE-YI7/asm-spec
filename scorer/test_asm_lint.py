@@ -52,6 +52,20 @@ def test_lints_direct_manifest_as_selection_ready(tmp_path):
     assert report["issues"] == []
 
 
+def test_ten_minute_adoption_example_is_selection_ready():
+    report = build_report(
+        EXAMPLES / "operational-envelope-with-asm.server.json", AS_OF
+    )
+
+    assert report["statuses"] == {
+        "schema": "valid",
+        "provenance": "complete",
+        "freshness": "fresh",
+        "selection_readiness": "ready",
+    }
+    assert report["issues"] == []
+
+
 def test_missing_asm_fails_default_policy(tmp_path, capsys):
     path = tmp_path / "server.json"
     path.write_text(json.dumps({"name": "io.example/no-asm"}), encoding="utf-8")

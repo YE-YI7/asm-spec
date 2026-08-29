@@ -25,7 +25,7 @@ It accepts either a standalone ASM manifest or an MCP Registry `server.json`
 with publisher-provided ASM metadata:
 
 ```bash
-python -m pip install "asm-protocol==0.5.2"
+python -m pip install "asm-protocol==0.6.0"
 asm-lint server.json --format markdown --output asm-lint-report.md
 ```
 
@@ -42,7 +42,7 @@ steps:
   - uses: actions/setup-python@v5
     with:
       python-version: "3.12"
-  - uses: YE-YI7/asm-spec/.github/actions/asm-lint@v0.5.2
+  - uses: YE-YI7/asm-spec/.github/actions/asm-lint@v0.6.0
     with:
       path: server.json
       fail-on: invalid
@@ -51,6 +51,8 @@ steps:
 The Action adds the full Markdown report to the job summary. It does not call
 an ASM-hosted API or upload the inspected manifest. See the
 [lint and CI guide](docs/adoption/asm-lint.md) for status semantics.
+For a bounded producer-side change, use the
+[10-minute adoption package](docs/adoption/ten-minute.md).
 
 ## Try it: pick a tool for a task
 
@@ -134,7 +136,7 @@ from asm_protocol.integrations.langchain import ASMToolSelectorTool
 agent_tools = [ASMToolSelectorTool()]   # name: asm_tool_selector
 ```
 
-Install it with `python -m pip install "asm-protocol[langchain]"`. LangChain
+Install it with `python -m pip install "asm-protocol[langchain]==0.6.0"`. LangChain
 hosts receive the full structured decision in `ToolMessage.artifact`; the
 model-facing content remains a short summary. The adapter never executes or
 authorizes the selected service.

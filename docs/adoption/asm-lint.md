@@ -7,7 +7,7 @@ The same manifest and `--as-of` time produce the same statuses and digest.
 ## Install and run
 
 ```bash
-python -m pip install "asm-protocol==0.5.2"
+python -m pip install "asm-protocol==0.6.0"
 asm-lint path/to/server.json
 ```
 
@@ -69,7 +69,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: YE-YI7/asm-spec/.github/actions/asm-lint@v0.5.2
+      - uses: YE-YI7/asm-spec/.github/actions/asm-lint@v0.6.0
         with:
           path: server.json
           fail-on: invalid
@@ -84,3 +84,6 @@ API nor uploads the inspected manifest.
 An external repository keeping this check enabled, with a report tied to a
 manifest digest, is an observable adoption receipt. A self-owned workflow,
 README badge, star, or verbal expression of interest is not.
+
+For the smallest reviewable producer change, follow the
+[10-minute adoption package](ten-minute.md).
