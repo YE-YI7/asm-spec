@@ -18,16 +18,27 @@ Execution Receipt      what the service did        (execution-receipt family)
 
 ## Shape (v0.1)
 
-Emitted by the selector when asked (`select(..., receipt=True)`, or `"receipt": true` on `POST /select`). The closed, versioned machine contract is [`schema/selection-receipt-v0.1.schema.json`](../../schema/selection-receipt-v0.1.schema.json). A real, generated example is [`examples/receipts/selection-receipt.json`](../../examples/receipts/selection-receipt.json).
+Emitted only by the frozen compatibility profile
+(`select(..., selection_profile="legacy-0.5.2", receipt=True)`, or the
+equivalent fields on `POST /select`). The closed, versioned machine contract is
+[`schema/selection-receipt-v0.1.schema.json`](../../schema/selection-receipt-v0.1.schema.json).
+A generated compatibility example is
+[`examples/receipts/selection-receipt.json`](../../examples/receipts/selection-receipt.json).
 
 Compatibility boundary: v0.1 requires a scalar `monthly_cost_usd` and cannot
 represent workload, free-tier allowance uncertainty, or an unknown total. The
 current selector response therefore carries the authoritative structured
-`cost_estimate`; the v0.1 receipt keeps its historical scalar projection so
-existing fixtures and consumers remain byte-compatible. Do not use that legacy
-projection alone for new cost-sensitive routing. A future receipt revision must
-carry the estimate status, workload, assumptions, and unknown dimensions rather
-than silently changing v0.1.
+`cost_estimate` and does not emit v0.1. The compatibility profile keeps its
+historical scalar projection so existing fixtures and consumers remain
+byte-compatible. Do not present that legacy projection as a v0.6 cost-safe
+decision. A future receipt revision must carry the estimate status, workload,
+assumptions, fallback policy, and unknown dimensions rather than silently
+changing v0.1.
+
+The frozen receipt identifies its historical selector as
+`asm-protocol/0.5.1`. That value is part of the v0.1 fixture contract; it is not
+the installed SDK version. The `legacy-0.5.2` profile name identifies the last
+SDK compatibility baseline that reproduces this contract.
 
 | Field | Meaning |
 |---|---|

@@ -268,6 +268,11 @@ def build_selection_receipt(
     selection_profile: str = "current",
 ) -> dict:
     """Build the frozen Selection Receipt v0.1 compatibility projection."""
+    if selection_profile != "legacy-0.5.2":
+        raise ValueError(
+            "Selection Receipt v0.1 is only valid for "
+            "selection_profile='legacy-0.5.2'"
+        )
     legacy = selection_profile == "legacy-0.5.2"
     return {
         "receipt_type": "selection",
@@ -332,6 +337,14 @@ def select(
 ) -> dict:
     """Return a decision from structured constraints; never parse ``task`` text."""
     workload = coerce_workload(workload)
+    if selection_profile == "legacy-0.5.2" and (
+        fallback_policy is not None
+        or workload.monthly_units
+        or workload.amortization_months is not None
+    ):
+        raise ValueError(
+            "selection_profile='legacy-0.5.2' cannot use workload or fallback_policy"
+        )
     out = {
         "task": task,
         "task_interpreted": False,
@@ -393,7 +406,11 @@ def select(
         elif kept:
             top = kept[0]
             policy = policy_of(top, require_approval_for)
-            out["selected"] = _selected_view(top, workload)
+            out["selected"] = (
+                _receipt_candidate(top, pool)
+                if selection_profile == "legacy-0.5.2"
+                else _selected_view(top, workload)
+            )
             out["risk_class"] = policy["risk_class"]
             out["approval_required"] = policy["approval_required"]
             out["side_effects"] = policy["side_effects"]
@@ -422,13 +439,18 @@ def select(
                         else "no approval gate triggered."
                     )
                 )
-            out["alternatives"] = [_selected_view(m, workload) for m in kept[1:]]
+            out["alternatives"] = (
+                _receipt_alternatives(kept[1:], pool)
+                if selection_profile == "legacy-0.5.2"
+                else [_selected_view(m, workload) for m in kept[1:]]
+            )
 
     if receipt:
-        if selection_profile == "current" and fallback_policy is not None:
+        if selection_profile == "current":
             raise ValueError(
-                "Selection Receipt v0.1 cannot encode fallback_policy; "
-                "omit the fallback or use a future receipt contract"
+                "Selection Receipt v0.1 cannot represent the v0.6 structured "
+                "cost decision; omit receipt or use "
+                "selection_profile='legacy-0.5.2' for a frozen compatibility projection"
             )
         out["receipt"] = build_selection_receipt(
             out,

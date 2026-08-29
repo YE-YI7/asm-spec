@@ -9,7 +9,6 @@ from jsonschema import Draft202012Validator
 
 from library_select import load_library, select
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = json.loads(
     (ROOT / "schema" / "selection-receipt-v0.1.schema.json").read_text(
@@ -55,6 +54,7 @@ def test_selection_receipt_schema_accepts_live_producer_receipts(
         agent_reach="cloud",
         user_platform="any",
         receipt=True,
+        selection_profile="legacy-0.5.2",
     )
     VALIDATOR.validate(decision["receipt"])
 

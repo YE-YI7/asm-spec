@@ -122,17 +122,22 @@ python asm_select_api.py     # POST /select, GET /tools, GET /healthz on :8787
 
 DeepSeek Harness developer-preview users can install the native
 [`asm_select` tool adapter](integrations/deepseek-harness/README.md). It uses
-the same HTTP contract and returns an unsigned Selection Receipt, but never
-invokes or authorizes the selected service. The adapter defaults to a local
-selector so task text is not sent to a hosted endpoint implicitly.
+the same HTTP contract and returns the current structured decision, but never
+invokes or authorizes the selected service. The frozen v0.1 receipt is available
+only through an explicit legacy compatibility profile. The adapter defaults to
+a local selector so task text is not sent to a hosted endpoint implicitly.
 
-LangChain / LangGraph builders get the same selector as a drop-in tool (`pip install langchain-core`):
+LangChain / LangGraph builders get the same selector as a packaged drop-in tool:
 
 ```python
-import sys; sys.path += ["asm-spec", "asm-spec/integrations/langchain"]
-from asm_tools import ASMToolSelectorTool
+from asm_protocol.integrations.langchain import ASMToolSelectorTool
 agent_tools = [ASMToolSelectorTool()]   # name: asm_tool_selector
 ```
+
+Install it with `python -m pip install "asm-protocol[langchain]"`. LangChain
+hosts receive the full structured decision in `ToolMessage.artifact`; the
+model-facing content remains a short summary. The adapter never executes or
+authorizes the selected service.
 
 A public reference instance runs at **https://asm-spec.onrender.com**. It also dogfoods ASM's own publishing convention: `GET /.well-known/asm` serves the library catalog (one re-stampable `generated_at`, per-manifest links), and `GET /manifest/{service_id}` serves each full manifest — ASM is its own first publisher.
 

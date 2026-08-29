@@ -5,13 +5,12 @@ import { createAsmListTool, createAsmSelectTool, requestSelection, requestServic
 const openSignal = new AbortController().signal
 
 describe('ASM DeepSeek Harness plugin', () => {
-  it('maps tool arguments to POST /select and always requests a receipt', async () => {
+  it('maps tool arguments to the current selector without requesting a legacy receipt', async () => {
     let capturedUrl = ''
     let capturedInit: RequestInit | undefined
     const decision = {
       selected: { service_id: 'example/service@1', display_name: 'Example' },
       reason: 'eligible',
-      receipt: { receipt_type: 'selection', receipt_version: '0.1' },
     }
     const fetchImpl: typeof fetch = async (input, init) => {
       capturedUrl = String(input)
@@ -40,7 +39,31 @@ describe('ASM DeepSeek Harness plugin', () => {
       task: 'book a refundable flight',
       taxonomy: 'tool.booking.travel',
       required_functions: ['flight_search'],
+    })
+  })
+
+  it('requests the frozen receipt only with an explicit legacy profile', async () => {
+    let capturedInit: RequestInit | undefined
+    const fetchImpl: typeof fetch = async (_input, init) => {
+      capturedInit = init
+      return new Response(JSON.stringify({
+        selected: { service_id: 'example/service@1' },
+        reason: 'legacy selection',
+        receipt: { receipt_type: 'selection', receipt_version: '0.1' },
+      }), { status: 200 })
+    }
+    await requestSelection(
+      'http://127.0.0.1:8787',
+      { task: 'x', taxonomy: 'tool.example' },
+      openSignal,
+      fetchImpl,
+      true,
+    )
+    assert.deepEqual(JSON.parse(String(capturedInit?.body)), {
+      task: 'x',
+      taxonomy: 'tool.example',
       receipt: true,
+      selection_profile: 'legacy-0.5.2',
     })
   })
 

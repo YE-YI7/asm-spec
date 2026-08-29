@@ -27,7 +27,13 @@ asm-selector = "asm_selector_mcp:main"
 
 [tool.setuptools]
 py-modules = ["asm_cli", "asm_lint", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
-packages = ["asm_protocol", "scorer", "scorer.data", "asm_schema"]
+packages = [
+  "asm_protocol",
+  "asm_protocol.integrations",
+  "scorer",
+  "scorer.data",
+  "asm_schema",
+]
 
 [tool.setuptools.package-dir]
 asm_protocol = "src/asm_protocol"

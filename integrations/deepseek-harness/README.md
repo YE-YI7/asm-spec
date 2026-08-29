@@ -2,13 +2,15 @@
 
 This package adds two native DeepSeek Harness tools: `asm_list_services` shows
 what the configured catalog actually covers, and `asm_select` chooses within
-one explicit taxonomy and returns the decision with a Selection Receipt.
+one explicit taxonomy and returns the structured decision.
 
 It is deliberately narrow:
 
 - it selects; it does not invoke the selected service;
 - an `approval_required` result is not user authorization;
-- Selection Receipt v0.1 is unsigned evidence, not cryptographic attestation;
+- the current v0.6 cost-safe selector does not emit the frozen v0.1 receipt;
+- optional `legacyReceipt: true` reproduces the 0.5.2 selector and its unsigned
+  v0.1 receipt, but must not be described as a current cost-safe decision;
 - it does not claim that the configured ASM catalog covers every Harness tool;
 - it does not send task text to a remote endpoint unless you configure one.
 
@@ -42,8 +44,8 @@ contributes its `cordis.patch.yml` automatically.
 
 The selection tool accepts the same constraints as `POST /select`: task, taxonomy,
 runtime reach, user platform, required functions, approval-triggering side
-effects, and whether setup must be agent-completable. It always requests a
-Selection Receipt.
+effects, and whether setup must be agent-completable. It does not request the
+legacy Selection Receipt unless `legacyReceipt: true` is explicitly configured.
 
 `taxonomy` is required by the Harness adapter. The current ASM library selector
 does not infer taxonomy from natural-language task text, so allowing an

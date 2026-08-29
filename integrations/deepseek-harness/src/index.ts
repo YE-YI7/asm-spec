@@ -25,6 +25,8 @@ export interface Config {
   toolName?: string
   /** Model-facing catalog-listing tool name. */
   listToolName?: string
+  /** Explicitly reproduce the frozen 0.5.2 selector and v0.1 receipt contract. */
+  legacyReceipt?: boolean
 }
 
 export const Config: z<Config> = z.object({
@@ -32,6 +34,7 @@ export const Config: z<Config> = z.object({
   timeoutMs: z.number().default(DEFAULT_TIMEOUT_MS),
   toolName: z.string().default(DEFAULT_TOOL_NAME),
   listToolName: z.string().default(DEFAULT_LIST_TOOL_NAME),
+  legacyReceipt: z.boolean().default(false),
 })
 
 interface ResolvedConfig {
@@ -39,6 +42,7 @@ interface ResolvedConfig {
   timeoutMs: number
   toolName: string
   listToolName: string
+  legacyReceipt: boolean
 }
 
 export interface SelectRequest {
@@ -78,7 +82,13 @@ function resolveConfig(config: Config): ResolvedConfig {
   if (toolName === listToolName) {
     throw new Error('asm-selector: toolName and listToolName must be different')
   }
-  return { endpoint, timeoutMs, toolName, listToolName }
+  return {
+    endpoint,
+    timeoutMs,
+    toolName,
+    listToolName,
+    legacyReceipt: config.legacyReceipt ?? false,
+  }
 }
 
 function assertDecision(value: unknown): asserts value is JsonValue {
@@ -111,13 +121,16 @@ export async function requestSelection(
   request: SelectRequest,
   signal: AbortSignal,
   fetchImpl: typeof fetch = fetch,
+  legacyReceipt = false,
 ): Promise<JsonValue> {
   let response: Response
   try {
     response = await fetchImpl(`${endpoint}/select`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ ...request, receipt: true }),
+      body: JSON.stringify(legacyReceipt
+        ? { ...request, receipt: true, selection_profile: 'legacy-0.5.2' }
+        : request),
       signal,
     })
   } catch (error: unknown) {
@@ -178,7 +191,7 @@ export function createAsmSelectTool(config: Config = {}): ToolDefinition {
   return defineTool({
     name: resolved.toolName,
     description:
-      'Choose within one explicit ASM taxonomy before a consequential service call. Returns eligibility, risk, approval requirement, alternatives, and an unsigned Selection Receipt. It does not infer taxonomy from task text. It does not execute a service or grant authorization. Call the catalog-listing tool first if the taxonomy is unknown.',
+      'Choose within one explicit ASM taxonomy before a consequential service call. Returns eligibility, risk, approval requirement, and alternatives. The current cost-safe selector does not emit the frozen v0.1 receipt unless legacyReceipt is explicitly configured. It does not infer taxonomy from task text, does not execute any service, and does not grant authorization. Call the catalog-listing tool first if the taxonomy is unknown.',
     parameters: {
       task: {
         type: 'string',
@@ -215,7 +228,13 @@ export function createAsmSelectTool(config: Config = {}): ToolDefinition {
     async execute(args, exec) {
       const linked = linkedSignal(exec.signal, resolved.timeoutMs)
       try {
-        return await requestSelection(resolved.endpoint, args, linked.signal)
+        return await requestSelection(
+          resolved.endpoint,
+          args,
+          linked.signal,
+          fetch,
+          resolved.legacyReceipt,
+        )
       } finally {
         linked.dispose()
       }

@@ -262,6 +262,7 @@ class Handler(BaseHTTPRequestHandler):
                 require_agent_completable_setup=bool(req.get("require_agent_completable_setup", False)),
                 workload=req.get("workload"),
                 fallback_policy=req.get("fallback_policy"),
+                selection_profile=req.get("selection_profile", "current"),
                 library=_LIBRARY,
                 receipt=bool(req.get("receipt", False)),
             )
