@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "asm-protocol"
-version = "0.5.2"
+dynamic = ["version"]
 description = "Agent Service Manifest: value metadata and scoring for autonomous service selection"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,10 +27,20 @@ asm-selector = "asm_selector_mcp:main"
 
 [tool.setuptools]
 py-modules = ["asm_cli", "asm_lint", "mcp_server_json_asm", "openrouter_adapter", "library_select", "asm_selector_mcp", "asm_select_api", "_asm_library_data"]
-packages = ["scorer", "asm_schema"]
+packages = [
+  "asm_protocol",
+  "asm_protocol.integrations",
+  "scorer",
+  "scorer.data",
+  "asm_schema",
+]
 
 [tool.setuptools.package-dir]
+asm_protocol = "src/asm_protocol"
 asm_schema = "schema"
+
+[tool.setuptools.dynamic]
+version = {attr = "asm_protocol.version.__version__"}
 
 [tool.setuptools.package-data]
 scorer = ["data/*.json"]
@@ -39,3 +49,4 @@ asm_schema = ["*.json"]
 [tool.pytest.ini_options]
 testpaths = ["scorer", "tools/asm-gen"]
 python_files = ["test_*.py"]
+pythonpath = [".", "src"]

@@ -35,7 +35,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from library_select import eligibility, load_library, monthly_cost  # noqa: E402
+from library_select import (  # noqa: E402
+    eligibility,
+    legacy_monthly_cost as monthly_cost,
+    load_library,
+)
 
 MAX_PER_BUCKET = 6          # cap per (taxonomy, type) to keep the set diverse
 REACHES = ["cloud", "local_device"]

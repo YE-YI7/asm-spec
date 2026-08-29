@@ -1,8 +1,13 @@
-"""ASM Scorer — Service selection engine for Agent Service Manifest.
+"""Experimental per-unit utility scorer for Agent Service Manifest.
 
 v0.2: Weighted average scoring (demo-ready)
 v1.0: Filter (hard constraints) + TOPSIS (multi-criteria ranking)
 v1.1: Trust delta scoring with exponential decay (Signed Receipts integration)
+
+This module is not the canonical workload-aware selector. Its ``cost_per_unit``
+vector compares like units inside curated model sets. Production eligibility,
+workload cost, policy gates, and Selection Receipts live in
+``asm_protocol.selection``. The legacy API remains importable for compatibility.
 """
 from __future__ import annotations
 
@@ -752,7 +757,10 @@ def select_service(
     preferences: Preferences | None = None,
     method: str = "topsis",
 ) -> list[ScoredService]:
-    """End-to-end service selection pipeline.
+    """Run the experimental TOPSIS/weighted-average utility pipeline.
+
+    Do not use this function as a monthly-cost selector across unlike billing
+    units. Use ``asm_protocol.selection.select`` for the canonical contract.
     
     Args:
         manifests: List of ASM manifest dicts

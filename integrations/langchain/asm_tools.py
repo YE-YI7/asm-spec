@@ -26,7 +26,10 @@ if str(_REPO_ROOT) not in sys.path:
 if _SCORER_DIR not in sys.path:
     sys.path.insert(0, _SCORER_DIR)
 
-from library_select import select as _library_select  # noqa: E402
+from asm_protocol.integrations.langchain import (  # noqa: E402
+    ASMToolSelectorInput,
+    ASMToolSelectorTool,
+)
 
 from scorer import (  # noqa: E402
     Constraints,
@@ -236,110 +239,6 @@ def _format_comparison_table(manifests: list[dict]) -> str:
         body_lines.append(f"| {dim} | " + " | ".join(vals) + " |")
 
     return "\n".join([header, sep] + body_lines)
-
-
-# ============================================================
-# ASMToolSelectorTool — agent 工具选择 (library/)
-# ============================================================
-
-class ASMToolSelectorInput(BaseModel):
-    """ASMToolSelectorTool 的输入 schema。"""
-    task: str = Field(
-        description="Natural-language description of the task the agent must perform, "
-        "e.g. 'find and book a refundable flight' or 'store a study plan with daily reminders'."
-    )
-    taxonomy: Optional[str] = Field(
-        default=None,
-        description="Optional ASM taxonomy to scope candidates, e.g. 'tool.booking.travel', "
-        "'tool.productivity.task_management', 'tool.data.real_estate'.",
-    )
-    agent_reach: str = Field(
-        default="cloud",
-        description="Where this agent runs: 'cloud' (remote/headless) or 'local_device' "
-        "(on the user's own machine — required to drive local-only tools).",
-    )
-    user_platform: str = Field(
-        default="any",
-        description="The user's platform: windows, macos, ios, android, web, or any.",
-    )
-    required_functions: str = Field(
-        default="",
-        description="Comma-separated capability names the tool must have, "
-        "e.g. 'flight_search,flight_order_create' or 'reminders,recurring_tasks'.",
-    )
-    require_approval_for: str = Field(
-        default="financial_charge,sends_message,executes_code",
-        description="Comma-separated side-effects that force approval before invocation.",
-    )
-    require_agent_completable_setup: bool = Field(
-        default=False,
-        description="If true, drop tools whose onboarding needs a human (paid signup, "
-        "OAuth consent, manual approval) — keep only tools usable unattended right now.",
-    )
-
-
-class ASMToolSelectorTool(BaseTool):
-    """从 ASM tool-value library 中为任务选择工具。
-
-    资格门(能否调用 / 是否许可 / 平台与能力适配) → 成本排序 →
-    返回选定工具 + 操作策略(risk / approval / side-effects),供调用方
-    在执行前做审批闸口。
-    """
-
-    name: str = "asm_tool_selector"
-    description: str = (
-        "Pick the right TOOL (real product/API, not a model) for an agent task from the "
-        "ASM tool-value library. Filters out tools the agent cannot drive (GUI-only, "
-        "local-only, ToS-forbidden, missing capabilities), ranks the rest by cost, and "
-        "returns the pick with its risk class, approval requirement, and side effects. "
-        "Use before invoking any external tool on a user's behalf."
-    )
-    args_schema: Type[BaseModel] = ASMToolSelectorInput
-
-    def _run(
-        self,
-        task: str,
-        taxonomy: Optional[str] = None,
-        agent_reach: str = "cloud",
-        user_platform: str = "any",
-        required_functions: str = "",
-        require_approval_for: str = "financial_charge,sends_message,executes_code",
-        require_agent_completable_setup: bool = False,
-    ) -> str:
-        result = _library_select(
-            task,
-            taxonomy=taxonomy,
-            agent_reach=agent_reach,
-            user_platform=user_platform,
-            required_functions=[f.strip() for f in required_functions.split(",") if f.strip()],
-            require_approval_for=[s.strip() for s in require_approval_for.split(",") if s.strip()],
-            require_agent_completable_setup=require_agent_completable_setup,
-        )
-        sel = result["selected"]
-        if not sel:
-            lines = [f"No eligible tool for: {task}", "Rejected candidates:"]
-            lines += [f"  - {r['service']}: {r['reason']}" for r in result["rejected"]]
-            return "\n".join(lines)
-
-        lines = [
-            f"Selected tool: {sel['display_name']} ({sel['service_id']})",
-            f"  cost: ${sel['monthly_cost_usd']}/mo | interface: {sel['interface']} | reach: {sel['reach']}",
-            f"  risk_class: {result['risk_class']} | approval_required: {result['approval_required']}",
-            f"  side_effects: {', '.join(result['side_effects']) or 'none declared'}",
-        ]
-        if sel.get("agent_completable_setup") is not None:
-            lines.append(
-                f"  setup: agent_completable={sel['agent_completable_setup']}, "
-                f"requires={sel.get('setup_requires', [])}"
-            )
-        lines.append(f"  reason: {result['reason']}")
-        if result["alternatives"]:
-            lines.append("Alternatives: " + ", ".join(
-                f"{a['display_name']} (${a['monthly_cost_usd']}/mo)" for a in result["alternatives"][:4]))
-        if result["rejected"]:
-            lines.append("Filtered out:")
-            lines += [f"  - {r['service']}: {r['reason']}" for r in result["rejected"][:6]]
-        return "\n".join(lines)
 
 
 # ============================================================
