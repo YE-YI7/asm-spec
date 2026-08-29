@@ -16,3 +16,20 @@ def test_mcp_server_imports_single_version_source():
     source = Path("asm_selector_mcp.py").read_text(encoding="utf-8")
     assert "from library_select import SELECTOR_VERSION" in source
     assert 'version="0.5.1"' not in source
+
+
+def test_public_adoption_entrypoints_pin_the_package_release():
+    release = __version__
+    package_pin = f"asm-protocol=={release}"
+    action_pin = f"@v{release}"
+    paths = [
+        Path("README.md"),
+        Path("docs/adoption/asm-lint.md"),
+        Path("docs/adoption/ten-minute.md"),
+    ]
+    action = Path(".github/actions/asm-lint/action.yml").read_text(encoding="utf-8")
+    assert package_pin in action
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        assert package_pin in text
+        assert action_pin in text

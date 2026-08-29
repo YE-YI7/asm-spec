@@ -126,10 +126,10 @@ See the v0.4 draft RFC:
 
 ## 5. Validate
 
-From an ASM checkout:
+Install the pinned public release and validate locally:
 
 ```bash
-pip install -e .
+python -m pip install "asm-protocol==0.6.0"
 asm-mcp-validate path/to/server.json
 ```
 

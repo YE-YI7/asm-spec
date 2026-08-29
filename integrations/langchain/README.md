@@ -7,7 +7,7 @@ into authorization.
 ## Install
 
 ```bash
-python -m pip install "asm-protocol[langchain]"
+python -m pip install "asm-protocol[langchain]==0.6.0"
 ```
 
 The compatibility checkout imports in this directory remain available, but new
