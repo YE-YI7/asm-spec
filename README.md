@@ -77,12 +77,53 @@ The library it selects over is in [`library/`](library/) — 30 real tools acros
 - **data_governance** — ownership, export, whether it trains on your data
 
 Entries are schema-validated and source-linked; unverified dimensions are marked, not faked.
+They are not a live directory: the 2026-08-31 offline audit classifies the 30
+library entries as stale and the separate 75-manifest research set as expired.
+Schema validity is not current-fact evidence.
 
 June 2026 coverage update: the tool-selection library now includes 30 source-linked tools across seven domains. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights.
 
 Productization/distribution plan: [`docs/productization-distribution.md`](docs/productization-distribution.md).
 
 Coverage report and remaining unknowns: [`docs/library-coverage-report.md`](docs/library-coverage-report.md).
+
+### Development preview: adaptive selection v0.7
+
+The unreleased v0.7 branch treats TOPSIS as a named historical baseline rather
+than ASM's default innovation. These commands are available from this source
+branch only; PyPI `0.6.0` remains the current stable release. The branch adds
+four experimental pieces:
+
+- cursor-safe discovery from the official MCP Registry; discovery records are
+  explicitly not promoted to selection-ready manifests;
+- one adaptive decision result built on the canonical eligibility gates;
+- a local owner preference ledger and Bayesian online-learning baseline that
+  stores normalized evidence, not raw prompts;
+- per-claim freshness gates plus Value-of-Information clarification. Unknown
+  risk fails closed, and LinUCB/Thompson exploration is disabled for
+  consequential or irreversible actions.
+
+Cost and latency are not normalized against whichever candidates happen to be
+present. They become preference features only when the agent already knows an
+owner budget or latency target; otherwise they remain unknown. VoI likewise
+does not invent an interruption cost: a caller may supply a learned estimate,
+or the result records that the comparison is not calibrated.
+
+```bash
+# Search only three registry pages; candidates still need ASM facts.
+asm discover "web search" --max-pages 3 --limit 5
+
+# Strict freshness is the default. allow_stale is an explicit development-only override.
+asm adaptive-select "make a recurring study plan" \
+  --taxonomy tool.productivity.task_management \
+  --requires recurring_tasks --monthly-budget 20 \
+  --freshness-policy allow_stale --json
+```
+
+The research basis, alternatives, failure modes, and promotion gates are in
+[`docs/design/adaptive-selection-v0.7.md`](docs/design/adaptive-selection-v0.7.md).
+No adaptive policy becomes the release default until held-out owner outcomes,
+not TOPSIS's own utility score, beat the compatibility baselines.
 
 ## The gap ASM fills
 
@@ -101,7 +142,14 @@ python3 -m pip install "asm-protocol[mcp]==0.6.0"
 asm-selector                     # stdio MCP server (MCP SDK 2.x)
 ```
 
-It exposes three tools: **`select_tool`** (pick a tool for a task and return its risk/approval policy), **`list_library_tools`**, and **`get_tool_manifest`**. Point your client's MCP config at `asm-selector`, or at `python3 /path/to/asm-spec/asm_selector_mcp.py`; the selector reads `library/` (override with `ASM_LIBRARY_DIR`). The Python server uses the stable MCP SDK 2.x line and supports the modern `2026-07-28` protocol era. The same selector is importable directly: `from library_select import select`.
+The stable surface exposes **`select_tool`**, **`list_library_tools`**, and
+**`get_tool_manifest`**. This source preview also exposes experimental
+**`adaptive_select_tool`** and **`discover_mcp_servers`**; discovery output is
+never marked selection-ready. Point your client's MCP config at `asm-selector`,
+or at `python3 /path/to/asm-spec/asm_selector_mcp.py`; the selector reads
+`library/` (override with `ASM_LIBRARY_DIR`). The Python server uses the stable
+MCP SDK 2.x line and supports the modern `2026-07-28` protocol era. The same
+stable selector is importable directly: `from library_select import select`.
 
 Cost output has an explicit `known`, `partial`, or `unknown` status. Metered
 prices need expected monthly usage; one-time licenses need an amortization

@@ -12,8 +12,14 @@ Requires:     pip install "asm-protocol[mcp]"
 
 from __future__ import annotations
 
+import os
+from pathlib import Path
+
 from mcp.server import MCPServer
 
+from asm_protocol.adaptive import OwnerContext, adaptive_select
+from asm_protocol.federation import MCPRegistryClient
+from asm_protocol.preferences import PreferenceLedger, model_from_ledger
 from library_select import SELECTOR_VERSION, estimate_monthly_cost, load_library, select
 
 mcp = MCPServer(
@@ -70,6 +76,92 @@ def select_tool(
         },
         fallback_policy=fallback_policy,
     )
+
+
+@mcp.tool()
+def adaptive_select_tool(
+    task: str,
+    taxonomy: str,
+    required_functions: list[str] | None = None,
+    explicit_service_id: str | None = None,
+    installed_service_ids: list[str] | None = None,
+    authenticated_service_ids: list[str] | None = None,
+    forbidden_service_ids: list[str] | None = None,
+    forbidden_side_effects: list[str] | None = None,
+    agent_reach: str = "cloud",
+    user_platform: str = "any",
+    reversible: bool = True,
+    max_risk: str = "critical",
+    allow_unknown_risk: bool = False,
+    interruption_cost: float | None = None,
+    monthly_budget: float | None = None,
+    budget_currency: str = "USD",
+    latency_target_seconds: float | None = None,
+    freshness_policy: str = "require_fresh",
+    policy: str = "posterior_mean",
+) -> dict:
+    """EXPERIMENTAL owner-aligned selection with local history, freshness, and VoI.
+
+    Owner history remains in a local JSONL ledger configured by
+    ASM_PREFERENCE_LEDGER. The tool returns a model digest and observation
+    count, never raw history. Consequential decisions disable exploration.
+    """
+    ledger_path = Path(
+        os.environ.get("ASM_PREFERENCE_LEDGER")
+        or Path.home() / ".asm" / "owner-preferences.jsonl"
+    )
+    model = model_from_ledger(PreferenceLedger(ledger_path))
+    return adaptive_select(
+        task,
+        taxonomy=taxonomy,
+        required_functions=required_functions or (),
+        agent_reach=agent_reach,
+        user_platform=user_platform,
+        library=load_library(),
+        preference_model=model,
+        owner_context=OwnerContext(
+            explicit_service_id=explicit_service_id,
+            installed_service_ids=tuple(installed_service_ids or ()),
+            authenticated_service_ids=tuple(authenticated_service_ids or ()),
+            forbidden_service_ids=tuple(forbidden_service_ids or ()),
+            forbidden_side_effects=tuple(forbidden_side_effects or ()),
+            reversible=reversible,
+            max_risk=max_risk,
+            allow_unknown_risk=allow_unknown_risk,
+            interruption_cost=interruption_cost,
+            monthly_budget=monthly_budget,
+            budget_currency=budget_currency,
+            latency_target_seconds=latency_target_seconds,
+        ),
+        freshness_policy=freshness_policy,
+        policy=policy,
+    )
+
+
+@mcp.tool()
+def discover_mcp_servers(
+    query: str,
+    limit: int = 10,
+    max_pages: int = 3,
+) -> dict:
+    """Search official MCP Registry discovery metadata.
+
+    Returned records are explicitly not selection-ready. An agent must obtain
+    and verify current ASM value/policy facts before calling adaptive selection.
+    """
+    if not 1 <= max_pages <= 10:
+        raise ValueError("max_pages must be between 1 and 10 for the MCP tool")
+    records = MCPRegistryClient(timeout=5.0).search(query, limit=limit, max_pages=max_pages)
+    return {
+        "query": query,
+        "count": len(records),
+        "scan_scope": {
+            "bounded": True,
+            "max_pages": max_pages,
+            "max_registry_records_scanned": max_pages * 100,
+        },
+        "candidates": [record.to_discovery_candidate() for record in records],
+    }
 
 
 @mcp.tool()

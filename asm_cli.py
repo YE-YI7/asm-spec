@@ -9,6 +9,9 @@ import re
 import sys
 from pathlib import Path
 
+from asm_protocol.adaptive import OwnerContext, adaptive_select
+from asm_protocol.federation import MCPRegistryClient
+from asm_protocol.preferences import PreferenceLedger, model_from_ledger
 from openrouter_adapter import load_openrouter_manifests
 from scorer import Constraints, Preferences, filter_services, load_manifests, parse_manifest, score_topsis
 
@@ -550,6 +553,141 @@ def cmd_select(args: argparse.Namespace) -> int:
     return 0
 
 
+def _csv(value: str | None) -> tuple[str, ...]:
+    return tuple(item.strip() for item in (value or "").split(",") if item.strip())
+
+
+def cmd_adaptive_select(args: argparse.Namespace) -> int:
+    """Experimental owner-aligned decision over the canonical tool library."""
+    ledger = PreferenceLedger(args.preference_ledger)
+    model = model_from_ledger(ledger)
+    context = OwnerContext(
+        explicit_service_id=args.explicit_tool,
+        installed_service_ids=_csv(args.installed),
+        authenticated_service_ids=_csv(args.authenticated),
+        forbidden_service_ids=_csv(args.forbidden),
+        forbidden_side_effects=_csv(args.forbidden_side_effects),
+        max_risk=args.max_risk,
+        allow_unknown_risk=args.allow_unknown_risk,
+        reversible=not args.non_reversible,
+        interruption_cost=args.interruption_cost,
+        monthly_budget=args.monthly_budget,
+        budget_currency=args.budget_currency,
+        latency_target_seconds=args.latency_target_seconds,
+    )
+    result = adaptive_select(
+        args.task,
+        taxonomy=args.taxonomy,
+        required_functions=_csv(args.requires),
+        agent_reach=args.reach,
+        user_platform=args.platform,
+        require_agent_completable_setup=args.agent_setup_only,
+        owner_context=context,
+        preference_model=model,
+        freshness_policy=args.freshness_policy,
+        policy=args.policy,
+    )
+    if args.json:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    else:
+        print(f"Status: {result['selection_status']}")
+        print(f"Policy: {result['decision_policy']}")
+        print(f"Owner evidence: {result['preference_model']['observations']} observations")
+        if result["selected"]:
+            selected = result["selected"]
+            print(f"Selected: {selected['display_name']} ({selected['service_id']})")
+        print(f"Reason: {result['reason']}")
+        if result.get("question"):
+            print(f"Clarify only because VoI is positive: {result['question']}")
+        if result.get("expected_regret") is not None:
+            print(
+                f"Expected regret: {result['expected_regret']:.4f}; "
+                f"preference confidence: {result['preference_confidence']:.2%}"
+            )
+        for row in result["rejected"][: args.limit]:
+            print(f"  rejected: {row['service_id']}: {row['reason']}")
+    return 0 if result["selected"] else 2
+
+
+def cmd_discover(args: argparse.Namespace) -> int:
+    """Retrieve candidate MCP servers without fabricating ASM selection facts."""
+    client = MCPRegistryClient(args.registry_url, timeout=args.timeout)
+    records = client.search(
+        args.query,
+        limit=args.limit,
+        max_pages=args.max_pages,
+        latest_only=not args.all_versions,
+    )
+    rows = [record.to_discovery_candidate() for record in records]
+    payload = {
+        "query": args.query,
+        "count": len(rows),
+        "scan_scope": {
+            "bounded": True,
+            "max_pages": args.max_pages,
+            "max_registry_records_scanned": args.max_pages * 100,
+        },
+        "candidates": rows,
+    }
+    if args.json:
+        print(json.dumps(payload, indent=2, ensure_ascii=False))
+    else:
+        print(f"Discovery candidates for {args.query!r}: {len(rows)}")
+        print("These records are not selection-ready until ASM facts are fetched and verified.")
+        for row in rows:
+            print(f"- {row['registry_name']}@{row['version']}: {row.get('description') or ''}")
+    return 0 if rows else 2
+
+
+def _feature_json(value: str) -> dict[str, float]:
+    try:
+        parsed = json.loads(value)
+    except json.JSONDecodeError as exc:
+        raise argparse.ArgumentTypeError(f"features must be a JSON object: {exc}") from exc
+    if not isinstance(parsed, dict):
+        raise argparse.ArgumentTypeError("features must be a JSON object")
+    try:
+        return {str(name): float(number) for name, number in parsed.items()}
+    except (TypeError, ValueError) as exc:
+        raise argparse.ArgumentTypeError("feature values must be numbers") from exc
+
+
+def cmd_preference_choice(args: argparse.Namespace) -> int:
+    event = PreferenceLedger(args.ledger).record_pairwise(
+        chosen_service_id=args.chosen_id,
+        chosen_features=args.chosen_features,
+        rejected_service_id=args.rejected_id,
+        rejected_features=args.rejected_features,
+        context_tags=_csv(args.context_tags),
+        reversible=not args.non_reversible,
+    )
+    print(json.dumps(event.to_dict(), indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_preference_outcome(args: argparse.Namespace) -> int:
+    event = PreferenceLedger(args.ledger).record_outcome(
+        service_id=args.service_id,
+        features=args.features,
+        reward=args.reward,
+        context_tags=_csv(args.context_tags),
+        reversible=not args.non_reversible,
+    )
+    print(json.dumps(event.to_dict(), indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_preference_show(args: argparse.Namespace) -> int:
+    model = model_from_ledger(PreferenceLedger(args.ledger))
+    print(json.dumps({
+        "observations": model.observations,
+        "posterior_mean": model.mean,
+        "model_digest": model.digest(),
+        "raw_history_included": False,
+    }, indent=2, ensure_ascii=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="asm", description="Agent Service Manifest CLI")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -571,7 +709,91 @@ def build_parser() -> argparse.ArgumentParser:
     sel.add_argument("--limit", type=int, default=5, help="Maximum alternatives/rejections to print")
     sel.set_defaults(func=cmd_select)
 
-    score = sub.add_parser("score", help="Rank services for a natural-language service request")
+    adaptive = sub.add_parser(
+        "adaptive-select",
+        help="EXPERIMENTAL: owner-aligned selection with freshness and VoI",
+    )
+    adaptive.add_argument("task")
+    adaptive.add_argument("--taxonomy", required=True)
+    adaptive.add_argument("--requires", help="Comma-separated required functions")
+    adaptive.add_argument("--reach", default="cloud", choices=["cloud", "local_device"])
+    adaptive.add_argument("--platform", default="any")
+    adaptive.add_argument("--agent-setup-only", action="store_true")
+    adaptive.add_argument("--explicit-tool", help="Owner-specified service_id to validate")
+    adaptive.add_argument("--installed", help="Comma-separated installed service_ids")
+    adaptive.add_argument("--authenticated", help="Comma-separated authenticated service_ids")
+    adaptive.add_argument("--forbidden", help="Comma-separated forbidden service_ids")
+    adaptive.add_argument("--forbidden-side-effects", help="Comma-separated blocked side effects")
+    adaptive.add_argument("--max-risk", choices=["low", "medium", "high", "critical"], default="critical")
+    adaptive.add_argument("--allow-unknown-risk", action="store_true")
+    adaptive.add_argument("--non-reversible", action="store_true")
+    adaptive.add_argument(
+        "--interruption-cost",
+        type=float,
+        help="Learned/estimated cost of asking, in the same [-1,1] reward units; no guessed default",
+    )
+    adaptive.add_argument("--monthly-budget", type=float, help="Known owner budget for stable cost comparison")
+    adaptive.add_argument("--budget-currency", default="USD")
+    adaptive.add_argument("--latency-target-seconds", type=float)
+    adaptive.add_argument(
+        "--freshness-policy",
+        choices=["require_fresh", "allow_stale", "allow_unknown"],
+        default="require_fresh",
+    )
+    adaptive.add_argument("--policy", choices=["posterior_mean", "linucb", "thompson"], default="posterior_mean")
+    adaptive.add_argument(
+        "--preference-ledger",
+        default=str(Path.home() / ".asm" / "owner-preferences.jsonl"),
+        help="Owner-controlled local JSONL evidence; raw prompts are never written",
+    )
+    adaptive.add_argument("--json", action="store_true")
+    adaptive.add_argument("--limit", type=int, default=5)
+    adaptive.set_defaults(func=cmd_adaptive_select)
+
+    discover = sub.add_parser(
+        "discover",
+        help="Search federated MCP discovery metadata (not selection-ready ASM facts)",
+    )
+    discover.add_argument("query")
+    discover.add_argument("--registry-url", default="https://registry.modelcontextprotocol.io")
+    discover.add_argument("--limit", type=int, default=10)
+    discover.add_argument("--max-pages", type=int, default=3)
+    discover.add_argument("--timeout", type=float, default=15)
+    discover.add_argument("--all-versions", action="store_true")
+    discover.add_argument("--json", action="store_true")
+    discover.set_defaults(func=cmd_discover)
+
+    preference = sub.add_parser(
+        "preference",
+        help="Agent integration hooks for a local owner preference ledger",
+    )
+    preference_sub = preference.add_subparsers(dest="preference_command", required=True)
+    pref_default = str(Path.home() / ".asm" / "owner-preferences.jsonl")
+
+    choice = preference_sub.add_parser("record-choice", help="Record an owner correction or explicit pairwise choice")
+    choice.add_argument("--ledger", default=pref_default)
+    choice.add_argument("--chosen-id", required=True)
+    choice.add_argument("--rejected-id", required=True)
+    choice.add_argument("--chosen-features", required=True, type=_feature_json)
+    choice.add_argument("--rejected-features", required=True, type=_feature_json)
+    choice.add_argument("--context-tags")
+    choice.add_argument("--non-reversible", action="store_true")
+    choice.set_defaults(func=cmd_preference_choice)
+
+    outcome = preference_sub.add_parser("record-outcome", help="Record observed success or failure for the selected tool")
+    outcome.add_argument("--ledger", default=pref_default)
+    outcome.add_argument("--service-id", required=True)
+    outcome.add_argument("--features", required=True, type=_feature_json)
+    outcome.add_argument("--reward", required=True, type=float)
+    outcome.add_argument("--context-tags")
+    outcome.add_argument("--non-reversible", action="store_true")
+    outcome.set_defaults(func=cmd_preference_outcome)
+
+    show = preference_sub.add_parser("show", help="Show posterior summary without exposing raw owner history")
+    show.add_argument("--ledger", default=pref_default)
+    show.set_defaults(func=cmd_preference_show)
+
+    score = sub.add_parser("score", help="LEGACY BASELINE: rank services with static TOPSIS preferences")
     score.add_argument("query", help='Example: "cheap reliable TTS under 1s"')
     score.add_argument("--taxonomy", help="Override inferred taxonomy, e.g. ai.audio.tts")
     score.add_argument("--manifests", default=str(DEFAULT_MANIFEST_DIR), help="Directory of .asm.json manifests")

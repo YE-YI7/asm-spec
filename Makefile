@@ -1,4 +1,4 @@
-.PHONY: test test-py test-ts validate-mcp-examples data-quality-audit eval ablations selection-baselines preference-alignment llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce refresh-elo clean clean-cache help
+.PHONY: test test-py test-ts validate-mcp-examples data-quality-audit eval ablations selection-baselines preference-alignment adaptive-replay llm-eval llm-eval-live audit value-audit value-audit-full paper-tables reproduce refresh-elo clean clean-cache help
 
 LLM_PROVIDER ?= deepseek
 LLM_MODEL ?= deepseek-chat
@@ -18,6 +18,7 @@ help:
 	@echo "  make ablations     Run ablation studies (Section 6.3a)"
 	@echo "  make selection-baselines  Run 7-policy regret analysis (Section 6.6)"
 	@echo "  make preference-alignment  Run natural-language preference evaluation (Section 6.6a)"
+	@echo "  make adaptive-replay  Run stationary and preference-drift mechanism tests"
 	@echo "  make llm-eval      LLM-as-selector dry-run (no API calls)"
 	@echo "  make llm-eval-live LLM-as-selector with live LLM (override LLM_PROVIDER/LLM_MODEL/LLM_BASE_URL/LLM_API_KEY_ENV)"
 	@echo "  make audit         Run MCP ecosystem audit (Section 2)"
@@ -70,6 +71,10 @@ selection-baselines:
 
 preference-alignment:
 	$(PYTHON) experiments/preference_alignment.py --seed 2024
+
+adaptive-replay:
+	$(PYTHON) experiments/adaptive_selection_replay.py --seed 20260831 --rounds 300 --holdout 100
+	$(PYTHON) experiments/adaptive_selection_replay.py --seed 20260831 --rounds 300 --holdout 100 --preference-drift --reward-noise 0.05
 
 llm-eval:
 	$(PYTHON) experiments/expert_annotation/run_ranking_experiment.py \
