@@ -12,6 +12,7 @@ license = "MIT"
 authors = [{ name = "Yi Guo" }]
 dependencies = [
   "jsonschema>=4.0",
+  "rfc8785==0.1.4",
 ]
 
 [project.optional-dependencies]
@@ -31,14 +32,20 @@ packages = [
   "asm_protocol",
   "asm_protocol.federation",
   "asm_protocol.integrations",
+  "asm_protocol.providers",
   "scorer",
   "scorer.data",
   "asm_schema",
+  "asm_public",
+  "asm_public.methods",
+  "asm_public.runs",
+  "asm_public.services",
 ]
 
 [tool.setuptools.package-dir]
 asm_protocol = "src/asm_protocol"
 asm_schema = "schema"
+asm_public = "public"
 
 [tool.setuptools.dynamic]
 version = {attr = "asm_protocol.version.__version__"}
@@ -46,6 +53,10 @@ version = {attr = "asm_protocol.version.__version__"}
 [tool.setuptools.package-data]
 scorer = ["data/*.json"]
 asm_schema = ["*.json"]
+asm_public = ["*.html", "*.json", "*.css"]
+"asm_public.methods" = ["*.html"]
+"asm_public.runs" = ["*.html"]
+"asm_public.services" = ["*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["scorer", "tools/asm-gen"]

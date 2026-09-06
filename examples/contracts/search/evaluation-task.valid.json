@@ -1,0 +1,35 @@
+{
+  "contract_type": "search_evaluation_task",
+  "contract_version": "0.1",
+  "task_id": "freshqa-controlled-row-001",
+  "task_family": "time_sensitive_fact",
+  "coverage_tags": ["time_sensitive_fact", "english_query"],
+  "split": "held_out",
+  "language": "en",
+  "query_ref": {
+    "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "disclosure": "benchmark_controlled"
+  },
+  "source_provenance": {
+    "kind": "benchmark_dataset",
+    "name": "FreshQA",
+    "version": "2026-04-21",
+    "source_url": "https://github.com/freshllms/freshqa",
+    "license": "Apache-2.0",
+    "snapshot_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "row_id": "controlled-row-001"
+  },
+  "ground_truth_ref": {
+    "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+    "disclosure": "benchmark_controlled"
+  },
+  "checks": {
+    "reference_domains": [],
+    "domain_requirement": "none",
+    "minimum_independent_sources": 1,
+    "temporal_requirement": "current_at_run",
+    "cutoff": null,
+    "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen"
+  },
+  "committed_at": "2026-09-06T03:00:00Z"
+}

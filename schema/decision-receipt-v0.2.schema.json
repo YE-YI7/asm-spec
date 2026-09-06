@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asm-protocol.org/schemas/decision-receipt-v0.2.schema.json",
+  "title": "ASM Decision Receipt v0.2 draft",
+  "description": "An auditable recommendation. It is not authorization and is not proof that a service was invoked.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "contract_version", "decision_id", "request_id", "issued_at", "valid_until", "request_commitment", "effective_policy_digest", "algorithm", "status", "candidates", "evidence_refs", "selected", "alternatives", "rejected", "unknowns", "cost_estimate", "execution_binding", "issuer"],
+  "properties": {
+    "contract_type": {"const": "decision_receipt"}, "contract_version": {"const": "0.2-draft"},
+    "decision_id": {"type": "string", "minLength": 1}, "request_id": {"type": "string", "minLength": 1},
+    "predecessor_decision_id": {"type": ["string", "null"], "minLength": 1},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "valid_until": {"type": "string", "format": "date-time"}, "request_commitment": {"$ref": "#/$defs/digest"},
+    "effective_policy_digest": {"$ref": "#/$defs/digest"},
+    "algorithm": {
+      "type": "object", "additionalProperties": false, "required": ["name", "version"],
+      "properties": {"name": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}}
+    },
+    "status": {"enum": ["selected", "under_specified", "no_eligible_candidate", "needs_evidence", "needs_authorization", "needs_budget", "needs_owner_input"]},
+    "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidateSummary"}},
+    "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/evidenceRef"}, "uniqueItems": true},
+    "selected": {"oneOf": [{"$ref": "#/$defs/selection"}, {"type": "null"}]},
+    "alternatives": {"type": "array", "items": {"$ref": "#/$defs/selection"}},
+    "rejected": {"type": "array", "items": {"$ref": "#/$defs/rejection"}},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "cost_estimate": {"$ref": "#/$defs/cost"},
+    "execution_binding": {
+      "type": "object", "additionalProperties": false, "required": ["authorization_granted", "interface_digest", "mode"],
+      "properties": {"authorization_granted": {"const": false}, "interface_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}, "mode": {"enum": ["replay", "shadow", "live"]}}
+    },
+    "issuer": {"type": "object", "additionalProperties": false, "required": ["id", "signature_status"], "properties": {"id": {"type": "string", "minLength": 1}, "signature_status": {"enum": ["unsigned", "signed_unverified", "signed_verified"]}}}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "candidateSummary": {"type": "object", "additionalProperties": false, "required": ["interface_id", "evidence_snapshot_digest"], "properties": {"interface_id": {"type": "string", "minLength": 1}, "evidence_snapshot_digest": {"$ref": "#/$defs/digest"}}},
+    "evidenceRef": {"type": "object", "additionalProperties": false, "required": ["evidence_id", "digest"], "properties": {"evidence_id": {"type": "string", "minLength": 1}, "digest": {"$ref": "#/$defs/digest"}}},
+    "selection": {"type": "object", "additionalProperties": false, "required": ["interface_id", "reason_codes"], "properties": {"interface_id": {"type": "string", "minLength": 1}, "reason_codes": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"}, "minItems": 1, "uniqueItems": true}}},
+    "rejection": {"type": "object", "additionalProperties": false, "required": ["interface_id", "reason_codes"], "properties": {"interface_id": {"type": "string", "minLength": 1}, "reason_codes": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"}, "minItems": 1, "uniqueItems": true}}},
+    "cost": {
+      "type": "object", "additionalProperties": false, "required": ["status", "amount", "currency", "basis", "assumptions"],
+      "properties": {
+        "status": {"enum": ["known", "bounded", "unknown", "not_applicable"]},
+        "amount": {"type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
+        "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"},
+        "basis": {"enum": ["currency_estimate", "credit_only", "free_allowance", "unknown", "not_applicable"]},
+        "assumptions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "selected"}}}, "then": {"properties": {"selected": {"$ref": "#/$defs/selection"}, "candidates": {"minItems": 1}}}},
+    {"if": {"not": {"properties": {"status": {"const": "selected"}}}}, "then": {"properties": {"selected": {"type": "null"}}}},
+    {"if": {"properties": {"cost_estimate": {"properties": {"status": {"enum": ["known", "bounded"]}}}}}, "then": {"properties": {"cost_estimate": {"properties": {"amount": {"type": "string"}, "currency": {"type": "string"}}}}}},
+    {"if": {"properties": {"cost_estimate": {"properties": {"status": {"enum": ["unknown", "not_applicable"]}}}}}, "then": {"properties": {"cost_estimate": {"properties": {"amount": {"type": "null"}}}}}}
+  ]
+}

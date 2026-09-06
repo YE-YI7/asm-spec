@@ -33,6 +33,9 @@ def test_selector_stdio_negotiates_modern_era_and_exposes_tools() -> None:
                 "select_tool",
                 "adaptive_select_tool",
                 "discover_mcp_servers",
+                "validate_application_contract",
+                "run_search_replay_tool",
+                "plan_search_fallback_tool",
                 "list_library_tools",
                 "get_tool_manifest",
             }

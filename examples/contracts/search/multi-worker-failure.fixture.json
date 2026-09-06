@@ -1,0 +1,25 @@
+{
+  "fixture_type": "asm-multi-worker-observation/0.1",
+  "purpose": "Worker B can consume Worker A's redacted failure only inside the same host-provided owner scope and interface version.",
+  "owner_scope_id": "opaque-test-owner-a",
+  "producer": {
+    "worker_id": "worker-a",
+    "outcome_id": "out-worker-a",
+    "interface_id": "tavily/search:https-api",
+    "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "transport_status": "rate_limited",
+    "tool_status": "not_observed"
+  },
+  "consumer": {
+    "worker_id": "worker-b",
+    "same_owner_expected_records": 1,
+    "different_owner_expected_records": 0,
+    "changed_interface_digest_expected_records": 0
+  },
+  "claims_not_proven": [
+    "external adoption",
+    "provider quality",
+    "cross-organization identity",
+    "public trust"
+  ]
+}

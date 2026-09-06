@@ -10,11 +10,21 @@ import sys
 from pathlib import Path
 
 from asm_protocol.adaptive import OwnerContext, adaptive_select
+from asm_protocol.bootstrap import build_bootstrap_decision
+from asm_protocol.contracts import CONTRACT_SCHEMAS, contract_errors
 from asm_protocol.federation import MCPRegistryClient
 from asm_protocol.preferences import PreferenceLedger, model_from_ledger
+from asm_protocol.run_store import store_run
+from asm_protocol.search_replay import run_bootstrap_replay, run_search_replay
 from openrouter_adapter import load_openrouter_manifests
-from scorer import Constraints, Preferences, filter_services, load_manifests, parse_manifest, score_topsis
-
+from scorer import (
+    Constraints,
+    Preferences,
+    filter_services,
+    load_manifests,
+    parse_manifest,
+    score_topsis,
+)
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_MANIFEST_DIR = ROOT / "manifests"
@@ -688,6 +698,110 @@ def cmd_preference_show(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_contract_validate(args: argparse.Namespace) -> int:
+    try:
+        payload = json.loads(Path(args.path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"Unable to read contract: {exc}", file=sys.stderr)
+        return 1
+    if not isinstance(payload, dict):
+        print("Contract root must be a JSON object.", file=sys.stderr)
+        return 1
+    errors = contract_errors(args.type, payload)
+    if errors:
+        for error in errors:
+            print(f"- {error}", file=sys.stderr)
+        return 2
+    print(f"PASS {args.type}: {args.path}")
+    return 0
+
+
+def _json_object(path: str) -> dict:
+    try:
+        value = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"unable to read {path}: {exc}") from exc
+    if not isinstance(value, dict):
+        raise TypeError(f"{path} must contain a JSON object")
+    return value
+
+
+def cmd_search_replay(args: argparse.Namespace) -> int:
+    try:
+        result = run_search_replay(
+            request=_json_object(args.request),
+            decision=_json_object(args.decision),
+            provider_id=args.provider,
+            provider_payload=_json_object(args.response),
+            http_status=args.http_status,
+            retry_after=args.retry_after,
+            decision_receipt_digest=args.decision_digest,
+            outcome_id=args.outcome_id,
+            attempt_id=args.attempt_id,
+            started_at=args.started_at,
+            ended_at=args.ended_at,
+            result_commitment=args.result_digest,
+        )
+    except (TypeError, ValueError) as exc:
+        print(f"Replay failed: {exc}", file=sys.stderr)
+        return 2
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_search_decide(args: argparse.Namespace) -> int:
+    try:
+        decision = build_bootstrap_decision(
+            request=_json_object(args.request),
+            evidence=[_json_object(path) for path in args.evidence],
+            decision_id=args.decision_id,
+            issued_at=args.issued_at,
+            valid_until=args.valid_until,
+        )
+    except (TypeError, ValueError) as exc:
+        print(f"Decision failed: {exc}", file=sys.stderr)
+        return 2
+    print(json.dumps(decision, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_search_run_replay(args: argparse.Namespace) -> int:
+    try:
+        result = run_bootstrap_replay(
+            request=_json_object(args.request),
+            evidence=[_json_object(path) for path in args.evidence],
+            provider_id=args.provider,
+            provider_payload=_json_object(args.response),
+            decision_id=args.decision_id,
+            outcome_id=args.outcome_id,
+            attempt_id=args.attempt_id,
+            issued_at=args.issued_at,
+            valid_until=args.valid_until,
+            started_at=args.started_at,
+            ended_at=args.ended_at,
+            http_status=args.http_status,
+            retry_after=args.retry_after,
+        )
+        if result["outcome"] is None:
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            return 3
+        stored_at = None
+        if args.store_dir:
+            stored_at = str(
+                store_run(
+                    args.store_dir,
+                    decision=result["decision"],
+                    outcome=result["outcome"],
+                    observation=result["observation"],
+                )
+            )
+    except (TypeError, ValueError) as exc:
+        print(f"Replay run failed: {exc}", file=sys.stderr)
+        return 2
+    print(json.dumps({**result, "stored_at": stored_at}, indent=2, ensure_ascii=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="asm", description="Agent Service Manifest CLI")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -792,6 +906,53 @@ def build_parser() -> argparse.ArgumentParser:
     show = preference_sub.add_parser("show", help="Show posterior summary without exposing raw owner history")
     show.add_argument("--ledger", default=pref_default)
     show.set_defaults(func=cmd_preference_show)
+
+    contract = sub.add_parser("contract", help="Validate a versioned ASM application contract")
+    contract_sub = contract.add_subparsers(dest="contract_command", required=True)
+    contract_validate = contract_sub.add_parser("validate", help="Validate one JSON contract file")
+    contract_validate.add_argument("--type", choices=sorted(CONTRACT_SCHEMAS), required=True)
+    contract_validate.add_argument("path")
+    contract_validate.set_defaults(func=cmd_contract_validate)
+
+    search = sub.add_parser("search", help="Run the draft ASM web-search application")
+    search_sub = search.add_subparsers(dest="search_command", required=True)
+    decide = search_sub.add_parser("decide", help="Build a deterministic bootstrap DecisionReceipt")
+    decide.add_argument("--request", required=True)
+    decide.add_argument("--evidence", action="append", default=[], help="Evidence JSON; repeat for multiple records")
+    decide.add_argument("--decision-id", required=True)
+    decide.add_argument("--issued-at", required=True)
+    decide.add_argument("--valid-until", required=True)
+    decide.set_defaults(func=cmd_search_decide)
+    run_replay = search_sub.add_parser("run-replay", help="Select, normalize a saved response, and emit an outcome")
+    run_replay.add_argument("--provider", choices=["tavily", "exa", "firecrawl"], required=True)
+    run_replay.add_argument("--request", required=True)
+    run_replay.add_argument("--evidence", action="append", default=[], help="Evidence JSON; repeat for multiple records")
+    run_replay.add_argument("--response", required=True)
+    run_replay.add_argument("--http-status", type=int, default=200)
+    run_replay.add_argument("--retry-after")
+    run_replay.add_argument("--decision-id", required=True)
+    run_replay.add_argument("--outcome-id", required=True)
+    run_replay.add_argument("--attempt-id", required=True)
+    run_replay.add_argument("--issued-at", required=True)
+    run_replay.add_argument("--valid-until", required=True)
+    run_replay.add_argument("--started-at", required=True)
+    run_replay.add_argument("--ended-at", required=True)
+    run_replay.add_argument("--store-dir", help="Private local run directory; files are written mode 0600")
+    run_replay.set_defaults(func=cmd_search_run_replay)
+    replay = search_sub.add_parser("replay", help="Normalize a saved provider response and emit an outcome")
+    replay.add_argument("--provider", choices=["tavily", "exa", "firecrawl"], required=True)
+    replay.add_argument("--request", required=True)
+    replay.add_argument("--decision", required=True)
+    replay.add_argument("--response", required=True)
+    replay.add_argument("--http-status", type=int, default=200)
+    replay.add_argument("--retry-after")
+    replay.add_argument("--decision-digest", help="Optional expected JCS digest; mismatch fails closed")
+    replay.add_argument("--result-digest")
+    replay.add_argument("--outcome-id", required=True)
+    replay.add_argument("--attempt-id", required=True)
+    replay.add_argument("--started-at", required=True)
+    replay.add_argument("--ended-at", required=True)
+    replay.set_defaults(func=cmd_search_replay)
 
     score = sub.add_parser("score", help="LEGACY BASELINE: rank services with static TOPSIS preferences")
     score.add_argument("query", help='Example: "cheap reliable TTS under 1s"')

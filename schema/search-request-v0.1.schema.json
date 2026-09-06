@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asm-protocol.org/schemas/search-request-v0.1.schema.json",
+  "title": "ASM Search Request v0.1",
+  "description": "A host-compiled request for selecting and optionally invoking one web search service. This contract does not grant credentials or expand authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "contract_version", "request_id", "issued_at", "operation", "query_ref", "candidate_scope", "effective_policy", "budget", "execution"],
+  "properties": {
+    "contract_type": {"const": "search_request"},
+    "contract_version": {"const": "0.1"},
+    "request_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "operation": {"const": "web.search"},
+    "query_ref": {"$ref": "#/$defs/commitment"},
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "language": {"type": ["string", "null"], "minLength": 2},
+        "time_window": {"type": ["string", "null"], "enum": ["day", "week", "month", "year", null]},
+        "allowed_domains": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "excluded_domains": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "result_limit": {"type": "integer", "minimum": 1, "maximum": 100}
+      }
+    },
+    "candidate_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorized_interfaces"],
+      "properties": {
+        "authorized_interfaces": {"type": "array", "items": {"$ref": "#/$defs/interfaceRef"}, "minItems": 1},
+        "explicit_interface_id": {"type": ["string", "null"], "minLength": 1},
+        "default_interface_id": {"type": ["string", "null"], "minLength": 1},
+        "default_source": {"type": ["string", "null"], "enum": ["host_configuration", "organization_policy", "owner_history", null]}
+      }
+    },
+    "effective_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_ref", "policy_digest", "data_egress_allowed"],
+      "properties": {
+        "policy_ref": {"type": "string", "minLength": 1},
+        "policy_digest": {"$ref": "#/$defs/digest"},
+        "data_egress_allowed": {"type": "boolean"},
+        "forbidden_providers": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "max_request_amount", "max_session_remaining", "unknown_cost_action"],
+      "properties": {
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "max_request_amount": {"$ref": "#/$defs/decimalOrNull"},
+        "max_session_remaining": {"$ref": "#/$defs/decimalOrNull"},
+        "unknown_cost_action": {"enum": ["stop", "require_authorization"]}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "deadline_ms", "max_attempts", "fallback_allowlist"],
+      "properties": {
+        "mode": {"enum": ["replay", "shadow", "live"]},
+        "deadline_ms": {"type": "integer", "minimum": 1},
+        "max_attempts": {"type": "integer", "minimum": 1, "maximum": 2},
+        "fallback_allowlist": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "commitment": {
+      "type": "object", "additionalProperties": false, "required": ["digest", "disclosure"],
+      "properties": {"digest": {"$ref": "#/$defs/digest"}, "disclosure": {"enum": ["private", "redacted"]}}
+    },
+    "decimalOrNull": {"type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
+    "interfaceRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider_id", "service_id", "interface_id", "account_ref"],
+      "properties": {
+        "provider_id": {"type": "string", "minLength": 1}, "service_id": {"type": "string", "minLength": 1},
+        "interface_id": {"type": "string", "minLength": 1}, "account_ref": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

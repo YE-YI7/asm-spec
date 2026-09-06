@@ -1,0 +1,26 @@
+{
+  "contract_type": "selection_evidence",
+  "contract_version": "0.1",
+  "evidence_id": "ev-example-settled-cost-unknown",
+  "candidate": {
+    "provider_id": "example-search",
+    "service_id": "example-search/web-search@1",
+    "interface_id": "example-search/web-search@1:https-api:basic",
+    "operation": "web.search",
+    "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "service_version": "1",
+    "adapter_version": "0.1.0",
+    "endpoint": "https://api.example.com/search"
+  },
+  "claim_path": "pricing.settled_cost",
+  "claim": {"value": null, "unit": "USD/request", "value_kind": "unknown", "currency": "USD"},
+  "source": {"issuer": "asm-replay", "source_url": null},
+  "method": "authenticated_call",
+  "observed_at": "2026-09-05T02:00:00Z",
+  "fetched_at": "2026-09-05T02:00:00Z",
+  "expires_at": null,
+  "scope": {"operation": "web.search", "region": null, "account_plan": "basic", "task_profile": null, "cache_mode": "replay"},
+  "strength": "observed",
+  "status": "unknown",
+  "snapshot": {"digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "snapshot_ref": null, "retention": "digest_only"}
+}

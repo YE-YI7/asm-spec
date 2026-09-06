@@ -1,0 +1,26 @@
+{
+  "contract_type": "outcome_receipt",
+  "contract_version": "0.1-draft",
+  "outcome_id": "out-replay-001",
+  "decision_id": "dec-replay-001",
+  "decision_receipt_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+  "attempt_id": "attempt-replay-001",
+  "supersedes": null,
+  "executed": {
+    "interface_id": "example-search/web-search@1:https-api:basic",
+    "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "adapter_version": "0.1.0",
+    "provider_request_id": "provider-replay-001"
+  },
+  "request_commitment": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "started_at": "2026-09-05T02:00:11Z",
+  "ended_at": "2026-09-05T02:00:12Z",
+  "transport_status": "succeeded",
+  "tool_status": "succeeded",
+  "task_check_results": [{"check_id": "result.has_url", "status": "pass", "method": "deterministic", "evidence_ref": "result:0"}],
+  "usage": [{"dimension": "search_request", "quantity": "1", "unit": "request", "source": "adapter_observed"}],
+  "estimated_cost": {"status": "known", "amount": "0.01", "currency": "USD", "source": "provider_estimate"},
+  "settled_cost": {"status": "unknown", "amount": null, "currency": "USD", "source": "unknown"},
+  "result_commitment": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+  "issuer": {"id": "asm-local", "signature_status": "unsigned"}
+}

@@ -1,0 +1,44 @@
+{
+  "contract_type": "selection_evidence",
+  "contract_version": "0.1",
+  "evidence_id": "ev-example-price-001",
+  "candidate": {
+    "provider_id": "example-search",
+    "service_id": "example-search/web-search@1",
+    "interface_id": "example-search/web-search@1:https-api:basic",
+    "operation": "web.search",
+    "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "service_version": "1",
+    "adapter_version": "0.1.0",
+    "endpoint": "https://api.example.com/search"
+  },
+  "claim_path": "pricing.search_request",
+  "claim": {
+    "value": "0.01",
+    "unit": "USD/request",
+    "value_kind": "currency_estimate",
+    "currency": "USD"
+  },
+  "source": {
+    "issuer": "example-search",
+    "source_url": "https://example.com/pricing"
+  },
+  "method": "producer_declared",
+  "observed_at": "2026-09-05T02:00:00Z",
+  "fetched_at": "2026-09-05T02:00:05Z",
+  "expires_at": "2026-09-12T02:00:00Z",
+  "scope": {
+    "operation": "web.search",
+    "region": "global",
+    "account_plan": "basic",
+    "task_profile": null,
+    "cache_mode": "default"
+  },
+  "strength": "declared",
+  "status": "current",
+  "snapshot": {
+    "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "snapshot_ref": "replay://example-search/pricing-2026-09-05",
+    "retention": "retained"
+  }
+}

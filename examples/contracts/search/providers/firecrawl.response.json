@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "data": {"web": [{"url": "https://example.com/asm", "title": "ASM", "description": "A selection-layer example.", "position": 1}]},
+  "warning": null,
+  "id": "firecrawl-replay-001",
+  "creditsUsed": 2
+}

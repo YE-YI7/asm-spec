@@ -1,0 +1,8 @@
+{
+  "query": "ASM protocol",
+  "results": [{"title": "ASM", "url": "https://example.com/asm", "content": "A selection-layer example.", "score": 0.91}],
+  "response_time": 0.42,
+  "auto_parameters": {"topic": "general", "search_depth": "basic"},
+  "usage": {"credits": 1},
+  "request_id": "tavily-replay-001"
+}

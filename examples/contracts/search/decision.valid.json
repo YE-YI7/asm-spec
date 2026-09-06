@@ -1,0 +1,21 @@
+{
+  "contract_type": "decision_receipt",
+  "contract_version": "0.2-draft",
+  "decision_id": "dec-replay-001",
+  "request_id": "req-replay-001",
+  "issued_at": "2026-09-05T02:00:10Z",
+  "valid_until": "2026-09-05T02:05:10Z",
+  "request_commitment": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "effective_policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "algorithm": {"name": "bootstrap-policy", "version": "1"},
+  "status": "selected",
+  "candidates": [{"interface_id": "tavily/search:https-api", "evidence_snapshot_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"}],
+  "evidence_refs": [{"evidence_id": "ev-example-price-001", "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}],
+  "selected": {"interface_id": "tavily/search:https-api", "reason_codes": ["host.default", "policy.eligible"]},
+  "alternatives": [],
+  "rejected": [],
+  "unknowns": ["settled_cost"],
+  "cost_estimate": {"status": "known", "amount": "0.01", "currency": "USD", "basis": "currency_estimate", "assumptions": ["one basic search request"]},
+  "execution_binding": {"authorization_granted": false, "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "mode": "replay"},
+  "issuer": {"id": "asm-local", "signature_status": "unsigned"}
+}

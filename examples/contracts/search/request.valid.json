@@ -1,0 +1,49 @@
+{
+  "contract_type": "search_request",
+  "contract_version": "0.1",
+  "request_id": "req-replay-001",
+  "issued_at": "2026-09-05T02:00:00Z",
+  "operation": "web.search",
+  "query_ref": {
+    "digest": "sha256:e4d157bcacfe56991e67c0d010a06ed58b13dd186a70ed964b62932184dcfbae",
+    "disclosure": "private"
+  },
+  "parameters": {
+    "language": "en",
+    "time_window": null,
+    "allowed_domains": ["example.com"],
+    "excluded_domains": [],
+    "result_limit": 5
+  },
+  "candidate_scope": {
+    "authorized_interfaces": [
+      {
+        "provider_id": "tavily",
+        "service_id": "tavily/search",
+        "interface_id": "tavily/search:https-api",
+        "account_ref": "host-account:tavily-replay"
+      }
+    ],
+    "explicit_interface_id": null,
+    "default_interface_id": "tavily/search:https-api",
+    "default_source": "host_configuration"
+  },
+  "effective_policy": {
+    "policy_ref": "host-policy:default-search/v1",
+    "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "data_egress_allowed": true,
+    "forbidden_providers": []
+  },
+  "budget": {
+    "currency": "USD",
+    "max_request_amount": "0.05",
+    "max_session_remaining": "1.00",
+    "unknown_cost_action": "stop"
+  },
+  "execution": {
+    "mode": "replay",
+    "deadline_ms": 300000,
+    "max_attempts": 1,
+    "fallback_allowlist": []
+  }
+}

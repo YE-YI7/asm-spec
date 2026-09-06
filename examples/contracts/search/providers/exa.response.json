@@ -1,0 +1,7 @@
+{
+  "results": [{"title": "ASM", "url": "https://example.com/asm", "summary": "A selection-layer example."}],
+  "requestId": "exa-replay-001",
+  "resolvedSearchType": "neural",
+  "costDollars": {"total": 0.007, "search": {"neural": 0.007}},
+  "searchTime": 312.4
+}

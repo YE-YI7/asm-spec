@@ -7,6 +7,8 @@ Endpoints:
                                require_agent_completable_setup?, workload?: {
                                  monthly_units?, amortization_months?}}
                         -> structured selection decision (same shape as library_select.select)
+  POST /contracts/validate body: {type, payload} -> draft application-contract
+                        conformance result; never an authorization or certification
   GET  /tools           ?taxonomy=...  -> list of selectable tools
   GET  /.well-known/asm -> ASM catalog: one re-stampable generated_at + per-manifest
                            links (the inline-vs-link convention, applied to ourselves)
@@ -27,9 +29,11 @@ import os
 import re
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from importlib import resources
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
+from asm_protocol.contracts import CONTRACT_SCHEMAS, contract_errors
 from library_select import estimate_monthly_cost, load_library, select
 
 _LIBRARY = load_library()
@@ -37,13 +41,20 @@ _BY_ID = {m.get("service_id"): m for m in _LIBRARY}
 _GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 # Static launch assets (agent-commerce showcase): served from public/ if present.
-_PUBLIC = Path(__file__).resolve().parent / "public"
+_SOURCE_PUBLIC = Path(__file__).resolve().parent / "public"
+_PUBLIC = _SOURCE_PUBLIC if _SOURCE_PUBLIC.is_dir() else resources.files("asm_public")
 _AI_CATALOG_EXTENSION = "io.github.ye-yi7.asm.selection"
 _STATIC = {
     "/": ("index.html", "text/html; charset=utf-8"),
+    "/styles.css": ("styles.css", "text/css; charset=utf-8"),
     "/showcase": ("showcase.html", "text/html; charset=utf-8"),
     "/showcase.html": ("showcase.html", "text/html; charset=utf-8"),
     "/showcase-data.json": ("showcase-data.json", "application/json; charset=utf-8"),
+    "/services/tavily-search": ("services/tavily-search.html", "text/html; charset=utf-8"),
+    "/services/exa-search": ("services/exa-search.html", "text/html; charset=utf-8"),
+    "/services/firecrawl-search": ("services/firecrawl-search.html", "text/html; charset=utf-8"),
+    "/methods/web-search-replay-v0.1": ("methods/web-search-replay-v0.1.html", "text/html; charset=utf-8"),
+    "/runs/replay-search-example": ("runs/replay-search-example.html", "text/html; charset=utf-8"),
 }
 
 
@@ -238,14 +249,29 @@ class Handler(BaseHTTPRequestHandler):
             self._send(404, {"error": "unknown path; use POST /select, GET /tools, GET /.well-known/asm, GET /manifest/{service_id}, GET /healthz"})
 
     def do_POST(self) -> None:
-        if urlparse(self.path).path != "/select":
-            self._send(404, {"error": "unknown path; POST /select"})
+        path = urlparse(self.path).path
+        if path not in {"/select", "/contracts/validate"}:
+            self._send(404, {"error": "unknown path; POST /select or /contracts/validate"})
             return
         try:
             length = int(self.headers.get("Content-Length") or 0)
             req = json.loads(self.rfile.read(length) or b"{}")
         except (ValueError, json.JSONDecodeError):
             self._send(400, {"error": "invalid JSON body"})
+            return
+        if path == "/contracts/validate":
+            contract = req.get("type") if isinstance(req, dict) else None
+            payload = req.get("payload") if isinstance(req, dict) else None
+            if contract not in CONTRACT_SCHEMAS or not isinstance(payload, dict):
+                self._send(400, {"error": "'type' must name an ASM contract and 'payload' must be an object"})
+                return
+            errors = contract_errors(contract, payload)
+            self._send(200 if not errors else 422, {
+                "valid": not errors,
+                "contract": contract,
+                "errors": errors,
+                "meaning": "schema conformance only; not source truth, authorization, execution, or certification",
+            })
             return
         task = req.get("task")
         if not task:

@@ -1,0 +1,27 @@
+{
+  "contract_type": "selection_evidence",
+  "contract_version": "0.1",
+  "evidence_id": "ev-example-price-conflict",
+  "candidate": {
+    "provider_id": "example-search",
+    "service_id": "example-search/web-search@1",
+    "interface_id": "example-search/web-search@1:https-api:basic",
+    "operation": "web.search",
+    "interface_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "service_version": "1",
+    "adapter_version": "0.1.0",
+    "endpoint": "https://api.example.com/search"
+  },
+  "claim_path": "pricing.search_request",
+  "claim": {"value": "2", "unit": "credit/request", "value_kind": "credit", "currency": null},
+  "source": {"issuer": "example-search-api", "source_url": "https://api.example.com/usage"},
+  "method": "authenticated_call",
+  "observed_at": "2026-09-05T02:01:00Z",
+  "fetched_at": "2026-09-05T02:01:00Z",
+  "expires_at": "2026-09-12T02:01:00Z",
+  "scope": {"operation": "web.search", "region": "global", "account_plan": "basic", "task_profile": null, "cache_mode": "default"},
+  "strength": "observed",
+  "status": "conflicting",
+  "conflicts_with": ["ev-example-price-001"],
+  "snapshot": {"digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", "snapshot_ref": "replay://example-search/usage-2026-09-05", "retention": "retained"}
+}

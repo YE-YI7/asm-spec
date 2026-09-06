@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asm-protocol.org/schemas/selection-evidence-v0.1.schema.json",
+  "title": "ASM Selection Evidence v0.1",
+  "description": "One scoped, time-bounded claim used during service selection. Conflicting claims remain separate evidence records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "contract_version", "evidence_id", "candidate", "claim_path", "claim", "source", "method", "observed_at", "fetched_at", "expires_at", "scope", "strength", "status", "snapshot"],
+  "properties": {
+    "contract_type": {"const": "selection_evidence"},
+    "contract_version": {"const": "0.1"},
+    "evidence_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "candidate": {"$ref": "#/$defs/candidate"},
+    "claim_path": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,127}$"},
+    "claim": {"$ref": "#/$defs/claim"},
+    "source": {"$ref": "#/$defs/source"},
+    "method": {"enum": ["producer_declared", "registry_observed", "http_probe", "authenticated_call", "independent_eval", "caller_report"]},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "fetched_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": ["string", "null"], "format": "date-time"},
+    "scope": {"$ref": "#/$defs/scope"},
+    "strength": {"enum": ["declared", "observed", "measured", "independently_measured"]},
+    "status": {"enum": ["current", "stale", "expired", "unknown", "conflicting", "revoked"]},
+    "conflicts_with": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "snapshot": {"$ref": "#/$defs/snapshot"}
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "conflicting"}}}, "then": {"required": ["conflicts_with"], "properties": {"conflicts_with": {"minItems": 1}}}},
+    {"if": {"properties": {"status": {"const": "unknown"}}}, "then": {"properties": {"claim": {"required": ["value"], "properties": {"value": {"type": "null"}}}}}},
+    {"if": {"properties": {"claim": {"properties": {"value_kind": {"enum": ["currency_estimate", "currency_usage", "currency_settled"]}}}}}, "then": {"properties": {"claim": {"required": ["currency"], "properties": {"currency": {"type": "string", "pattern": "^[A-Z]{3}$"}}}}}},
+    {"if": {"properties": {"claim": {"properties": {"value_kind": {"const": "credit"}}}}}, "then": {"properties": {"claim": {"required": ["currency"], "properties": {"currency": {"type": "null"}}}}}}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider_id", "service_id", "interface_id", "operation", "interface_digest", "service_version", "adapter_version"],
+      "properties": {
+        "provider_id": {"type": "string", "minLength": 1}, "service_id": {"type": "string", "minLength": 1},
+        "interface_id": {"type": "string", "minLength": 1}, "operation": {"const": "web.search"},
+        "interface_digest": {"$ref": "#/$defs/digest"}, "service_version": {"type": "string", "minLength": 1},
+        "adapter_version": {"type": "string", "minLength": 1}, "endpoint": {"type": ["string", "null"], "format": "uri"}
+      }
+    },
+    "claim": {
+      "type": "object", "additionalProperties": false, "required": ["value", "unit", "value_kind"],
+      "properties": {
+        "value": {"type": ["string", "number", "integer", "boolean", "object", "array", "null"]},
+        "unit": {"type": ["string", "null"], "minLength": 1},
+        "value_kind": {"enum": ["fact", "credit", "currency_estimate", "currency_usage", "currency_settled", "measurement", "unknown"]},
+        "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"}
+      }
+    },
+    "source": {
+      "type": "object", "additionalProperties": false, "required": ["issuer", "source_url"],
+      "properties": {"issuer": {"type": "string", "minLength": 1}, "source_url": {"type": ["string", "null"], "format": "uri"}}
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false, "required": ["operation"],
+      "properties": {
+        "operation": {"const": "web.search"}, "region": {"type": ["string", "null"]}, "account_plan": {"type": ["string", "null"]},
+        "task_profile": {"type": ["string", "null"]}, "cache_mode": {"type": ["string", "null"]}
+      }
+    },
+    "snapshot": {
+      "type": "object", "additionalProperties": false, "required": ["digest", "retention"],
+      "properties": {"digest": {"$ref": "#/$defs/digest"}, "snapshot_ref": {"type": ["string", "null"], "minLength": 1}, "retention": {"enum": ["retained", "digest_only", "not_retained"]}}
+    }
+  }
+}

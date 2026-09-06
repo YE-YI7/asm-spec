@@ -1,0 +1,5 @@
+{
+  "query": "ASM protocol",
+  "results": [{"title": "Invalid fixture", "url": "file:///etc/passwd", "content": "Must be rejected."}],
+  "request_id": "tavily-replay-invalid-001"
+}

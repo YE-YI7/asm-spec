@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asm-protocol.org/schemas/outcome-receipt-v0.1.schema.json",
+  "title": "ASM Outcome Receipt v0.1 draft",
+  "description": "Observed execution facts bound to a prior decision. Success at transport or tool level is not equivalent to task correctness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "contract_version", "outcome_id", "decision_id", "decision_receipt_digest", "attempt_id", "executed", "request_commitment", "started_at", "ended_at", "transport_status", "tool_status", "task_check_results", "usage", "estimated_cost", "settled_cost", "result_commitment", "issuer"],
+  "properties": {
+    "contract_type": {"const": "outcome_receipt"}, "contract_version": {"const": "0.1-draft"},
+    "outcome_id": {"type": "string", "minLength": 1}, "decision_id": {"type": "string", "minLength": 1},
+    "decision_receipt_digest": {"$ref": "#/$defs/digest"}, "attempt_id": {"type": "string", "minLength": 1},
+    "supersedes": {"type": ["string", "null"], "minLength": 1},
+    "executed": {
+      "type": "object", "additionalProperties": false, "required": ["interface_id", "interface_digest", "adapter_version"],
+      "properties": {"interface_id": {"type": "string", "minLength": 1}, "interface_digest": {"$ref": "#/$defs/digest"}, "adapter_version": {"type": "string", "minLength": 1}, "provider_request_id": {"type": ["string", "null"], "minLength": 1}}
+    },
+    "request_commitment": {"$ref": "#/$defs/digest"}, "started_at": {"type": "string", "format": "date-time"}, "ended_at": {"type": "string", "format": "date-time"},
+    "transport_status": {"enum": ["succeeded", "timeout", "rate_limited", "authentication_failed", "billing_blocked", "network_failed", "invalid_response", "not_attempted"]},
+    "tool_status": {"enum": ["succeeded", "empty_result", "provider_error", "invalid_result", "not_observed"]},
+    "task_check_results": {"type": "array", "items": {"$ref": "#/$defs/check"}},
+    "usage": {"type": "array", "items": {"$ref": "#/$defs/usage"}},
+    "estimated_cost": {"$ref": "#/$defs/moneyObservation"}, "settled_cost": {"$ref": "#/$defs/moneyObservation"},
+    "result_commitment": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "issuer": {"type": "object", "additionalProperties": false, "required": ["id", "signature_status"], "properties": {"id": {"type": "string", "minLength": 1}, "signature_status": {"enum": ["unsigned", "signed_unverified", "signed_verified"]}}}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "check": {"type": "object", "additionalProperties": false, "required": ["check_id", "status", "method"], "properties": {"check_id": {"type": "string", "minLength": 1}, "status": {"enum": ["pass", "fail", "unknown", "not_applicable"]}, "method": {"enum": ["deterministic", "human_review", "model_assisted"]}, "evidence_ref": {"type": ["string", "null"], "minLength": 1}}},
+    "usage": {"type": "object", "additionalProperties": false, "required": ["dimension", "quantity", "unit", "source"], "properties": {"dimension": {"type": "string", "minLength": 1}, "quantity": {"type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"}, "unit": {"type": "string", "minLength": 1}, "source": {"enum": ["provider_response", "adapter_observed", "derived"]}}},
+    "moneyObservation": {"type": "object", "additionalProperties": false, "required": ["status", "amount", "currency", "source"], "properties": {"status": {"enum": ["known", "unknown", "not_applicable"]}, "amount": {"type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"}, "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"}, "source": {"enum": ["provider_estimate", "usage_derived", "billing_record", "unknown", "not_applicable"]}}}
+  }
+}

@@ -18,8 +18,11 @@ from pathlib import Path
 from mcp.server import MCPServer
 
 from asm_protocol.adaptive import OwnerContext, adaptive_select
+from asm_protocol.contracts import CONTRACT_SCHEMAS, contract_errors
+from asm_protocol.fallback import plan_search_fallback
 from asm_protocol.federation import MCPRegistryClient
 from asm_protocol.preferences import PreferenceLedger, model_from_ledger
+from asm_protocol.search_replay import run_bootstrap_replay
 from library_select import SELECTOR_VERSION, estimate_monthly_cost, load_library, select
 
 mcp = MCPServer(
@@ -162,6 +165,88 @@ def discover_mcp_servers(
         },
         "candidates": [record.to_discovery_candidate() for record in records],
     }
+
+
+@mcp.tool()
+def validate_application_contract(contract: str, payload: dict) -> dict:
+    """Validate one draft application contract without asserting its truth.
+
+    Contract conformance does not prove source truth, authorization, execution,
+    quality, or certification.
+    """
+    if contract not in CONTRACT_SCHEMAS:
+        return {
+            "valid": False,
+            "contract": contract,
+            "errors": [f"unknown contract; expected one of {sorted(CONTRACT_SCHEMAS)}"],
+        }
+    errors = contract_errors(contract, payload)
+    return {
+        "valid": not errors,
+        "contract": contract,
+        "errors": errors,
+        "meaning": "schema conformance only; not source truth, authorization, execution, or certification",
+    }
+
+
+@mcp.tool()
+def run_search_replay_tool(
+    request: dict,
+    evidence: list[dict],
+    provider_id: str,
+    provider_payload: dict,
+    decision_id: str,
+    outcome_id: str,
+    attempt_id: str,
+    issued_at: str,
+    valid_until: str,
+    started_at: str,
+    ended_at: str,
+    http_status: int = 200,
+    retry_after: str | None = None,
+) -> dict:
+    """Run the no-network search selection replay and return decision plus outcome."""
+    return run_bootstrap_replay(
+        request=request,
+        evidence=evidence,
+        provider_id=provider_id,
+        provider_payload=provider_payload,
+        decision_id=decision_id,
+        outcome_id=outcome_id,
+        attempt_id=attempt_id,
+        issued_at=issued_at,
+        valid_until=valid_until,
+        started_at=started_at,
+        ended_at=ended_at,
+        http_status=http_status,
+        retry_after=retry_after,
+    )
+
+
+@mcp.tool()
+def plan_search_fallback_tool(
+    request: dict,
+    evidence: list[dict],
+    previous_decision: dict,
+    previous_outcomes: list[dict],
+    decision_id: str,
+    issued_at: str,
+    valid_until: str,
+    now: str,
+    fallback_interface_id: str | None = None,
+) -> dict:
+    """Plan, but never execute, one explicitly authorized successor attempt."""
+    return plan_search_fallback(
+        request=request,
+        evidence=evidence,
+        previous_decision=previous_decision,
+        previous_outcomes=previous_outcomes,
+        decision_id=decision_id,
+        issued_at=issued_at,
+        valid_until=valid_until,
+        now=now,
+        fallback_interface_id=fallback_interface_id,
+    )
 
 
 @mcp.tool()

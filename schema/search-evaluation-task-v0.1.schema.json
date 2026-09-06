@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asm-protocol.org/schemas/search-evaluation-task-v0.1.schema.json",
+  "title": "ASM content-committed search evaluation task v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_type", "contract_version", "task_id", "task_family", "coverage_tags", "split", "language", "query_ref", "source_provenance", "ground_truth_ref", "checks", "committed_at"],
+  "properties": {
+    "contract_type": {"const": "search_evaluation_task"},
+    "contract_version": {"const": "0.1"},
+    "task_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "task_family": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]+$"},
+    "coverage_tags": {"type": "array", "items": {"enum": ["official_documentation", "time_sensitive_fact", "multi_source_verification", "chinese_query", "english_query"]}, "minItems": 1, "uniqueItems": true},
+    "split": {"enum": ["development", "held_out"]},
+    "language": {"type": "string", "minLength": 2},
+    "query_ref": {"$ref": "#/$defs/privateCommitment"},
+    "source_provenance": {
+      "oneOf": [
+        {"$ref": "#/$defs/benchmarkDataset"},
+        {"$ref": "#/$defs/externalContribution"}
+      ]
+    },
+    "ground_truth_ref": {"$ref": "#/$defs/privateCommitment"},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_domains", "domain_requirement", "minimum_independent_sources", "temporal_requirement", "judge_profile"],
+      "properties": {
+        "reference_domains": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "domain_requirement": {"enum": ["none", "any_reference"]},
+        "minimum_independent_sources": {"type": "integer", "minimum": 1},
+        "temporal_requirement": {"enum": ["none", "current_at_run", "before_cutoff", "after_cutoff"]},
+        "cutoff": {"type": ["string", "null"], "format": "date-time"},
+        "judge_profile": {"type": "string", "minLength": 1}
+      }
+    },
+    "committed_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "benchmarkDataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "version", "source_url", "license", "snapshot_digest", "row_id"],
+      "properties": {
+        "kind": {"const": "benchmark_dataset"},
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "license": {"type": "string", "minLength": 1},
+        "snapshot_digest": {"$ref": "#/$defs/digest"},
+        "row_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "externalContribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "contribution_digest", "batch_digest", "private_payload_digest", "permission_digest", "reference_set_digest", "received_at"],
+      "properties": {
+        "kind": {"const": "external_contribution"},
+        "contribution_digest": {"$ref": "#/$defs/digest"},
+        "batch_digest": {"$ref": "#/$defs/digest"},
+        "private_payload_digest": {"$ref": "#/$defs/digest"},
+        "permission_digest": {"$ref": "#/$defs/digest"},
+        "reference_set_digest": {"$ref": "#/$defs/digest"},
+        "received_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "privateCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest", "disclosure"],
+      "properties": {
+        "digest": {"$ref": "#/$defs/digest"},
+        "disclosure": {"enum": ["private", "benchmark_controlled"]}
+      }
+    }
+  }
+}
