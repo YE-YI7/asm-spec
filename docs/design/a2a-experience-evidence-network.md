@@ -86,11 +86,13 @@ This is an active field, not empty white space:
 - A2A issue #1628 proposes a consolidated `trust.signals[]` taxonomy.
 - Nobulex publishes behavioral evidence as an Agent Card extension.
 - ERC-8004 provides identity, reputation-feedback, and validation registries.
-- `capacity-attest` 0.1.2 publishes payer-signed post-settlement delivery
-  claims. Its public fixture's Base transfer, content hash, and EIP-191 signer
-  were independently reproduced on 2026-09-01. The `delivered` assertion and
-  `evidenceHash` preimage were not independently verified. It is a candidate
-  downstream evidence source, not ASM adoption.
+- `capacity-attest` publishes payer-signed post-settlement delivery claims. Its
+  pinned public claim was rechecked with `capacity-attest@0.2.0` on 2026-09-06:
+  the content address, EIP-191 signer, and Base USDC transfer matched. The
+  `delivered` assertion and `evidenceHash` preimage were not independently
+  verified. The producer agreed to review a narrow ASM linkage fixture. This is
+  an external technical collaboration and candidate downstream evidence source,
+  not ASM adoption.
 
 ASM should not compete by inventing another identity or generic attestation
 envelope. Its possible differentiation is narrower:
@@ -107,7 +109,8 @@ References:
 - https://github.com/a2aproject/A2A/issues/1628
 - https://github.com/a2aproject/A2A/discussions/1760
 - https://github.com/holistis/tokenizen/tree/main/packages/capacity-attest
-- https://github.com/modelcontextprotocol/registry/discussions/1300#discussioncomment-18226135
+- https://github.com/modelcontextprotocol/registry/discussions/1300#discussioncomment-18312359
+- `examples/interop/capacity-attest-outcome-linkage/`
 
 ## Evidence event draft
 
