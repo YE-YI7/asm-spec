@@ -1,8 +1,8 @@
 # ASM product program spec
 
-**Version:** 0.1-draft  
-**Date:** 2026-08-31  
-**Audience:** ASM maintainers and coding agents  
+**Version:** 0.1-draft
+**Date:** 2026-08-31
+**Audience:** ASM maintainers and coding agents
 **Purpose:** keep core ASM, A2A evidence, and Multi-Agent value moving together
 
 ## 1. Product invariant

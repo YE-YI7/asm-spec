@@ -1,7 +1,7 @@
 # A2A and Multi-Agent validation v0.1
 
-**Date:** 2026-08-31  
-**Result:** 7/7 synthetic mechanism checks passed  
+**Date:** 2026-08-31
+**Result:** 7/7 synthetic mechanism checks passed
 **Claim boundary:** no real-agent quality, demand, security, or adoption claim
 
 The evidence weights, minimum sample size, and per-evaluator cap in this fixture

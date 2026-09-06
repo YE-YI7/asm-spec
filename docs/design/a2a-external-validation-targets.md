@@ -1,6 +1,6 @@
 # A2A external validation targets
 
-**Date:** 2026-08-31  
+**Date:** 2026-08-31
 **Status:** shortlist; no partnership or adoption claim
 
 | Target | What it actually does | Validation role | Current action |

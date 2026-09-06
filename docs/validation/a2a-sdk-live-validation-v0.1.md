@@ -1,8 +1,8 @@
 # A2A SDK live validation v0.1
 
-**Date:** 2026-08-31  
-**Result:** PASS  
-**SDK:** `a2a-sdk 1.1.2`  
+**Date:** 2026-08-31
+**Result:** PASS
+**SDK:** `a2a-sdk 1.1.2`
 **Transport:** A2A 1.0 JSON-RPC over local HTTP
 
 ## Result
@@ -76,4 +76,3 @@ uv run --isolated --python 3.12 \
   --with uvicorn --with starlette --with httpx --with cryptography \
   python experiments/a2a_sdk_live_validation.py
 ```
-

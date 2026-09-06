@@ -1,6 +1,6 @@
 # Multi-Agent product discovery
 
-**Date:** 2026-08-31  
+**Date:** 2026-08-31
 **Status:** research only; no protocol or adapter commitment
 
 Program-level invariants and balance rules:

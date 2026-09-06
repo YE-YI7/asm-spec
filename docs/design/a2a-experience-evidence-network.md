@@ -1,7 +1,7 @@
 # A2A experience evidence network
 
-**Date:** 2026-08-31  
-**Status:** product hypothesis; research contract only  
+**Date:** 2026-08-31
+**Status:** product hypothesis; research contract only
 **Working analogy:** Yelp for agents, without unverified star averages
 
 Program-level invariants and balance rules:

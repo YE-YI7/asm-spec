@@ -1,8 +1,8 @@
 # Selection data: Linear + Product Hunt first-pass audit
 
-**Date:** 2026-08-31  
-**Scope:** first 10 entries shown in Linear's Agents directory  
-**Unit:** one public Linear integration listing  
+**Date:** 2026-08-31
+**Scope:** first 10 entries shown in Linear's Agents directory
+**Unit:** one public Linear integration listing
 **Question:** can a human or agent compare eligible integrations before delegation?
 
 `No` means the fact is not disclosed on the Linear listing. It does not mean the

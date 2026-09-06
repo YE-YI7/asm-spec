@@ -1,9 +1,9 @@
 # A2A external reference probe
 
-**Date:** 2026-08-31  
-**Reproduced:** 2026-09-01  
-**Endpoint:** `https://tasks.a2a-testbed.com`  
-**Scope:** one public test endpoint; two benign task attempts  
+**Date:** 2026-08-31
+**Reproduced:** 2026-09-01
+**Endpoint:** `https://tasks.a2a-testbed.com`
+**Scope:** one public test endpoint; two benign task attempts
 **Relationship:** independent observation only; no adoption or partnership
 
 ## Observed facts
@@ -66,8 +66,8 @@ v1.0 JSON-RPC methods, requested the reproducer, and stated an intention to add
 the case to the conformance suite. The same mismatch was reproduced again on
 2026-09-01 before delivery.
 
-Status: external maintainer confirmed the fix direction; fix not yet observed.  
-Initial report: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18216328  
-Maintainer reply: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18222053  
-Reproducer delivery: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18226134  
+Status: external maintainer confirmed the fix direction; fix not yet observed.
+Initial report: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18216328
+Maintainer reply: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18222053
+Reproducer delivery: https://github.com/a2aproject/A2A/discussions/1826#discussioncomment-18226134
 Standalone script: https://gist.github.com/YE-YI7/25d4e2bf1a136277c4c6c7f67a24566c
