@@ -10,6 +10,7 @@ from collections.abc import Mapping, Sequence
 from datetime import datetime
 from typing import Any
 
+from .contracts import validate_contract
 from .digests import digest_json
 
 
@@ -175,6 +176,10 @@ def validate_frozen_quality_plan(
     )
     if external_rows < minimum_external:
         raise ValueError("task snapshot does not contain enough external contribution rows")
+    for task in tasks:
+        if not isinstance(task, Mapping):
+            raise TypeError("every task snapshot row must be an object")
+        validate_contract("search_evaluation_task", task)
     if any(
         not isinstance(task, Mapping)
         or not isinstance(task.get("checks"), Mapping)
@@ -203,6 +208,28 @@ def validate_frozen_quality_plan(
     actual_splits = {row["task_id"]: row["split"] for row in rows}
     if actual_splits != expected_splits:
         raise ValueError("evaluation rows must match every committed task_id and split exactly")
+    observation_times: dict[str, datetime] = {}
+    for row in rows:
+        observed_at = _aware_timestamp(row.get("observed_at"), "row observed_at")
+        if observed_at < frozen_at or observed_at > evaluation_time:
+            raise ValueError("every row observed_at must fall between frozen_at and evaluated_at")
+        observation_times[row["task_id"]] = observed_at
+    for task in tasks:
+        if "time_sensitive_fact" not in task.get("coverage_tags", []):
+            continue
+        ground_truth = task.get("ground_truth_ref")
+        if not isinstance(ground_truth, Mapping):
+            raise TypeError("time-sensitive tasks require a ground-truth commitment")
+        verified_at = _aware_timestamp(ground_truth.get("verified_at"), "ground truth verified_at")
+        expires_at = _aware_timestamp(ground_truth.get("expires_at"), "ground truth expires_at")
+        committed_at = _aware_timestamp(task.get("committed_at"), "task committed_at")
+        observed_at = observation_times[task["task_id"]]
+        if verified_at > committed_at:
+            raise ValueError("time-sensitive ground truth must be verified before task commitment")
+        if expires_at <= verified_at or expires_at < observed_at:
+            raise ValueError(
+                "time-sensitive ground truth must be valid when the task result is observed"
+            )
     held_out = sum(row.get("split") == "held_out" for row in rows)
     if held_out < 20:
         raise ValueError("quality evaluation requires at least 20 held-out tasks")

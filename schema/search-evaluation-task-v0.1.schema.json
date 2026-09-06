@@ -20,7 +20,7 @@
         {"$ref": "#/$defs/externalContribution"}
       ]
     },
-    "ground_truth_ref": {"$ref": "#/$defs/privateCommitment"},
+    "ground_truth_ref": {"$ref": "#/$defs/groundTruthCommitment"},
     "checks": {
       "type": "object",
       "additionalProperties": false,
@@ -73,6 +73,21 @@
       "properties": {
         "digest": {"$ref": "#/$defs/digest"},
         "disclosure": {"enum": ["private", "benchmark_controlled"]}
+      }
+    },
+    "groundTruthCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest", "disclosure"],
+      "dependentRequired": {
+        "verified_at": ["expires_at"],
+        "expires_at": ["verified_at"]
+      },
+      "properties": {
+        "digest": {"$ref": "#/$defs/digest"},
+        "disclosure": {"enum": ["private", "benchmark_controlled"]},
+        "verified_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"}
       }
     }
   }

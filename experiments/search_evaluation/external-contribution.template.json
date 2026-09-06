@@ -7,6 +7,8 @@
   ],
   "cutoff": null,
   "language": "zh-CN",
+  "ground_truth_expires_at": "2026-09-07T00:00:00Z",
+  "ground_truth_verified_at": "2026-09-06T00:00:00Z",
   "permission": {
     "contains_personal_data": false,
     "evaluation_use_granted": true,

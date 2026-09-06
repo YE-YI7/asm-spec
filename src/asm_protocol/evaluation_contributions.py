@@ -7,6 +7,7 @@ import os
 import re
 import uuid
 from collections.abc import Mapping
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -27,6 +28,7 @@ _FIELDS = {
     "cutoff",
     "permission",
 }
+_OPTIONAL_FIELDS = {"ground_truth_verified_at", "ground_truth_expires_at"}
 _PERMISSION_FIELDS = {
     "evaluation_use_granted",
     "publish_commitments_granted",
@@ -65,6 +67,18 @@ def _validate_permission(payload: Mapping[str, Any]) -> dict[str, Any]:
     return normalized
 
 
+def _aware_timestamp(value: Any, label: str) -> datetime:
+    if not isinstance(value, str):
+        raise TypeError(f"{label} must be an ISO 8601 timestamp")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError(f"{label} must be an ISO 8601 timestamp") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ValueError(f"{label} must include a timezone")
+    return parsed
+
+
 def commit_external_contribution(
     contribution: Mapping[str, Any],
     *,
@@ -75,7 +89,7 @@ def commit_external_contribution(
     judge_profile: str,
 ) -> dict[str, dict[str, Any]]:
     """Build one public task commitment and its private, local-only source record."""
-    unknown = set(contribution) - _FIELDS
+    unknown = set(contribution) - _FIELDS - _OPTIONAL_FIELDS
     missing = _FIELDS - set(contribution)
     if unknown or missing:
         raise ValueError(f"contribution fields mismatch; missing={sorted(missing)}, unknown={sorted(unknown)}")
@@ -108,6 +122,23 @@ def commit_external_contribution(
     if len(domains) < minimum_sources:
         raise ValueError(f"this task requires at least {minimum_sources} independent reference domains")
 
+    ground_truth_ref = {"digest": digest_json({"answer": answer}), "disclosure": "private"}
+    if "time_sensitive_fact" in coverage_tags:
+        verified_at = _aware_timestamp(
+            contribution.get("ground_truth_verified_at"), "ground_truth_verified_at"
+        )
+        expires_at = _aware_timestamp(
+            contribution.get("ground_truth_expires_at"), "ground_truth_expires_at"
+        )
+        if expires_at <= verified_at:
+            raise ValueError("ground_truth_expires_at must be later than ground_truth_verified_at")
+        ground_truth_ref.update(
+            {
+                "verified_at": contribution["ground_truth_verified_at"],
+                "expires_at": contribution["ground_truth_expires_at"],
+            }
+        )
+
     task_id_suffix = digest_json(
         {"batch_id": batch_id, "contribution_id": contribution_id}
     ).removeprefix("sha256:")[:20]
@@ -129,7 +160,7 @@ def commit_external_contribution(
             "reference_set_digest": digest_json({"reference_urls": normalized_urls}),
             "received_at": received_at,
         },
-        "ground_truth_ref": {"digest": digest_json({"answer": answer}), "disclosure": "private"},
+        "ground_truth_ref": ground_truth_ref,
         "checks": {
             "reference_domains": [],
             "domain_requirement": "none",
@@ -172,6 +203,16 @@ def verify_private_contribution(
         raise ValueError("private query does not match its public commitment")
     if public_task["ground_truth_ref"]["digest"] != digest_json({"answer": contribution.get("answer")}):
         raise ValueError("private answer does not match its public commitment")
+    if "time_sensitive_fact" in contribution.get("coverage_tags", []) and (
+        public_task["ground_truth_ref"].get("verified_at") != contribution.get(
+            "ground_truth_verified_at"
+        )
+        or public_task["ground_truth_ref"].get("expires_at")
+        != contribution.get(
+            "ground_truth_expires_at"
+        )
+    ):
+        raise ValueError("private ground-truth validity window does not match public task")
     permission = _validate_permission(contribution)
     if provenance["permission_digest"] != digest_json({"permission": permission}):
         raise ValueError("private permission does not match its public commitment")

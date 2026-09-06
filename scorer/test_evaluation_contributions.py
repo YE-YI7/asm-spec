@@ -19,6 +19,8 @@ def _contribution() -> dict:
         "task_family": "external.chinese_current_fact",
         "coverage_tags": ["chinese_query", "time_sensitive_fact"],
         "language": "zh-CN",
+        "ground_truth_verified_at": "2026-09-06T04:55:00Z",
+        "ground_truth_expires_at": "2026-09-07T04:55:00Z",
         "query": "这是一条不会写入公开任务的真实问题吗？",
         "answer": "这是不会写入公开任务的参考答案。",
         "reference_urls": ["https://example.com/source"],
@@ -95,6 +97,18 @@ def test_multi_source_contribution_requires_two_domains() -> None:
     contribution["coverage_tags"].append("multi_source_verification")
 
     with pytest.raises(ValueError, match="at least 2"):
+        _commit(contribution)
+
+
+def test_time_sensitive_contribution_requires_a_valid_truth_window() -> None:
+    contribution = _contribution()
+    del contribution["ground_truth_verified_at"]
+    with pytest.raises(TypeError, match="ground_truth_verified_at"):
+        _commit(contribution)
+
+    contribution = _contribution()
+    contribution["ground_truth_expires_at"] = contribution["ground_truth_verified_at"]
+    with pytest.raises(ValueError, match="must be later"):
         _commit(contribution)
 
 

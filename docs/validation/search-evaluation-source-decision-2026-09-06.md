@@ -31,16 +31,22 @@ procedure, provider versions/accounts, and authorized comparison budget.
 
 | Source | Decision | Reason |
 |---|---|---|
-| FreshQA 2026-04-21 | use for time-sensitive candidate rows once the exact sheet export is retained | official repository is Apache-2.0 and versions the sheet, but Google Sheets was unreachable from this build environment |
+| FreshQA 2026-04-21 | use only as a candidate-query source once the exact sheet export is retained; re-verify answers before commitment | official repository is Apache-2.0 and links sheet `1_8mi-yuK30mvoDJu1KQXD6ODem7MKMcIgVAwDSzJkjM`; Google CSV export remained unreachable from this build environment, and April answers cannot be assumed current in September |
 | Chinese SimpleQA | do not ingest yet | the official GitHub repository reports MIT while the Hugging Face dataset card reports CC-BY-NC-SA-4.0; commercial-use rights are therefore unresolved |
 | CDQA | do not ingest | useful Chinese dynamic questions, but the official repository declares no license |
 | UIS-QA / BrowseComp-ZH | secondary agent benchmark only | they intentionally require navigation or deep browsing beyond the common title/snippet contract |
 | WideSearch | secondary end-to-end benchmark only | MIT and bilingual, but measures broad multi-step collection rather than one-call search-provider quality |
 
-The cleanest remaining route is to combine licensed FreshQA rows with a small
-external Chinese task contribution. That closes time-sensitive, Chinese, and
-external-origin coverage without pretending a deep-research benchmark measures
-the same operation as a search API.
+The cleanest remaining route is to use licensed FreshQA questions as candidates,
+independently re-verify and time-bound their expected answers, then combine them
+with a small external Chinese task contribution. That closes time-sensitive,
+Chinese, and external-origin coverage without pretending a deep-research
+benchmark measures the same operation as a search API.
+
+Time-sensitive tasks now fail closed unless the public ground-truth commitment
+contains `verified_at` and `expires_at`, and the recorded result `observed_at`
+falls inside that validity window. A dated FreshQA answer is therefore not
+treated as current merely because its source file is content-committed.
 
 ## External contribution intake
 

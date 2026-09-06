@@ -65,7 +65,7 @@ provider evidence, external adoption, or commercial validation.
 | T4 entry | CLI and MCP replay, safe one-call transport boundary, private run storage implemented | live account run remains unverified |
 | T5 closure | successor decision, authorized fallback, attempt/deadline/budget/version checks, failure states and owner-scoped two-worker fixture implemented | cross-organization identity remains out of scope |
 | T6 public surface | three source-labeled cards, method page, noindex replay page and opt-in local activation events implemented | cards correctly show live quality evidence as insufficient |
-| T7 evaluation | primary quality objective selected before results; 60 SimpleQA rows are content-committed with a proportional 10-family held-out split; source/task/result binding, exact McNemar, seeded task-family cluster bootstrap, and a local-only consented external-task intake are implemented | no real external contribution has been received; snapshot still lacks Chinese/time-sensitive coverage; judge model/version, accounts, budget and external trials remain absent |
+| T7 evaluation | primary quality objective selected before results; 60 SimpleQA rows are content-committed with a proportional 10-family held-out split; source/task/result/time-window binding, exact McNemar, seeded task-family cluster bootstrap, and a local-only consented external-task intake are implemented | no real external contribution has been received; snapshot still lacks Chinese/time-sensitive coverage; dated FreshQA answers require current re-verification; judge model/version, accounts, budget and external trials remain absent |
 
-Latest local verification at this point: `368 passed, 1 skipped`; targeted Ruff
+Latest local verification at this point: `372 passed, 1 skipped`; targeted Ruff
 and JSON parsing passed. Re-run after packaging changes before any review or push.

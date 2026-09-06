@@ -56,9 +56,12 @@ def _timestamp(value: Any) -> datetime | None:
     if not isinstance(value, str):
         return None
     try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     except ValueError:
         return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed
 
 
 def _semantic_errors(contract: str, payload: Mapping[str, Any]) -> list[str]:
@@ -116,6 +119,19 @@ def _semantic_errors(contract: str, payload: Mapping[str, Any]) -> list[str]:
         cutoff = checks.get("cutoff")
         if (temporal in {"before_cutoff", "after_cutoff"}) != (cutoff is not None):
             errors.append("checks.cutoff: required exactly for before_cutoff or after_cutoff")
+        ground_truth = payload.get("ground_truth_ref") or {}
+        time_sensitive = "time_sensitive_fact" in (payload.get("coverage_tags") or [])
+        verified = _timestamp(ground_truth.get("verified_at"))
+        expires = _timestamp(ground_truth.get("expires_at"))
+        committed = _timestamp(payload.get("committed_at"))
+        if time_sensitive and (verified is None or expires is None):
+            errors.append(
+                "ground_truth_ref: time-sensitive tasks require verified_at and expires_at"
+            )
+        if verified and expires and verified >= expires:
+            errors.append("ground_truth_ref.expires_at: must be later than verified_at")
+        if verified and committed and verified > committed:
+            errors.append("ground_truth_ref.verified_at: must not be later than committed_at")
     return errors
 
 

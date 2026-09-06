@@ -21,7 +21,9 @@
   },
   "ground_truth_ref": {
     "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-    "disclosure": "benchmark_controlled"
+    "disclosure": "benchmark_controlled",
+    "verified_at": "2026-09-06T02:30:00Z",
+    "expires_at": "2026-09-07T02:30:00Z"
   },
   "checks": {
     "reference_domains": [],

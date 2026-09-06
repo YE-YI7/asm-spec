@@ -77,15 +77,51 @@ def _plan(task_set_digest: str) -> dict:
 
 
 def _task(index: int, split: str) -> dict:
+    digest = "sha256:" + f"{index:064x}"[-64:]
+    if index == 0:
+        source_provenance = {
+            "kind": "external_contribution",
+            "contribution_digest": digest,
+            "batch_digest": digest,
+            "private_payload_digest": digest,
+            "permission_digest": digest,
+            "reference_set_digest": digest,
+            "received_at": "2026-09-06T00:30:00Z",
+        }
+    else:
+        source_provenance = {
+            "kind": "benchmark_dataset",
+            "name": "synthetic test fixture",
+            "version": "fixture-v1",
+            "source_url": "https://example.com/fixture.csv",
+            "license": "test-only",
+            "snapshot_digest": digest,
+            "row_id": str(index),
+        }
     return {
+        "contract_type": "search_evaluation_task",
+        "contract_version": "0.1",
         "task_id": f"task-{index}",
         "task_family": f"family-{index % 10}",
         "split": split,
         "coverage_tags": REQUIRED_TAGS,
-        "source_provenance": {
-            "kind": "external_contribution" if index == 0 else "benchmark_dataset"
+        "language": "en",
+        "query_ref": {"digest": digest, "disclosure": "private"},
+        "source_provenance": source_provenance,
+        "ground_truth_ref": {
+            "digest": digest,
+            "disclosure": "private",
+            "verified_at": "2026-09-06T00:50:00Z",
+            "expires_at": "2026-09-06T04:00:00Z",
         },
-        "checks": {"judge_profile": JUDGE},
+        "checks": {
+            "reference_domains": [],
+            "domain_requirement": "none",
+            "minimum_independent_sources": 1,
+            "temporal_requirement": "current_at_run",
+            "cutoff": None,
+            "judge_profile": JUDGE,
+        },
         "committed_at": "2026-09-06T01:00:00Z",
     }
 
@@ -98,6 +134,7 @@ def _row(task: dict) -> dict:
         "asm_pass": True,
         "split": task["split"],
         "constraint_violations": 0,
+        "observed_at": "2026-09-06T02:30:00Z",
     }
 
 
@@ -197,3 +234,38 @@ def test_quality_report_runs_only_through_validated_bound_snapshot() -> None:
     assert report["task_set_digest"] == snapshot["task_set_digest"]
     assert report["sample_size"] == 60
     assert report["asm_pass_rate"] == 1.0
+
+
+def test_frozen_plan_binds_result_observation_time() -> None:
+    tasks = [_task(index, "held_out" if index < 20 else "development") for index in range(60)]
+    rows = [_row(task) for task in tasks]
+    snapshot = {"tasks": tasks, "task_set_digest": digest_json({"tasks": tasks})}
+    plan = _plan(snapshot["task_set_digest"])
+
+    rows[0]["observed_at"] = "2026-09-06T04:30:00Z"
+    with pytest.raises(ValueError, match="between frozen_at and evaluated_at"):
+        validate_frozen_quality_plan(
+            plan, rows, task_snapshot=snapshot, evaluated_at="2026-09-06T03:00:00Z"
+        )
+
+
+def test_frozen_plan_rejects_stale_or_post_committed_time_sensitive_truth() -> None:
+    tasks = [_task(index, "held_out" if index < 20 else "development") for index in range(60)]
+    rows = [_row(task) for task in tasks]
+
+    tasks[0]["ground_truth_ref"]["expires_at"] = "2026-09-06T02:20:00Z"
+    snapshot = {"tasks": tasks, "task_set_digest": digest_json({"tasks": tasks})}
+    plan = _plan(snapshot["task_set_digest"])
+    with pytest.raises(ValueError, match="valid when the task result is observed"):
+        validate_frozen_quality_plan(
+            plan, rows, task_snapshot=snapshot, evaluated_at="2026-09-06T03:00:00Z"
+        )
+
+    tasks[0]["ground_truth_ref"]["expires_at"] = "2026-09-06T04:00:00Z"
+    tasks[0]["ground_truth_ref"]["verified_at"] = "2026-09-06T01:30:00Z"
+    snapshot = {"tasks": tasks, "task_set_digest": digest_json({"tasks": tasks})}
+    plan["task_set_digest"] = snapshot["task_set_digest"]
+    with pytest.raises(ValueError, match="must not be later than committed_at"):
+        validate_frozen_quality_plan(
+            plan, rows, task_snapshot=snapshot, evaluated_at="2026-09-06T03:00:00Z"
+        )

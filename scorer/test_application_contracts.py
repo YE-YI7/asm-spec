@@ -186,3 +186,22 @@ def test_frozen_search_evaluation_task_uses_shared_contract() -> None:
     assert contract_errors("search_evaluation_task", payload) == [
         "checks.cutoff: required exactly for before_cutoff or after_cutoff"
     ]
+
+
+def test_time_sensitive_evaluation_task_requires_a_precommitted_truth_window() -> None:
+    payload = json.loads((FIXTURES / "evaluation-task.valid.json").read_text(encoding="utf-8"))
+    payload["ground_truth_ref"].pop("verified_at")
+    payload["ground_truth_ref"].pop("expires_at")
+    assert contract_errors("search_evaluation_task", payload) == [
+        "ground_truth_ref: time-sensitive tasks require verified_at and expires_at"
+    ]
+
+    payload["ground_truth_ref"].update(
+        verified_at="2026-09-05T00:00:00Z",
+        expires_at="2026-09-07T00:00:00Z",
+    )
+    validate_contract("search_evaluation_task", payload)
+    payload["ground_truth_ref"]["verified_at"] = "2026-09-06T03:30:00Z"
+    assert "ground_truth_ref.verified_at: must not be later than committed_at" in contract_errors(
+        "search_evaluation_task", payload
+    )
