@@ -1,0 +1,12 @@
+{
+  "name": "asm-capacity-attest-outcome-linkage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test.mjs"
+  },
+  "dependencies": {
+    "capacity-attest": "0.2.0"
+  }
+}

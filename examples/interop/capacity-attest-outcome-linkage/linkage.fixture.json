@@ -1,0 +1,66 @@
+{
+  "fixture_type": "asm_external_attestation_linkage",
+  "fixture_version": "0.1",
+  "status": "interop_verification_only",
+  "historical_asm_use": false,
+  "producer": {
+    "name": "capacity-attest",
+    "repository": "https://github.com/holistis/tokenizen/tree/main/packages/capacity-attest"
+  },
+  "external_attestation": {
+    "raw_claim_url": "https://raw.githubusercontent.com/holistis/tokenizen/85c8fc1feef099c17bf178b75f4a476e5b867976/packages/capacity-attest/data-selftest/claims.jsonl",
+    "raw_claim_sha256": "sha256:2c6292a296a5d9feef4ea2f301968523488f0a95621fc4a94ce770b66f38cf5c",
+    "claim_id": "0xc008b7b38e8a80061d525ac1cfe08c4f48244612dcf7f2a1b61b82c16fccac29",
+    "expected_signer": "0xf11ce7141daecec9624ec3ccf49b437d40a0ad20",
+    "verifier": {
+      "package": "capacity-attest",
+      "version": "0.2.0",
+      "import": "capacity-attest/dist/signing.js",
+      "function": "verifyClaim"
+    }
+  },
+  "settlement": {
+    "chain_namespace": "eip155",
+    "chain_reference": "8453",
+    "network_name": "Base Mainnet",
+    "transaction_hash": "0xc00a638491986962ca125c01da4e3df8a07d715216694bb0a59ff257c88e6880",
+    "transaction_status": "success",
+    "asset_contract": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "asset_symbol": "USDC",
+    "asset_decimals": 6,
+    "raw_amount": "1000",
+    "display_amount": "0.001",
+    "payer": "0xf11ce7141daecec9624ec3ccf49b437d40a0ad20",
+    "payee": "0x015eb036560216b3051339061ff68a207e0fe88f"
+  },
+  "asm_mapping": {
+    "chain_order": [
+      "DecisionReceipt",
+      "OutcomeReceipt",
+      "external_attestation_reference"
+    ],
+    "decision_receipt_must_not_reference_post_call_claim": true,
+    "outcome_binding_requirements": [
+      "outcome receipt digest",
+      "stable raw claim URL",
+      "claim ID",
+      "verifier package and exact version",
+      "settlement reference",
+      "verification result"
+    ],
+    "current_outcome_schema_limit": "OutcomeReceipt v0.1-draft cannot type a non-fiat asset settlement or external attestation reference without an extension mapping."
+  },
+  "verified": [
+    "raw claim bytes match the pinned digest",
+    "claim content recomputes to claimId",
+    "EIP-191 signature recovers to buyerAddress",
+    "Base receipt succeeded",
+    "USDC Transfer log binds payer, payee, and 1000 base units"
+  ],
+  "not_independently_proven": [
+    "delivered=yes",
+    "evidenceHash preimage",
+    "task correctness",
+    "historical use of ASM for the paid call"
+  ]
+}
