@@ -1,0 +1,151 @@
+{
+  "suite_version": "0.1",
+  "status": "design-only",
+  "purpose": "Source-informed synthetic cases for testing whether one selection contract can support tools and agents-as-tools without taking over orchestration.",
+  "ground_truth_boundary": "Candidate facts are synthetic and explicit. The suite tests constraint handling and set composition, not real provider quality.",
+  "cases": [
+    {
+      "id": "ma-001-single-specialist",
+      "source_pattern": "https://openai.github.io/openai-agents-python/multi_agent/",
+      "decision_type": "single",
+      "goal": "Calculate the percentage change from supplied values.",
+      "required_functions": ["percentage_change"],
+      "candidates": [
+        {"id": "research-agent", "functions": ["web_search"], "eligible": true},
+        {"id": "analysis-agent", "functions": ["percentage_change"], "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["analysis-agent"]},
+      "failure_metrics": ["hard_constraint_violation", "unnecessary_team_size"]
+    },
+    {
+      "id": "ma-002-complementary-team",
+      "source_pattern": "https://docs.langchain.com/oss/python/langchain/multi-agent/subagents",
+      "decision_type": "set",
+      "goal": "Find a value on the web and calculate its percentage change.",
+      "required_functions": ["web_search", "percentage_change"],
+      "constraints": {"max_total_cost": 4, "currency": "USD"},
+      "candidates": [
+        {"id": "research-agent", "functions": ["web_search"], "cost": 2, "eligible": true},
+        {"id": "analysis-agent", "functions": ["percentage_change"], "cost": 2, "eligible": true},
+        {"id": "generalist-agent", "functions": ["web_search", "percentage_change"], "cost": 8, "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["research-agent", "analysis-agent"]},
+      "failure_metrics": ["capability_coverage", "budget_violation", "exact_set", "jaccard"]
+    },
+    {
+      "id": "ma-003-sequential-single",
+      "source_pattern": "https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/",
+      "decision_type": "set",
+      "goal": "Edit one document through three tightly dependent revisions.",
+      "required_functions": ["document_edit", "revision_memory"],
+      "constraints": {"task_shape": "sequential", "minimize_coordination": true},
+      "candidates": [
+        {"id": "document-agent", "functions": ["document_edit", "revision_memory"], "eligible": true},
+        {"id": "draft-agent", "functions": ["document_edit"], "eligible": true},
+        {"id": "memory-agent", "functions": ["revision_memory"], "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["document-agent"]},
+      "failure_metrics": ["unnecessary_team_size", "coordination_overselection"]
+    },
+    {
+      "id": "ma-004-a2a-interface",
+      "source_pattern": "https://a2a-protocol.org/dev/specification/",
+      "decision_type": "single",
+      "goal": "Send a CSV artifact to a remote analysis agent.",
+      "required_functions": ["tabular_analysis"],
+      "constraints": {"required_input_mode": "text/csv", "protocol": "A2A/1.0"},
+      "candidates": [
+        {"id": "text-only-agent", "functions": ["tabular_analysis"], "input_modes": ["text/plain"], "protocols": ["A2A/1.0"], "eligible": true},
+        {"id": "csv-agent", "functions": ["tabular_analysis"], "input_modes": ["text/csv"], "protocols": ["A2A/1.0"], "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["csv-agent"], "rejected": ["text-only-agent"]},
+      "failure_metrics": ["interface_violation"]
+    },
+    {
+      "id": "ma-005-stale-capability",
+      "source_pattern": "https://docs.cloud.google.com/agent-registry/search-agents-and-tools",
+      "decision_type": "single",
+      "goal": "Use a currently supported repository writer.",
+      "required_functions": ["repository_write"],
+      "constraints": {"as_of": "2026-08-31T00:00:00Z"},
+      "candidates": [
+        {"id": "expired-agent", "functions": ["repository_write"], "claim_expires_at": "2026-08-01T00:00:00Z", "eligible": true},
+        {"id": "current-agent", "functions": ["repository_write"], "claim_expires_at": "2026-09-30T00:00:00Z", "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["current-agent"], "rejected": ["expired-agent"]},
+      "failure_metrics": ["freshness_violation"]
+    },
+    {
+      "id": "ma-006-runtime-replacement",
+      "source_pattern": "https://openai.github.io/openai-agents-python/multi_agent/",
+      "decision_type": "replacement",
+      "goal": "Continue web research after the primary provider exhausts quota.",
+      "required_functions": ["web_search"],
+      "runtime_event": {"candidate_id": "primary-search", "status": "quota_exhausted"},
+      "candidates": [
+        {"id": "primary-search", "functions": ["web_search"], "runtime_status": "quota_exhausted", "eligible": true},
+        {"id": "backup-search", "functions": ["web_search"], "runtime_status": "available", "eligible": true}
+      ],
+      "expected": {"status": "reselected", "selected": ["backup-search"], "receipt_chain": ["primary-search", "backup-search"]},
+      "failure_metrics": ["recovery_failure", "fallback_chain_completeness"]
+    },
+    {
+      "id": "ma-007-shared-budget",
+      "source_pattern": "https://github.com/microsoft/agent-framework/blob/main/python/samples/03-workflows/control-flow/multi_selection_edge_group.py",
+      "decision_type": "set",
+      "goal": "Run research and review branches in parallel.",
+      "required_functions": ["research", "review"],
+      "constraints": {"max_total_cost": 10, "currency": "USD"},
+      "candidates": [
+        {"id": "research-premium", "functions": ["research"], "cost": 8, "eligible": true},
+        {"id": "research-standard", "functions": ["research"], "cost": 4, "eligible": true},
+        {"id": "review-agent", "functions": ["review"], "cost": 5, "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["research-standard", "review-agent"], "total_cost": 9},
+      "failure_metrics": ["budget_violation", "capability_coverage"]
+    },
+    {
+      "id": "ma-008-owner-policy",
+      "source_pattern": "https://github.com/openai/openai-agents-python/blob/main/examples/agent_patterns/agents_as_tools_conditional.py",
+      "decision_type": "single",
+      "goal": "Analyze a private customer document.",
+      "required_functions": ["document_analysis"],
+      "policy": {"training_on_user_data": "forbidden"},
+      "candidates": [
+        {"id": "training-agent", "functions": ["document_analysis"], "trains_on_user_data": true, "eligible": true},
+        {"id": "private-agent", "functions": ["document_analysis"], "trains_on_user_data": false, "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["private-agent"], "rejected": ["training-agent"]},
+      "failure_metrics": ["owner_policy_violation"]
+    },
+    {
+      "id": "ma-009-independent-reviewer",
+      "source_pattern": "https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/group-chat",
+      "decision_type": "set",
+      "goal": "Produce and independently review a technical answer.",
+      "required_functions": ["answer", "review"],
+      "constraints": {"reviewer_provider_must_differ_from_producer": true},
+      "candidates": [
+        {"id": "producer-a", "provider": "provider-a", "functions": ["answer"], "eligible": true},
+        {"id": "reviewer-a", "provider": "provider-a", "functions": ["review"], "eligible": true},
+        {"id": "reviewer-b", "provider": "provider-b", "functions": ["review"], "eligible": true}
+      ],
+      "expected": {"status": "selected", "selected": ["producer-a", "reviewer-b"]},
+      "failure_metrics": ["provenance_independence_violation", "exact_set"]
+    },
+    {
+      "id": "ma-010-under-specified",
+      "source_pattern": "https://arxiv.org/abs/2606.28925",
+      "decision_type": "set",
+      "goal": "Choose the best team for this task.",
+      "required_functions": [],
+      "constraints": {},
+      "candidates": [
+        {"id": "agent-a", "functions": ["research"], "eligible": true},
+        {"id": "agent-b", "functions": ["analysis"], "eligible": true}
+      ],
+      "expected": {"status": "needs_facts", "selected": []},
+      "failure_metrics": ["unsafe_false_certainty"]
+    }
+  ]
+}
