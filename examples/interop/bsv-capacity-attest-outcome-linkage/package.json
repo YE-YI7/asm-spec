@@ -1,0 +1,12 @@
+{
+  "name": "bsv-capacity-attest-outcome-linkage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@bsv/sdk": "^1.4.0"
+  }
+}

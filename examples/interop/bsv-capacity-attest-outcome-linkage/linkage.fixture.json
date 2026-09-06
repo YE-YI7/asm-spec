@@ -1,0 +1,72 @@
+{
+  "fixture_type": "asm_external_attestation_linkage",
+  "fixture_version": "0.1",
+  "status": "interop_verification_only",
+  "historical_asm_use": false,
+  "producer": {
+    "name": "bsv-capacity-attest",
+    "repository": "https://github.com/EmbryoSpace/bsv-capacity-attest",
+    "content_addressing_shared_with": {
+      "name": "capacity-attest",
+      "repository": "https://github.com/holistis/tokenizen/tree/main/packages/capacity-attest",
+      "note": "Same rail-neutral content-addressing (sha256 of canonical JSON of the content fields). Only signature recovery and address encoding are BSV-specific, isolated behind the rail adapter; capacity-attest's own verifyClaim is ETH/EIP-191-typed and cannot verify a base58 claim directly."
+    }
+  },
+  "external_attestation": {
+    "raw_claim_url": "https://raw.githubusercontent.com/EmbryoSpace/bsv-capacity-attest/0ea9bc915e87d3fe6e7d845e1b6089fef60c809c/claim_inference.json",
+    "raw_claim_sha256": "sha256:179baf958f63a7a67486cca0bc4dff57af3a07ab8b7206b11488a2e7c84845d7",
+    "claim_id": "0x58e9fc4aacd64246f1bc85b223a811ab456ca2f337ab029416db53da4b8f16ec",
+    "expected_signer": "1ErDfgzGWe6kDSHWWZPUSpVRRvfQo7rDdZ",
+    "verifier": {
+      "package": "bsv-capacity-attest",
+      "commit": "0ea9bc915e87d3fe6e7d845e1b6089fef60c809c",
+      "import": "./bsv-claim.mjs",
+      "function": "verifyClaim",
+      "note": "Recovers a Bitcoin Signed Message (BSM / BRC-77) to a base58 P2PKH address; the claim carries the payer pubkey (a P2PKH spend reveals it on-chain) and the check binds signature -> pubkey -> buyerAddress."
+    }
+  },
+  "settlement": {
+    "chain_namespace": "bip122",
+    "chain_reference": "000000000019d6689c085ae165831e93",
+    "network_name": "BSV Mainnet",
+    "chain_reference_note": "BSV shares the bip122 genesis with the wider Bitcoin family; the settlement is disambiguated by the transaction existing on BSV mainnet (verify via a BSV explorer / WhatsOnChain).",
+    "transaction_hash": "77030c6192c6e86b808f1d7afa210b874bad86ed6a6b4ef69a8ccebc51ec83c6",
+    "transaction_status": "confirmed",
+    "asset_symbol": "BSV",
+    "asset_decimals": 8,
+    "raw_amount": "5942",
+    "display_amount": "0.00005942",
+    "payer": "1ErDfgzGWe6kDSHWWZPUSpVRRvfQo7rDdZ",
+    "payee": "1LdqUbdZ6GY71KxThU6aKfuKXxgmTn82cv"
+  },
+  "asm_mapping": {
+    "chain_order": [
+      "DecisionReceipt",
+      "OutcomeReceipt",
+      "external_attestation_reference"
+    ],
+    "decision_receipt_must_not_reference_post_call_claim": true,
+    "outcome_binding_requirements": [
+      "outcome receipt digest",
+      "stable raw claim URL",
+      "claim ID",
+      "verifier package and exact commit",
+      "settlement reference",
+      "verification result"
+    ],
+    "current_outcome_schema_limit": "OutcomeReceipt v0.1-draft cannot type a non-fiat BSV settlement or external attestation reference without an extension mapping."
+  },
+  "verified": [
+    "raw claim bytes match the pinned digest",
+    "claim content recomputes to claimId (sha256 of canonical content)",
+    "BSM signature recovers under the payer pubkey and P2PKH(pubkey) equals buyerAddress",
+    "BSV transaction is confirmed on mainnet",
+    "a P2PKH output pays payee and an input is spent by payer"
+  ],
+  "not_independently_proven": [
+    "delivered=yes",
+    "evidenceHash preimage",
+    "task correctness",
+    "historical use of ASM for the paid call"
+  ]
+}
