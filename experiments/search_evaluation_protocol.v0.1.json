@@ -1,0 +1,42 @@
+{
+  "protocol": "asm-search-evaluation/0.1",
+  "status": "draft_unfrozen",
+  "frozen_at": null,
+  "task_set_digest": null,
+  "budget_authorized": false,
+  "provider_versions": {},
+  "judge_profile": null,
+  "primary_objective": "pass_rate_improvement",
+  "primary_comparison": "asm_bootstrap_vs_host_current_fixed_service",
+  "minimum_task_rows": 60,
+  "minimum_held_out_rows": 20,
+  "required_coverage_tags": [
+    "official_documentation",
+    "time_sensitive_fact",
+    "multi_source_verification",
+    "chinese_query",
+    "english_query"
+  ],
+  "minimum_external_contribution_rows": 1,
+  "required_versions": [
+    "provider_api_or_sdk",
+    "provider_mode",
+    "asm_adapter",
+    "asm_policy",
+    "judge_profile"
+  ],
+  "quality_gate": {
+    "pass_rate_delta_min": 0.05,
+    "cluster_bootstrap_ci95_lower_min_exclusive": 0.0,
+    "paired_test": "exact_mcnemar"
+  },
+  "hard_constraint_violations_allowed": 0,
+  "freeze_blockers": [
+    "candidate task snapshot exists but the complete mixed-coverage task set is not frozen or bound here",
+    "provider accounts and comparison budget are not authorized",
+    "external task contribution is absent",
+    "independent judge profile is not fixed"
+  ],
+  "results": null,
+  "claim_status": "no_result"
+}

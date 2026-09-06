@@ -1,0 +1,2464 @@
+{
+  "build_algorithm": "simpleqa-topic-round-robin+proportional-topic-split/v1",
+  "held_out_count": 20,
+  "missing_coverage": [
+    "chinese_query",
+    "time_sensitive_fact",
+    "external_task_contribution"
+  ],
+  "snapshot_format": "asm-search-task-snapshot/0.1",
+  "source_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+  "status": "candidate_incomplete_coverage",
+  "task_count": 60,
+  "task_set_digest": "sha256:71c3fa458f86d470cacf631ba7f496bbb205c0e4aeef443a410768094ff7cdcd",
+  "tasks": [
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "mofga.org",
+          "z1073.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:545c34e3c204f7a2d396590b6019165d439f56dedf0a8666fc03e41081497769",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:190f8baca176997c6b1763849fcb664ff1d61b35b637b90e681f2c45e600c949",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "190f8baca176997c6b17",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-190f8baca176997c6b17"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "fsi.nic.in",
+          "static.pib.gov.in"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:4c3ea664d6d410772ef3c850d02201c0c56a5adb6551471d45eb7387b9002b0e",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:614b5cf8daad29508d4c95c71c383255a1305d587374ae190949e878c4af0161",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "614b5cf8daad29508d4c",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-614b5cf8daad29508d4c"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "birminghamhistory.co.uk",
+          "en.wikipedia.org",
+          "loquis.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:2e874654db7ea4fefea73181d4a7aa844962b9185ca6c518a5b59b7718bddd03",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:207bee1652f181a1f9c75e30dd84a264b546578ae367d03ba51d2cce57f7ec2b",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "207bee1652f181a1f9c7",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-207bee1652f181a1f9c7"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "docradio.org",
+          "en.wikipedia.org",
+          "encyclopedia.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:33fb7298c0b2ac6e27484e40f168015f35be5a59322fc0b86b87a6a5a3bee4e7",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:29498c2b970f44297c686a0c47cdcd1561dcc718c7b2678f4fc4f21b548ab1b8",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "29498c2b970f44297c68",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-29498c2b970f44297c68"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "cbc.ca",
+          "en.wikipedia.org",
+          "ualberta.ca"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:66329dfe5d09b566393f45b8ba380eca1f6a7fa2ee9e2d7205fb60562cb82db6",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:11ce6d3acaf309301d61a1a840f5fe969037b65a79a88801b33f765360d977e0",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "11ce6d3acaf309301d61",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-11ce6d3acaf309301d61"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "scmp.com",
+          "timenote.info"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:662bfb2a201e921397006cc22165e050d5f8df83e9b6984071bc28e9264f868e",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:8b1a392a3a5be7a5d1f28149edbb481501a277070cd4af9095f430027d244c4f",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "8b1a392a3a5be7a5d1f2",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-8b1a392a3a5be7a5d1f2"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "archlinux.org",
+          "en.wikipedia.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ee389f2017606199457aa1bda8fa8863dbb1951890d779fb0441d2f723812ce4",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:319c8c52d645f813122baf5cdd861e2410181c2390eb59da66fe9ec67a22346d",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "319c8c52d645f813122b",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-319c8c52d645f813122b"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "clydepinelandsfc.wordpress.com",
+          "community-services.blaauwberg.net",
+          "geocaching.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:d78389444f8c80a506079df598d7f4ed33e49026306afd8589bfbd7f25c0905b",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:2c2ad1c433cebcb290e1db3b930b83816db06f34cf8144ed8ffad1bfec5f8d87",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "2c2ad1c433cebcb290e1",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-2c2ad1c433cebcb290e1"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "imdb.com",
+          "rottentomatoes.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:714b47e2e6dfece3b2b9ef4e427953c7d01ab609a318f0afa86c4c6ecaf8e9cc",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:425c8c268c9599a63e48b653e8b9898220f5bebbfa127976a3e068d695a9d12f",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "425c8c268c9599a63e48",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-425c8c268c9599a63e48"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "warcraft.wiki.gg",
+          "wowpedia.fandom.com",
+          "wowwiki-archive.fandom.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:39cbf118e65163fe56cac668830bbeebc5f7f63ac297b0c8532e797af3aa22cb",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:b4421f5551c746d7031d38cb600ad7f0f836e2a1729e1226f973c04962e0106b",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "b4421f5551c746d7031d",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-b4421f5551c746d7031d"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "lucie.tv",
+          "photoawards.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:69afac8927db7328aa7cec769df8e3937981729a6562633c8ddb96bdf58e046a",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:97cc827ecc54cc1f78c742a4918b28f1b28197bf4b92ffd1dab47f48d06b6f49",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "97cc827ecc54cc1f78c7",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-97cc827ecc54cc1f78c7"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "kashmirlife.net",
+          "rightwingstours.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:226603c42cf5f0d2194efb27b154a1d7104ac45ae22dc129c26676d278ffcf99",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:bc1d090928ff81a860ace915e0a7de67bb6a4f60791927b5377d1f5da1cfc122",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "bc1d090928ff81a860ac",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-bc1d090928ff81a860ac"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:0bdb46b7ccaaa2e6f378237064e7c3e9dec3b152216cb828a3a3337e4fcda3f2",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:99dd549e7202f8820545d3aaf388094da8dcef2251ce96b844bf082df686df3f",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "99dd549e7202f8820545",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-99dd549e7202f8820545"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "ism.yale.edu",
+          "music.metason.net",
+          "stefanparkman.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ded48df074bb9fcf4f3eea2922f143d45803dfa3e41e6d245c3ba955b6bc94c9",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:75870f7a13c9fcf2b9d36d711a499e35877363e3c39d1c490c3e44d28bb0cf1c",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "75870f7a13c9fcf2b9d3",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-75870f7a13c9fcf2b9d3"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "gameshows.fandom.com",
+          "thewaltdisneycompany.com",
+          "yahoo.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:a37ac5939df127bbd8cb3b01f66677566e1ed01acadb18383f755ea3ac3ae7a4",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:607490a8156cf9ec9e60871463a64a3099ec5ac1c90aaf17ddabd01169d3db16",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "607490a8156cf9ec9e60",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-607490a8156cf9ec9e60"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "ballotpedia.org",
+          "en.wikipedia.org",
+          "garbarino.house.gov"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:b66c14038c53a59795eaf6da354060ccc8eb7582539a251cab30552da5f1cb5e",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:695b5b3775354c6669ebd2d0bbef120e4b7a18cb96e82f32623a9ad39e345e6b",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "695b5b3775354c6669eb",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-695b5b3775354c6669eb"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "etu.ru",
+          "sigsam.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:d3ab3a6a5f98f78406d04b64ca86c4e1fc1f827a2f1be8fee7449918aaec29ee",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:cdc3f16dd5491c54a1f63930083d154eb95f7594cc82f18b838ef5466947fb7a",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "cdc3f16dd5491c54a1f6",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-cdc3f16dd5491c54a1f6"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en-academic.com",
+          "en.wikipedia.org",
+          "internationalhockeywiki.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:9dcb849904b340c16b276467a7a8f9ddc96da337f15592480b71a2f7bd83b0b0",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:be59e54f233fddaf3c263f30ceff3ff4a2b458f2c61b47361d56a053d2a65793",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "be59e54f233fddaf3c26",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-be59e54f233fddaf3c26"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "epguides.com",
+          "imdb.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:9155c7a007f34442cf392b7d2b680b0ad41ccd4b3e5d3962a3f415dd3c3a7928",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:f7701b2dacf1b56b065f78be7b532cee1bd7e3d7ccb563fbe916db8c9e767858",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "f7701b2dacf1b56b065f",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-f7701b2dacf1b56b065f"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "fe3h.com",
+          "fireemblem.fandom.com",
+          "fireemblemwiki.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:729b732da0217fe594254d55334c8ab27b9389e6550838ce443c730cebd60291",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:336f4d506f2562fdc99eeebc0e87433c55baaae570c89561695e6f16b5af53ff",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "336f4d506f2562fdc99e",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-336f4d506f2562fdc99e"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "fashionpluslifestyle.wordpress.com",
+          "thephotographersgallery.org.uk"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:c96b04277178c2356ffa0b2d4e6ec188a5b939e72b7093514057eb278230affc",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:603043f771f7ad0c00c8c2a48b1fd8815c560e183abcf3b312363bbc5bafb265",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "603043f771f7ad0c00c8",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-603043f771f7ad0c00c8"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "nativeplanet.com",
+          "pulwama.gov.in"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:5316ce1e350afcdc4fa9de7c9030846a8e2849cdc79d45961f259bdcc613e9c9",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:261358849913d8bf0350cc0e9e5f5f26640affe804c1e2298a129526065a4e84",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "261358849913d8bf0350",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-261358849913d8bf0350"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "cdn.ymaws.com",
+          "en.wikipedia.org",
+          "opentripmap.com",
+          "wikiwand.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:1bec516185ce4ac00eb6cc11b4d33c52200b1a294af2a7ef23474338c0b61da4",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:fc3452cee7ef39a98521be4a1ebd2ef397dd3870feef742ccb9d4b625c019997",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "fc3452cee7ef39a98521",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-fc3452cee7ef39a98521"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "feather.openai.com",
+          "nytimes.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:da5e33eb1e70040a50b6105ff05a626788572a21e1b9beab4fac088fe9f84ab5",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:f546ec8936342550e1838be0e84e6276e8530b3e3d33c8e4d348121abb0ec05b",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "f546ec8936342550e183",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-f546ec8936342550e183"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "kids.kiddle.co",
+          "timesofindia.indiatimes.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:b63475dc4d7ab269c618d96aebf86a70c1e1fe296621b624831315c73ca769f6",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:8d8407f2e1be3a9b7851399c105f9d6f15cfa7c2ceba13a77294e9b063edee12",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "8d8407f2e1be3a9b7851",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-8d8407f2e1be3a9b7851"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "chosun.com",
+          "en.wikipedia.org",
+          "koreajoongangdaily.joins.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ff07c86c20f66b77251355c7a585a2e26f722ca90225bb093e198cd2c8b4c976",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:a72574c6f926608e2dc996781562856e341e206381235972077aee6f4b760d22",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "a72574c6f926608e2dc9",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-a72574c6f926608e2dc9"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "britannica.com",
+          "mathigon.org",
+          "mathshistory.st-andrews.ac.uk"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:de26edb323bd44c9a3b4809ce463d27a280e66bc873275b11d0e6ab520830b2f",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:df4dc329a1231f947e036318e3aa6fa635966a212489a174c93fadceb08b61f4",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "df4dc329a1231f947e03",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-df4dc329a1231f947e03"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "newbalance.newsmarket.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:723ffdd587fb3a56db143719287cb42ac48685c170de17ac37cf8647dfa65545",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:10812aa0a888c4c8703545d3f233d576d6eabb000254d670c7a70a6a975c41b3",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "10812aa0a888c4c87035",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-10812aa0a888c4c87035"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "hbo-family.fandom.com",
+          "imdb.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:49974364232a786559ddf8ef7ca0bc289ffc693161f4fc7c951dd5bde570619d",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:46e62dfa9f5520ba7115586d2e35d290ac5b9a43ff43dd87a3e1603e5c3bdf08",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "46e62dfa9f5520ba7115",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-46e62dfa9f5520ba7115"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "darksouls2.wiki.fextralife.com",
+          "gamerant.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:b845ac076ec4f0a57fea38ef881dbaee53d0fe82dfd9239f076267f11f0c25a4",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:2f44fe3927562a1a1522817c2ac160a75a97d69678cd69406618abcf93fcc388",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "2f44fe3927562a1a1522",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-2f44fe3927562a1a1522"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "kettererkunst.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ec9ba2b8d0feb9ba8af465dfd1451a5e213efe0a336b0396835f7f4eee12cd6f",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:987ef888059177668e3ee783204b3042913623bf6cde1e486c141527bc9069f8",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "987ef888059177668e3e",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-987ef888059177668e3e"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "brainly.in",
+          "en.wikipedia.org",
+          "rashidfaridi.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:3c8256e30c4cfdbbe9f37615db7a37460ba74ad8277d7ebf0fe4c7705c21bae3",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:2d6142c9a02d22b83d64a96876f9884e1301175761fadb35aa32d762cf522bea",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "2d6142c9a02d22b83d64",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-2d6142c9a02d22b83d64"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "alchetron.com",
+          "en.wikipedia.org",
+          "mughallibrary.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:45a06d4aa6f171dc580c9b31842a96fa47724380c45566ad3a0f6977573c2ead",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:c1b34c2f4ab3a53ef1a84b661e1666f9e91d28a3c1ead8c491347fd44ef83089",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "c1b34c2f4ab3a53ef1a8",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-c1b34c2f4ab3a53ef1a8"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "genius.com",
+          "secondhandsongs.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:158959628fb31e35a861b878a6cbf6e0781ff67fcc79f573ee9f42dba4306b18",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:ae85490408fc6e6e27c3d82523537702623800178aed2e3355acfba83109d407",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "ae85490408fc6e6e27c3",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-ae85490408fc6e6e27c3"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "cbsnews.com",
+          "edition.cnn.com",
+          "en.wikipedia.org",
+          "idahostatesman.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:2dbcd636b5a614356e49a6b74a5aca90e00f0ac05f14f9619749e96fc41d1ff4",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:70b5f510d461461430858dc5d4144d84b987132ae755c818834ae326ea04f229",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "70b5f510d46146143085",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-70b5f510d46146143085"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "concordlibrary.org",
+          "en.wikipedia.org",
+          "library.pasen.gov"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:4f323c883cba955c45bfe289e2381de19784dae0f8d46c751e46de76d48c6029",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:d2258e796e87913b816375a8333d97275c81bef4b8612fccf594f7bbcee4bb1a",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "d2258e796e87913b8163",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-d2258e796e87913b8163"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en-academic.com",
+          "en.wikipedia.org",
+          "fromfrancewithloves.wordpress.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:53e4c52ac95fbce6aa9dddc8ae684a604db47342ada2af25167cd8f2c8746014",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:3280685f4836dbebc222cf090d08d66c00d8ed72d24c2b322e1a3a55aa0b2db4",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "3280685f4836dbebc222",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-3280685f4836dbebc222"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "fenwayparkdiaries.com",
+          "ocps.net"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:657f590531acbf6706a3e890a300eb8ab500a794d845d7c43a712b1afadf7783",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:93a12a414e98c301e91ccc17ac755ecf155e7e88526af4be040e83c61044df88",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "93a12a414e98c301e91c",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-93a12a414e98c301e91c"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "theyoungandtherestless.fandom.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:9a6e59f28e1987ef9cee4f22566491341b494d8fd11be1d5055673f1098223f8",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:0cc5cc6d57446683dc415c564efca771c8f897f30f062c776678603f7cde3e0e",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "0cc5cc6d57446683dc41",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-0cc5cc6d57446683dc41"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "bioshock.fandom.com",
+          "ign.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:104be812a7e847a69e6a875671776030f94ce321ff2b58878049c2a205f77963",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:a97e7464056cd96e349d11a1ca2d43d10e5ff4d5e24f44224693027dfc5ead64",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "a97e7464056cd96e349d",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-a97e7464056cd96e349d"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "olympedia.org",
+          "olympics.com",
+          "sport-olympic.gr"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:4295372a8619668af43e2848c4a06a99cd5a0cb6ffa83dbf23dd6e3c1380341e",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:259ff282089458a1690eb2ee9e4517ca52c2ca8dd02e22336ddb5a636a00ecc6",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "259ff282089458a1690e",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-259ff282089458a1690e"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "morebooks.shop"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:75eb63ddebd0401da92e585b01cdf95154c91e0e7cf7a36030703a3175f59fed",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:c40b7905b5eb74f0baa162da5b7225e7536563edafe657f7cbc20de2837fac5f",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "c40b7905b5eb74f0baa1",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-c40b7905b5eb74f0baa1"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "lynmuseum.ca"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ad1f1ed97b90fb3024fec5498d59f14e5126aa50a7f491dfa431a3bce4a7ac61",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:b8e548bd44cc98f8c2d7c90ec68b2050e51df513e2237620d0cc97f26d82a548",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "b8e548bd44cc98f8c2d7",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-b8e548bd44cc98f8c2d7"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "jetsetradio.fandom.com",
+          "squareenixmusic.com",
+          "vgmdb.net"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:b3b491d31eb97a83f7902a7a20eccf9d9229760cbc3a06c3a0f669f2fbbb64cf",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:0017c97ce0d8336ee3f987bd86ec2908f471e23c393b05917716fa77fb32abdf",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "0017c97ce0d8336ee3f9",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-0017c97ce0d8336ee3f9"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "dbpedia.org",
+          "en.wikipedia.org",
+          "vcstar.com",
+          "wikiwand.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:050fcfd17e1e01ce3e8ed79fae0f530e6a435e4d4b0fd53e07ada6c49502f593",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:1285aa568f079d041fce82ffbd16071cfaabde445ef293c5885d38a9000d68a9",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "1285aa568f079d041fce",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-1285aa568f079d041fce"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "dlab.epfl.ch",
+          "en.wikipedia.org",
+          "military-history.fandom.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:dc88d32d3e683dc84a0c33261fc9fc2e4a14d17426ad9acad1b8e4ed804612e7",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:5f9682e8d17efa1b6764fb9107a3455cf7fdc1f0996f27651f831a330011c5fd",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "5f9682e8d17efa1b6764",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-5f9682e8d17efa1b6764"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "iscb.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:70c06e20aff4c224bd3481c6e5605b99683f10379e2d85de4dee73efe40e91a2",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:40bfe8de978f17c9008b71b823c8e7900ee0d1c6ed6b21b7022b39b952ac88b1",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "40bfe8de978f17c9008b",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-40bfe8de978f17c9008b"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "rcdb.com",
+          "rollercoaster.fandom.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:3e39558e24abe4988b7cdab11a1cb99e8919033b0636061f3b1a25dc76dc21e3",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:12a8cab6f17defc7acc070de4d234986eed46e5249e55d81a8c17ce463aad614",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "12a8cab6f17defc7acc0",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-12a8cab6f17defc7acc0"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "breakingbad.fandom.com",
+          "en.wikipedia.org",
+          "imdb.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:c4e702a2ccd37b4e6ab11f027ee708fbe294d22bd852de9a582cce9a1766f6c7",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:8c9d9af170957e649d27c5e51db619bc5a5dec4f6628ab37441066ee433b0233",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "8c9d9af170957e649d27",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-8c9d9af170957e649d27"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "downloads.khinsider.com",
+          "mariolegacy.com",
+          "musicbrainz.org",
+          "vgmdb.net"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:f8dacb90af98f1e85bac65c19257f1ebdccb09a31e811e5ee5414bbb7f295ffd",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:6ee40233cef6e0c73b5d760657e297163c576943a374f11858aec2352399ab97",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "6ee40233cef6e0c73b5d",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-6ee40233cef6e0c73b5d"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "gerhard-richter.com",
+          "kunstsammlungundarchiv.at"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:b0202972bc86537f2bf86041cf9cb1f21e44f9a17a4b6be0dc5b334c2b27dbd1",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:c59179a33cb2426598fb6880bc21fffc5731b3b0c98ac3e01c0e78cf93d9e9ef",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "c59179a33cb2426598fb",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.art",
+      "task_id": "simpleqa-c59179a33cb2426598fb"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "familysearch.org",
+          "jenesano-boyaca.gov.co"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:4f48c6001ecb771e05a039f388ecf63f18d770c98caed1998aef58f39513bd69",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:8faffdce75577fd783bae5a956e3c4958bb03ed7530b16b637de655752095763",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "8faffdce75577fd783ba",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.geography",
+      "task_id": "simpleqa-8faffdce75577fd783ba"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "bscene.ca",
+          "digitalcollections.ucalgary.ca"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:a379b065df285a165dade079f7e10b541b4591c5a2b018db3709ada3df2cad6f",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:76869f8d218ef3e615297f25fab65bfebbf144511ba5699b9776b0d7325f1ad1",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "76869f8d218ef3e61529",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.history",
+      "task_id": "simpleqa-76869f8d218ef3e61529"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "familyphile.com",
+          "sparknotes.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:78e607c059033808207e6f951e3cf3bf6f989e88c7d46fc9905c905d728892ce",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:4c52c9d6dbe34f85bee33c1498497b690d0c34de1e727d4d07b880607f99ec84",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "4c52c9d6dbe34f85bee3",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.music",
+      "task_id": "simpleqa-4c52c9d6dbe34f85bee3"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "1news.co.nz",
+          "en.wikipedia.org",
+          "newshub.co.nz"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:43daa0c7e49e89b806b429ca2a3d2f44137ea35519a20609c0ea74773254632a",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:e48a3d5a654b4524d062ef49fa80402303430d9d347e3231d655270497ae1a5e",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "e48a3d5a654b4524d062",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.other",
+      "task_id": "simpleqa-e48a3d5a654b4524d062"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "pakistani.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:f9fc47cf82a23151d769fa729c43e3833319f7081abcbdf3830ce62d4983f3c0",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:63e84dd6c06c83b0e698deafd782c5d4fc7a4c8d8fd6a0a58d5e5d8f01023fb8",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "63e84dd6c06c83b0e698",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.politics",
+      "task_id": "simpleqa-63e84dd6c06c83b0e698"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "wikidata.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:ce9df1046c00240e9250242f2bcca745ad60e8bbc0d3089b8493d59f34b003f7",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:b633144b42ac0634b8760855e84a0f5131ad7a3be0bde8de8de5f3c7fe24df31",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "b633144b42ac0634b876",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.science_and_technology",
+      "task_id": "simpleqa-b633144b42ac0634b876"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "en.wikipedia.org",
+          "mlb.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:23cf6b5816a45fe023889cd0218de65486f15c2df17aac7a177b6e3bbe2997eb",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:58dc6ac0e82628039352e634893880b730f81217f561fb4dd7c78ec938f7400c",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "58dc6ac0e82628039352",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.sports",
+      "task_id": "simpleqa-58dc6ac0e82628039352"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "imdb.com",
+          "themoviedb.org"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:377fd374f794d5bd45faa3b12bd2f73a072f345d05de027d9f4dff615cdfd54d",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:c51b9a0d7b9062aee500f44970a67dfed8409d96c5b3aa60ae86e4822896336d",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "c51b9a0d7b9062aee500",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "development",
+      "task_family": "simpleqa.tv_shows",
+      "task_id": "simpleqa-c51b9a0d7b9062aee500"
+    },
+    {
+      "checks": {
+        "cutoff": null,
+        "domain_requirement": "none",
+        "judge_profile": "asm-search-blinded-judge/v0.1-unfrozen",
+        "minimum_independent_sources": 1,
+        "reference_domains": [
+          "darksouls.fandom.com",
+          "darksouls2.wiki.fextralife.com"
+        ],
+        "temporal_requirement": "none"
+      },
+      "committed_at": "2026-09-06T02:19:50Z",
+      "contract_type": "search_evaluation_task",
+      "contract_version": "0.1",
+      "coverage_tags": [
+        "english_query"
+      ],
+      "ground_truth_ref": {
+        "digest": "sha256:25b1c377cc95c087c00ef7bf047f20b43196d0362a9cf26bfd551920b705a716",
+        "disclosure": "benchmark_controlled"
+      },
+      "language": "en",
+      "query_ref": {
+        "digest": "sha256:6f8d1e18ab40dfe1d3d5df91148cc94d8070b44fd2f90412329a742b28bb3972",
+        "disclosure": "benchmark_controlled"
+      },
+      "source_provenance": {
+        "kind": "benchmark_dataset",
+        "license": "MIT",
+        "name": "OpenAI SimpleQA",
+        "row_id": "6f8d1e18ab40dfe1d3d5",
+        "snapshot_digest": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032",
+        "source_url": "https://openaipublic.blob.core.windows.net/simple-evals/simple_qa_test_set.csv",
+        "version": "sha256:feee3f7e7db3617e94e8fcf1977b756ec420ef8568f4e0fcbbe0e92e9d5fc032"
+      },
+      "split": "held_out",
+      "task_family": "simpleqa.video_games",
+      "task_id": "simpleqa-6f8d1e18ab40dfe1d3d5"
+    }
+  ]
+}

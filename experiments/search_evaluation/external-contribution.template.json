@@ -1,0 +1,23 @@
+{
+  "answer": "Replace with the privately retained expected answer.",
+  "contribution_id": "replace-with-opaque-id",
+  "coverage_tags": [
+    "chinese_query",
+    "time_sensitive_fact"
+  ],
+  "cutoff": null,
+  "language": "zh-CN",
+  "permission": {
+    "contains_personal_data": false,
+    "evaluation_use_granted": true,
+    "publish_commitments_granted": true,
+    "submitter_has_authority": true,
+    "terms_version": "asm-search-evaluation-contribution-terms/0.1"
+  },
+  "query": "Replace with the private evaluation question.",
+  "reference_urls": [
+    "https://example.com/replace-with-authoritative-reference"
+  ],
+  "task_family": "external.chinese_current_fact",
+  "temporal_requirement": "current_at_run"
+}

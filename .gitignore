@@ -54,3 +54,7 @@ scorer/data/*.parquet
 # Build artifacts
 build/
 _wheelcheck/
+
+# Raw external evaluation contributions are local-only.
+experiments/search_evaluation/private/
+*.search-eval-private.json

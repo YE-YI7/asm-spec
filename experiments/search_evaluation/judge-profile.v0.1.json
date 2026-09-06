@@ -1,0 +1,36 @@
+{
+  "profile": "asm-search-blinded-judge/v0.1-unfrozen",
+  "status": "draft_unfrozen",
+  "provider_identity_visible": false,
+  "input_surface": ["rank", "url", "title", "snippet"],
+  "gold_input": ["benchmark_answer"],
+  "full_page_content_allowed": false,
+  "steps": [
+    {
+      "order": 1,
+      "method": "normalized_exact_answer",
+      "decision": "pass only when the normalized answer occurs in a returned title or snippet"
+    },
+    {
+      "order": 2,
+      "method": "blinded_model_assisted",
+      "decision": "judge whether a returned title or snippet supports the frozen answer; provider identity remains hidden",
+      "model": null,
+      "model_version": null,
+      "prompt_file": "judge-prompt.v0.1.txt",
+      "prompt_digest_profile": "sha256-raw-utf8",
+      "prompt_digest": "sha256:d8e519ea4f63e10129e93195532d1d62d86c8193f96c2281baa29b330ebbffb7"
+    },
+    {
+      "order": 3,
+      "method": "human_review",
+      "decision": "review disagreement or ambiguity without seeing provider identity"
+    }
+  ],
+  "reference_domain_policy": "Reference domains are withheld from automated and human judges until after the pass decision; they are diagnostic only and an alternative source can pass",
+  "abstention": "If title and snippet do not contain enough evidence, mark unsupported rather than fetching full pages in the primary search-only comparison",
+  "freeze_blockers": [
+    "model and immutable model version are unset",
+    "human disagreement procedure is not piloted"
+  ]
+}
