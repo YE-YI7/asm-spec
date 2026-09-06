@@ -10,9 +10,9 @@ import hashlib
 import json
 import math
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
-from typing import Any, Iterable
-
+from collections.abc import Iterable
+from datetime import datetime
+from typing import Any
 
 # Test controls chosen only to make the synthetic cases distinguishable. They are
 # not a proposed production scoring algorithm and require empirical calibration.
@@ -121,7 +121,7 @@ def validate_event(event: dict[str, Any]) -> None:
     checks = event["outcome"].get("objective_checks") or {}
     passed, failed = checks.get("passed"), checks.get("failed")
     if not isinstance(passed, int) or not isinstance(failed, int):
-        raise ValueError("objective check counts must be integers")
+        raise TypeError("objective check counts must be integers")
     if passed < 0 or failed < 0 or passed + failed == 0:
         raise ValueError("objective check counts must be non-negative and non-empty")
     datetime.fromisoformat(event["observed_at"].replace("Z", "+00:00"))
@@ -222,7 +222,7 @@ def select_with_evidence(candidates: list[dict[str, Any]]) -> str:
         and "insufficient_evaluator_diversity" not in candidate["summary"]["warnings"]
     ]
     if not usable:
-        return sorted(candidate["service_id"] for candidate in candidates)[0]
+        return min(candidate["service_id"] for candidate in candidates)
     usable.sort(
         key=lambda candidate: (
             -candidate["summary"]["objective_pass_rate"]["interval_95"][0],

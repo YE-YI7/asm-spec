@@ -17,7 +17,6 @@ from a2a.client import ClientConfig, create_client
 from a2a.helpers import new_text_message
 from a2a.types.a2a_pb2 import Role, SendMessageRequest
 
-
 ENDPOINT = "https://tasks.a2a-testbed.com"
 CARD_PATH = "/.well-known/agent-card.json"
 

@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import asyncio
 import base64
-import hashlib
 import json
 import socket
 from collections.abc import Callable
@@ -34,6 +33,12 @@ from a2a.server.tasks import InMemoryTaskStore, TaskUpdater
 from a2a.types import AgentCapabilities, AgentCard, AgentInterface, AgentSkill
 from a2a.types.a2a_pb2 import Role, SendMessageRequest, Task, TaskState
 from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
+from a2a_experience_validation import (
+    _canonical_digest,
+    event_from_a2a,
+    select_with_evidence,
+    summarize,
+)
 from cryptography.hazmat.primitives.asymmetric.ed25519 import (
     Ed25519PrivateKey,
     Ed25519PublicKey,
@@ -41,13 +46,6 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import (
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from google.protobuf.json_format import MessageToDict
 from starlette.applications import Starlette
-
-from a2a_experience_validation import (
-    _canonical_digest,
-    event_from_a2a,
-    select_with_evidence,
-    summarize,
-)
 
 
 def _free_port() -> int:
