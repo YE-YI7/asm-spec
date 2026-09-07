@@ -1,0 +1,3 @@
+# The pinned claim is content-addressed by the sha256 of its exact bytes.
+# Never convert its line endings on checkout, or the digest check breaks.
+claim_inference.json -text
