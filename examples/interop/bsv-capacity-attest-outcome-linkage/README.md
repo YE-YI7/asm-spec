@@ -13,10 +13,15 @@ content-addressing** as
 [`capacity-attest`](https://github.com/holistis/tokenizen/tree/main/packages/capacity-attest)
 (holistis): `claimId` is the sha256 of the canonical JSON of the claim's content
 fields. Only two things are BSV-specific and isolated behind the adapter: base58
-P2PKH address encoding, and a **Bitcoin Signed Message (BSM / BRC-77)** signature
+P2PKH address encoding, and a **compact Bitcoin Signed Message (BSM)** signature
 recovered to that address. capacity-attest's own `verifyClaim` is ETH/EIP-191
 typed and rejects a base58 claim before hashing, so the shared piece is the hash
 route, not the schema.
+
+This fixture uses the legacy compact BSM signature API. `@bsv/sdk` marks BSM as
+deprecated in favor of BRC-77; BSM and BRC-77 are not equivalent, and migrating
+the signature envelope to BRC-77 is out of scope for this interoperability
+fixture.
 
 The raw claim stays in the producer repository, pinned to the commit that
 recorded it. ASM stores only a stable reference, expected identifiers, a verifier
