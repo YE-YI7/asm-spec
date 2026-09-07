@@ -45,7 +45,11 @@ test("pinned BSV claim verifies and tampering fails", async () => {
   });
 });
 
-test("BSV settlement binds the declared transfer (payer -> payee on-chain)", async () => {
+test("BSV settlement binds the declared transfer (payer -> payee on-chain)", async (t) => {
+  if (process.env.FIXTURE_OFFLINE) {
+    t.skip("FIXTURE_OFFLINE set: skipping the WhatsOnChain settlement read");
+    return;
+  }
   const s = await verifySettlement({
     settlementRef: fixture.settlement.transaction_hash,
     buyerAddress: fixture.settlement.payer,

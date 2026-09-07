@@ -41,21 +41,34 @@ npm ci
 npm test
 ```
 
-For a network-independent claim fetch while still checking the pinned bytes:
+### Offline mode
+
+The run has a deterministic offline path with no network at all. `CLAIM_FILE`
+reads the claim from disk (a copy of the pinned claim ships here as
+`claim_inference.json`, still checked against the pinned sha256), and
+`FIXTURE_OFFLINE=1` skips the live settlement read:
 
 ```bash
-CLAIM_FILE=/path/to/claim_inference.json npm test
+CLAIM_FILE=./claim_inference.json FIXTURE_OFFLINE=1 npm test
 ```
 
-The settlement test reads BSV mainnet through WhatsOnChain. It checks that the
-transaction is confirmed, that a P2PKH output pays the payee, and that an input
-is spent by the payer (the BSV analog of reading an ERC-20 `Transfer` log).
+That leaves the two deterministic checks (pinned bytes + content address, and
+signature recovery) running with zero network calls. The live settlement test is
+the only networked step, so it can be kept out of required CI.
+
+The settlement test reads BSV mainnet through WhatsOnChain (with retry/backoff on
+rate limits). It checks that the transaction is confirmed, that a P2PKH output
+pays the payee, and that an input **spends a previous output locked to the
+payer** (the prevout locking script is `P2PKH(payer)`), the BSV analog of reading
+an ERC-20 `Transfer` log.
 
 ## Proven and not proven
 
-The test reproduces content addressing, BSM payer-signature recovery (signature
-→ pubkey → base58 `buyerAddress`), and the BSV settlement link. It does **not**
-prove the buyer's `delivered=yes` statement, reveal the `evidenceHash` preimage,
+The test reproduces content addressing, **compact BSM signature recovery** (the
+signer's public key is recovered from the signature and the `claimId`, then
+`P2PKH(recovered)` must equal `buyerAddress`; the carried `buyerPubKey` is
+cross-checked, not trusted), and the BSV settlement link. It does **not** prove
+the buyer's `delivered=yes` statement, reveal the `evidenceHash` preimage,
 establish task correctness, or show that ASM participated in the original call.
 
 OutcomeReceipt v0.1-draft currently has no typed field for non-fiat settlement
@@ -65,6 +78,6 @@ mislabeling BSV as fiat or silently changing either protocol core.
 ## Vendored adapter
 
 `bsv-claim.mjs` and `verify-settlement.mjs` are copied verbatim from the pinned
-producer commit so this example runs self-contained (only `@bsv/sdk` is
+producer commit so this example runs self-contained (only `@bsv/sdk` >= 2 is
 installed). The canonical source is the producer repository at the commit named
 in `linkage.fixture.json` → `external_attestation.verifier.commit`.

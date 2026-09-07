@@ -7,6 +7,6 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@bsv/sdk": "^1.4.0"
+    "@bsv/sdk": "^2.4.2"
   }
 }

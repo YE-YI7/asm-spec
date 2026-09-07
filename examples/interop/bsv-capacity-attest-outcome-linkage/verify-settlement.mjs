@@ -1,26 +1,41 @@
 // Settlement-linkage check for a BSV delivery claim, the third of the three
 // checks (recover-to-buyer, recompute-claimId, confirm-on-chain-transfer). This
 // is the BSV analog of reading a USDC Transfer log: fetch the settlement tx and
-// confirm an output pays the seller (P2PKH to sellerAddress) and an input is
-// spent by the buyer (a P2PKH-spend input whose revealed pubkey hashes to
-// buyerAddress). Read-only; needs no key. Network: WhatsOnChain mainnet.
+// confirm (a) an output pays the seller (P2PKH to sellerAddress) and (b) at
+// least one input SPENDS A UTXO THAT WAS LOCKED TO buyerAddress, proven by
+// fetching the referenced previous output and checking its locking script is
+// P2PKH(buyerAddress). Inspecting the prevout (not just the unlocking script's
+// revealed pubkey) is what establishes the spent coin belonged to the buyer.
+// Read-only; needs no key. Network: WhatsOnChain mainnet.
 
-import { Transaction, PublicKey, P2PKH } from '@bsv/sdk';
+import { Transaction, P2PKH } from '@bsv/sdk';
 import { pathToFileURL } from 'node:url';
 
 const WOC = 'https://api.whatsonchain.com/v1/bsv/main';
 
+// WhatsOnChain rate-limits; retry a few times on 429 with linear backoff so a
+// reproduction run does not fail on a transient limit rather than a real fault.
+async function wocFetch(path, { tries = 4 } = {}) {
+  let last;
+  for (let i = 0; i < tries; i++) {
+    const r = await fetch(`${WOC}${path}`);
+    if (r.ok) return r;
+    last = r;
+    if (r.status === 429) { await new Promise((res) => setTimeout(res, 1500 * (i + 1))); continue; }
+    throw new Error(`WhatsOnChain ${r.status} for ${path}`);
+  }
+  throw new Error(`WhatsOnChain ${last?.status ?? 'error'} for ${path} after ${tries} tries`);
+}
+
 async function fetchTxHex(txid) {
-  const r = await fetch(`${WOC}/tx/${txid}/hex`);
-  if (!r.ok) throw new Error(`WhatsOnChain ${r.status} for tx ${txid}`);
+  const r = await wocFetch(`/tx/${txid}/hex`);
   return (await r.text()).trim();
 }
 
 // Confirmation depth for the settlement tx, so a mere mempool transaction is not
 // accepted as a settled payment. 0 for unconfirmed / not found.
 async function fetchConfirmations(txid) {
-  const r = await fetch(`${WOC}/tx/hash/${txid}`);
-  if (!r.ok) throw new Error(`WhatsOnChain ${r.status} for tx ${txid}`);
+  const r = await wocFetch(`/tx/hash/${txid}`);
   const j = await r.json();
   return Number(j.confirmations) || 0;
 }
@@ -35,30 +50,44 @@ function satsPaidTo(tx, address) {
   return sats;
 }
 
-// Is `address` a payer? A P2PKH-spend input's unlocking script is <sig> <pubkey>;
-// the pubkey's P2PKH address is the spender. We check any input reveals a pubkey
-// hashing to `address`.
-function isPayer(tx, address) {
+// Prove `address` is a payer by inspecting the PREVIOUS OUTPUTS the tx spends:
+// for each input, fetch the referenced prevout and check its locking script is
+// P2PKH(address). Returns { inputs, sats } over inputs whose prevout was locked
+// to `address`. This is stronger than reading the unlocking script's pubkey push,
+// which by itself does not prove the spent coin was the buyer's.
+async function buyerFundedInputs(tx, address) {
+  const target = new P2PKH().lock(address).toHex();
+  let inputs = 0;
+  let sats = 0;
   for (const i of tx.inputs) {
-    const us = i.unlockingScript;
-    if (!us || !us.chunks || us.chunks.length < 2) continue;
-    const last = us.chunks[us.chunks.length - 1];
-    if (!last || !last.data) continue;
+    const prev = Transaction.fromHex(await fetchTxHex(i.sourceTXID));
+    const out = prev.outputs[i.sourceOutputIndex];
+    if (!out) continue;
     try {
-      const hex = last.data.map((b) => b.toString(16).padStart(2, '0')).join('');
-      if (PublicKey.fromString(hex).toAddress() === address) return true;
-    } catch { /* not a pubkey push */ }
+      if (out.lockingScript.toHex() === target) { inputs += 1; sats += out.satoshis; }
+    } catch { /* non-standard prevout */ }
   }
-  return false;
+  return { inputs, sats };
 }
 
 export async function verifySettlement({ settlementRef, buyerAddress, sellerAddress, minSats = 1, minConfirmations = 1 }) {
   const tx = Transaction.fromHex(await fetchTxHex(settlementRef));
   const sellerPaidSats = satsPaidTo(tx, sellerAddress);
-  const buyerIsPayer = isPayer(tx, buyerAddress);
+  const buyer = await buyerFundedInputs(tx, buyerAddress);
   const confirmations = await fetchConfirmations(settlementRef);
+  const buyerIsPayer = buyer.inputs > 0;
   const ok = sellerPaidSats >= minSats && buyerIsPayer && confirmations >= minConfirmations;
-  return { ok, txid: settlementRef, sellerPaidSats, buyerIsPayer, confirmations, sellerAddress, buyerAddress };
+  return {
+    ok,
+    txid: settlementRef,
+    sellerPaidSats,
+    buyerIsPayer,
+    buyerInputCount: buyer.inputs,
+    buyerSpentSats: buyer.sats,
+    confirmations,
+    sellerAddress,
+    buyerAddress,
+  };
 }
 
 // CLI: node verify-settlement.mjs <txid> <buyerAddress> <sellerAddress>

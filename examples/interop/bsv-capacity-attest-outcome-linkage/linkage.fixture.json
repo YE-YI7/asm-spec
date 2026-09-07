@@ -13,16 +13,16 @@
     }
   },
   "external_attestation": {
-    "raw_claim_url": "https://raw.githubusercontent.com/EmbryoSpace/bsv-capacity-attest/0ea9bc915e87d3fe6e7d845e1b6089fef60c809c/claim_inference.json",
-    "raw_claim_sha256": "sha256:179baf958f63a7a67486cca0bc4dff57af3a07ab8b7206b11488a2e7c84845d7",
+    "raw_claim_url": "https://raw.githubusercontent.com/EmbryoSpace/bsv-capacity-attest/fa1443c3821c7fa74b1d4a6583056e163e1190a1/claim_inference.json",
+    "raw_claim_sha256": "sha256:c4f500789ceca41071bbfd70524fe172133439d9d08a0381f3da01b2cc041db3",
     "claim_id": "0x58e9fc4aacd64246f1bc85b223a811ab456ca2f337ab029416db53da4b8f16ec",
     "expected_signer": "1ErDfgzGWe6kDSHWWZPUSpVRRvfQo7rDdZ",
     "verifier": {
       "package": "bsv-capacity-attest",
-      "commit": "0ea9bc915e87d3fe6e7d845e1b6089fef60c809c",
+      "commit": "fa1443c3821c7fa74b1d4a6583056e163e1190a1",
       "import": "./bsv-claim.mjs",
       "function": "verifyClaim",
-      "note": "Recovers a Bitcoin Signed Message (BSM / BRC-77) to a base58 P2PKH address; the claim carries the payer pubkey (a P2PKH spend reveals it on-chain) and the check binds signature -> pubkey -> buyerAddress."
+      "note": "Recovers the signer from a compact Bitcoin Signed Message (BSM) signature: the public key is recovered from the signature and the claimId, then P2PKH(recovered) must equal buyerAddress. The carried buyerPubKey is cross-checked against the recovered key, not trusted."
     }
   },
   "settlement": {
@@ -59,9 +59,9 @@
   "verified": [
     "raw claim bytes match the pinned digest",
     "claim content recomputes to claimId (sha256 of canonical content)",
-    "BSM signature recovers under the payer pubkey and P2PKH(pubkey) equals buyerAddress",
+    "the compact BSM signature recovers the signer and P2PKH(recovered pubkey) equals buyerAddress",
     "BSV transaction is confirmed on mainnet",
-    "a P2PKH output pays payee and an input is spent by payer"
+    "a P2PKH output pays payee and an input spends a previous output locked to payer"
   ],
   "not_independently_proven": [
     "delivered=yes",
