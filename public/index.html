@@ -98,7 +98,7 @@
         <div>
           <span class="eyebrow">One concrete decision</span>
           <h2>Book a flight I can later cancel.</h2>
-          <p class="note">The selector must reject ineligible tools, surface financial risk, require approval, and preserve the evidence it used.</p>
+          <p class="note">The selector rejects ineligible tools and surfaces financial risk and approval requirements. This uses expired June 2026 example facts, not current provider recommendations.</p>
         </div>
         <button id="run" type="button">Run live selector</button>
       </div>
@@ -122,7 +122,7 @@ approval gate: financial_charge</pre>
     </section>
 
     <footer>
-      Honest status: ASM has reproducible benchmarks, a working selector, selection receipts, and a separate historical testnet-settlement experiment; it does not yet claim production selection traffic. The hosted library is a demonstration dataset. Every production consumer should enforce freshness and verification policy.
+      Honest status: ASM has reproducible benchmarks, a working selector, selection receipts, and a separate historical testnet-settlement experiment; it does not yet claim production selection traffic. The hosted library is a demonstration dataset: its source claims were last verified in June 2026 and are expired under ASM's policy. It is not a live provider directory.
     </footer>
   </main>
   <script>
@@ -132,7 +132,7 @@ approval gate: financial_charge</pre>
     run.addEventListener('click', async () => {
       run.disabled = true;
       state.className = 'status';
-      state.textContent = 'Selecting and generating a receipt…';
+      state.textContent = 'Selecting from structured eligibility and policy constraints…';
       try {
         const response = await fetch('/select', {
           method: 'POST',
@@ -141,8 +141,7 @@ approval gate: financial_charge</pre>
             task: 'book a flight I can later cancel',
             taxonomy: 'tool.booking.travel',
             required_functions: ['flight_search', 'flight_order_create', 'booking_cancel'],
-            require_approval_for: ['financial_charge'],
-            receipt: true
+            require_approval_for: ['financial_charge']
           })
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -153,16 +152,13 @@ approval gate: financial_charge</pre>
           service_id: selected.service_id,
           risk_class: data.risk_class,
           approval_required: data.approval_required,
+          selection_status: data.selection_status,
+          reason: data.reason,
           rejected: (data.rejected || []).map(x => ({service: x.service, reason: x.reason})),
-          receipt: {
-            type: data.receipt?.receipt_type,
-            selection_id: data.receipt?.selection_id,
-            evidence_count: data.receipt?.evidence?.length,
-            evidence: data.receipt?.evidence
-          }
+          alternatives: (data.alternatives || []).map(x => ({service: x.display_name, cost_status: x.cost_estimate?.status}))
         }, null, 2);
         state.className = 'status ok';
-        state.textContent = 'Decision complete. The evidence set is digest-bound in the receipt.';
+        state.textContent = 'Decision complete. This is a policy demonstration over expired source examples, not a current provider recommendation.';
       } catch (error) {
         state.className = 'status error';
         state.textContent = `The hosted selector did not answer: ${error}. The source and offline reproduction remain available on GitHub.`;

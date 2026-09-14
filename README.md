@@ -16,7 +16,7 @@ The layers above and below are being built by Anthropic, Google, AWS, Coinbase, 
 
 It is **not** a model picker. The tools are real products — task managers, design apps, data tools, schedulers, booking APIs — anything an agent might invoke on a user's behalf.
 
-**Honest status:** this is the layer we're *building*, with receipts (a measured benchmark, a working selector, a live on-chain demo below), not a layer with production traffic yet. We're early and say so.
+**Honest status:** this is the layer we're *building*, with receipts (a measured benchmark, a working selector, and a separate historical testnet-settlement experiment), not a layer with production traffic yet. The bundled 30-service library is a versioned demonstration dataset, not a live marketplace: its source claims were last verified in June 2026 and are now expired under ASM's own freshness policy. It is useful for schema, integration, and benchmark reproduction; it must not be used as current provider pricing, SLA, or capability data until refreshed.
 
 ## Validate your service in 60 seconds
 
@@ -69,7 +69,7 @@ taxonomy and required functions are both absent, selection returns
 
 For *"make a study plan and remind me daily"* with a cloud agent on Windows, the selector drops the tools it can't drive (Apple Reminders, Things 3 — local-device only) and the ones it can't call directly (Any.do — Zapier only), then ranks the rest from those explicit constraints. Ask for a built-in pomodoro and the pick changes to TickTick. Ask to *"edit an image and lay out a poster"* and it filters **Affinity Designer**, which exposes no automation API at all.
 
-The library it selects over is in [`library/`](library/) — 30 real tools across task management, creative design, research, communication, developer tools, booking, and real-estate data today, each carrying:
+The library it selects over is in [`library/`](library/) — 30 source-linked service examples across task management, creative design, research, communication, developer tools, booking, and real-estate data. They demonstrate the selection shape and carry:
 
 - **invocation** — can an agent drive it, and from where (cloud API / local script / GUI-only)
 - **pricing**, **quality**, **sla**, **payment**
@@ -78,7 +78,7 @@ The library it selects over is in [`library/`](library/) — 30 real tools acros
 
 Entries are schema-validated and source-linked; unverified dimensions are marked, not faked.
 
-June 2026 coverage update: the tool-selection library now includes 30 source-linked tools across seven domains. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights.
+June 2026 coverage snapshot: the tool-selection library includes 30 source-linked tools across seven domains. Booking and messaging entries deliberately expose `operational_constraints` so agents can separate read-only search from approval-gated actions such as sending messages, creating PRs, or purchasing flights. See the [data-quality policy](docs/data-quality/README.md) before treating any source claim as current.
 
 Productization/distribution plan: [`docs/productization-distribution.md`](docs/productization-distribution.md).
 
@@ -147,10 +147,17 @@ A public reference instance runs at **https://asm-spec.onrender.com**. It also d
 curl -X POST https://asm-spec.onrender.com/select -H "Content-Type: application/json" \
   -d '{"task":"find and book a refundable flight","taxonomy":"tool.booking.travel",
        "required_functions":["flight_search","flight_order_create"],
-       "require_approval_for":["financial_charge"]}'
+       "require_approval_for":["financial_charge"],
+       "fallback_policy":"capability_breadth"}'
 # -> {"selected": {"display_name": "Amadeus Self-Service APIs", ...},
 #     "risk_class": "critical", "approval_required": true, ...}
 ```
+
+The explicit fallback makes this a policy demonstration, not a claim that the
+selected provider is currently the cheapest or best. Without a workload or a
+fallback, the selector returns `needs_cost_facts` when eligible services cannot
+be compared honestly. The bundled library's source facts are expired; refresh
+them before any production decision.
 
 ## One slice: ranking AI services (OpenRouter)
 

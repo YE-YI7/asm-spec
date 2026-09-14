@@ -47,6 +47,40 @@ _STATIC = {
 }
 
 
+def _source_freshness(manifest: dict, *, now: datetime | None = None) -> dict:
+    """Expose the age of a checked-in source claim without treating publication
+    time as verification time."""
+    raw = (manifest.get("provenance") or {}).get("last_verified_at")
+    if not isinstance(raw, str):
+        return {"status": "unknown", "last_verified_at": None, "age_days": None}
+    try:
+        verified = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return {"status": "invalid", "last_verified_at": raw, "age_days": None}
+    if verified.tzinfo is None:
+        verified = verified.replace(tzinfo=timezone.utc)
+    now = now or datetime.now(timezone.utc)
+    if verified > now:
+        return {"status": "invalid", "last_verified_at": raw, "age_days": None}
+    age_days = (now - verified).days
+    status = "fresh" if age_days <= 30 else "stale" if age_days <= 90 else "expired"
+    return {"status": status, "last_verified_at": raw, "age_days": age_days}
+
+
+def _dataset_status() -> dict:
+    """Summarize source freshness for the hosted demonstration dataset."""
+    counts: dict[str, int] = {}
+    for manifest in _LIBRARY:
+        status = _source_freshness(manifest)["status"]
+        counts[status] = counts.get(status, 0) + 1
+    return {
+        "kind": "demonstration_dataset",
+        "current_provider_facts": False,
+        "freshness": counts,
+        "policy_url": "https://github.com/YE-YI7/asm-spec/blob/main/docs/data-quality/README.md",
+    }
+
+
 def _urn_part(s: str) -> str:
     """RFC 8141 urn:air segment: only [a-zA-Z0-9._-] survives."""
     return re.sub(r"[^A-Za-z0-9._-]", "-", s)
@@ -106,6 +140,10 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
     asm_meta = {"asm:version": m.get("asm_version", "0.3"),
                 "asm:taxonomy": m.get("taxonomy"),
                 "asm:manifestUrl": f"{base}/manifest/{sid}"}
+    freshness = _source_freshness(m)
+    asm_meta["asm:sourceFreshness"] = freshness["status"]
+    if freshness["last_verified_at"]:
+        asm_meta["asm:lastVerifiedAt"] = freshness["last_verified_at"]
     for k in ("interface", "reach", "agent_operable", "agent_completable_setup"):
         if inv.get(k) is not None:
             asm_meta[f"asm:{k}"] = inv[k]
@@ -150,6 +188,7 @@ def _tools_listing(taxonomy: str | None) -> list[dict]:
             "agent_completable_setup": inv.get("agent_completable_setup"),
             "monthly_cost_usd": estimate.monthly_total,
             "cost_estimate": estimate.to_dict(),
+            "source_freshness": _source_freshness(m),
         })
     return out
 
@@ -189,7 +228,8 @@ class Handler(BaseHTTPRequestHandler):
         if url.path in _STATIC:
             self._send_static(*_STATIC[url.path])
         elif url.path == "/healthz":
-            self._send(200, {"ok": True, "tools": len(_LIBRARY)})
+            self._send(200, {"ok": True, "tools": len(_LIBRARY),
+                             "dataset": _dataset_status()})
         elif url.path == "/tools":
             taxonomy = (parse_qs(url.query).get("taxonomy") or [None])[0]
             self._send(200, _tools_listing(taxonomy))
@@ -202,6 +242,7 @@ class Handler(BaseHTTPRequestHandler):
                 "generated_at": _GENERATED_AT,
                 "schema": "https://github.com/YE-YI7/asm-spec/blob/main/schema/asm-v0.3.schema.json",
                 "count": len(_LIBRARY),
+                "dataset": _dataset_status(),
                 "manifests": [
                     {"service_id": m.get("service_id"), "taxonomy": m.get("taxonomy"),
                      "display_name": m.get("display_name"),
@@ -215,13 +256,13 @@ class Handler(BaseHTTPRequestHandler):
             host = self.headers.get("Host", "asm-spec.onrender.com")
             scheme = "http" if host.split(":")[0] in ("localhost", "127.0.0.1") else "https"
             base = f"{scheme}://{host}"
-            # Root is closed (specVersion/host/entries only); freshness moves to
-            # per-entry updatedAt, provenance note into host.displayName.
+            # Root is closed (specVersion/host/entries only); source freshness
+            # travels with each entry rather than response serialization time.
             self._send(200, {
                 "specVersion": "1.0",
                 "host": {
-                    "displayName": "ASM tool-value library (demonstration registry; "
-                                   "selection metadata rides a namespaced entry extension)",
+                    "displayName": "ASM tool-value examples (demonstration dataset, "
+                                   "not a live marketplace)",
                     "identifier": "asm-spec.onrender.com",
                     "documentationUrl": "https://github.com/YE-YI7/asm-spec",
                 },
@@ -269,6 +310,17 @@ class Handler(BaseHTTPRequestHandler):
         except (TypeError, ValueError) as error:
             self._send(400, {"error": str(error)})
             return
+        # Hosted-data disclosure is outside the frozen SDK/receipt contract.
+        result["dataset"] = _dataset_status()
+        result["source_freshness"] = {
+            manifest["service_id"]: _source_freshness(manifest)
+            for manifest in _LIBRARY
+            if manifest["service_id"] in {
+                candidate["service_id"]
+                for candidate in ([result["selected"]] if result["selected"] else [])
+                + result["alternatives"]
+            }
+        }
         self._send(422 if result["selection_status"] == "under_specified" else 200, result)
 
     def log_message(self, fmt, *args):  # quiet default logging

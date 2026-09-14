@@ -148,6 +148,8 @@ def test_select_api_endpoints():
         tools = json.loads(urllib.request.urlopen(
             f"http://127.0.0.1:{port}/tools?taxonomy=tool.data.real_estate").read())
         assert len(tools) == 4
+        assert tools[0]["source_freshness"]["last_verified_at"]
+        assert tools[0]["source_freshness"]["status"] != "fresh"
 
         body = json.dumps({"task": "book a flight", "taxonomy": "tool.booking.travel",
                            "user_platform": "windows",
@@ -177,6 +179,8 @@ def test_select_api_endpoints():
         )
         legacy = json.loads(urllib.request.urlopen(legacy_req).read())
         assert legacy["selected"] is not None
+        assert legacy["dataset"]["current_provider_facts"] is False
+        assert legacy["source_freshness"][legacy["selected"]["service_id"]]["status"] == "expired"
         assert legacy["receipt"]["receipt_type"] == "selection"
         assert legacy["receipt"]["selector"]["name"] == "asm-protocol/0.5.1"
 
@@ -220,6 +224,8 @@ def test_select_api_endpoints():
         cat = json.loads(urllib.request.urlopen(
             f"http://127.0.0.1:{port}/.well-known/asm").read())
         assert cat["count"] >= 30 and cat["generated_at"]
+        assert cat["dataset"]["kind"] == "demonstration_dataset"
+        assert cat["dataset"]["current_provider_facts"] is False
         assert all("service_id" in e and e["url"].startswith("/manifest/")
                    for e in cat["manifests"])
 
@@ -243,6 +249,9 @@ def test_select_api_endpoints():
         e = aic["entries"][0]
         ext = e["extensions"]["io.github.ye-yi7.asm.selection"]
         assert ext["asm:taxonomy"]
+        assert ext["asm:sourceFreshness"] != "fresh"
+        assert e["updatedAt"]
+        assert ext["asm:lastVerifiedAt"]
         assert all(isinstance(v, (str, int, float, bool)) or v is None
                    for v in ext.values())
         assert e["url"].startswith(f"http://127.0.0.1:{port}/manifest/")
@@ -250,3 +259,18 @@ def test_select_api_endpoints():
         assert man2["service_id"] in e["url"]
     finally:
         srv.shutdown()
+
+
+def test_source_freshness_boundaries():
+    from datetime import datetime, timedelta, timezone
+    from asm_select_api import _source_freshness
+
+    now = datetime(2026, 9, 14, tzinfo=timezone.utc)
+    for days, expected in [(0, "fresh"), (30, "fresh"), (31, "stale"),
+                           (90, "stale"), (91, "expired"), (-1, "invalid")]:
+        manifest = {"provenance": {"last_verified_at":
+                    (now - timedelta(days=days)).isoformat()}}
+        assert _source_freshness(manifest, now=now)["status"] == expected
+    assert _source_freshness({}, now=now)["status"] == "unknown"
+    assert _source_freshness({"provenance": {"last_verified_at": "bad"}},
+                             now=now)["status"] == "invalid"
