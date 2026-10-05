@@ -57,8 +57,8 @@ reads the claim from disk (a copy of the pinned claim ships here as
 CLAIM_FILE=./claim_inference.json FIXTURE_OFFLINE=1 npm test
 ```
 
-That leaves the two deterministic checks (pinned bytes + content address, and
-signature recovery) running with zero network calls. The live settlement test is
+The deterministic integrity, signature, binding, and boundary checks run with
+zero network calls. The live settlement test is
 the only networked step, so it can be kept out of required CI.
 
 The settlement test reads BSV mainnet through WhatsOnChain (with retry/backoff on
@@ -66,6 +66,48 @@ rate limits). It checks that the transaction is confirmed, that a P2PKH output
 pays the payee, and that an input **spends a previous output locked to the
 payer** (the prevout locking script is `P2PKH(payer)`), the BSV analog of reading
 an ERC-20 `Transfer` log.
+
+## Verifier requirements (normative)
+
+A signed, content-addressed attestation can be copied by any holder. Its signature
+binds the statement to its signer, but does not establish that the holder paid
+for the call. Signature and content-address checks alone prove neither settlement
+nor delivery. This fixture leaves delivery and task correctness unproven even
+when the separate chain check succeeds.
+
+To rely on a settlement attestation as evidence of its **own** paid call, a
+verifier MUST:
+
+1. **Hold the settlement reference independently.** Compare the record's
+   `settlementRef` (and, where present, the payer identity) against the
+   transaction the verifier itself paid, taken from the verifier's own context,
+   never read back out of the record being checked.
+2. **Refuse when unbound.** If no expected settlement reference is supplied, the
+   verifier MUST refuse rather than pass. An absent binding is a refusal, not a
+   skip: silence about which payment this is must not be read as "mine."
+3. **Reconcile against the chain.** Read `settlementRef` on the relevant chain and
+   confirm the movement it names (payer → payee, amount) actually occurred.
+
+This is the settlement-layer form of the general rule that the **acceptance rule
+must remain the verifier's**: adding checks does not establish that a record is the
+verifier's own unless the reference those checks run against is one the verifier
+holds independently. A reference implementation of the binding for this fixture's
+rail is `bindX402Receipt(...)` / `verifySettlement({ ..., expected })` in the
+producer repository; the same requirement applies to any rail's attestation.
+
+`bindClaim` checks only equality with independently supplied expectations; it
+does not verify a signature, read the chain, validate address checksums, establish
+request identity, or prevent reuse of a settlement across multiple calls. A host
+must associate its payment with its own request and enforce any single-use rule.
+The local vendored `verifySettlement` is unchanged and does not compose this
+binding automatically. These requirements apply to this example, not MCP core.
+
+`bind.mjs` + `bind.test.mjs` here demonstrate it offline against the pinned claim
+(no network): the claim's own content-address and signature-recovery checks pass
+for any holder, binding it to the settlement the verifier paid is accepted, and a
+different settlement or an absent expected settlement is refused. Run with
+`npm test` (the demo is fully offline; only the live settlement read needs the
+network).
 
 ## Proven and not proven
 
