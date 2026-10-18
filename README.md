@@ -1,20 +1,26 @@
 # Agent Service Manifest (ASM)
 
-**The agent economy has discovery and it's getting payment rails. The layer in between — deciding which tool an agent uses and who gets paid — is missing. ASM is our bid to build it.**
+> **Current direction — September 22, 2026:** ASM is investigating evidence-informed
+> execution-path selection under goals, constraints and budgets. The near-term
+> question is whether reusable evidence improves accepted outcomes at lower total
+> cost than native host behavior or an ordinary agent with search. This is an
+> unvalidated product hypothesis; capability acquisition and RSI budget allocation
+> remain future research, not shipped scope.
+>
+> Read the [direction](docs/positioning-20260922/DIRECTION.md),
+> [public demand research](docs/positioning-20260922/DEMAND-VALIDATION.md), and
+> [paper Part I](paper/path-selection-part1.md). Older implementation and experiment
+> descriptions below do not establish this new hypothesis.
 
-```
-Discovery    MCP · ARD · AI-Catalog        what tools exist
-    │
-    ▼
-Selection    ASM  ← the missing layer      which one the agent can use, should use, and pays
-    │
-    ▼
-Settlement   x402 · AP2 · ACP              how the payment executes
-```
 
-The layers above and below are being built by Anthropic, Google, AWS, Coinbase, Visa. The **selection layer** between them — can the agent even drive this tool, is it allowed to, which of the eligible ones fits the task at what cost/quality/risk, and therefore who gets the work and the money — is the unfilled slot. ASM fills it with structured eligibility + value metadata (the substrate), a gated selector (the mechanism), and a hand-off to settlement.
+ASM began with structured tool eligibility and service selection. Its current
+research direction considers feasible execution paths: tools, models, harnesses,
+services or combinations that can meet a task's acceptance criteria and constraints.
 
-It is **not** a model picker. The tools are real products — task managers, design apps, data tools, schedulers, booking APIs — anything an agent might invoke on a user's behalf.
+Existing hosts, gateways and frameworks already provide selection and recovery
+mechanisms. ASM must demonstrate an incremental benefit over those alternatives,
+including the cost of collecting evidence and switching paths. Neither an empty
+market position nor a defensible evidence advantage has been established.
 
 **Honest status:** this is the layer we're *building*, with receipts (a measured benchmark, a working selector, and a separate historical testnet-settlement experiment), not a layer with production traffic yet. The bundled 30-service library is a versioned demonstration dataset, not a live marketplace: its source claims were last verified in June 2026 and are now expired under ASM's own freshness policy. It is useful for schema, integration, and benchmark reproduction; it must not be used as current provider pricing, SLA, or capability data until refreshed.
 
