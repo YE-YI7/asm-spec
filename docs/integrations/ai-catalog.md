@@ -59,3 +59,19 @@ built by [`examples/ai-catalog/_build.py`](../../examples/ai-catalog/_build.py).
 - ASM normalizes selection facts, applies local policy, and emits a selection receipt.
 - MPP, x402, Stripe, ACP, or UCP owns its runtime quote/payment/commerce receipt.
 - Observed outcome evidence remains a separate artifact linked by subject/version/digest.
+
+## ARD v0.91 publisher compatibility
+
+The canonical publisher endpoint is `/.well-known/ard.json`; landing pages
+advertise it with `rel="ard"`. The predecessor `/.well-known/ai-catalog.json`
+keeps its existing representation and identifiers. ARD entries carry the base
+JSON-LD context plus ASM's provisional namespace and expose the same source
+facts as `asm:` terms. This namespace is publisher-defined, not an upstream
+endorsement. Two representative queries describe the metadata artifact; they
+do not claim that a tool has been independently executed or currently works.
+Original source-verification timestamps and freshness states remain unchanged.
+
+This is the publisher role, not ARD registry search/explore conformance. Before
+requesting inclusion in `ards-project/ard-docs`, test the deployed canonical
+endpoint with the current upstream conformance CLI and report its actual date,
+errors and warnings. Local conformance and a merged PR are not a deployment.

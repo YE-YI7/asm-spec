@@ -10,6 +10,7 @@ Endpoints:
   GET  /tools           ?taxonomy=...  -> list of selectable tools
   GET  /.well-known/asm -> ASM catalog: one re-stampable generated_at + per-manifest
                            links (the inline-vs-link convention, applied to ourselves)
+  GET  /.well-known/ard.json -> ARD v0.91 publisher manifest
   GET  /.well-known/ai-catalog.json -> AI Catalog (Agent-Card/ai-catalog) document:
                            every library tool as a catalog entry carrying its ASM
                            value/selection block in a namespaced `extensions` entry
@@ -171,6 +172,29 @@ def _ai_catalog_entry(m: dict, base: str) -> dict:
     return entry
 
 
+_ARD_CONTEXT = "https://agenticresourcediscovery.org/context/v1"
+_ASM_NAMESPACE = "https://github.com/YE-YI7/asm-spec#"
+
+
+def _ard_entry(manifest: dict, base: str) -> dict:
+    """Publish the same source snapshot with explicit JSON-LD selection terms.
+
+    Discovery queries describe this metadata artifact, not verified live tool
+    execution. Preserve identifiers, source timestamps and freshness states.
+    The predecessor representation remains unchanged for existing consumers.
+    """
+    entry = _ai_catalog_entry(manifest, base)
+    selection = entry.pop("extensions")[_AI_CATALOG_EXTENSION]
+    entry["@context"] = [_ARD_CONTEXT, {"asm": _ASM_NAMESPACE}]
+    entry.update(selection)
+    name = entry["displayName"]
+    entry["representativeQueries"] = [
+        f"Find ASM reference metadata for {name}",
+        f"Inspect the source verification dates and setup requirements for {name}",
+    ]
+    return entry
+
+
 def _tools_listing(taxonomy: str | None) -> list[dict]:
     out = []
     for m in _LIBRARY:
@@ -250,14 +274,14 @@ class Handler(BaseHTTPRequestHandler):
                     for m in _LIBRARY
                 ],
             })
-        elif url.path == "/.well-known/ai-catalog.json":
+        elif url.path in ("/.well-known/ard.json", "/.well-known/ai-catalog.json"):
             # Cross-protocol discovery: the same library as an AI Catalog document,
             # with value/selection metadata in a namespaced extension.
             host = self.headers.get("Host", "asm-spec.onrender.com")
             scheme = "http" if host.split(":")[0] in ("localhost", "127.0.0.1") else "https"
             base = f"{scheme}://{host}"
-            # Root is closed (specVersion/host/entries only); source freshness
-            # travels with each entry rather than response serialization time.
+            # The predecessor wire format is preserved; ARD adds namespaced
+            # entry terms. Publication does not renew source verification.
             self._send(200, {
                 "specVersion": "1.0",
                 "host": {
@@ -266,7 +290,8 @@ class Handler(BaseHTTPRequestHandler):
                     "identifier": "asm-spec.onrender.com",
                     "documentationUrl": "https://github.com/YE-YI7/asm-spec",
                 },
-                "entries": [_ai_catalog_entry(m, base) for m in _LIBRARY],
+                "entries": [(_ard_entry if url.path == "/.well-known/ard.json"
+                             else _ai_catalog_entry)(m, base) for m in _LIBRARY],
             })
         elif url.path.startswith("/manifest/"):
             sid = unquote(url.path[len("/manifest/"):])
@@ -276,7 +301,7 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 self._send(404, {"error": f"no manifest with service_id={sid}"})
         else:
-            self._send(404, {"error": "unknown path; use POST /select, GET /tools, GET /.well-known/asm, GET /manifest/{service_id}, GET /healthz"})
+            self._send(404, {"error": "unknown path; use POST /select, GET /tools, GET /.well-known/asm, GET /.well-known/ard.json, GET /manifest/{service_id}, GET /healthz"})
 
     def do_POST(self) -> None:
         if urlparse(self.path).path != "/select":
