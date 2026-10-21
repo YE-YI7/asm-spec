@@ -1,0 +1,94 @@
+{
+  "source_commit": "0b499f095c4ca145eee07b09137641c037d58449",
+  "source_sha256": "08a2ffb7efbfd07dbadac74435f8cabb2a265cc3389dfcc4a3303b42c21a934f",
+  "captured_at": "2026-10-21T16:15:20.146934+00:00",
+  "source_http_reads": 2,
+  "endpoint_access_declaration": {
+    "authentication": "anonymous_with_rate_limits",
+    "credential_options": [
+      "oauth",
+      "api_token"
+    ],
+    "effects": [
+      "higher_limits",
+      "tool_specific_access"
+    ],
+    "basis": "provider_documentation",
+    "account_grants": "unknown"
+  },
+  "source_refresh_elapsed_ms": 2017.543,
+  "tool_calls": 0,
+  "api_cost_usd": null,
+  "manifests": [
+    {
+      "asm_version": "0.3",
+      "service_id": "exa/web_search_exa@0b499f095c4c",
+      "display_name": "web_search_exa",
+      "taxonomy": "tool.data.search",
+      "capabilities": {
+        "functions": [
+          "web_search"
+        ]
+      },
+      "invocation": {
+        "interface": "mcp",
+        "reach": "cloud",
+        "platforms": [
+          "any"
+        ],
+        "agent_operable": true,
+        "auth_to_invoke": "none",
+        "agent_completable_setup": true
+      },
+      "provenance": {
+        "source_url": "https://github.com/exa-labs/exa-mcp-server/blob/0b499f095c4ca145eee07b09137641c037d58449/README.md",
+        "retrieved_at": "2026-10-21T16:15:20.146934+00:00",
+        "last_verified_at": "2026-10-21T16:15:20.146934+00:00",
+        "verification_status": "self_reported",
+        "notes": "Adapter author interpretation of provider documentation; not provider-endorsed metadata or observed account access."
+      },
+      "ttl": 86400,
+      "extensions": {
+        "org.asm.access-pilot": {
+          "scope": "tool",
+          "optional_credentials_effect": "higher_limits"
+        }
+      }
+    },
+    {
+      "asm_version": "0.3",
+      "service_id": "exa/agent_run@0b499f095c4c",
+      "display_name": "agent_run",
+      "taxonomy": "tool.data.search",
+      "capabilities": {
+        "functions": [
+          "multi_step_research"
+        ]
+      },
+      "invocation": {
+        "interface": "mcp",
+        "reach": "cloud",
+        "platforms": [
+          "any"
+        ],
+        "agent_operable": true,
+        "auth_to_invoke": "api_token_or_oauth",
+        "agent_completable_setup": false
+      },
+      "provenance": {
+        "source_url": "https://github.com/exa-labs/exa-mcp-server/blob/0b499f095c4ca145eee07b09137641c037d58449/README.md",
+        "retrieved_at": "2026-10-21T16:15:20.146934+00:00",
+        "last_verified_at": "2026-10-21T16:15:20.146934+00:00",
+        "verification_status": "self_reported",
+        "notes": "Adapter author interpretation of provider documentation; not provider-endorsed metadata or observed account access."
+      },
+      "ttl": 86400,
+      "extensions": {
+        "org.asm.access-pilot": {
+          "scope": "tool",
+          "optional_credentials_effect": null
+        }
+      }
+    }
+  ]
+}
