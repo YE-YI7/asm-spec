@@ -1,0 +1,93 @@
+{
+  "source": {
+    "source_commit": "0b499f095c4ca145eee07b09137641c037d58449",
+    "source_sha256": "08a2ffb7efbfd07dbadac74435f8cabb2a265cc3389dfcc4a3303b42c21a934f",
+    "captured_at": "2026-10-21T16:15:20.146934+00:00",
+    "source_http_reads": 2,
+    "endpoint_access_declaration": {
+      "authentication": "anonymous_with_rate_limits",
+      "credential_options": [
+        "oauth",
+        "api_token"
+      ],
+      "effects": [
+        "higher_limits",
+        "tool_specific_access"
+      ],
+      "basis": "provider_documentation",
+      "account_grants": "unknown"
+    },
+    "source_refresh_elapsed_ms": 2017.543,
+    "tool_calls": 0,
+    "api_cost_usd": null
+  },
+  "source_http_reads_this_run": 0,
+  "preflight_elapsed_ms": 0.921,
+  "receipt": {
+    "receipt_type": "access_preflight_pilot",
+    "receipt_version": "0.1",
+    "evaluated_at": "2026-10-21T16:16:50.958222+00:00",
+    "auth_context": "anonymous",
+    "required_functions": [
+      "web_search"
+    ],
+    "considered": [
+      {
+        "service_id": "exa/web_search_exa@0b499f095c4c",
+        "status": "anonymous_declared",
+        "reason": "provider_declares_anonymous_access",
+        "basis": "provider_documentation",
+        "source_url": "https://github.com/exa-labs/exa-mcp-server/blob/0b499f095c4ca145eee07b09137641c037d58449/README.md",
+        "last_verified_at": "2026-10-21T16:15:20.146934+00:00",
+        "manifest_digest": "sha256:9d36fb79998c4df1874aa08ba0dadc4a148175f44c90477af811eb0764ca0e8b",
+        "runtime_access_verified": false
+      },
+      {
+        "service_id": "exa/agent_run@0b499f095c4c",
+        "status": "requires_authentication",
+        "reason": "no_credential_configured",
+        "basis": "provider_documentation",
+        "source_url": "https://github.com/exa-labs/exa-mcp-server/blob/0b499f095c4ca145eee07b09137641c037d58449/README.md",
+        "last_verified_at": "2026-10-21T16:15:20.146934+00:00",
+        "manifest_digest": "sha256:5bb96458869bc25c635504911110fbca8d4a31683ce9741ab1f0db753c22f04f",
+        "runtime_access_verified": false
+      }
+    ],
+    "decision": {
+      "task": "consumer-supplied structured function requirement",
+      "task_interpreted": false,
+      "taxonomy": null,
+      "selection_status": "selected",
+      "selected": {
+        "service_id": "exa/web_search_exa@0b499f095c4c",
+        "display_name": "web_search_exa",
+        "monthly_cost_usd": null,
+        "cost_estimate": {
+          "status": "unknown",
+          "monthly_total": null,
+          "currency": null,
+          "assumptions": [
+            "no billing dimensions were declared"
+          ],
+          "unknown_dimensions": [
+            "pricing"
+          ],
+          "lower_bound": null
+        },
+        "interface": "mcp",
+        "reach": "cloud",
+        "agent_completable_setup": true,
+        "setup_requires": []
+      },
+      "reason": "Eligible unknown-risk tool with required functions; candidate costs are not fully comparable; explicit None fallback was used; no approval gate triggered.",
+      "risk_class": "unknown",
+      "approval_required": false,
+      "side_effects": [],
+      "alternatives": [],
+      "rejected": []
+    },
+    "execution_authorized": false,
+    "additional_model_calls": 0,
+    "limits": "Documentation-based path hint only; host authorization, current quotas, price and runtime success remain unverified."
+  }
+}
